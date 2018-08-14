@@ -1,0 +1,280 @@
+/*
+ Copyright @ 2016 Diego Garcia
+*/
+html, body {
+    position:relative;
+    margin:0;
+    padding:0;
+    font-size:1em;
+    height:100%;
+    /* font-family:Georgia,"Times New Roman",Times,serif;color:#919191;background-color:#232323; */
+    font-family: georgia,"times new roman",times,serif;
+    /* font: 13px/16px "Guardian Sans", Tahoma, Trebuchet MS, TrebuchetMS, sans-serif; */
+    background-color: gray;
+    color: #000;
+}
+.container {
+    margin: 0 auto;
+    max-width: 1300px;  
+}
+.bodysize {
+    display:block;
+    margin:0 auto;
+    /* min-height: 600px; */
+}
+.fl_left{
+    float:left;
+    margin-left: 5px;
+}
+.fl_right{
+    float:right;
+    margin-right: 5px;
+}
+.clear:after {
+    content:".";
+    display:block;
+    height:0;
+    clear:both;
+    visibility:hidden;
+    line-height:0;
+}
+#header, #footer{
+    display:block;
+    margin:0 auto;
+}
+#header{
+    overflow:hidden;
+    margin-top: 4px;
+}
+#footer {
+    /* border: 1px solid green; */
+    width: 100%;
+    background-color: #000;
+    overflow:hidden;
+}
+.page {
+    padding: 10px 0; 
+    background-color:#eee;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+}
+#brand {
+    padding-left: 30px;
+    /* border: 1px solid red; */
+    padding-top: 20px;
+    padding-bottom: 20px;
+    line-height: 1.3em;
+    background-color: #000;
+}
+#brand a{
+    font-family: Rockwell, "Courier Bold", Courier, Georgia, Times, "Times New Roman", serif;
+    font-size:3em;
+    text-decoration: none;
+}
+#brand span {
+    font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+    font-size: 1.3em;  
+}
+.row1, .row3 {
+    margin: 0 auto;
+}
+.row1, .row1 a {
+    color:#DCDCDC;
+    /* border: 1px solid red; */
+}
+.row2{
+    color:#979797;
+    background-color: #e5e5e5;
+}
+.row2 a{
+    color:#F90;
+    background-color:#fff;
+}
+.row3,.row3 a{
+    color:#DCDCDC;
+}
+h1,h2,h3,h4,h5,h6{
+    margin:0;
+    padding:0;
+    font-weight:bold;
+    font-style:normal;
+    line-height:normal;
+}
+#header-menu{
+    display:block;
+    background-color:#eee;
+    overflow:hidden;
+    color: #870505;
+    border: 1px solid #000;
+}
+#header-menu ul{
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+#header-menu li{
+    display:inline;
+    text-transform:uppercase;
+}
+#header-menu li a{
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    padding: 4px;
+    transition: .3s;
+    font-size: 1em;
+    border: none;
+    color: inherit;
+    background-color: transparent;
+    height: 20px;
+}
+#header-menu li a:hover {background-color: #000;}
+.nav_left {
+    float:left;
+}
+.nav_right {
+    float:right;
+}
+#header-menu li.last{
+    margin-right:0;
+}
+#header-menu select {
+    -moz-appearance: none; 
+    -webkit-appearance: none;
+    /* appearance: none;*/
+    padding: 0 4px;
+    font-size: 1em;
+    margin: 0;
+    border-radius:3px;
+    background: transparent;
+    color: inherit;
+    border: 0px solid #888;
+    cursor:pointer;
+    margin-top: 2px;
+    overflow: hidden;
+}
+#header-menu select:hover {background-color: #000;}
+#header-menu img {
+    padding-left: 10px;
+    padding-right: 10px;
+    width:20px;
+    height:20px;
+}
+.standard_box {
+    margin:auto;
+    width: 50%;
+    background-color: #919191;
+    background: #f7f7f7;
+    border: 1px solid rgba(147, 184, 189,0.8);
+    box-shadow:	
+        0px 2px 5px rgba(105, 108, 109,  0.7),	
+        0px 0px 8px 5px rgba(208, 223, 226, 0.4) inset;
+    border-radius: 5px;
+    text-align:left;
+    padding: 10px;
+    padding-left: 30px;
+    padding-bottom: 30px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+.standard_box h1 {
+    font-size: 2em;
+    color: #066A75;	
+    font-family: 'FranchiseRegular','Arial Narrow',Arial,sans-serif;
+    padding-bottom: 30px;
+    text-align: center;
+}
+.p_center_small {
+    text-align: center;
+    font-size: 1em;
+}
+.p_center_medium {
+    text-align: center;
+    font-size: 1.5em;
+}
+.p_center_big {
+    text-align: center;
+    font-size: 2.0em;
+    line-height: 1em;
+}
+.resp-icon {
+    display: none !important;
+    text-align: center;
+    font-size: 1.2em;
+    padding-right: 4px;
+    transition: .3s;
+}
+.resp-icon:hover {
+    background-color: #000;
+}
+#main_banner {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+.center {
+    text-align:center;
+}
+.zero {
+    padding: 0;
+    margin: 0;
+}
+#sections_nav, #sections_submenu {
+    text-align: center;
+    background: blue;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    color:white;
+    background: linear-gradient(#55a0db, #1f6ba5);
+}
+#sections_nav {
+    border: 1px solid #000;
+}
+#sections_nav ul, #sections_submenu ul {
+    padding:0;
+    margin:0;
+    /*margin-bottom: 4px;*/
+}
+#sections_nav li, #sections_submenu li {
+    display: inline;
+}
+#sections_nav li a, #sections_submenu li a{
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    padding: 1px;
+    margin-right: 5%;
+    transition: .3s;
+    font-size: 1em;
+    border: none;
+    color: inherit;
+    background-color: transparent;
+    height: 20px;
+}
+#sections_nav li a:hover, #sections_submenu li a:hover {
+    background: linear-gradient(#2f5d81, #0b2a42);
+}
+#sections_nav li a:active, #sections_submenu li a:active {
+    color: #000;
+    background: #f7f7f7 none repeat scroll 0% 0%;
+    border-right: 1px solid #999;
+    border-left: 1px solid #999;
+}
+#sections_submenu {
+    color: #000;
+    background: linear-gradient(#898484, #eee); 
+}
+.nodecor {
+    text-decoration:none;
+}
+.display_hidden {
+    display: none;
+}
+.bold {
+    font-weight: bold;
+}
+.italic {
+    font-style: italic;
+}
+.underline {
+    text-decoration: underline;
+}

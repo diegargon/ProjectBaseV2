@@ -1,0 +1,41 @@
+RewriteEngine On
+RewriteBase /
+
+#RewriteCond %{HTTP_HOST} ^www.domain.com [NC]
+#RewriteRule ^(.*)$ https://domain.com/$1 [L,R=301]
+
+#Admin
+RewriteRule  ^([a-zA-z]{2})\/admin(.*)$   index.php?module=AdminBasic&page=adm&lang=$1$2
+RewriteRule  ^admin index.php?module=AdminBasic&page=adm [L]
+#NewsSearch 
+RewriteRule  ^([a-zA-z]{2})\/searchTag/(.*)$   index.php?module=NewsSearch&page=search&lang=$1&searchTag=$2
+RewriteRule  ^([a-zA-z]{2})\/search/?(.*)   index.php?$2&module=NewsSearch&page=search&lang=$1 [QSA]
+
+#Newspage
+RewriteRule  ^([a-zA-Z]{2})\/news/([0-9]+)\/([0-9]+)\/(.*)$   index.php?module=Newspage&page=news&lang=$1&nid=$2&npage=$3 [NC]
+RewriteRule  ^([a-zA-z]{2})\/submitnews$   index.php?module=Newspage&page=submitnews&lang=$1 [NC]
+RewriteRule  ^([a-zA-z]{2})\/sec.*/(.*)$   index.php?module=Newspage&page=section&lang=$1&section=$2 [NC]
+
+#SMBasic
+RewriteRule  ^([a-zA-z]{2})\/login?(.*)$   index.php?$2module=SMBasic&page=login&lang=$1 [QSA]
+RewriteRule  ^([a-zA-z]{2})\/logout$   index.php?module=SMBasic&page=logout&lang=$1
+RewriteRule  ^([a-zA-z]{2})\/profile(.*)$   index.php?module=SMBasic&page=profile&lang=$1$2
+RewriteRule  ^([a-zA-z]{2})\/register?(.*)   index.php?$2&module=SMBasic&page=register&lang=$1 [QSA]
+#RewriteRule  ^([a-zA-z]{2})\/terms?(.*)   index.php?$2&module=SMBasic&page=termslang=$1 [QSA]
+RewriteRule  ^([a-zA-z]{2})\/terms$   index.php?module=SMBasic&page=terms&lang=$1
+#WebInfo
+RewriteRule  ^([a-zA-z]{2})\/AboutUs$   index.php?module=WebInfo&page=AboutUs&lang=$1
+RewriteRule  ^([a-zA-z]{2})\/Contact$   index.php?module=WebInfo&page=Contact&lang=$1
+RewriteRule  ^([a-zA-z]{2})\/Advertise$   index.php?module=WebInfo&page=Advertise&lang=$1
+
+
+RewriteRule ^(es|en)/$  $2?lang=$1 [QSA]
+RewriteRule  ^([a-zA-z]{2})$ $1/ [L,R=301]
+
+<ifmodule mod_expires.c>
+<Filesmatch "\.(jpg|jpeg|png|gif|js|css|swf|ico|woff|mp3)$">
+    ExpiresActive on
+    ExpiresDefault "access plus 30 days"
+</Filesmatch>
+#ExpiresByType image/x-icon "access plus 1 day/month/year"
+</ifmodule>

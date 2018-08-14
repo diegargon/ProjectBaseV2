@@ -1,0 +1,17 @@
+/*
+ Copyright @ 2016 Diego Garcia
+*/
+#admin_ml_content {}
+
+#iso_code {
+    width:25px;
+}
+#lang_name {
+    width:200px;
+}
+.p_error {
+    font-weight: bold;
+    font-size: 1.5em;
+    text-align: center;
+    color: #660000;
+}

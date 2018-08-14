@@ -1,0 +1,3 @@
+Each js, css, template file loading for the web check before if exist a copy in the "default"  directory (can change in config.inc.php),  if not exist load the plugin default one.
+this is where you must put your custom CSS/tpl files not modify the default ones. Here is place for themes.
+

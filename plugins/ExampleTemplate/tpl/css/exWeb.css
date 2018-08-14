@@ -1,0 +1,28 @@
+/*
+ Copyright @ 2016 Diego Garcia
+*/
+
+.aggre_col {
+    width:32%;
+    float: left;
+    margin-left: 1%;
+}
+.aggre_col h2 {
+    font-size: 0.8em;
+}
+
+.row_head {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    font-size: 1.0rem;
+    box-shadow: 0 0 10px #ccc;
+    border-bottom: 1px solid #dcdcdc;
+    border-right: 1px solid #dcdcdc;
+    border-top: 2px solid #1f6ba5;
+    color: #000;
+    /* background-color: #232323; */
+    padding-left: 4px;
+    width: 100%;
+    margin: 0 auto;
+    margin-bottom: 4px;
+}    
