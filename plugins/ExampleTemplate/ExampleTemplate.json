@@ -9,7 +9,7 @@
     "function_upgrade": "ExampleTemplate_upgrade",
     "function_uninstall": "ExampleTemplate_uninstall",
     "provide": "",
-    "version": 0.2,
+    "version": 0.3,
     "depends": [
         {
             "name": "CORE",

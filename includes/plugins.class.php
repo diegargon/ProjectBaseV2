@@ -150,6 +150,27 @@ class Plugins {
         return true;
     }
 
+    function upgrade($pluginid) {
+        global $db;
+
+        $query = $db->select_all("plugins", ["plugin_id" => $pluginid], "LIMIT 1");
+        $plugin = $db->fetch($query);
+        if ($plugin['installed'] == 1) {
+            require_once("plugins/{$plugin['plugin_name']}/{$plugin['main_file']}");
+            $func_Upgrade = $plugin['function_upgrade'];
+            if (function_exists($func_Upgrade)) {
+                if ($func_Upgrade($plugin['version'], $plugin['upgrade_from'])) {
+                    $db->update("plugins", ["upgrade_from" => 0], ["plugin_id" => $pluginid]);
+                }
+            } else {
+                die("FUNCION NO EXISTE");
+            }
+        } else {
+            return false;
+        }
+        return true;
+    }
+
     function setEnable($pluginid, $value) {
         global $db;
 
@@ -227,9 +248,9 @@ class Plugins {
 
         $this->registered_plugins = [];
         $this->scanDir();
-        
+
         $db->update("plugins", ["missing" => 1]); //mark missing
-        
+
         foreach ($this->registered_plugins as $plugin) {
             $result = $db->select_all("plugins", ["plugin_name" => $plugin->plugin_name], "LIMIT 1");
 
@@ -240,7 +261,6 @@ class Plugins {
                 "function_init" => $plugin->function_init,
                 "function_admin_init" => $plugin->function_admin_init,
                 "function_install" => $plugin->function_install,
-                "missing" => 1,
                 "function_pre_install" => $plugin->function_pre_install,
                 "function_pre_install_info" => $plugin->function_pre_install_info,
                 "function_uninstall" => $plugin->function_uninstall,
@@ -258,6 +278,7 @@ class Plugins {
                     if ($plugin_row['upgrade_from'] == 0) {
                         $query_ary["upgrade_from"] = $plugin_row['version'];
                     }
+                    $query_ary["missing"] = 0;
                     $db->update("plugins", $query_ary, ["plugin_name" => $plugin->plugin_name]);
                 } else {
                     $db->update("plugins", ["missing" => 0], ["plugin_name" => $plugin->plugin_name]);

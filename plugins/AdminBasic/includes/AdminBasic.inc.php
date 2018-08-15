@@ -113,6 +113,9 @@ function admin_general_content($params) {
         if (isset($_POST['btnDeleteMissing'])) {
             $db->delete("plugins", ["plugin_id" => $plugin_id], "LIMIT 1");
         }
+        if (isset($_POST['btnUpgrade'])) {
+            $plugins->upgrade($plugin_id);
+        }
     }
 
     if (isset($_POST['btnReScan'])) {
