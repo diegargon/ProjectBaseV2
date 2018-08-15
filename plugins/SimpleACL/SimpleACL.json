@@ -1,0 +1,28 @@
+{
+    "plugin_name": "SimpleACL",
+    "main_file": "SimpleACL.php",
+    "function_init": "SimpleACL_init",
+    "function_admin_init": "SimpleACL_AdminInit",
+    "function_install": "SimpleACL_install",
+    "function_pre_install": "SimpleACL_preInstall",
+    "function_pre_install_info": "SimpleACL_preInstall_info",
+    "function_upgrade": "SimpleACL_upgrade",
+    "function_uninstall": "SimpleACL_uninstall",
+    "provided": "ACL",
+    "version": 0.2,
+    "depends": [
+        {
+            "name": "SESSIONS",
+            "min_version": 0.2,
+            "max_version": 0.9
+        },
+        {
+            "name": "SQL",
+            "min_version": 0.2,
+            "max_version": 0.9
+        }        
+    ],
+    "priority": 4,
+    "optional": [],
+    "conflicts": []
+}
