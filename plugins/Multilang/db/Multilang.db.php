@@ -17,7 +17,7 @@ $multilang_database = [
   ADD UNIQUE KEY `lang_id` (`lang_id`);",
      
     "ALTER TABLE `" . DB_PREFIX . "lang`
-  MODIFY `lang_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;",
+  MODIFY `lang_id` int(11) NOT NULL AUTO_INCREMENT",
  
     "ALTER TABLE `" . DB_PREFIX . "lang` ADD UNIQUE(`iso_code`);",
     "ALTER TABLE `" . DB_PREFIX . "lang` ADD UNIQUE(`lang_name`);",

@@ -61,12 +61,10 @@ ALTER TABLE `" . DB_PREFIX . "users`
 
 $smbasic_database[] = "
 ALTER TABLE `" . DB_PREFIX . "users`
-  MODIFY `uid` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `uid` int(32) NOT NULL AUTO_INCREMENT;
 ";
 
-
 /* INSERTS */
-
 
 $smbasic_insert_database = [
     /* CONFIG */
@@ -94,8 +92,6 @@ $smbasic_insert_database = [
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', 'smbasic_https_remove_avatar', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', 'smbasic_session_salt', 'y1!^!ob32a.,$!!$3]Q&%@/^^i@?Xx]')",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', 'smbasic_cookie_expire', '86400')",
-    
-   
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', 'smbasic_default_img_avatar', '')",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', 'smbasic_https_remote_avatar', '1')",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', 'smbasic_ask_terms', '1')",
