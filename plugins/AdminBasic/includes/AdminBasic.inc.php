@@ -153,11 +153,11 @@ function admin_general_content($params) {
         $content .= "<hr/>";
         foreach ($all_plugins as $plugin) {
             $content .= "<form action='' method='post' id='formPlugin'> ";
-            $content .= "<p><span>{$plugin['plugin_name']}</span> {$plugin['version']}<br>";
+            $content .= "<p><span>{$plugin['plugin_name']}</span> {$plugin['version']}<br/>";
             $content .= $LNG['L_PL_PROVIDE'] . $plugin['provide'] . "<br/>";
-            $content .= !empty($r = AdminBasic_unserialize_forPrint($plugin['depends'])) ? $LNG['L_PL_DEPENDS'] . $r : null;
-            $content .= !empty($r = AdminBasic_unserialize_forPrint($plugin['optional'])) ? $LNG['L_PL_OPTIONAL'] . $r : null;
-            $content .= !empty($r = AdminBasic_unserialize_forPrint($plugin['conflicts'])) ? $LNG['L_PL_CONFLICTS'] . $r : null;
+            $content .= !empty($r = AdminBasic_unserialize_forPrint($plugin['depends'])) ? $LNG['L_PL_DEPENDS'] . "<br/>" . $r : null;
+            $content .= !empty($r = AdminBasic_unserialize_forPrint($plugin['optional'])) ? $LNG['L_PL_OPTIONAL'] . "<br/>" . $r : null;
+            $content .= !empty($r = AdminBasic_unserialize_forPrint($plugin['conflicts'])) ? $LNG['L_PL_CONFLICTS'] . "<br/>" . $r : null;
             $content .= "</p>";
             $content .= "<input type='hidden' name='plugin_id' value='{$plugin['plugin_id']}'/>";
             if ($plugin['missing']) {
