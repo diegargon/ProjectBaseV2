@@ -10,7 +10,7 @@ function SMBasic_AdminInit() {
 }
 
 function SMBasic_AdminMenu($params) {
-    global $plugins, $db;
+    global $plugins;
 
     $tab_num = $plugins->getPluginID("SMBasic");
     if ($params['admtab'] == $tab_num) {
