@@ -6,12 +6,12 @@
 !defined('IN_WEB') ? exit : true;
 
 function ExampleTemplate_init() {
-    
+    defined('DEBUG') ? $debug->log("ExampleTemplate  initialice", "SMBasic", "INFO") : null;
 }
 
 function ExampleTemplate_AdminInit() {
     global $debug;
-    defined('DEBUG') ? $debug->log("ExampleTemplate initialice", "SMBasic", "INFO") : null;
+    defined('DEBUG') ? $debug->log("ExampleTemplate admin initialice", "SMBasic", "INFO") : null;
 }
 
 function ExampleTemplate_install() {
