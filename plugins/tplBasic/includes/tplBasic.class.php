@@ -68,6 +68,8 @@ class TPL {
     }
 
     function getTPL_file($plugin, $filename = null, $data = null) {
+        //TODO add file cache for repetetive file get
+        
         global $debug;
         empty($filename) ? $filename = $plugin : null;
 
