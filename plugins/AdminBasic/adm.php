@@ -7,6 +7,8 @@
  */
 !defined('IN_WEB') ? exit : true;
 
+require_once("admin/AdminBasic.func.php");
+
 $user = $sm->getSessionUser();
 
 if (!$user || (defined('ACL') && !$acl_auth->acl_ask("admin_read"))) {
