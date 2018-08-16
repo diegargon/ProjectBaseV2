@@ -296,7 +296,7 @@ class Plugins {
     function express_start($pluginname) {
         global $debug;
 
-        $this->debug ? $debug->log("Express order to start $pluginname", "PLUGIN_LOAD", "PLUGINS", "INFO") : null;
+        $this->debug ? $debug->log("Express order to start $pluginname", "PLUGINS", "INFO") : null;
 
         foreach ($this->enabled_plugins as $plugin) {
             if ($plugin['plugin_name'] == $pluginname) {
@@ -311,7 +311,7 @@ class Plugins {
                 echo "---------------------<br>";
             }
         }
-        $this->debug ? $debug->log("Plugin $pluginname not exist", "PLUGIN_LOAD", "PLUGINS", "ERROR") : null;
+        $this->debug ? $debug->log("Plugin $pluginname not exist", "PLUGINS", "ERROR") : null;
 
         return false;
     }
@@ -344,7 +344,7 @@ class Plugins {
     }
 
     function includePluginFiles($plugin, $admin = 0) {
-        global $cfg, $LNG; //LNG used on include
+        global $cfg, $LNG, $debug; //LNG used on include
 
         $class_file = "";
         $inc_file = "";
@@ -361,6 +361,16 @@ class Plugins {
         }
         !empty($inc_file) && file_exists($inc_file) ? include_once($inc_file) : false;
         !empty($inc_file) && file_exists($class_file) ? include_once($class_file) : false;
+        if ($this->debug) {
+            if (!empty($inc_file) && file_exists($inc_file)) {
+                include_once($inc_file);
+                $debug->log("Loading $inc_file", "PLUGINS", "INFO");
+            }
+            if (!empty($inc_file) && file_exists($class_file)) {
+                include_once($class_file);
+                $debug->log("Loading $class_file", "PLUGINS", "INFO");
+            }
+        }
     }
 
     private function plugin_check($plugin) {
