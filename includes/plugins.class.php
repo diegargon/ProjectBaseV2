@@ -129,12 +129,12 @@ class Plugins {
         return true;
     }
 
-    function uninstall($pluginid) {
+    function uninstall($pluginid, $force = 0) {
         global $db;
 
         $query = $db->select_all("plugins", ["plugin_id" => $pluginid], "LIMIT 1");
         $plugin = $db->fetch($query);
-        if ($plugin['installed'] == 1) {
+        if ($plugin['installed'] == 1 || $force) {
             require_once("plugins/{$plugin['plugin_name']}/{$plugin['main_file']}");
             $func_plugUninstall = $plugin['function_uninstall'];
             if (function_exists($func_plugUninstall)) {
