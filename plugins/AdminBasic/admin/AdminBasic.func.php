@@ -98,6 +98,11 @@ function admin_general_content($params) {
                 die("Plugin $plugin_id uninstall failed");
             }
         }
+        if (isset($_POST['btnCleanFailed'])) {
+            //$db->silent(true);
+            $plugins->uninstall($plugin_id, 1);
+            //$db->silent(false);
+        }        
         if (isset($_POST['btnEnable'])) {
             $plugins->setEnable($plugin_id, 1);
         }
@@ -165,6 +170,7 @@ function admin_general_content($params) {
                 $content .= "<input type='submit' name='btnDeleteMissing'  value='" . $LNG['L_PL_DELETE'] . "'>";
             } else if (!$plugin['installed']) {
                 $content .= "<input type='submit' name='btnInstall'  value='" . $LNG['L_PL_INSTALL'] . "'>";
+                $content .= "<input type='submit' name='btnCleanFailed'  value='" . $LNG['L_PL_CLEAN_FAILED'] . "'>";
             } else if ($plugin['upgrade_from'] != 0) {
                 $content .= "<input type='submit' name='btnUpgrade'  value='" . $LNG['L_PL_UPGRADE'] . "'>";
             } else {

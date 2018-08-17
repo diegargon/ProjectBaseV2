@@ -40,3 +40,4 @@ $LNG['L_PL_RESCAN'] = "Re-Escanear";
 $LNG['L_PL_UPGRADE'] = "Actualizar";
 $LNG['L_PL_E_ITSMISSING'] = "Faltan archivos";
 $LNG['L_PL_DELETE'] = "Borrar";
+$LNG['L_PL_CLEAN_FAILED'] = "Limpiar instalación fallida";
