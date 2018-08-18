@@ -1,0 +1,23 @@
+{
+    "plugin_name": "GoogleAnalytics",
+    "main_file" : "GoogleAnalytics.php",
+    "function_init": "GoogleAnalytics_init",
+    "function_install": "GoogleAnalytics_install",
+    "function_pre_install": "GoogleAnalytics_preInstall",
+    "function_pre_install_info": "GoogleAnalytics_preInstallInfo",
+    "function_admin_init": "GoogleAnalytics_admin_init",
+    "function_upgrade": "GoogleAnalytics_upgrade",
+    "function_uninstall": "GoogleAnalytics_uninstall",    
+    "provide": "GoogleAnalytcs",
+    "version": 0.2,
+    "depends": [
+        {
+            "name": "TPL",
+            "min_version": 0.2,
+            "max_version": 0.9
+        }        
+    ],
+    "priority" : 9,
+    "optional": [],
+    "conflicts": []
+}
