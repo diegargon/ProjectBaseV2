@@ -8,7 +8,7 @@
     "function_pre_install_info": "SimpleACL_preInstall_info",
     "function_upgrade": "SimpleACL_upgrade",
     "function_uninstall": "SimpleACL_uninstall",
-    "provided": "ACL",
+    "provide": "ACL",
     "version": 0.2,
     "depends": [
         {

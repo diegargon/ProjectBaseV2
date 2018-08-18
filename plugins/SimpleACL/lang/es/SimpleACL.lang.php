@@ -1,6 +1,7 @@
 <?php
-/* 
- *  Copyright @ 2016 Diego Garcia
+
+/*
+ *  Copyright @ 2016 - 2018 Diego Garcia
  * ES
  */
 !defined('IN_WEB') ? exit : true;
@@ -18,14 +19,18 @@ $LNG['L_ACL_SEND'] = "Enviar";
 $LNG['L_ACL_DELETE'] = "Borrar";
 $LNG['L_ACL_E_EMPTY_NEWROLE'] = "Todos los campos excepto descripción son obligatorios y deben tener caracteres validos";
 $LNG['L_ACL_ROLE_SUBMIT_SUCCESFUL'] = "Rol introducido con exito";
+$LNG['L_ACL_ROLE_DELETE_SUCCESFUL'] = "Rol eliminado con exito";
 $LNG['L_ACL_USER_ROLES'] = "Roles de usuario";
 $LNG['L_ACL_SEARCH'] = "Buscar";
 $LNG['L_ACL_NO_ROLES_FOUND'] = "No se encontraron roles";
 $LNG['L_ACL_ADD'] = "Añadir rol";
 $LNG['L_GOOD'] = "Dios";
 $LNG['L_ADMIN_ALL'] = "Administrador total";
-$LNG['L_ADMIN_CHANGE'] = "Administrador cambios";
-$LNG['L_ADMIN_READ'] = "Administrador leer/no modificar";
+$LNG['L_ADMIN_WRITE'] = "Administrador cambios";
+$LNG['L_ADMIN_READ'] = "Administrador lectura";
+$LNG['L_ADMIN_ALL_DESC'] = "Administrador total";
+$LNG['L_ADMIN_WRITE_DESC'] = "Puede leer y modificar";
+$LNG['L_ADMIN_READ_DESC'] = "Solo leer/no modificar";
 $LNG['L_REGISTERED_ALL'] = "Usuario registrado total";
 $LNG['L_REGISTERED_READ'] = "Usuario registrado leer";
 $LNG['L_NEWS_ADMIN_ALL'] = "Administrador total noticias";

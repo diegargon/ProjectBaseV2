@@ -1,27 +1,32 @@
 /*
  Copyright @ 2016 Diego Garcia
 */
-.acl_table {
-    border:0px solid red;
+.divTable{
+    display: table;
     width: 100%;
-    text-align: left;
-    background: #a1a1a1;
-    padding: 2px;       
 }
-.acl_table th{
-    border:1px solid gray;
-    border-bottom: 1px solid #000;
-    border-right: 1px solid #000;
-    background: #005555;
+.divTableRow {
+    display: table-row;
 }
-.acl_table td{
-    border-top: 1px solid #000;  
-    padding: 1px;
+.divTableHeading {
+    background-color: #EEE;
+    display: table-header-group;
 }
-.acl_table_sep {
-    background-color: #005555;    
-    height: 10px;
+.divTableCell, .divTableHead {
+    border: 1px solid #999999;
+    display: table-cell;
+    padding: 3px 10px;
+
 }
-.option_roles {
-    width: 100%;
+.divTableFoot {
+    background-color: #EEE;
+    display: table-footer-group;
+    font-weight: bold;
+}
+.divTableBody {
+    display: table-row-group;
+}
+.divTableSep {
+    background-color: #EEE;
+    height: 25px;
 }

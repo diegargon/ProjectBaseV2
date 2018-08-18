@@ -1,12 +1,11 @@
 <?php
-/* 
- *  Copyright @ 2016 Diego Garcia
+/*
+ *  Copyright @ 2016 - 2018 Diego Garcia
  */
 !defined('IN_WEB') ? exit : true;
 ?>
 <br/>
 <?= isset($data['ADM_TABLE_TITLE']) ? $data['ADM_TABLE_TITLE'] : false ?>        
-<?= isset($data['ACL_MSG']) ? "<p> {$data['ACL_MSG']} </p>" : false ?>
 <form method="post" action="" id="user_search">
     <input type="text" name="username"/>
     <input type="submit" name="btnSearchUser" value="<?= $LNG['L_ACL_SEARCH'] ?>" />
@@ -25,6 +24,7 @@
     <p><?= $data['username'] ?></p>
     <p><?= $LNG['L_ACL_NO_ROLES_FOUND'] ?></p>
 <?php } ?>
+<?= isset($data['ACL_MSG']) ? "<p> {$data['ACL_MSG']} </p>" : false ?>
 <?php if (!empty($data['roles'])) { ?>
     <form method='post' action='' id='form_add_roles'>
         <select class='add_role' name='add_role_id'>
