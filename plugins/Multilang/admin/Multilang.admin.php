@@ -6,7 +6,7 @@
 !defined('IN_WEB') ? exit : true;
 
 function Multilang_AdminInit() {
-    global $plugins;
+    global $plugins, $ml;
     /* Check if start for configure */
     !isset($ml) ? $plugins->express_start("Multilang") : null;
 

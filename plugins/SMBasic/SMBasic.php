@@ -8,11 +8,9 @@
 !defined('IN_WEB') ? exit : true;
 
 function SMBasic_Init() {
-    global $sm, $cfg, $debug;
+    global $sm;
     
     define ('SESSIONS', TRUE);
-    
-    (defined('DEBUG') && $cfg['smbasic_debug']) ? $debug->log("SMBasic initialice", "SMBasic", "INFO") : null;
 
     !isset($sm) ? $sm = new SessionManager : null;
     $sm->start();

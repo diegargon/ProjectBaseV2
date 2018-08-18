@@ -6,12 +6,11 @@
 !defined('IN_WEB') ? exit : true;
 
 function Multilang_init() {
-    global $cfg, $ml, $debug;
-    
-    define ('MULTILANG', TRUE);
-    defined('DEBUG') && $cfg['multilang_debug'] ? $debug->log("Multilang Inititated", "MULTILANG", "DEBUG") : null;
+    global $cfg, $ml;
 
-    $ml = new Multilang($cfg);
+    define('MULTILANG', TRUE);
+    
+    !isset($ml) ? $ml = new Multilang($cfg): false;
 }
 
 function Multilang_install() {

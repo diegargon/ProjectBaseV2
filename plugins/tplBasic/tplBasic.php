@@ -8,12 +8,7 @@
 function tplBasic_init() {
     global $tpl, $cfg;
 
-    define ('TPL', TRUE );
-    
-    if ((defined('DEBUG') && $cfg['tplbasic_debug'])) {
-        global $debug;
-        $debug->log("tplBasic initialized", "tplBasic", "INFO");
-    }
+    define('TPL', TRUE);
 
     $custom_lang = "tpl/lang/" . $cfg['WEB_LANG'] . "/custom.lang.php";
     file_exists($custom_lang) ? require_once($custom_lang) : false;
