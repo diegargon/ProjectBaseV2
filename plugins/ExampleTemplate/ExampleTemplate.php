@@ -18,17 +18,17 @@ function ExampleTemplate_install() {
     global $db;
     require_once "db/ExampleTemplate.db.php";
     foreach ($exampleTemplate_database as $query) {
-        $db->query($query);
+        $r = $db->query($query);
     }
-    return true;
+    return ($r) ? true : false;
 }
 
 function ExampleTemplate_preInstall() {
-    
+    return true;
 }
 
 function ExampleTemplate_preInstall_info() {
-    
+    return true;
 }
 
 function ExampleTemplate_upgrade($version, $from_version) {
@@ -36,9 +36,9 @@ function ExampleTemplate_upgrade($version, $from_version) {
     require_once "db/ExampleTemplate.db.php";
     if ($version == 0.3 && $from_version == 0.2) {
         foreach ($exampleTemplate_database_upgrade_002_to_003 as $query) {
-            $db->query($query);
+            $r = $db->query($query);
         }
-        return true;
+        return ($r) ? true : false;
     }
     return false;
 }
@@ -47,7 +47,7 @@ function ExampleTemplate_uninstall() {
     global $db;
     require_once "db/ExampleTemplate.db.php";
     foreach ($exampleTemplate_database_uninstall as $query) {
-        $db->query($query);
+        $r = $db->query($query);
     }
-    return true;
+    return ($r) ? true : false;
 }
