@@ -1,12 +1,13 @@
 <?php
-/* 
+
+/*
  *  Copyright @ 2016 - 2018 Diego Garcia
  */
 !defined('IN_WEB') ? exit : true;
 
-function GoogleAnalytics_init() { 
+function GoogleAnalytics_init() {
     global $tpl;
-   
+
     $tpl->addto_tplvar("SCRIPTS_BOTTOM", $tpl->getTPL_file("GoogleAnalytics"));
 }
 
@@ -30,12 +31,15 @@ function GoogleAnalytics_uninstall() {
     }
     return ($r) ? true : false;
 }
+
 function GoogleAnalytics_preInstall() {
     return true;
 }
+
 function GoogleAnalytics_admin_init() {
     return true;
 }
+
 function GoogleAnalytics_preInstallInfo() {
     return true;
 }
