@@ -405,7 +405,7 @@ class Plugins {
     }
 
     private function check_provide_conflicts($plugin) {
-        //TODO: ONLY CHECK FOR DUPLICATE PRIVIDE, DO CONFLICT CHECK
+        //TODO: ONLY CHECK FDUPLICATE PROVIDE, DO CONFLICT CHECK
         $allprovide = preg_split('/\s+/', $plugin['provide']);
         foreach ($allprovide as $provide) {
             if (empty($provide)) {
