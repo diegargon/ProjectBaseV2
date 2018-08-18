@@ -152,7 +152,7 @@ class ACL {
         return $LNG['L_ACL_E_ID'];
     }
 
-    function acl_ask($roles_demand, $resource = null) {
+    function acl_ask($roles_demand, $resource = "ALL") {
         global $sm;
 
         $this->debug ? $this->debug->log("ACL_ASK-> $roles_demand", "SimpleACL", "DEBUG") : false;
@@ -177,7 +177,7 @@ class ACL {
         //remove all white spaces
         $roles_demand = preg_replace('/\s+/', '', $roles_demand);
 
-        return $this->check_roles($roles_demand);
+        return $this->check_roles($roles_demand, $resource);
     }
 
     private function SetUserRoles() {
@@ -195,7 +195,7 @@ class ACL {
         return true;
     }
 
-    private function check_roles($roles_demand) {
+    private function check_roles($roles_demand, $resource = "ALL") {
 
         if (preg_match("/\|\|/", $roles_demand)) {
             $or_split = preg_split("/\|\|/", $roles_demand);
@@ -206,7 +206,7 @@ class ACL {
         foreach ($or_split as $or_split_role) {
             $auth = false;
             if (!preg_match("/\&\&/", $or_split_role)) {
-                $auth = $this->demanding_role_check($or_split_role);
+                $auth = $this->demanding_role_check($or_split_role, $resource);
                 $this->debug ? $this->debug->log("ACL 1 \"$or_split_role\" result->$auth", "SimpleACL", "DEBUG") : false;
                 if ($auth) {
                     return true;
@@ -215,7 +215,7 @@ class ACL {
                 $and_split = preg_split("/\&\&/", $or_split_role);
 
                 foreach ($and_split as $and_split_role) {
-                    $auth = $this->demanding_role_check ($and_split_role);
+                    $auth = $this->demanding_role_check($and_split_role, $resource);
                     $this->debug ? $this->debug->log("ACL 3 -> \"$and_split_role\" -> $auth  ", "SimpleACL", "DEBUG") : false;
                     if ($auth == false) {
                         $this->debug ? $this->debug->log("ACL 4 -> \"$and_split_role\" -> Break", "SimpleACL", "DEBUG") : false;
@@ -232,7 +232,7 @@ class ACL {
         return false;
     }
 
-    private function demanding_role_check($role) {
+    private function demanding_role_check($role, $resource = "ALL") {
         $this->debug ? $this->debug->log("ACL Checking -> $role", "SimpleACL", "DEBUG") : false;
         list($role_group, $role_type) = preg_split("/_/", $role);
 
@@ -241,11 +241,11 @@ class ACL {
         }
 
         foreach ($this->user_roles as $user_role_id) {
-            if (!$user_role_data = $this->getRoleByID($user_role_id)) {
+            if (!$user_role_data = $this->getRoleByRoleID($user_role_id)) {
                 return false;
             }
             if (($user_role_data['role_id'] == $asked_role['role_id']) &&
-                    ($user_role_data['resource'] == $resource) //Used later
+                    ( ($user_role_data['resource'] == $resource || $user_role_data['resource'] == "ALL") )
             ) {
                 $this->debug ? $this->debug->log("Exact role found", "SimpleACL", "DEBUG") : false;
                 return true; //its the exact role
@@ -253,7 +253,7 @@ class ACL {
             //Look if role its upper level
             if (( $asked_role['role_group'] == $user_role_data['role_group'] ) &&
                     ( $asked_role['level'] > $user_role_data['level'] ) &&
-                    ( $user_role_data['resource'] == $resource) //Used later
+                      ( ($user_role_data['resource'] == $resource || $user_role_data['resource'] == "ALL") )
             ) {
                 $this->debug ? $this->debug->log("Role up found", "SimpleACL", "DEBUG") : false;
                 return true;
