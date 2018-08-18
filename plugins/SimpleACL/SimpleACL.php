@@ -17,10 +17,10 @@ function SimpleACL_install() {
 
     require_once "db/SimpleACL.db.php";
     foreach ($simpleacl_database_install as $query) {
-        $db->query($query);
+        $r = $db->query($query);
     }
 
-    return true;
+    return ($r) ? true : false;
 }
 
 function SimpleACL_preInstall() {
@@ -32,7 +32,7 @@ function SimpleACL_preInstall_info() {
 }
 
 function SimpleACL_upgrade($version, $from_version) {
-    return false;
+    return true;
 }
 
 function SimpleACL_uninstall() {
@@ -41,8 +41,9 @@ function SimpleACL_uninstall() {
     $db->silent(true);
     require_once "db/SimpleACL.db.php";
     foreach ($simpleacl_database_uninstall as $query) {
-        $db->query($query);
+        $r = $db->query($query);
     }
     $db->silent(false);
-    return true;
+
+    return ($r) ? true : false;
 }
