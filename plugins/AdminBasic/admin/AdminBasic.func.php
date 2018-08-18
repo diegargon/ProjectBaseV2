@@ -99,9 +99,9 @@ function admin_general_content($params) {
             }
         }
         if (isset($_POST['btnCleanFailed'])) {
-            //$db->silent(true);
+            $db->silent(true);
             $plugins->uninstall($plugin_id, 1);
-            //$db->silent(false);
+            $db->silent(false);
         }        
         if (isset($_POST['btnEnable'])) {
             $plugins->setEnable($plugin_id, 1);

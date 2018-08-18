@@ -8,6 +8,8 @@
 function tplBasic_init() {
     global $tpl, $cfg;
 
+    define ('TPL', TRUE );
+    
     if ((defined('DEBUG') && $cfg['tplbasic_debug'])) {
         global $debug;
         $debug->log("tplBasic initialized", "tplBasic", "INFO");

@@ -7,7 +7,8 @@
 
 function Multilang_init() {
     global $cfg, $ml, $debug;
-
+    
+    define ('MULTILANG', TRUE);
     defined('DEBUG') && $cfg['multilang_debug'] ? $debug->log("Multilang Inititated", "MULTILANG", "DEBUG") : null;
 
     $ml = new Multilang($cfg);

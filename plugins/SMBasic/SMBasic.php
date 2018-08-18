@@ -9,7 +9,9 @@
 
 function SMBasic_Init() {
     global $sm, $cfg, $debug;
-
+    
+    define ('SESSIONS', TRUE);
+    
     (defined('DEBUG') && $cfg['smbasic_debug']) ? $debug->log("SMBasic initialice", "SMBasic", "INFO") : null;
 
     !isset($sm) ? $sm = new SessionManager : null;

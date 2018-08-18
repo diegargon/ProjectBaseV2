@@ -6,7 +6,9 @@
 !defined('IN_WEB') ? exit : true;
 
 function SimpleACL_init() {
+    define ('ACL', TRUE);
     global $acl_auth, $debug, $cfg;
+    
     defined(DEBUG) && $cfg['simpleacl_debug'] ? $debug->log("SimpleACL Inititated", "SimpleACL", "INFO") : false;
 
     empty($acl_auth) ? $acl_auth = new ACL : false;
