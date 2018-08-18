@@ -307,8 +307,6 @@ class Plugins {
                     //exist but already starter
                     return false;
                 }
-            } else {
-                echo "---------------------<br>";
             }
         }
         $this->debug ? $debug->log("Plugin $pluginname not exist", "PLUGINS", "ERROR") : null;
