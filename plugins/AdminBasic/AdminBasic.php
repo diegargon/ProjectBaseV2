@@ -8,12 +8,11 @@
 function AdminBasic_init() {
     global $sm;
 
-    define ('ADMIN', TRUE);
+    define('ADMIN', TRUE);
     $user = $sm->getSessionUser();
     if ($user) {
         global $acl_auth;
         if ((defined('ACL') && $acl_auth->acl_ask("admin_all")) || (!defined('ACL') && $user['isAdmin'])) {
-            //  $tpl->addto_tplvar("HEADER_MENU_ELEMENT", $tpl->getTPL_file("AdminBasic", "admin_menu_opt"));
             register_action("header_menu_element", "AdminBasic_menu_opt");
         }
     }

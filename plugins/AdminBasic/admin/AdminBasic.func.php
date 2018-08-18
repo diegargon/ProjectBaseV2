@@ -7,6 +7,25 @@
  */
 !defined('IN_WEB') ? exit : true;
 
+function admin_auth($tokens, $resource = "ALL") {
+    global $sm, $acl_auth;
+
+    $user = $sm->getSessionUser();
+
+    if ($user && (
+            (!defined('ACL') && $user['isAdmin'] == 1) ||
+            (defined('ACL') && $acl_auth->acl_ask($tokens, $resource))
+            )
+    ) {
+        return true;
+    }
+    $msgbox['msg'] = "L_E_NOACCESS";
+    $msgbox['backlink'] = $sm->getPage("login");
+    $msgbox['backlink_title'] = "L_LOGIN";
+    do_action("message_page", $msgbox);
+    return false;
+}
+
 function admin_load_plugin_files() {
     //Load administration side from all register plugins (all enabled) and init the admin_init function.
 
@@ -87,7 +106,9 @@ function admin_general_content($params) {
     $content = "";
 
     if (($_SERVER['REQUEST_METHOD'] === 'POST') && ($plugin_id = $filter->post_int("plugin_id")) != false) {
-
+        if (!admin_auth("admin_write", "ADMIN_PLUGINS")) {
+            return false;
+        }
         if (isset($_POST['btnInstall'])) {
             if ($plugins->install($plugin_id) == false) {
                 die("Plugin $plugin_id install failed");
@@ -102,7 +123,7 @@ function admin_general_content($params) {
             $db->silent(true);
             $plugins->uninstall($plugin_id, 1);
             $db->silent(false);
-        }        
+        }
         if (isset($_POST['btnEnable'])) {
             $plugins->setEnable($plugin_id, 1);
         }
@@ -123,30 +144,44 @@ function admin_general_content($params) {
         }
     }
 
-    if (isset($_POST['btnReScan'])) {
-        $plugins->reScanToDB();
-    }
+    if (($_SERVER['REQUEST_METHOD'] === 'POST') && $plugin_id == false) {
 
-    if (isset($_POST['btnDebugChange'])) {
-        $q = $db->search("config", "cfg_key", "_debug");
-        while ($result = $db->fetch($q)) {
-            $checked_value = 0;
-            if (isset($_POST['debug_list'])) { //avoid warning if uncheck all
-                foreach ($_POST['debug_list'] as $checked) {
-                    if ($result['cfg_id'] == $checked) {
-                        $checked_value = 1;
+        if (isset($_POST['btnReScan'])) {
+            if (!admin_auth("admin_write", "ADMIN_PLUGINS")) {
+                return false;
+            }
+            $plugins->reScanToDB();
+        }
+
+
+        if (isset($_POST['btnDebugChange'])) {
+            if (!admin_auth("admin_write", "ADMIN_DEBUG")) {
+                return false;
+            }
+
+            $q = $db->search("config", "cfg_key", "_debug");
+            while ($result = $db->fetch($q)) {
+                $checked_value = 0;
+                if (isset($_POST['debug_list'])) { //avoid warning if uncheck all
+                    foreach ($_POST['debug_list'] as $checked) {
+                        if ($result['cfg_id'] == $checked) {
+                            $checked_value = 1;
+                        }
                     }
                 }
+                $db->update("config", ["cfg_value" => $checked_value], ["cfg_id" => $result['cfg_id']]);
             }
-            $db->update("config", ["cfg_value" => $checked_value], ["cfg_id" => $result['cfg_id']]);
         }
     }
+
 
     if ($params['opt'] == 1) {
         $content = "<h1>" . $LNG['L_PL_STATE'] . "</h1>";
         $content .= Admin_GetPluginState("AdminBasic");
     } else if ($params['opt'] == 2) {
-
+        if (!admin_auth("admin_read", "ADMIN_PLUGINS")) {
+            return false;
+        }
 
         ($_SERVER['REQUEST_METHOD'] === 'POST') ? $force_reload = 1 : $force_reload = 0;
 
@@ -229,8 +264,14 @@ function admin_general_content($params) {
          * 
          */
     } else if ($params['opt'] == 4) {
+        if (!admin_auth("admin_read", "ADMIN_CONFIG_CORE")) {
+            return false;
+        }
         $content .= AdminPluginConfig("CORE");
     } else if ($params['opt'] == 10) {
+        if (!admin_auth("admin_read", "ADMIN_PHPINFO")) {
+            return false;
+        }
         $content .= "<div style='width:100%'>" . get_phpinfo() . "</div>";
     }
     return $content;
@@ -239,9 +280,14 @@ function admin_general_content($params) {
 function AdminPluginConfig($plugin) {
     global $db, $filter;
 
+
     if (($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSubmitConfig']))) {
+
+        if (!admin_auth("admin_write", "ADMIN_CONFIG_" . $plugin)) {
+            return false;
+        }
         $cfg_id = $filter->post_int("configID", 8, 1);
-        //WARN: UNFILTERING, UNCHECKING
+        //TODO: UNFILTERING, UNCHECKING
         $value = $_POST['cfg_value'];
         if (!empty($cfg_id) && ($cfg_id != false) && ($value !== false)) {
             $db->update("config", ["cfg_value" => $value], ["cfg_id" => $cfg_id], "LIMIT 1");

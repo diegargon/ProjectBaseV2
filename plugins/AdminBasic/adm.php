@@ -9,23 +9,11 @@
 
 require_once("admin/AdminBasic.func.php");
 
-$user = $sm->getSessionUser();
-
-if (!$user || (defined('ACL') && !$acl_auth->acl_ask("admin_read"))) {
-    $msgbox['msg'] = "L_E_NOACCESS";
-    $msgbox['backlink'] = $sm->getPage("login");
-    $msgbox['backlink_title'] = "L_LOGIN";
-    do_action("message_page", $msgbox);
+if (!admin_auth("admin_read", "ADMIN_GENERAL")) {
     return false;
 }
 
-if (!defined('ACL') && $user['isAdmin'] != 1) {
-    $msgbox['msg'] = "L_E_NOACCESS";
-    $msgbox['backlink'] = $sm->getPage("login");
-    $msgbox['backlink_title'] = "L_LOGIN";
-    do_action("message_page", $msgbox);
-    return false;
-}
+$tpl->getCSS_filePath("AdminBasic");
 
 admin_load_plugin_files();
 
@@ -43,8 +31,8 @@ if ($cfg['FRIENDLY_URL']) {
     $params['url'] = "/{$cfg['CON_FILE']}?lang={$cfg['WEB_LANG']}&module=AdminBasic&page=adm";
 }
 
+
 $tpl->addto_tplvar("ADMIN_TAB_ACTIVE", $params);
-$tpl->getCSS_filePath("AdminBasic");
 $tpl->addto_tplvar("ADD_ADMIN_MENU", do_action("add_admin_menu", $params));
 $tpl->addto_tplvar("ADD_TOP_MENU", do_action("add_top_menu"));
 $tpl->addto_tplvar("ADD_BOTTOM_MENU", do_action("add_bottom_menu"));
