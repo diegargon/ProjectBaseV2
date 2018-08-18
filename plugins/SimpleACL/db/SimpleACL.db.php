@@ -27,12 +27,12 @@ $simpleacl_database_install [] = "INSERT INTO `" . DB_PREFIX . "acl_roles` (`lev
 (2, 'admin', 'read', 'L_ADMIN_READ_DESC', 'L_ADMIN_READ', 'ALL'),
 (3, 'admin', 'write', 'L_ADMIN_WRITE_DESC', 'L_ADMIN_WRITE', 'ALL');"
 ;
-        
+
 $simpleacl_database_install [] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SimpleACL', 'simpleacl_debug', '0');"
 ;
 /* USERS */
 
-$simpleacl_database_install [] = "ALTER TABLE `" . DB_PREFIX ."users` ADD `roles` VARCHAR(64) DEFAULT NULL";
+$simpleacl_database_install [] = "ALTER TABLE `" . DB_PREFIX . "users` ADD `roles` VARCHAR(64) DEFAULT NULL";
 $simpleacl_database_install [] = "UPDATE `" . DB_PREFIX . "users` SET roles = '1' WHERE isAdmin = '1'";
 
 /* UNINSTALL */

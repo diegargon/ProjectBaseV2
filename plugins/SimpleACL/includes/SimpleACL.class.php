@@ -152,35 +152,129 @@ class ACL {
         return $LNG['L_ACL_E_ID'];
     }
 
+    function acl_ask($roles_demand, $resource = null) {
+        global $sm;
+
+        $this->debug ? $this->debug->log("ACL_ASK-> $roles_demand", "SimpleACL", "DEBUG") : false;
+
+        $this->debug ? $this->debug->log("ACL_ASK-> $roles_demand", "SimpleACL", "DEBUG") : false;
+        $user = $sm->getSessionUser();
+        if (!$user) {
+            return false;
+        }
+
+        if (empty($this->roles) || empty($this->user_roles)) {
+            $this->SetRoles();
+            $this->SetUserRoles();
+        }
+        if ($this->roles == false) {
+            return false;
+        }
+
+        if ($this->user_roles == false) {
+            return false;
+        }
+        //remove all white spaces
+        $roles_demand = preg_replace('/\s+/', '', $roles_demand);
+
+        return $this->check_roles($roles_demand);
+    }
+
+    private function SetUserRoles() {
+        global $sm;
+
+        if (!($user = $sm->getSessionUser())) {
+            return ($this->user_roles = false);
+        }
+
+        $this->user_roles = $this->getUserRolesByUID($user['uid']);
+        if (!(count($this->user_roles) > 0)) {
+            return ($this->user_roles = false);
+        }
+
+        return true;
+    }
+
+    private function check_roles($roles_demand) {
+
+        if (preg_match("/\|\|/", $roles_demand)) {
+            $or_split = preg_split("/\|\|/", $roles_demand);
+        } else {
+            $or_split[] = $roles_demand;
+        }
+
+        foreach ($or_split as $or_split_role) {
+            $auth = false;
+            if (!preg_match("/\&\&/", $or_split_role)) {
+                $auth = $this->demanding_role_check($or_split_role);
+                $this->debug ? $this->debug->log("ACL 1 \"$or_split_role\" result->$auth", "SimpleACL", "DEBUG") : false;
+                if ($auth) {
+                    return true;
+                } //first OR true, no need check the others
+            } else { //&& check all except if any its false
+                $and_split = preg_split("/\&\&/", $or_split_role);
+
+                foreach ($and_split as $and_split_role) {
+                    $auth = $this->demanding_role_check ($and_split_role);
+                    $this->debug ? $this->debug->log("ACL 3 -> \"$and_split_role\" -> $auth  ", "SimpleACL", "DEBUG") : false;
+                    if ($auth == false) {
+                        $this->debug ? $this->debug->log("ACL 4 -> \"$and_split_role\" -> Break", "SimpleACL", "DEBUG") : false;
+                        break;
+                    } //if any && role its false, not check the next && roles
+                }
+                if ($auth == true) {
+                    $this->debug ? $this->debug->log("ACL result->true", "SimpleACL", "DEBUG") : false;
+                    return true;
+                } //if auth = true at this point, this group of && roles are all true
+            }
+        }
+        $this->debug ? $this->debug->log("ACL F result->false", "SimpleACL", "DEBUG") : false;
+        return false;
+    }
+
+    private function demanding_role_check($role) {
+        $this->debug ? $this->debug->log("ACL Checking -> $role", "SimpleACL", "DEBUG") : false;
+        list($role_group, $role_type) = preg_split("/_/", $role);
+
+        if (!$asked_role = $this->getRoleDataByName($role_group, $role_type)) {
+            return false;
+        }
+
+        foreach ($this->user_roles as $user_role_id) {
+            if (!$user_role_data = $this->getRoleByID($user_role_id)) {
+                return false;
+            }
+            if (($user_role_data['role_id'] == $asked_role['role_id']) &&
+                    ($user_role_data['resource'] == $resource) //Used later
+            ) {
+                $this->debug ? $this->debug->log("Exact role found", "SimpleACL", "DEBUG") : false;
+                return true; //its the exact role
+            }
+            //Look if role its upper level
+            if (( $asked_role['role_group'] == $user_role_data['role_group'] ) &&
+                    ( $asked_role['level'] > $user_role_data['level'] ) &&
+                    ( $user_role_data['resource'] == $resource) //Used later
+            ) {
+                $this->debug ? $this->debug->log("Role up found", "SimpleACL", "DEBUG") : false;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private function getRoleDataByName($role_group, $role_type) {
+        foreach ($this->roles as $rol) {
+            if (($rol['role_group'] == $role_group) && ($rol['role_type'] == $role_type)) {
+                return $rol;
+            }
+        }
+        return false;
+    }
+
     /*
 
-      function acl_ask($roles_demand, $resource = null) {
-      global $sm;
 
-      $this->debug ? $this->debug->log("ACL_ASK-> $roles_demand", "SimpleACL", "DEBUG") : false;
 
-      $this->debug ? $this->debug->log("ACL_ASK-> $roles_demand", "SimpleACL", "DEBUG") : false;
-      $user = $sm->getSessionUser();
-      if (!$user) {
-      return false;
-      }
-
-      if (empty($this->roles) || empty($this->user_roles)) {
-      $this->SetRoles();
-      $this->SetUserRoles();
-      }
-      if ($this->roles == false) {
-      return false;
-      }
-
-      if ($this->user_roles == false) { //No user_roles in DB for that user
-      return false;
-      }
-      //remove all white spaces since in next step when split not want check agains "admin_all " instead of "admin_all"
-      $roles_demand = preg_replace('/\s+/', '', $roles_demand);
-
-      return $this->check_demanding_roles($roles_demand);
-      }
 
       function get_roles_select($acl_group = null, $selected = null) {
       global $LNG, $db;
@@ -205,61 +299,10 @@ class ACL {
       return $select;
       }
 
-      private function checkUserPerms($role_group, $role_type, $resource = "ALL") {
-      if (!$asked_role = $this->getRoleDataByName($role_group, $role_type)) {
-      return false;
-      }
-
-      foreach ($this->user_roles as $user_role) {
-      if (!$user_role_data = $this->getRoleByID($user_role['role_id'])) {
-      return false;
-      }
-      if (($user_role_data['role_id'] == $asked_role['role_id']) &&
-      ($user_role_data['resource'] == $resource) //Used later
-      ) {
-      $this->debug ? $this->debug->log("Exact role found", "SimpleACL", "DEBUG") : false;
-      return true; //its the exact role
-      }
-      //Look if role its upper level
-      if (( $asked_role['role_group'] == $user_role_data['role_group'] ) &&
-      ( $asked_role['level'] > $user_role_data['level'] ) &&
-      ( $user_role_data['resource'] == $resource) //Used later
-      ) {
-      $this->debug ? $this->debug->log("Role up found", "SimpleACL", "DEBUG") : false;
-      return true;
-      }
-      }
-      return false;
-      }
-
-      private function getRoleDataByName($role_group, $role_type) {
-      foreach ($this->roles as $rol) {
-      if (($rol['role_group'] == $role_group) && ($rol['role_type'] == $role_type)) {
-      return $rol;
-      }
-      }
-      return false;
-      }
 
 
 
-      private function SetUserRoles() {
-      global $db, $sm;
 
-      if (!($user = $sm->getSessionUser())) {
-      return false;
-      }
-
-      $query = $db->select_all("acl_users", array("uid" => "{$user['uid']}"));
-      if ($db->num_rows($query) > 0) {
-      while ($row = $db->fetch($query)) {
-      $this->user_roles[] = $row;
-      }
-      } else {
-      $this->user_roles = false;
-      }
-      $db->free($query);
-      }
 
       private function get_roles_query($acl_group = null) {
       global $db;
@@ -273,48 +316,6 @@ class ACL {
       return $query;
       }
 
-      private function check_demanding_roles($roles_demand) {
 
-      if (preg_match("/\|\|/", $roles_demand)) {
-      $or_split = preg_split("/\|\|/", $roles_demand);
-      } else {
-      $or_split[] = $roles_demand;
-      }
-
-      foreach ($or_split as $or_split_role) {
-      $auth = false;
-      if (!preg_match("/\&\&/", $or_split_role)) {
-      $auth = $this->demanding_role_process($or_split_role);
-      $this->debug ? $this->debug->log("ACL 1 \"$or_split_role\" result->$auth", "SimpleACL", "DEBUG") : false;
-      if ($auth) {
-      return true;
-      } //first OR true, no need check the others
-      } else { //&& check all except if any its false
-      $and_split = preg_split("/\&\&/", $or_split_role);
-
-      foreach ($and_split as $and_split_role) {
-      $auth = $this->demanding_role_process($and_split_role);
-      $this->debug ? $this->debug->log("ACL 3 -> \"$and_split_role\" -> $auth  ", "SimpleACL", "DEBUG") : false;
-      if ($auth == false) {
-      $this->debug ? $this->debug->log("ACL 4 -> \"$and_split_role\" -> Break", "SimpleACL", "DEBUG") : false;
-      break;
-      } //if any && role its false, not check the next && roles
-      }
-      if ($auth == true) {
-      $this->debug ? $this->debug->log("ACL result->true", "SimpleACL", "DEBUG") : false;
-      return true;
-      } //if auth = true at this point, this group of && roles are all true
-      }
-      }
-      $this->debug ? $this->debug->log("ACL F result->false", "SimpleACL", "DEBUG") : false;
-      return false;
-      }
-
-      private function demanding_role_process($role) {
-      $this->debug ? $this->debug->log("ACL Checking -> $role", "SimpleACL", "DEBUG") : false;
-      list($role_group, $role_type) = preg_split("/_/", $role);
-
-      return !$this->checkUserPerms($role_group, $role_type) ? false : true;
-      }
      */
 }
