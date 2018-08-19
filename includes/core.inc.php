@@ -120,10 +120,16 @@ if (empty($module) || empty($page)) {
 
 (defined('DEBUG') && $cfg['smbasic_debug']) ? setSessionDebugDetails() : null;
 
-$q_history = $db->get_query_history();
-foreach ($q_history as $key => $value) {
-    $debug->log($value, "MYSQL");
+if (defined('DEBUG')) {
+    $q_history = $db->get_query_history();
+    foreach ($q_history as $key => $value) {
+        $debug->log($value, "MYSQL");
+    }
+
+    $tpl->addto_tplvar("ADD_TO_FOOTER", $debug->print_debug());
+    $tpl->addto_tplvar("ADD_TO_FOOTER", formatBytes(memory_get_usage()));
+    $tpl->addto_tplvar("ADD_TO_FOOTER", formatBytes(memory_get_peak_usage()));
 }
-$tpl->addto_tplvar("ADD_TO_FOOTER", $debug->print_debug());
 $tpl->build_page();
+
 do_action("finalize");
