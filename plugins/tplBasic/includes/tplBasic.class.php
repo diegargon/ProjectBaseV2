@@ -293,6 +293,7 @@ class TPL {
 
         $tpldata = $this->get_tpldata();
         ob_start();
+        //ob_start("ob_gzhandler");
         include ($path);
         $content = ob_get_contents();
         ob_end_clean();
