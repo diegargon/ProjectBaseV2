@@ -301,7 +301,7 @@ class Plugins {
     function express_start($pluginname) {
         global $debug;
 
-        $this->debug ? $debug->log("--Express order to start $pluginname", "PLUGINS", "INFO") : null;
+        $this->debug ? $debug->log("Express order to start $pluginname", "PLUGINS", "INFO") : null;
 
         foreach ($this->enabled_plugins as $plugin) {
             if ($plugin['plugin_name'] == $pluginname) {
