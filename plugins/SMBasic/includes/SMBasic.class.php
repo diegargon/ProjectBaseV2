@@ -303,13 +303,23 @@ class SessionManager {
     }
 
     function getPage($page) {
-        if ($page == "login")  { return $this->file_path . "login"; }
-        if ($page == "logout") { return $this->file_path . "logout"; }
-        if ($page == "register") { return $this->file_path . "register"; }
-        if ($page == "profile") { return $this->file_path . "profile"; }
-        if ($page == "terms") { return $this->file_path . "terms"; }
-        
+        if ($page == "login") {
+            return $this->file_path . "login";
+        }
+        if ($page == "logout") {
+            return $this->file_path . "logout";
+        }
+        if ($page == "register") {
+            return $this->file_path . "register";
+        }
+        if ($page == "profile") {
+            return $this->file_path . "profile";
+        }
+        if ($page == "terms") {
+            return $this->file_path . "terms";
+        }
     }
+
     private function setConfig() {
         global $cfg;
 
