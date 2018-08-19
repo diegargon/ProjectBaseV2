@@ -288,12 +288,15 @@ class TPL {
 
     function codetovar($path, $data = null) {
         //global $cfg, $LNG, $tpl;
-        global $LNG, $tUtil;
+        global $LNG, $tUtil, $debug;
         $cfg = & $this->cfg;
 
+        $this->debug ? $debug->log("TPL code to var $path, gzip its {$cfg['tplbasic_gzip']}", "tplBasic", "DEBUG") : null;
+        
         $tpldata = $this->get_tpldata();
-        ob_start();
-        //ob_start("ob_gzhandler");
+        
+        isset($cfg['tplbasic_gzip']) && $cfg['tplbasic_gzip'] ? ob_start("ob_gzhandler") : ob_start();
+
         include ($path);
         $content = ob_get_contents();
         ob_end_clean();
