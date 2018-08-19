@@ -9,13 +9,13 @@
 
 class ACL {
 
-    public $debug;
+    private $debug;
     private $roles;
     private $user_roles;
 
     function __construct() {
         global $cfg, $debug;
-        (defined(DEBUG) && $cfg['simpleacl_debug']) ? $this->debug = & $debug : $this->debug = false;
+        defined('DEBUG') && $cfg['simpleacl_debug'] ? $this->debug = & $debug : $this->debug = false;
     }
 
     function getRoles() {
@@ -111,10 +111,8 @@ class ACL {
                 if ($actual_role_id != $role_id) {
                     if ($first) {
                         $first = 0;
-                        echo "ENTRA 1";
                         $new_roles .= $actual_role_id;
                     } else {
-                        echo "ENTRA 2";
                         $new_roles .= "," . $actual_role_id;
                     }
                 } else {
@@ -252,8 +250,8 @@ class ACL {
             }
             //Look if role its upper level
             if (( $asked_role['role_group'] == $user_role_data['role_group'] ) &&
-                    ( $asked_role['level'] < $user_role_data['level'] ) &&
-                      ( ($user_role_data['resource'] == $resource || $user_role_data['resource'] == "ALL") )
+                    ( $asked_role['level'] >= $user_role_data['level'] ) &&
+                    ( ($user_role_data['resource'] == $resource || $user_role_data['resource'] == "ALL") )
             ) {
                 $this->debug ? $this->debug->log("Role up found", "SimpleACL", "DEBUG") : false;
                 return true;

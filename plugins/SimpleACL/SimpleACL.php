@@ -7,10 +7,8 @@
 
 function SimpleACL_init() {
     define ('ACL', TRUE);
-    global $acl_auth, $debug, $cfg;
+    global $acl_auth;
     
-    defined(DEBUG) && $cfg['simpleacl_debug'] ? $debug->log("SimpleACL Inititated", "SimpleACL", "INFO") : false;
-
     empty($acl_auth) ? $acl_auth = new ACL : false;
 }
 
