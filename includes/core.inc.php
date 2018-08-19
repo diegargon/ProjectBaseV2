@@ -118,9 +118,12 @@ if (empty($module) || empty($page)) {
     }
 }
 
-(defined('DEBUG') && $cfg['smbasic_debug']) ? setSessionDebugDetails() : null;
+
 
 if (defined('DEBUG')) {
+    
+    ($cfg['smbasic_debug']) ? setSessionDebugDetails() : null;
+    
     $q_history = $db->get_query_history();
     foreach ($q_history as $key => $value) {
         $debug->log($value, "MYSQL");
