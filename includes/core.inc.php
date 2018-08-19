@@ -130,8 +130,8 @@ if (defined('DEBUG')) {
     }
 
     $tpl->addto_tplvar("ADD_TO_FOOTER", $debug->print_debug());
-    $tpl->addto_tplvar("ADD_TO_FOOTER", formatBytes(memory_get_usage()));
-    $tpl->addto_tplvar("ADD_TO_FOOTER", formatBytes(memory_get_peak_usage()));
+    $tpl->addto_tplvar("ADD_TO_FOOTER",  "Memory usage:" . formatBytes(memory_get_usage()) ."<br/>");
+    $tpl->addto_tplvar("ADD_TO_FOOTER", "Memory peak usage:" . formatBytes(memory_get_peak_usage()). "<br/>");
 }
 $tpl->build_page();
 
