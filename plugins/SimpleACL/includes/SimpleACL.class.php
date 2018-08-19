@@ -252,7 +252,7 @@ class ACL {
             }
             //Look if role its upper level
             if (( $asked_role['role_group'] == $user_role_data['role_group'] ) &&
-                    ( $asked_role['level'] > $user_role_data['level'] ) &&
+                    ( $asked_role['level'] < $user_role_data['level'] ) &&
                       ( ($user_role_data['resource'] == $resource || $user_role_data['resource'] == "ALL") )
             ) {
                 $this->debug ? $this->debug->log("Role up found", "SimpleACL", "DEBUG") : false;
