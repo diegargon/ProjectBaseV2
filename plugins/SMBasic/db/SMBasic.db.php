@@ -37,17 +37,17 @@ ALTER TABLE `" . DB_PREFIX . "sessions`
 
 $smbasic_database[] = "
 CREATE TABLE `" . DB_PREFIX . "users` (
-  `uid` int(32) NOT NULL,
+  `uid` int(16) NOT NULL,
   `username` varchar(32) NOT NULL,
-  `password` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `email` varchar(64) NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `email` varchar(100) NOT NULL,
   `regdate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `active` int(12) NOT NULL DEFAULT '0',
   `disable` tinyint(4) NOT NULL DEFAULT '0',
   `isAdmin` tinyint(1) NOT NULL DEFAULT '0',
   `last_login` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `reset` int(11) DEFAULT NULL,
-  `avatar` varchar(256) DEFAULT NULL,
+  `avatar` varchar(255) DEFAULT NULL,
   `tos` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . ";
 ";
