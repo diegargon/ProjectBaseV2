@@ -9,3 +9,5 @@ $LNG['L_HOME'] = "Inicio";
 $LNG['L_E_ERROR'] = "Error";
 $LNG['L_BACK'] = "Volver";
 $LNG['L_E_PLUGPAGE_NOEXISTS'] =  "Modulo o pagina no existe";
+$LNG['L_DELETE'] = "Eliminar";
+$LNG['L_ENVIAR'] = "Enviar";
