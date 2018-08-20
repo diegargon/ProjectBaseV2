@@ -28,10 +28,10 @@ function SimpleACL_AdminMenu($params) {
 function SimpleACL_AdminAside($params) {
     global $LNG;
 
-    return "<li><a href='admin&admtab=" . $params['admtab'] . "&opt=1'>" . $LNG['L_PL_STATE'] . "</a></li>\n" .
-            "<li><a href='admin&admtab=" . $params['admtab'] . "&opt=2'>" . $LNG['L_ACL_ROLES'] . "</a></li>\n" .
-            "<li><a href='admin&admtab=" . $params['admtab'] . "&opt=3'>" . $LNG['L_ACL_USER_ROLES'] . "</a></li>\n" .
-            "<li><a href='admin&admtab=" . $params['admtab'] . "&opt=4'>" . $LNG['L_PL_CONFIG'] . "</a></li>\n";
+    return "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=1'>" . $LNG['L_PL_STATE'] . "</a></li>\n" .
+            "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=2'>" . $LNG['L_ACL_ROLES'] . "</a></li>\n" .
+            "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=3'>" . $LNG['L_ACL_USER_ROLES'] . "</a></li>\n" .
+            "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=4'>" . $LNG['L_PL_CONFIG'] . "</a></li>\n";
 }
 
 function SimpleACL_AdminContent($params) {
