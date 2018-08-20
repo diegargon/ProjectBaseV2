@@ -8,8 +8,6 @@
 function ExampleTemplate_init() {  
 }
 
-function ExampleTemplate_AdminInit() {}
-
 function ExampleTemplate_install() {
     global $db;
     require_once "db/ExampleTemplate.db.php";
