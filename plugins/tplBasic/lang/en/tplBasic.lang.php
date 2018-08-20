@@ -9,3 +9,5 @@ $LNG['L_HOME'] = "Home";
 $LNG['L_E_ERROR'] = "Error";
 $LNG['L_BACK'] = "Back to home";
 $LNG['L_E_PLUGPAGE_NOEXISTS'] = "Plugin or page not exists";
+$LNG['L_DELETE'] = "Delete";
+$LNG['L_ENVIAR'] = "Send";
