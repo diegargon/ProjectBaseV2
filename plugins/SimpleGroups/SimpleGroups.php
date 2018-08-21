@@ -26,13 +26,21 @@ function SimpleGroups_install() {
     $admin_grp_id = $db->insert_id();
 
     if ($r) {
-        $r = $db->query($simplegroups_database_install_insert_groups);
+        $r = $db->query($simplegroups_database_install_registered_groups);
     } else {
         return false;
     }
-    
+    $registered_grp_id = $db->insert_id();
+
     if ($r) {
-        $db->update("users", ['groups' => $admin_grp_id], ['isAdmin' => 1]);
+        $r = $db->query($simplegroups_database_install_other_groups);
+    } else {
+        return false;
+    }
+
+    if ($r) {
+        $db->update("users", ['groups' => $admin_grp_id . "," . $registered_grp_id], ['isAdmin' => 1]);
+        $db->update("users", ['groups' => $registered_grp_id], ['isAdmin' != 1]);
     }
     return ($r) ? true : false;
 }

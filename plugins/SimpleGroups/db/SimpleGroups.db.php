@@ -28,8 +28,11 @@ $simplegroups_database_install_insert_admin_group = "INSERT INTO `" . DB_PREFIX 
 ('L_ADMINISTRATOR', 'L_ADMIN_DESC', 'USER', 'GROUPS')
 ";
 
-$simplegroups_database_install_insert_groups = "INSERT INTO `" . DB_PREFIX . "groups` (`group_name`, `group_desc`, `group_type`, `plugin`) VALUES
-('L_REGISTER_USERS', 'L_REGISTER_DESC', 'USER', 'GROUPS'),
+$simplegroups_database_install_insert_registerered_group = "INSERT INTO `" . DB_PREFIX . "groups` (`group_name`, `group_desc`, `group_type`, `plugin`) VALUES
+('L_REGISTER_USERS', 'L_REGISTER_DESC', 'USER', 'GROUPS')
+";
+
+$simplegroups_database_install_other_groups = "INSERT INTO `" . DB_PREFIX . "groups` (`group_name`, `group_desc`, `group_type`, `plugin`) VALUES
 ('L_ANONYMOUS', 'L_ANONYMOUS_DESC', 'USER', 'GROUPS')
 ";
 
