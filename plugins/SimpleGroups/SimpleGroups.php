@@ -26,7 +26,7 @@ function SimpleGroups_install() {
     $admin_grp_id = $db->insert_id();
 
     if ($r) {
-        $r = $db->query($simplegroups_database_install_registered_groups);
+        $r = $db->query($simplegroups_database_install_insert_registered_group );
     } else {
         return false;
     }
