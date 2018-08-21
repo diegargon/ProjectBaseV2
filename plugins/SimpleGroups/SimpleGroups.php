@@ -11,10 +11,6 @@ function SimpleGroups_init() {
     !isset($groups) ? $groups = new Groups() : false;
 }
 
-function SimpleGroups_AdminInit() {
-    
-}
-
 function SimpleGroups_install() {
     global $db;
     require_once "db/SimpleGroups.db.php";
@@ -24,12 +20,17 @@ function SimpleGroups_install() {
     //admin
     if ($r) {
         $r = $db->query($simplegroups_database_install_insert_admin_group);
+    } else {
+        return false;
     }
     $admin_grp_id = $db->insert_id();
 
     if ($r) {
-        $db->query($simplegroups_database_install_insert_groups);
+        $r = $db->query($simplegroups_database_install_insert_groups);
+    } else {
+        return false;
     }
+    
     if ($r) {
         $db->update("users", ['groups' => $admin_grp_id], ['isAdmin' => 1]);
     }
