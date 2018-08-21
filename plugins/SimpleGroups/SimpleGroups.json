@@ -17,6 +17,11 @@
             "max_version": 0.9
         },
         {
+            "name": "SQL",
+            "min_version": 0.2,
+            "max_version": 0.9
+        },        
+        {
             "name": "SESSIONS",
             "min_version": 0.2,
             "max_version": 0.9
