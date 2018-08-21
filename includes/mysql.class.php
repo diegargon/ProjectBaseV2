@@ -318,8 +318,8 @@ class Database {
             if (!is_array($value)) {
                 $q_where_fields[] = "$field = " . "'" . $value . "'";
             } else {
-                $q_where_fields[] = "$field {$value['operator']} '" . $value['value'] . "'";
-                //$q_where_fields[] = "$field {$value['operator']} " . $value['value']; CHANGE 100818
+                //$q_where_fields[] = "$field {$value['operator']} '" . $value['value'] . "'";
+                $q_where_fields[] = "$field {$value['operator']} " . $value['value']; //CHANGE 100818
             }
         }
         $query = implode(" $logic ", $q_where_fields);
