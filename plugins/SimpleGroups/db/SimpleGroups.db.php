@@ -5,6 +5,10 @@
  */
 
 
+/* CONFIG */
+$simplegroups_database_install [] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SimpleGroups', 'simplegroups_debug', '1');"
+;
+
 /* GROUPS */
 
 $simplegroups_database_install[] = "CREATE TABLE `" . DB_PREFIX . "groups` (
@@ -38,7 +42,7 @@ $simplegroups_database_install [] = "ALTER TABLE `" . DB_PREFIX . "users` ADD `g
 
 $simplegroups_database_uninstall[] = "DROP TABLE `" . DB_PREFIX . "groups`";
 $simplegroups_database_uninstall[] = "ALTER TABLE `" . DB_PREFIX . "users` DROP `groups`";
-
+$simplegroups_database_uninstall [] = "DELETE FROM `" . DB_PREFIX . "config` WHERE plugin = 'SimpleGroups'";
 
 
 
