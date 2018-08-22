@@ -10,260 +10,248 @@
 class ACL {
 
     private $debug;
-    private $roles;
-    private $user_roles;
+    private $user_permissions;
+    private $permissions;
 
     function __construct() {
         global $cfg, $debug;
         defined('DEBUG') && $cfg['simpleacl_debug'] ? $this->debug = & $debug : $this->debug = false;
+        $this->setPerms();
     }
 
-    function getRoles() {
-        (empty($this->roles)) ? $this->setRoles() : false;
+    function getPerms($force = 0) {
+        (empty($this->permissions) || $force) ? $this->setPerms() : false;
 
-        return $this->roles;
+        return $this->permissions;
     }
 
-    private function setRoles() {
+    private function setPerms() {
         global $db;
 
-        $query = $db->select_all("acl_roles", null, "ORDER BY role_group, level");
+        $query = $db->select_all("permissions", null, "ORDER BY perm_group, perm_level");
         if ($db->num_rows($query) > 0) {
             while ($row = $db->fetch($query)) {
-                $this->roles[] = $row;
+                $this->permissions[] = $row;
             }
         } else {
-            $this->roles = false;
+            $this->permissions = false;
         }
         $db->free($query);
     }
 
-    function getUserRolesByUID($uid) {
-        global $db, $sm;
+    function getUserPermsByUID($uid) {
+        global $groups;
 
-        $q = $db->select("users", "roles", ["uid" => "$uid"], "LIMIT 1");
+        $user_groups = $groups->getUserGroupsByUID($uid);
 
-        if ($db->num_rows($q) > 0) {
-            $row = $db->fetch($q);
-            if (empty($row['roles'])) {
-                return false;
-            } else {
-                $user_roles = explode(",", $row['roles']);
+        $user_perms = [];
+        if (count($user_groups > 0)) {
+            foreach ($user_groups as $user_group_id) { //Recorremos los grupos del usuario
+                foreach ($this->permissions as $this_perm) { //Recorremos los permisos
+                    $perm_groups_id = explode(",", $this_perm['groups']); //Cogemos los grupos a los que afecta el permiso
+                    foreach ($perm_groups_id as $perm_group_id) { //Si coincide el grupo del usuario con el grupo que afecta el permiso añadimos el permiso
+                        if ($perm_group_id == $user_group_id) {
+                            $user_perms[] = $this_perm['perm_id'];
+                            break;
+                        }
+                    }
+                }
             }
-        }
-
-        $db->free($q);
-        return $user_roles;
-    }
-
-    function getRoleByRoleID($role_id) {
-        empty($this->roles) ? $this->getRoles() : false;
-
-        foreach ($this->roles as $role) {
-            if (($role['role_id'] == $role_id)) {
-                return $role;
-            }
-        }
-        return false;
-    }
-
-    function newRole($role) {
-        global $LNG, $db;
-
-        if (empty($role['level']) || empty($role['group']) || empty($role['type']) || empty($role['name'])) {
-            return $msg = $LNG['L_ACL_E_EMPTY_NEWROLE'];
-        }
-
-        $insert_ary = array(
-            "level" => $role['level'],
-            "role_group" => $role['group'],
-            "role_type" => $role['type'],
-            "role_name" => $role['name'],
-            "role_description" => $db->escape_strip($role['description'])
-        );
-
-        $db->insert("acl_roles", $insert_ary);
-        return $LNG['L_ACL_ROLE_SUBMIT_SUCCESFUL'];
-    }
-
-    function deleteRole($role_id) {
-        global $db, $LNG;
-
-        if (!empty($role_id)) {
-            $db->delete("acl_roles", ["role_id" => "$role_id"], "LIMIT 1");
-            return $LNG['L_ACL_ROLE_DELETE_SUCCESFUL'];
         } else {
-            return $LNG['L_ACL_E_ID'];
+            $user_perms = false;
         }
+
+
+        return $user_perms;
     }
 
-    function addUserRole($uid, $role_id) {
-        global $db, $LNG;
+    function getGroupPerms($group_id) {
 
+        foreach ($this->permissions as $perm) {
+            $perm_groups_ids = explode(",", $perm['groups']);
 
+            foreach ($perm_groups_ids as $perm_group_id) {
+                if ($group_id == $perm_group_id) {
 
-        $actual_user_roles = $this->getUserRolesByUID($uid);
-        $new_roles = "";
-        $first = 1;
+                    $perm_groups[] = $perm;
+                }
+            }
+        }
+        return isset($perm_groups) ? $perm_groups : false;
+    }
 
-        if (count($actual_user_roles) > 0) {
-            foreach ($actual_user_roles as $actual_role_id) {
-                if ($actual_role_id != $role_id) {
-                    if ($first) {
-                        $first = 0;
-                        $new_roles .= $actual_role_id;
-                    } else {
-                        $new_roles .= "," . $actual_role_id;
-                    }
+    function addGroupPerm($group_id, $perm_id) {
+        global $db;
+        $new_groups = "";
+        foreach ($this->permissions as $permissions) {
+
+            if ($permissions['perm_id'] == $perm_id) {
+                if (!empty($permissions['groups'])) {
+                    $new_groups = $permissions['groups'] . "," . $group_id;
+                    break;
                 } else {
-                    return $LNG['L_ACL_USER_ALREADY_ROLE'];
+                    $new_groups = $group_id;
                 }
             }
         }
-        ($first) ? $new_roles .= $role_id : $new_roles .= "," . $role_id;
-        $db->update("users", ["roles" => $new_roles], ["uid" => $uid]);
-        return $LNG['L_ACL_ADD_SUCCESSFUL'];
+        if (!empty($new_groups)) {
+            $db->update("permissions", ["groups" => $new_groups], ["perm_id" => $perm_id], "LIMIT 1");
+        }
     }
 
-    function deleteUserRole($uid, $role_id) {
-        global $db, $LNG;
+    function deleteGroupPerm($group_id, $perm_id) {
+        global $db;
+        $new_groups = "";
+        foreach ($this->permissions as $permissions) {
 
-        $actual_user_roles = $this->getUserRolesByUID($uid);
-        $new_roles = "";
-        $first = 1;
+            if ($permissions['perm_id'] == $perm_id) {
 
-        if (count($actual_user_roles) > 0) {
-            foreach ($actual_user_roles as $actual_role_id) {
-                if ($actual_role_id != $role_id) {
-                    if ($first) {
-                        $first = 0;
-                        $new_roles .= $actual_role_id;
-                    } else {
-                        $new_roles .= "," . $actual_role_id;
+                if (empty($permissions['groups'])) {
+
+                    break;
+                }
+                $db_groups_ids = explode(",", $permissions['groups']);
+                $first = 0;
+                foreach ($db_groups_ids as $db_groups_id) {
+                    if ($db_groups_id != $group_id) {
+                        if ($first == 0) {
+                            $first = 1;
+                            $new_groups = $db_groups_id;
+                        } else {
+                            $new_groups .= "," . $db_groups_id;
+                        }
                     }
                 }
             }
-            $db->update("users", ["roles" => $new_roles], ["uid" => $uid]);
-            return $LNG['L_ACL_DEL_SUCCESSFUL'];
         }
-
-        return $LNG['L_ACL_E_ID'];
+        $db->update("permissions", ["groups" => $new_groups], ["perm_id" => $perm_id], "LIMIT 1");
     }
 
-    function acl_ask($roles_demand, $resource = "ALL") {
-        global $sm;
-
-        $this->debug ? $this->debug->log("ACL_ASK-> $roles_demand", "SimpleACL", "DEBUG") : false;
-
-        $this->debug ? $this->debug->log("ACL_ASK-> $roles_demand", "SimpleACL", "DEBUG") : false;
-        $user = $sm->getSessionUser();
-        if (!$user) {
-            return false;
-        }
-
-        if (empty($this->roles) || empty($this->user_roles)) {
-            $this->SetRoles();
-            $this->SetUserRoles();
-        }
-        if ($this->roles == false) {
-            return false;
-        }
-
-        if ($this->user_roles == false) {
-            return false;
-        }
-        //remove all white spaces
-        $roles_demand = preg_replace('/\s+/', '', $roles_demand);
-
-        return $this->check_roles($roles_demand, $resource);
-    }
-
-    private function SetUserRoles() {
+    private function SetUserPerm() {
         global $sm;
 
         if (!($user = $sm->getSessionUser())) {
-            return ($this->user_roles = false);
+            return ($this->user_permissions = false);
         }
 
-        $this->user_roles = $this->getUserRolesByUID($user['uid']);
-        if (!(count($this->user_roles) > 0)) {
-            return ($this->user_roles = false);
+        $this->user_permissions = $this->getUserPermsByUID($user['uid']);
+        if (!(count($this->user_permissions) > 0)) {
+            return ($this->user_permissins = false);
         }
 
         return true;
     }
 
-    private function check_roles($roles_demand, $resource = "ALL") {
+    function acl_ask($perms_demand, $resource = "ALL") {
+        global $sm;
 
-        if (preg_match("/\|\|/", $roles_demand)) {
-            $or_split = preg_split("/\|\|/", $roles_demand);
-        } else {
-            $or_split[] = $roles_demand;
+        $this->debug ? $this->debug->log("ACL_ASK-> $perms_demand", "SimpleACL", "DEBUG") : false;
+
+        $user = $sm->getSessionUser();
+        if (!$user) {
+            return false;
         }
 
-        foreach ($or_split as $or_split_role) {
+        if (empty($this->permissions) || empty($this->user_permissions)) {
+            $this->SetPerms();
+            $this->SetUserPerm();
+        }
+        if ($this->permissions == false) {
+            $this->debug ? $this->debug->log("ACL permissions is false", "SimpleACL", "WARNING") : false;
+            return false;
+        }
+
+        if ($this->user_permissions == false) {
+            $this->debug ? $this->debug->log("ACL user permissions is false", "SimpleACL", "WARNING") : false;
+            return false;
+        }
+        //remove all white spaces
+        $perms_demand = preg_replace('/\s+/', '', $perms_demand);
+
+        return $this->check_perms($perms_demand, $resource);
+    }
+
+    private function check_perms($perms_demand, $resource = "ALL") {
+
+        if (preg_match("/\|\|/", $perms_demand)) {
+            $or_split = preg_split("/\|\|/", $perms_demand);
+        } else {
+            $or_split[] = $perms_demand;
+        }
+
+        foreach ($or_split as $or_split_perm) {
             $auth = false;
-            if (!preg_match("/\&\&/", $or_split_role)) {
-                $auth = $this->demanding_role_check($or_split_role, $resource);
-                $this->debug ? $this->debug->log("ACL 1 \"$or_split_role\" result->$auth", "SimpleACL", "DEBUG") : false;
+            if (!preg_match("/\&\&/", $or_split_perm)) {
+                $auth = $this->demanding_perm_check($or_split_perm, $resource);
+                $this->debug ? $this->debug->log("ACL 1 {$or_split_perm} result->{$auth} resource->{$resource}", "SimpleACL", "DEBUG") : false;
                 if ($auth) {
                     return true;
                 } //first OR true, no need check the others
             } else { //&& check all except if any its false
-                $and_split = preg_split("/\&\&/", $or_split_role);
+                $and_split = preg_split("/\&\&/", $or_split_perm);
 
-                foreach ($and_split as $and_split_role) {
-                    $auth = $this->demanding_role_check($and_split_role, $resource);
-                    $this->debug ? $this->debug->log("ACL 3 -> \"$and_split_role\" -> $auth  ", "SimpleACL", "DEBUG") : false;
+                foreach ($and_split as $and_split_perm) {
+                    $auth = $this->demanding_perm_check($and_split_perm, $resource);
+                    $this->debug ? $this->debug->log("ACL 3 -> \"$and_split_perm\" -> $auth  ", "SimpleACL", "DEBUG") : false;
                     if ($auth == false) {
-                        $this->debug ? $this->debug->log("ACL 4 -> \"$and_split_role\" -> Break", "SimpleACL", "DEBUG") : false;
+                        $this->debug ? $this->debug->log("ACL 4 -> \"$and_split_perm\" -> Break", "SimpleACL", "DEBUG") : false;
                         break;
-                    } //if any && role its false, not check the next && roles
+                    } //if any && perm its false, not check the next && perms
                 }
                 if ($auth == true) {
                     $this->debug ? $this->debug->log("ACL result->true", "SimpleACL", "DEBUG") : false;
                     return true;
-                } //if auth = true at this point, this group of && roles are all true
+                } //if auth = true at this point, this group of && perms are all true
             }
         }
         $this->debug ? $this->debug->log("ACL F result->false", "SimpleACL", "DEBUG") : false;
         return false;
     }
 
-    private function demanding_role_check($role, $resource = "ALL") {
-        $this->debug ? $this->debug->log("ACL Checking -> $role", "SimpleACL", "DEBUG") : false;
-        list($role_group, $role_type) = preg_split("/_/", $role);
+    private function demanding_perm_check($perm, $resource = "ALL") {
+        $this->debug ? $this->debug->log("ACL Checking -> $perm", "SimpleACL", "DEBUG") : false;
+        list($perm_group, $perm_type) = preg_split("/_/", $perm);
 
-        if (!$asked_role = $this->getRoleDataByName($role_group, $role_type)) {
+        if (!$asked_perm = $this->getPermDataByName($perm_group, $perm_type)) {
             return false;
         }
 
-        foreach ($this->user_roles as $user_role_id) {
-            if (!$user_role_data = $this->getRoleByRoleID($user_role_id)) {
+        foreach ($this->user_permissions as $user_perm_id) {
+            if (!$user_perm_data = $this->getPermByPermID($user_perm_id)) {
                 return false;
             }
-            if (($user_role_data['role_id'] == $asked_role['role_id']) &&
-                    ( ($user_role_data['resource'] == $resource || $user_role_data['resource'] == "ALL") )
+            if (($user_perm_data['perm_id'] == $asked_perm['perm_id']) &&
+                    ( ($user_perm_data['resource'] == $resource || $user_perm_data['resource'] == "ALL") )
             ) {
-                $this->debug ? $this->debug->log("Exact role found", "SimpleACL", "DEBUG") : false;
-                return true; //its the exact role
+                $this->debug ? $this->debug->log("Exact perm found", "SimpleACL", "DEBUG") : false;
+                return true; //its the exact perm
             }
-            //Look if role its upper level
-            if (( $asked_role['role_group'] == $user_role_data['role_group'] ) &&
-                    ( $asked_role['level'] >= $user_role_data['level'] ) &&
-                    ( ($user_role_data['resource'] == $resource || $user_role_data['resource'] == "ALL") )
+            //Look if perm its upper level
+            if (( $asked_perm['perm_group'] == $user_perm_data['perm_group'] ) &&
+                    ( $asked_perm['perm_level'] >= $user_perm_data['perm_level'] )
             ) {
-                $this->debug ? $this->debug->log("Role up found", "SimpleACL", "DEBUG") : false;
+                $this->debug ? $this->debug->log("Group up found", "SimpleACL", "DEBUG") : false;
                 return true;
             }
         }
         return false;
     }
 
-    private function getRoleDataByName($role_group, $role_type) {
-        foreach ($this->roles as $rol) {
-            if (($rol['role_group'] == $role_group) && ($rol['role_type'] == $role_type)) {
-                return $rol;
+    private function getPermDataByName($perm_group, $perm_type) {
+        foreach ($this->permissions as $perm) {
+            if (($perm['perm_group'] == $perm_group) && ($perm['perm_type'] == $perm_type)) {
+                return $perm;
+            }
+        }
+        return false;
+    }
+
+    function getPermByPermID($perm_id) {
+        empty($this->permissions) ? $this->getPerms() : false;
+
+        foreach ($this->permissions as $perm) {
+            if (($perm['perm_id'] == $perm_id)) {
+                return $perm;
             }
         }
         return false;
@@ -272,9 +260,99 @@ class ACL {
     /*
 
 
+      function newRole($perm) {
+      global $LNG, $db;
+
+      if (empty($perm['level']) || empty($perm['group']) || empty($perm['type']) || empty($perm['name'])) {
+      return $msg = $LNG['L_ACL_E_EMPTY_NEWROLE'];
+      }
+
+      $insert_ary = array(
+      "level" => $perm['level'],
+      "perm_group" => $perm['group'],
+      "perm_type" => $perm['type'],
+      "perm_name" => $perm['name'],
+      "perm_description" => $db->escape_strip($perm['description'])
+      );
+
+      $db->insert("acl_perms", $insert_ary);
+      return $LNG['L_ACL_ROLE_SUBMIT_SUCCESFUL'];
+      }
+
+      function deleteRole($perm_id) {
+      global $db, $LNG;
+
+      if (!empty($perm_id)) {
+      $db->delete("acl_perms", ["perm_id" => "$perm_id"], "LIMIT 1");
+      return $LNG['L_ACL_ROLE_DELETE_SUCCESFUL'];
+      } else {
+      return $LNG['L_ACL_E_ID'];
+      }
+      }
+
+      function addUserRole($uid, $perm_id) {
+      global $db, $LNG;
 
 
-      function get_roles_select($acl_group = null, $selected = null) {
+
+      $actual_user_perms = $this->getUserRolesByUID($uid);
+      $new_perms = "";
+      $first = 1;
+
+      if (count($actual_user_perms) > 0) {
+      foreach ($actual_user_perms as $actual_perm_id) {
+      if ($actual_perm_id != $perm_id) {
+      if ($first) {
+      $first = 0;
+      $new_perms .= $actual_perm_id;
+      } else {
+      $new_perms .= "," . $actual_perm_id;
+      }
+      } else {
+      return $LNG['L_ACL_USER_ALREADY_ROLE'];
+      }
+      }
+      }
+      ($first) ? $new_perms .= $perm_id : $new_perms .= "," . $perm_id;
+      $db->update("users", ["perms" => $new_perms], ["uid" => $uid]);
+      return $LNG['L_ACL_ADD_SUCCESSFUL'];
+      }
+
+      function deleteUserRole($uid, $perm_id) {
+      global $db, $LNG;
+
+      $actual_user_perms = $this->getUserRolesByUID($uid);
+      $new_perms = "";
+      $first = 1;
+
+      if (count($actual_user_perms) > 0) {
+      foreach ($actual_user_perms as $actual_perm_id) {
+      if ($actual_perm_id != $perm_id) {
+      if ($first) {
+      $first = 0;
+      $new_perms .= $actual_perm_id;
+      } else {
+      $new_perms .= "," . $actual_perm_id;
+      }
+      }
+      }
+      $db->update("users", ["perms" => $new_perms], ["uid" => $uid]);
+      return $LNG['L_ACL_DEL_SUCCESSFUL'];
+      }
+
+      return $LNG['L_ACL_E_ID'];
+      }
+
+
+
+
+     */
+    /*
+
+
+
+
+      function get_perms_select($acl_group = null, $selected = null) {
       global $LNG, $db;
 
       $select = "<select name='{$acl_group}_acl' id='{$acl_group}_acl'>";
@@ -284,13 +362,13 @@ class ACL {
       $select .= "<option value=''>{$LNG['L_ACL_NONE']}</option>";
       }
 
-      $query = $this->get_roles_query($acl_group);
+      $query = $this->get_perms_query($acl_group);
       while ($row = $db->fetch($query)) {
-      $full_role = $row['role_group'] . "_" . $row['role_type'];
-      if ($full_role != $selected) {
-      $select .= "<option value='$full_role'>{$LNG[$row['role_name']]}</option>";
+      $full_perm = $row['perm_group'] . "_" . $row['perm_type'];
+      if ($full_perm != $selected) {
+      $select .= "<option value='$full_perm'>{$LNG[$row['perm_name']]}</option>";
       } else {
-      $select .= "<option selected value='$full_role'>{$LNG[$row['role_name']]}</option>";
+      $select .= "<option selected value='$full_perm'>{$LNG[$row['perm_name']]}</option>";
       }
       }
       $select .= "</select>";
@@ -302,13 +380,13 @@ class ACL {
 
 
 
-      private function get_roles_query($acl_group = null) {
+      private function get_perms_query($acl_group = null) {
       global $db;
 
       if (!empty($acl_group)) {
-      $query = $db->select_all("acl_roles", array("role_group" => "$acl_group"));
+      $query = $db->select_all("acl_perms", array("perm_group" => "$acl_group"));
       } else {
-      $query = $db->select_all("acl_roles");
+      $query = $db->select_all("acl_perms");
       }
 
       return $query;

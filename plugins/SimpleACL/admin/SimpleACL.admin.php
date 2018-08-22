@@ -7,9 +7,9 @@
 
 function SimpleACL_AdminInit() {
     global $acl_auth, $plugins;
-    
-    !isset($acl_auth) ? $plugins->express_start("SimpleACL") : null;    
-    register_action("add_admin_menu", "SimpleACL_AdminMenu", 5);    
+
+    !isset($acl_auth) ? $plugins->express_start("SimpleACL") : null;
+    register_action("add_admin_menu", "SimpleACL_AdminMenu", 5);
 }
 
 function SimpleACL_AdminMenu($params) {
@@ -29,8 +29,7 @@ function SimpleACL_AdminAside($params) {
     global $LNG;
 
     return "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=1'>" . $LNG['L_PL_STATE'] . "</a></li>\n" .
-            "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=2'>" . $LNG['L_ACL_ROLES'] . "</a></li>\n" .
-            "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=3'>" . $LNG['L_ACL_USER_ROLES'] . "</a></li>\n" .
+            "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=2'>" . $LNG['L_ACL_PERM_GROUPS'] . "</a></li>\n" .
             "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=4'>" . $LNG['L_PL_CONFIG'] . "</a></li>\n";
 }
 
@@ -45,13 +44,10 @@ function SimpleACL_AdminContent($params) {
         $page_data = "<h1>" . $LNG['L_GENERAL'] . ": " . $LNG['L_PL_STATE'] . "</h1>";
         $page_data .= Admin_GetPluginState("SimpleACL");
     } else if ($params['opt'] == 2) {
-        isset($_POST['btnNewRole']) ? $msg = SimpleACL_NewRole() : false;
-        isset($_POST['btnRoleDelete']) ? $msg = SimpleACL_DeleteRole() : false;
-        $page_data = $LNG['L_GENERAL'] . ": " . $LNG['L_ACL_ROLES'];
-        $page_data .= SimpleACL_ShowRoles($msg);
-    } else if ($params['opt'] == 3) {
-        $page_data = "<h1>" . $LNG['L_GENERAL'] . ": " . $LNG['L_ACL_USER_ROLES'] . "</h1>";
-        $page_data .= SimpleACL_UserRoles($msg);
+        isset($_POST['btnDelPerm']) ? $msg = SimpleACL_DelPerm() : false;
+        isset($_POST['btnNewPerm']) ? $msg = SimpleACL_AddPerm() : false;
+        $page_data = $LNG['L_GENERAL'] . ": " . $LNG['L_ACL_PERM_GROUPS'];
+        $page_data .= SimpleACL_ShowPermGroups($msg);
     } else if ($params['opt'] == 4) {
         $page_data .= AdminPluginConfig("SimpleACL");
     }
@@ -59,108 +55,67 @@ function SimpleACL_AdminContent($params) {
     return $page_data;
 }
 
-function SimpleACL_ShowRoles($msg) {
-    global $tpl, $acl_auth;
+function SimpleACL_ShowPermGroups($msg) {
+    global $tpl, $acl_auth, $groups, $filter, $LNG;
 
-    $roles = $acl_auth->getRoles();
-    $counter = 1;
-    $count = count($roles);
+    $group_selected = $filter->post_int("group_selected");
+
+
+    $db_groups = $groups->getGroups();
+    empty($group_selected) ? $group_selected = $db_groups[0]['group_id'] : false;
+
     $content = "";
-    $group = "";
+    $select_groups = "";
+    $select_group_perms = "";
+    $select_perms = "";
 
-    foreach ($roles as $role) {
-        ($counter == $count) ? $role['TPL_CTRL'] = 0 : $role['TPL_CTRL'] = $counter++;
-
-        (!empty($msg) && $counter == 1) ? $role['ACL_MSG'] = $msg : false;
-        $role['ACL_MSG'] = $msg;
-
-        if (!empty($group) && $role['role_group'] != $group) {
-            $role['ACL_SPLIT'] = 1;
-            $group = $role['role_group'];
-        } else if (empty($group)) {
-            $group = $role['role_group'];
-        }
-        $content .= $tpl->getTPL_file("SimpleACL", "acl_admin_roles", $role);
+    foreach ($db_groups as $db_group) {
+        (preg_match("/L_/", $db_group['group_name'])) ? $db_group['group_name'] = $LNG[$db_group['group_name']] : false;
+        (preg_match("/L_/", $db_group['group_desc'])) ? $db_group['group_desc'] = $LNG[$db_group['group_desc']] : false;
+        ($db_group['group_id'] == $group_selected) ? $selected = "selected" : $selected = "";
+        $select_groups .= "<option $selected value='{$db_group['group_id']}'>{$db_group['group_name']}</option>";
     }
+
+    $group_perms = $acl_auth->getGroupPerms($group_selected);
+    if (!empty($group_perms)) {
+        foreach ($group_perms as $group_perm) {
+            $select_group_perms .= "<option value='{$group_perm['perm_id']}'>{$group_perm['perm_group']}_{$group_perm['perm_type']}</option>";
+        }
+    }
+    foreach ($acl_auth->getPerms() as $perm) {
+        $coincidence = 0;
+        if (!empty($group_perms)) {
+            foreach ($group_perms as $group_perm) {
+                if ($perm['perm_id'] == $group_perm['perm_id']) {
+                    $coincidence = 1;
+                }
+            }
+        }
+        if (!$coincidence) {
+            $select_perms .= "<option value='{$perm['perm_id']}'>{$perm['perm_group']}_{$perm['perm_type']}</option>";
+        }
+    }
+    $page_data['group_selection'] = $group_selected;
+    $page_data['select_groups'] = $select_groups;
+    $page_data['select_perms'] = $select_perms;
+    $page_data['select_group_perms'] = $select_group_perms;
+    $content .= $tpl->getTPL_file("SimpleACL", "acl_perm_groups", $page_data);
 
     return $content;
 }
 
-function SimpleACL_UserRoles($msg) {
-    global $tpl, $LNG, $sm, $acl_auth, $filter;
-
-    $page_data = [];
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        if (!empty(($search_user = $sm->getUserByUsername($filter->post_strict_chars("username"))))) {
-
-            !empty($_POST['btnAddRole']) && !empty($search_user) ? $msg = SimpleACL_AddUserRole($search_user) : false;
-            !empty($_POST['btnDeleteRole']) && !empty($search_user) ? $msg = SimpleACL_DeleteUserRole($search_user) : false;
-            $page_data = array_merge($page_data, $search_user);
-            $user_roles = $acl_auth->getUserRolesByUID($search_user['uid']);
-
-            if ($user_roles !== false) {
-                $page_data['option_roles'] = "";
-                foreach ($user_roles as $user_role_id) {
-                    $role_data = $acl_auth->getRoleByRoleID($user_role_id);
-                    $page_data['option_roles'] .= "<option value='{$role_data['role_id']}'>{$role_data['role_group']}_{$role_data['role_type']}</option>";
-                }
-            } else {
-                $msg = $LNG['L_ACL_USER_NOROLES'];
-            }
-            $roles = $acl_auth->getRoles();
-
-            if (!empty($roles)) {
-                $page_data['roles'] = "";
-                foreach ($roles as $role) {
-                    if (preg_match("/L_/", $role['role_name'])) {
-                        $page_data['roles'] .= "<option value='{$role['role_id']}'>{$LNG[$role['role_name']]}</option>";
-                    } else {
-                        $page_data['roles'] .= "<option value='{$role['role_id']}'>{$role['role_name']}</option>";
-                    }
-                }
-            } else {
-                $msg = $LNG['L_ACL_INTERNAL_E_NOROLES'];
-            }
-        } else {
-            $msg = $LNG['L_ACL_USER_NOTFOUND'];
-        }
-    }
-    !empty($msg) ? $page_data['ACL_MSG'] = $msg : false;
-    return $tpl->getTPL_file("SimpleACL", "acl_user_roles", $page_data);
+function SimpleACL_DelPerm() {
+    global $filter, $acl_auth;
+    $perm_id = $filter->post_int("perm_id");
+    $group_id = $filter->post_int("group_id");
+    return $acl_auth->deleteGroupPerm($group_id, $perm_id);
 }
 
-function SimpleACL_NewRole() {
+function SimpleACL_AddPerm() {
     global $filter, $acl_auth;
 
-    $role['level'] = $filter->post_int("r_level", 2, 1);
-    $role['group'] = $filter->post_AZChar("r_group", 18, 1);
-    $role['type'] = $filter->post_strict_chars("r_type", 14, 1);
-    $role['name'] = $filter->post_strict_chars("r_name", 32, 1);
-    $role['description'] = $filter->post_UTF8_txt("r_description", 255);
+    $perm_id = $filter->post_int("perm_id");
+    $group_id = $filter->post_int("group_id");
 
-    return $acl_auth->newRole($role);
-}
-
-function SimpleACL_DeleteRole() {
-    global $filter, $acl_auth;
-    $role_id = $filter->post_int("role_id");
-
-    return $acl_auth->deleteRole($role_id);
-}
-
-function SimpleACL_AddUserRole($user) {
-    global $filter, $acl_auth;
-
-    $role = $filter->post_int("add_role_id");
-
-    return $acl_auth->addUserRole($user['uid'], $role);
-}
-
-function SimpleACL_DeleteUserRole($user) {
-    global $filter, $acl_auth;
-
-    $role_id = $filter->post_int("del_role_id");
-
-    return $acl_auth->deleteUserRole($user['uid'], $role_id);
+    return $acl_auth->addGroupPerm($group_id, $perm_id);
 }
