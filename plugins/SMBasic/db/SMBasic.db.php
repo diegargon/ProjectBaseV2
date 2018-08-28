@@ -95,17 +95,14 @@ $smbasic_insert_database = [
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', 'smbasic_default_img_avatar', '')",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', 'smbasic_https_remote_avatar', '1')",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', 'smbasic_ask_terms', '1')",
- //   "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', '', '')",
-   // "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', '', '')",
-   // "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', '', '')",
+    //   "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', '', '')",
+    // "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', '', '')",
+    // "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', '', '')",
     /* DEFAULT ADMIN USER */
     "INSERT INTO `" . DB_PREFIX . "users` (`username`, `password`, `email`, `isAdmin`, `active`) VALUES ('admin', 'e1da6ddee81e1d1662a9a43b64309e6229e6216d5daf0543248ae80f23b52a05d2e164a5f036c3e72460969c514330f3bed7cd5f23b00a2fd23ed404c56c1360', 'diego@envigo.net', '1', '1')"
 ];
 
 $smbasic_database = array_merge($smbasic_database, $smbasic_insert_database);
-
-
-
 
 /*
  * 
@@ -116,5 +113,6 @@ $smbasic_database = array_merge($smbasic_database, $smbasic_insert_database);
 $smbasic_uninstall_database = [
     "DROP TABLE `" . DB_PREFIX . "sessions`",
     "DROP TABLE `" . DB_PREFIX . "users`",
-    "DELETE FROM `" . DB_PREFIX . "config` WHERE plugin = 'SMBasic'"
+    "DELETE FROM `" . DB_PREFIX . "config` WHERE plugin = 'SMBasic'",
+    "DELETE FROM `" . DB_PREFIX . "plugins` WHERE plugin_name = 'SMBasic'"
 ];

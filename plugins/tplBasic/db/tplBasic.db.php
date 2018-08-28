@@ -20,5 +20,6 @@ $tplbasic_database = [
 ];
 
 $tplbasic_database_uninstall = [
-    "DELETE FROM `" . DB_PREFIX . "config` WHERE plugin = 'tplBasic'"
+    "DELETE FROM `" . DB_PREFIX . "config` WHERE plugin = 'tplBasic'",
+    "DELETE FROM `" . DB_PREFIX . "plugins` WHERE plugin_name = 'tplBasic'"
 ];
