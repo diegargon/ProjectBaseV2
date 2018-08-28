@@ -20,8 +20,6 @@ CREATE TABLE `" . DB_PREFIX . "categories` (
   `name` varchar(32) NOT NULL,
   `father` smallint(3) NOT NULL DEFAULT '0',
   `weight` smallint(3) NOT NULL DEFAULT '0',
-  `acl` varchar(32) DEFAULT NULL,
-  `admin` tinyint(1) NOT NULL DEFAULT '0',
   `views` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . ";
 ";

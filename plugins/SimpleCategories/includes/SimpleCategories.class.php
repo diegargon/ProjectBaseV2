@@ -1,7 +1,7 @@
 <?php
 
 /*
- *  Copyright @ 2016 Diego Garcia
+ *  Copyright @ 2016 - 2018 Diego Garcia
  * 
  *  Actually, on start load all cats all plug
  * 
@@ -149,7 +149,22 @@ class Categories {
         });
     }
 
-    private function loadCategories($orderByViews = 0) {
+    function getCategories($plugin = null, $order = null) {
+        global $db;
+        !$order ? $order = "cid" : null;
+
+        ($plugin) ? $plugin["plugin"] = $plugin : null;
+
+        $query = $db->select_all("categories", $plugin, "ORDER BY $order");
+
+        while ($row = $db->fetch($query)) {
+            $cats[] = $row;
+        }
+
+        return $cats;
+    }
+
+    private function loadCategories() {
         global $ml, $db;
         //Carga todas las categorias de todos los modulos de un solo lenguage
 
@@ -157,9 +172,7 @@ class Categories {
         $where_ary = [];
         !empty($lang_id) && is_numeric($lang_id) ? $where_ary['lang_id'] = $lang_id : null;
 
-        $orderByViews ? $order = "views DESC" : $order = "weight ASC";
-
-        $query = $db->select_all("categories", $where_ary, "ORDER BY $order");
+        $query = $db->select_all("categories", $where_ary, "ORDER BY weight");
         while ($c_row = $db->fetch($query)) {
             $this->categories[$c_row['cid']] = $c_row;
         }
