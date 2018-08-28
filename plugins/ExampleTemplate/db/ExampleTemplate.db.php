@@ -11,10 +11,13 @@ CREATE TABLE `" . DB_PREFIX . "exampleTemplate` (
 ) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . ";
 ";
 
+/* UNINSTALL */
+
 $exampleTemplate_database_uninstall[] = "
 DROP TABLE `" . DB_PREFIX . "exampleTemplate`
 ";
 
+$exampleTemplate_database_uninstall [] = "DELETE FROM `" . DB_PREFIX . "plugins` WHERE plugin_name = 'exampleTemplate'";
 
 /*
  * UPGRADE
