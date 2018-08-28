@@ -12,3 +12,4 @@ $google_analytics_db_install = [
 /* UNINSTALL */
 
 $google_analytics_db_uninstall[] = "DELETE FROM `" . DB_PREFIX . "config` WHERE plugin = 'GoogleAnalytics'";
+$google_analytics_db_uninstall [] = "DELETE FROM `" . DB_PREFIX . "plugins` WHERE plugin_name = 'GoogleAnalytcs'";
