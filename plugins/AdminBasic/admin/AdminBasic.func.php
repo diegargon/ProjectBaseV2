@@ -249,7 +249,7 @@ function admin_general_content($params) {
         }
         $content .= AdminPluginConfig("CORE");
     } else if ($params['opt'] == 10) {
-        if (!admin_auth("r_hoiphpinfo")) {
+        if (!admin_auth("r_phpinfo")) {
             return false;
         }
         $content .= "<div style='width:100%'>" . get_phpinfo() . "</div>";
