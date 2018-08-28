@@ -1,0 +1,13 @@
+{
+    "plugin_name": "SimpleCategories",
+    "enabled": 1,
+    "main_file": "SimpleCategories.php",
+    "function_init": "SimpleCategories_init",
+    "function_install": "",
+    "provided": "SCats1",
+    "depends": "SQL1 tplbasic1",
+    "autostart": 0,
+    "priority": 6,
+    "optional": "multilang1",
+    "conflicts": ""
+}
