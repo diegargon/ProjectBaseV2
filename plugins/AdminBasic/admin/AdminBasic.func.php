@@ -7,15 +7,12 @@
  */
 !defined('IN_WEB') ? exit : true;
 
-function admin_auth($tokens, $resource = "ALL") {
+function admin_auth($tokens) {
     global $sm, $acl_auth;
 
     $user = $sm->getSessionUser();
 
-    if ($user && (
-            (!defined('ACL') && $user['isAdmin'] == 1) ||
-            (defined('ACL') && $acl_auth->acl_ask($tokens, $resource))
-            )
+    if ($user && ($user['isAdmin'] == 10 || (defined('ACL') && $acl_auth->acl_ask($tokens)))
     ) {
         return true;
     }
@@ -106,7 +103,7 @@ function admin_general_content($params) {
     $content = "";
 
     if (($_SERVER['REQUEST_METHOD'] === 'POST') && ($plugin_id = $filter->post_int("plugin_id")) != false) {
-        if (!admin_auth("admin_write", "ADMIN_PLUGINS")) {
+        if (!admin_auth("w_plugin_cfg")) {
             return false;
         }
         if (isset($_POST['btnInstall'])) {
@@ -147,7 +144,7 @@ function admin_general_content($params) {
     if (($_SERVER['REQUEST_METHOD'] === 'POST') && $plugin_id == false) {
 
         if (isset($_POST['btnReScan'])) {
-            if (!admin_auth("admin_write", "ADMIN_PLUGINS")) {
+            if (!admin_auth("w_plugin_cfg")) {
                 return false;
             }
             $plugins->reScanToDB();
@@ -155,7 +152,7 @@ function admin_general_content($params) {
 
 
         if (isset($_POST['btnDebugChange'])) {
-            if (!admin_auth("admin_write", "ADMIN_DEBUG")) {
+            if (!admin_auth("w_plugin_cfg")) {
                 return false;
             }
 
@@ -175,11 +172,11 @@ function admin_general_content($params) {
     }
 
 
-    if ($params['opt'] == 1) {
+    if ($params['opt'] == 1) {     
         $content = "<h1>" . $LNG['L_PL_STATE'] . "</h1>";
         $content .= Admin_GetPluginState("AdminBasic");
     } else if ($params['opt'] == 2) {
-        if (!admin_auth("admin_read", "ADMIN_PLUGINS")) {
+        if (!admin_auth("r_plugin_cfg")) {
             return false;
         }
 
@@ -264,12 +261,12 @@ function admin_general_content($params) {
          * 
          */
     } else if ($params['opt'] == 4) {
-        if (!admin_auth("admin_read", "ADMIN_CONFIG_CORE")) {
+        if (!admin_auth("r_general_cfg")) {
             return false;
         }
         $content .= AdminPluginConfig("CORE");
     } else if ($params['opt'] == 10) {
-        if (!admin_auth("admin_read", "ADMIN_PHPINFO")) {
+        if (!admin_auth("r_phpinfo")) {
             return false;
         }
         $content .= "<div style='width:100%'>" . get_phpinfo() . "</div>";
@@ -283,7 +280,7 @@ function AdminPluginConfig($plugin) {
 
     if (($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSubmitConfig']))) {
 
-        if (!admin_auth("admin_write", "ADMIN_CONFIG_" . $plugin)) {
+        if (!admin_auth("w_general_cfg", "ADMIN_CONFIG_" . $plugin)) {
             return false;
         }
         $cfg_id = $filter->post_int("configID", 8, 1);

@@ -9,13 +9,13 @@
 
 require_once("admin/AdminBasic.func.php");
 
-if (!admin_auth("admin_read", "ADMIN_GENERAL")) {
-    return false;
-}
+admin_load_plugin_files();
 
 $tpl->getCSS_filePath("AdminBasic");
 
-admin_load_plugin_files();
+if (!admin_auth("r_adminmain_access")) {
+    return false;
+}
 
 $admin_id = $plugins->getPluginID("AdminBasic");
 

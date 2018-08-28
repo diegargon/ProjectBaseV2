@@ -41,3 +41,13 @@ $LNG['L_PL_UPGRADE'] = "Actualizar";
 $LNG['L_PL_E_ITSMISSING'] = "Faltan archivos";
 $LNG['L_PL_DELETE'] = "Borrar";
 $LNG['L_PL_CLEAN_FAILED'] = "Limpiar instalación fallida";
+$LNG['L_PERM_R_ADMINMAIN_ACCESS'] = "Acceso principal de administracion (lectura)";
+$LNG['L_PERM_R_PHPINFO'] = "Leer phpinfo";
+$LNG['L_PERM_W_GENERAL_CFG'] = "Cambiar configuración general";
+$LNG['L_PERM_R_GENERAL_CFG'] = "Leer configuración general";
+$LNG['L_PERM_R_DEBUG_CFG'] = "Leer estado debug";
+$LNG['L_PERM_W_DEBUG_CFG'] = "Cambiar estado debug";
+$LNG['L_PERM_R_PLUGIN_CFG'] = "Leer configuración plugins";
+$LNG['L_PERM_W_PLUGIN_CFG'] = "Cambiar configuración plugins";
+
+//$LNG[''] = "";
