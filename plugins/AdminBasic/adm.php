@@ -48,7 +48,7 @@ if ($params['admtab'] == $admin_id) {
     }
 } else {
     $section_content = do_action("admin_get_section_content", $params);
-    if ($general_conetnt !== false) {
+    if ($general_conent !== false) {
         $tpl->addto_tplvar("ADM_ASIDE_MENU_OPT", do_action("admin_get_aside_menu", $params));
         $tpl->addto_tplvar("ADM_SECTION_CONTENT", $section_content);
     } else {
