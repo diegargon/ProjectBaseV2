@@ -6,9 +6,9 @@
 !defined('IN_WEB') ? exit : true;
 
 function SimpleACL_init() {
-    define ('ACL', TRUE);
+    define('ACL', TRUE);
     global $acl_auth;
-    
+
     empty($acl_auth) ? $acl_auth = new ACL : false;
 }
 

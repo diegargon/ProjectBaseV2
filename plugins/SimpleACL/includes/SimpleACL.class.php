@@ -28,7 +28,9 @@ class ACL {
     private function setPerms() {
         global $db;
 
-        $query = $db->select_all("permissions", null, "ORDER BY perm_group, perm_level");
+        $this->permissions = null;
+        
+        $query = $db->select_all("permissions", null, "ORDER BY plugin");
         if ($db->num_rows($query) > 0) {
             while ($row = $db->fetch($query)) {
                 $this->permissions[] = $row;
@@ -142,7 +144,7 @@ class ACL {
         return true;
     }
 
-    function acl_ask($perms_demand, $resource = "ALL") {
+    function acl_ask($perms_demand) {
         global $sm;
 
         $this->debug ? $this->debug->log("ACL_ASK-> $perms_demand", "SimpleACL", "DEBUG") : false;
@@ -165,13 +167,13 @@ class ACL {
             $this->debug ? $this->debug->log("ACL user permissions is false", "SimpleACL", "WARNING") : false;
             return false;
         }
-        //remove all white spaces
+        //remove/trim white spaces
         $perms_demand = preg_replace('/\s+/', '', $perms_demand);
 
-        return $this->check_perms($perms_demand, $resource);
+        return $this->check_perms($perms_demand);
     }
 
-    private function check_perms($perms_demand, $resource = "ALL") {
+    private function check_perms($perms_demand) {
 
         if (preg_match("/\|\|/", $perms_demand)) {
             $or_split = preg_split("/\|\|/", $perms_demand);
@@ -182,8 +184,8 @@ class ACL {
         foreach ($or_split as $or_split_perm) {
             $auth = false;
             if (!preg_match("/\&\&/", $or_split_perm)) {
-                $auth = $this->demanding_perm_check($or_split_perm, $resource);
-                $this->debug ? $this->debug->log("ACL 1 {$or_split_perm} result->{$auth} resource->{$resource}", "SimpleACL", "DEBUG") : false;
+                $auth = $this->demanding_perm_check($or_split_perm);
+                $this->debug ? $this->debug->log("ACL 1 {$or_split_perm} result->{$auth} ", "SimpleACL", "DEBUG") : false;
                 if ($auth) {
                     return true;
                 } //first OR true, no need check the others
@@ -191,56 +193,50 @@ class ACL {
                 $and_split = preg_split("/\&\&/", $or_split_perm);
 
                 foreach ($and_split as $and_split_perm) {
-                    $auth = $this->demanding_perm_check($and_split_perm, $resource);
+                    $auth = $this->demanding_perm_check($and_split_perm);
                     $this->debug ? $this->debug->log("ACL 3 -> \"$and_split_perm\" -> $auth  ", "SimpleACL", "DEBUG") : false;
                     if ($auth == false) {
                         $this->debug ? $this->debug->log("ACL 4 -> \"$and_split_perm\" -> Break", "SimpleACL", "DEBUG") : false;
-                        break;
-                    } //if any && perm its false, not check the next && perms
+                        break; //if any && perm its false, not check the next perms are false
+                    }
                 }
-                if ($auth == true) {
-                    $this->debug ? $this->debug->log("ACL result->true", "SimpleACL", "DEBUG") : false;
-                    return true;
-                } //if auth = true at this point, this group of && perms are all true
+            }
+
+            if ($auth == true) {
+                $this->debug ? $this->debug->log("ACL result->true", "SimpleACL", "DEBUG") : false;
+                return true;
+            } else {
+                $this->debug ? $this->debug->log("ACL F result->false", "SimpleACL", "DEBUG") : false;
+                return false;
             }
         }
-        $this->debug ? $this->debug->log("ACL F result->false", "SimpleACL", "DEBUG") : false;
         return false;
     }
 
-    private function demanding_perm_check($perm, $resource = "ALL") {
+    private function demanding_perm_check($perm) {
         $this->debug ? $this->debug->log("ACL Checking -> $perm", "SimpleACL", "DEBUG") : false;
-        list($perm_group, $perm_type) = preg_split("/_/", $perm);
+        //list($perm_group, $perm_type) = preg_split("/_/", $perm);
 
-        if (!$asked_perm = $this->getPermDataByName($perm_group, $perm_type)) {
+        if (!($asked_perm = $this->getPermIDByName($perm))) {
             return false;
         }
 
         foreach ($this->user_permissions as $user_perm_id) {
-            if (!$user_perm_data = $this->getPermByPermID($user_perm_id)) {
+            if (!($user_perm_data = $this->getPermByPermID($user_perm_id))) {
                 return false;
             }
-            if (($user_perm_data['perm_id'] == $asked_perm['perm_id']) &&
-                    ( ($user_perm_data['resource'] == $resource || $user_perm_data['resource'] == "ALL") )
-            ) {
-                $this->debug ? $this->debug->log("Exact perm found", "SimpleACL", "DEBUG") : false;
+            if (($user_perm_data['perm_id'] == $asked_perm)) {
+                $this->debug ? $this->debug->log("Perm found", "SimpleACL", "DEBUG") : false;
                 return true; //its the exact perm
-            }
-            //Look if perm its upper level
-            if (( $asked_perm['perm_group'] == $user_perm_data['perm_group'] ) &&
-                    ( $asked_perm['perm_level'] >= $user_perm_data['perm_level'] )
-            ) {
-                $this->debug ? $this->debug->log("Group up found", "SimpleACL", "DEBUG") : false;
-                return true;
             }
         }
         return false;
     }
 
-    private function getPermDataByName($perm_group, $perm_type) {
+    private function getPermIDByName($perm_name) {
         foreach ($this->permissions as $perm) {
-            if (($perm['perm_group'] == $perm_group) && ($perm['perm_type'] == $perm_type)) {
-                return $perm;
+            if ($perm['perm_name'] == $perm_name) {
+                return $perm['perm_id'];
             }
         }
         return false;

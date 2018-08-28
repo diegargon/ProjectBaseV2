@@ -8,8 +8,10 @@
 function SimpleACL_AdminInit() {
     global $acl_auth, $plugins;
 
-    !isset($acl_auth) ? $plugins->express_start("SimpleACL") : null;
-    register_action("add_admin_menu", "SimpleACL_AdminMenu", 5);
+    !isset($acl_auth) ? ( $plugins->express_start("SimpleACL")) : null;
+    if (defined('ACL')) {
+        register_action("add_admin_menu", "SimpleACL_AdminMenu", 5);
+    }
 }
 
 function SimpleACL_AdminMenu($params) {
@@ -73,15 +75,17 @@ function SimpleACL_ShowPermGroups($msg) {
         (preg_match("/L_/", $db_group['group_name'])) ? $db_group['group_name'] = $LNG[$db_group['group_name']] : false;
         (preg_match("/L_/", $db_group['group_desc'])) ? $db_group['group_desc'] = $LNG[$db_group['group_desc']] : false;
         ($db_group['group_id'] == $group_selected) ? $selected = "selected" : $selected = "";
-        $select_groups .= "<option $selected value='{$db_group['group_id']}'>{$db_group['group_name']}</option>";
+        $select_groups .= "<option $selected value='{$db_group['group_id']}'>{$db_group['group_name']} - {$db_group['group_desc']}</option>";
     }
 
     $group_perms = $acl_auth->getGroupPerms($group_selected);
     if (!empty($group_perms)) {
         foreach ($group_perms as $group_perm) {
-            $select_group_perms .= "<option value='{$group_perm['perm_id']}'>{$group_perm['perm_group']}_{$group_perm['perm_type']}</option>";
+            (preg_match("/L_/", $group_perm['perm_desc'])) ? $group_perm['perm_desc'] = $LNG[$group_perm['perm_desc']] : false;
+            $select_group_perms .= "<option value='{$group_perm['perm_id']}'>{$group_perm['perm_desc']} - ({$group_perm['perm_name']})</option>";
         }
     }
+
     foreach ($acl_auth->getPerms() as $perm) {
         $coincidence = 0;
         if (!empty($group_perms)) {
@@ -92,7 +96,8 @@ function SimpleACL_ShowPermGroups($msg) {
             }
         }
         if (!$coincidence) {
-            $select_perms .= "<option value='{$perm['perm_id']}'>{$perm['perm_group']}_{$perm['perm_type']}</option>";
+            (preg_match("/L_/", $perm['perm_desc'])) ? $perm['perm_desc'] = $LNG[$perm['perm_desc']] : false;
+            $select_perms .= "<option value='{$perm['perm_id']}'>{$perm['perm_desc']} - {$perm['perm_name']}</option>";
         }
     }
     $page_data['group_selection'] = $group_selected;
