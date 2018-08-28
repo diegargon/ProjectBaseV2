@@ -2,7 +2,11 @@
 
 /*
  *  Copyright @ 2016 - 2018 Diego Garcia
+ * 
+ *  TODO Añadir en hazmin el id y poder establecer el padre
+ * 
  */
+
 !defined('IN_WEB') ? exit : true;
 
 function SimpleGroups_init() {
@@ -31,9 +35,9 @@ function SimpleGroups_install() {
         return false;
     }
     $admin_limited_id = $db->insert_id();
-    
+
     if ($r) {
-        $r = $db->query($simplegroups_database_install_insert_registered_group );
+        $r = $db->query($simplegroups_database_install_insert_registered_group);
     } else {
         return false;
     }
@@ -45,11 +49,11 @@ function SimpleGroups_install() {
         return false;
     }
     $anon_grp_id = $db->insert_id();
-    
+
     if ($r) {
         $db->update("groups", ['group_father' => $admin_grp_id], ['group_id' => $admin_limited_id]);
         $db->update("groups", ['group_father' => $admin_limited_id], ['group_id' => $registered_grp_id]);
-        $db->update("groups", ['group_father' => $registered_grp_id], ['group_id' => $anon_grp_id]);        
+        $db->update("groups", ['group_father' => $registered_grp_id], ['group_id' => $anon_grp_id]);
         $db->update("users", ['groups' => $admin_grp_id . "," . $registered_grp_id], ['isAdmin' => 1]);
         $db->update("users", ['groups' => $registered_grp_id], ['isAdmin' != 1]);
     }

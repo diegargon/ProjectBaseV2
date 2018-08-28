@@ -51,6 +51,6 @@ $simplegroups_database_install [] = "ALTER TABLE `" . DB_PREFIX . "users` ADD `g
 $simplegroups_database_uninstall[] = "DROP TABLE `" . DB_PREFIX . "groups`";
 $simplegroups_database_uninstall[] = "ALTER TABLE `" . DB_PREFIX . "users` DROP `groups`";
 $simplegroups_database_uninstall [] = "DELETE FROM `" . DB_PREFIX . "config` WHERE plugin = 'SimpleGroups'";
-
+$simplegroups_database_uninstall [] = "DELETE FROM `" . DB_PREFIX . "plugins` WHERE plugin_name = 'SimpleGroups'";
 
 
