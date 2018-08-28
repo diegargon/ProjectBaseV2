@@ -12,7 +12,7 @@ function admin_auth($tokens) {
 
     $user = $sm->getSessionUser();
 
-    if ($user && ($user['isAdmin'] == 10 || (defined('ACL') && $acl_auth->acl_ask($tokens)))
+    if ($user && ($user['isAdmin'] == 1 || (defined('ACL') && $acl_auth->acl_ask($tokens)))
     ) {
         return true;
     }
@@ -172,7 +172,7 @@ function admin_general_content($params) {
     }
 
 
-    if ($params['opt'] == 1) {     
+    if ($params['opt'] == 1) {
         $content = "<h1>" . $LNG['L_PL_STATE'] . "</h1>";
         $content .= Admin_GetPluginState("AdminBasic");
     } else if ($params['opt'] == 2) {
@@ -243,30 +243,13 @@ function admin_general_content($params) {
         }
         $content .= "<input type='submit' name='btnDebugChange'/>";
         $content .= "</form>";
-        /*
-          /   $enable_plugins = $plugins->getPluginsDB(["enabled" => 1]);
-          $content .= "<form method='' action='post'>";
-          foreach ($enable_plugins as $enable_plugin) {
-          $content .= "<p>";
-          $content .= "{$enable_plugin['plugin_name']}";
-          $debug_key = strtolower($enable_plugin['plugin_name']) . "_debug";
-          if (isset($cfg[$debug_key]) && $cfg[$debug_key] == 1) {
-          $content .= "<input type='checkbox' name='{$enable_plugin['plugin_name']}' checked>";
-          } else {
-          $content .= "<input type='checkbox' name='{$enable_plugin['plugin_name']}'>";
-          }
-          $content .= "</p>";
-          }
-          $content .= "</form>";
-         * 
-         */
     } else if ($params['opt'] == 4) {
         if (!admin_auth("r_general_cfg")) {
             return false;
         }
         $content .= AdminPluginConfig("CORE");
     } else if ($params['opt'] == 10) {
-        if (!admin_auth("r_phpinfo")) {
+        if (!admin_auth("r_hoiphpinfo")) {
             return false;
         }
         $content .= "<div style='width:100%'>" . get_phpinfo() . "</div>";
