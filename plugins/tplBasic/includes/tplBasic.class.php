@@ -32,8 +32,8 @@ class TPL {
     private $css_cache_onefile;
 
     function __construct($cfg, $db = null) {
-        $this->cfg = $cfg;
-        $this->db = $db;
+        $this->cfg =& $cfg;
+        $this->db =& $db;
         (defined('DEBUG') && $cfg['tplbasic_debug']) ? $this->debug = 1 : $this->debug = 0;
     }
 
