@@ -116,6 +116,18 @@ class Multilang {
         }
     }
 
+    function getSessionLangID() {
+        global $cfg;
+        return $this->iso_to_id($cfg['WEB_LANG']);
+    }
+
+    function getSessionLang() {
+        global $cfg;
+        
+        $lid = $this->iso_to_id($cfg['WEB_LANG']);
+        return $this->active_langs[$lid];
+    }
+
     function iso_to_id($isolang) {
         foreach ($this->get_site_langs() as $lang) {
             if ($lang['iso_code'] == $isolang) {
@@ -141,20 +153,4 @@ class Multilang {
         $db->free($query);
     }
 
-    /*
-
-      function getSessionLang() {
-      $lid = $this->iso_to_id($this->weblang);
-      return $this->active_langs[$lid];
-      }
-
-      function getSessionLangId() {
-      return $this->iso_to_id($this->weblang);
-      }
-
-
-
-
-
-     */
 }
