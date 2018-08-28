@@ -32,8 +32,8 @@ class TPL {
     private $css_cache_onefile;
 
     function __construct($cfg, $db = null) {
-        $this->cfg =& $cfg;
-        $this->db =& $db;
+        $this->cfg = & $cfg;
+        $this->db = & $db;
         (defined('DEBUG') && $cfg['tplbasic_debug']) ? $this->debug = 1 : $this->debug = 0;
     }
 
@@ -45,9 +45,9 @@ class TPL {
         // BEGIN HEAD
         $this->css_cache_check() && !empty($this->css_cache_onefile) ? $this->css_cache() : null;
         $web_head = do_action("get_head");
-        
+
         print $web_head;
-        
+
         //END HEAD
         //BEGIN BODY
         if ($this->cfg['tplbasic_nav_menu']) { //we use do_action for select order
@@ -57,9 +57,9 @@ class TPL {
 
         $this->tpldata['ADD_TO_BODY'] .= do_action("add_to_body");
         $web_body = do_action("get_body");
-        
+
         print $web_body;
-        
+
         //END BODY
         //BEGIN FOOTER
         if (defined('SQL') && $this->db != null && $this->cfg['tplbasic_stats_query']) {
@@ -75,7 +75,7 @@ class TPL {
 
     function getTPL_file($plugin, $filename = null, $data = null) {
         //TODO add file cache for repetetive file get
-        
+
         global $debug;
         empty($filename) ? $filename = $plugin : null;
 
@@ -102,7 +102,7 @@ class TPL {
         global $debug;
 
         empty($filename) ? $filename = $plugin : null;
-        
+
 
         $USER_PATH = "tpl/{$this->cfg['tplbasic_theme']}/css/$filename.css";
         $DEFAULT_PATH = "plugins/$plugin/tpl/css/$filename.css";
@@ -298,9 +298,9 @@ class TPL {
         $cfg = & $this->cfg;
 
         $this->debug ? $debug->log("TPL code to var $path, gzip its {$cfg['tplbasic_gzip']}", "tplBasic", "DEBUG") : null;
-        
+
         $tpldata = $this->get_tpldata();
-        
+
         isset($cfg['tplbasic_gzip']) && $cfg['tplbasic_gzip'] ? ob_start("ob_gzhandler") : ob_start();
 
         include ($path);
