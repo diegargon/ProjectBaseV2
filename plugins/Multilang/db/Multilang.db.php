@@ -32,5 +32,6 @@ $multilang_database = [
 
 $multilang_database_uninstall = [
     "DROP TABLE `" . DB_PREFIX . "lang`",    
-    "DELETE FROM `" . DB_PREFIX . "config` WHERE plugin = 'Multilang'"
+    "DELETE FROM `" . DB_PREFIX . "config` WHERE plugin = 'Multilang'",
+    "DELETE FROM `" . DB_PREFIX . "plugins` WHERE plugin_name = 'Multilang'" 
 ];
