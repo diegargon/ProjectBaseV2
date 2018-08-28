@@ -33,17 +33,16 @@ class Plugins {
         foreach ($this->getEnabled() as $plugin) {
             if ($plugin['autostart']) {
                 $this->debug ? $debug->log("WORKING on " . $plugin['plugin_name'] . "...", "PLUGINS", "INFO") : null;
-            if (!$this->check_started($plugin)) {
-                if ($this->plugin_check($plugin)) {
-                    $this->debug ? $debug->log("Check sucessfull " . $plugin['plugin_name'] . "...", "PLUGINS", "INFO") : null;
-                    $this->start_plugin($plugin);
+                if (!$this->check_started($plugin)) {
+                    if ($this->plugin_check($plugin)) {
+                        $this->debug ? $debug->log("Check sucessfull " . $plugin['plugin_name'] . "...", "PLUGINS", "INFO") : null;
+                        $this->start_plugin($plugin);
+                    } else {
+                        $this->debug ? $debug->log("Check unsucessfull " . $plugin['plugin_name'] . "...", "PLUGINS", "ERROR") : null;
+                    }
                 } else {
-                    $this->debug ? $debug->log("Check unsucessfull " . $plugin['plugin_name'] . "...", "PLUGINS", "ERROR") : null;
+                    $this->debug ? $debug->log("Plugin " . $plugin['plugin_name'] . " already started", "PLUGINS", "INFO") : null;
                 }
-            } else {
-                $this->debug ? $debug->log("Plugin " . $plugin['plugin_name'] . " already started", "PLUGINS", "INFO") : null;
-            }
-                
             } else {
                 $this->debug ? $debug->log("Autorstart off, omitting " . $plugin['plugin_name'] . " for now...", "PLUGINS", "INFO") : null;
             }
@@ -71,7 +70,7 @@ class Plugins {
     }
 
     function start_plugin($plugin) {
-        global $debug, $cfg;
+        global $debug;
         $this->debug ? $debug->log("Initation plugin " . $plugin['plugin_name'] . " ...", "PLUGINS", "INFO") : null;
 
         require_once("plugins/" . $plugin['plugin_name'] . "/" . $plugin['main_file'] . "");
@@ -286,7 +285,10 @@ class Plugins {
                     $query_ary["missing"] = 0;
                     $db->update("plugins", $query_ary, ["plugin_name" => $plugin->plugin_name]);
                 } else {
-                    $db->update("plugins", ["missing" => 0], ["plugin_name" => $plugin->plugin_name]);
+                    //$db->update("plugins", ["missing" => 0], ["plugin_name" => $plugin->plugin_name]);
+                    /* Update DB all better while devel and not versioning */
+                    $query_ary["missing"] = 0;
+                    $db->update("plugins", $query_ary, ["plugin_name" => $plugin->plugin_name]);
                 }
             } else {
                 $db->insert("plugins", $query_ary);
@@ -489,6 +491,7 @@ class Plugins {
 
     private function find_dependencies_and_start($depend_name, $min_version, $max_version) {
         global $debug;
+
         foreach ($this->enabled_plugins as $plugin) {
 
             $allprovide = preg_split('/\s+/', $plugin['provide']);
