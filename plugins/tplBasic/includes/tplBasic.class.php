@@ -45,6 +45,9 @@ class TPL {
         // BEGIN HEAD
         $this->css_cache_check() && !empty($this->css_cache_onefile) ? $this->css_cache() : null;
         $web_head = do_action("get_head");
+        
+        print $web_head;
+        
         //END HEAD
         //BEGIN BODY
         if ($this->cfg['tplbasic_nav_menu']) { //we use do_action for select order
@@ -54,6 +57,9 @@ class TPL {
 
         $this->tpldata['ADD_TO_BODY'] .= do_action("add_to_body");
         $web_body = do_action("get_body");
+        
+        print $web_body;
+        
         //END BODY
         //BEGIN FOOTER
         if (defined('SQL') && $this->db != null && $this->cfg['tplbasic_stats_query']) {
@@ -64,7 +70,7 @@ class TPL {
         $web_footer = do_action("get_footer");
         //END FOOTER
 
-        echo $web_head . $web_body . $web_footer;
+        print($web_footer);
     }
 
     function getTPL_file($plugin, $filename = null, $data = null) {
