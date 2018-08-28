@@ -44,7 +44,7 @@ CREATE TABLE `" . DB_PREFIX . "users` (
   `regdate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `active` int(12) NOT NULL DEFAULT '0',
   `disable` tinyint(4) NOT NULL DEFAULT '0',
-  `isAdmin` tinyint(1) NOT NULL DEFAULT '0',
+  `isFounder` tinyint(1) NOT NULL DEFAULT '0',
   `last_login` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `reset` int(11) DEFAULT NULL,
   `avatar` varchar(255) DEFAULT NULL,
@@ -95,9 +95,9 @@ $smbasic_insert_database = [
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', 'smbasic_default_img_avatar', '')",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', 'smbasic_https_remote_avatar', '1')",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', 'smbasic_ask_terms', '1')",
-    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', '', '')",
-    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', '', '')",
-    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', '', '')",
+ //   "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', '', '')",
+   // "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', '', '')",
+   // "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', '', '')",
     /* DEFAULT ADMIN USER */
     "INSERT INTO `" . DB_PREFIX . "users` (`username`, `password`, `email`, `isAdmin`, `active`) VALUES ('admin', 'e1da6ddee81e1d1662a9a43b64309e6229e6216d5daf0543248ae80f23b52a05d2e164a5f036c3e72460969c514330f3bed7cd5f23b00a2fd23ed404c56c1360', 'diego@envigo.net', '1', '1')"
 ];
