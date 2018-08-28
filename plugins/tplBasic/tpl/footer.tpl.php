@@ -11,8 +11,8 @@
         isset($tpldata['ADD_TO_FOOTER']) ? print $tpldata['ADD_TO_FOOTER'] : null;
         isset($cfg['FOOT_COPYRIGHT']) ? print "<small class=\"fl_right\">" . $cfg['FOOT_COPYRIGHT'] . "</small>" : null;
 
-        if (isset($cfg['WEB_URL']) && isset($cfg['TITLE'])) {
-            print "<small class=\"fl_right\"><a href=\"" . $cfg['WEB_URL'] . "\">" . $cfg['TITLE'] . "</a></small>";
+        if (isset($cfg['WEB_URL']) && isset($cfg['WEB_NAME'])) {
+            print "<small class=\"fl_right\"><a href=\"" . $cfg['WEB_URL'] . "\">" . $cfg['WEB_NAME'] . "</a></small>";
         }
         ?>        
     </footer>
