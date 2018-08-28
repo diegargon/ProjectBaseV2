@@ -39,11 +39,21 @@ $tpl->addto_tplvar("ADD_BOTTOM_MENU", do_action("add_bottom_menu"));
 
 
 if ($params['admtab'] == $admin_id) {
-    $tpl->addto_tplvar("ADM_ASIDE_MENU_OPT", admin_general_aside($params));
-    $tpl->addto_tplvar("ADM_SECTION_CONTENT", admin_general_content($params));
+    $general_content = admin_general_content($params);
+    if ($general_content !== false) {
+        $tpl->addto_tplvar("ADM_ASIDE_MENU_OPT", admin_general_aside($params));
+        $tpl->addto_tplvar("ADM_SECTION_CONTENT", $general_content);
+    } else {
+        return false;
+    }
 } else {
-    $tpl->addto_tplvar("ADM_ASIDE_MENU_OPT", do_action("admin_get_aside_menu", $params));
-    $tpl->addto_tplvar("ADM_SECTION_CONTENT", do_action("admin_get_section_content", $params));
+    $section_content = do_action("admin_get_section_content", $params);
+    if ($general_conetnt !== false) {
+        $tpl->addto_tplvar("ADM_ASIDE_MENU_OPT", do_action("admin_get_aside_menu", $params));
+        $tpl->addto_tplvar("ADM_SECTION_CONTENT", $section_content);
+    } else {
+        return false;
+    }
 }
 
 $tpl->addto_tplvar("ADD_TO_BODY", $tpl->getTPL_file("AdminBasic", "admin_main_body", $params));
