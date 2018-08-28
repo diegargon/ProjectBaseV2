@@ -5,14 +5,46 @@
  */
 !defined('IN_WEB') ? exit : true;
 
-function SimpleCategories_init() {
-    global $ctgs, $cfg, $LNG, $db, $ml;
-    print_debug("SimpleCategories initiated", "PLUGIN_LOAD");
+function SimpleCats_init() {
+    global $ctgs;
 
-    !defined('MULTILANG') || !isset($ml) ? $ml = null : null;
+    define('CATS', TRUE);
 
-    includePluginFiles("SimpleCategories");
-    //$tpl->getCSS_filePath("SimpleCategories");
-    //$tpl->getCSS_filePath("SimpleCategories", "SimpleCategories-mobile");
-    !isset($ctgs) ? $ctgs = new Categories($cfg, $LNG, $db, $ml) : null;
+    !isset($ctgs) ? $ctgs = new Categories() : null;
+}
+
+function SimpleCats_install() {
+    global $db;
+
+    require_once "db/SimpleCats.db.php";
+    foreach ($simplecats_db_install as $query) {
+        $r = $db->query($query);
+    }
+
+    return ($r) ? true : false;
+}
+
+function SimpleCats_preInstall() {
+    
+}
+
+function SimpleCats_preInstall_info() {
+    return true;
+}
+
+function SimpleCats_upgrade($version, $from_version) {
+    return true;
+}
+
+function SimpleCats_uninstall() {
+    global $db;
+
+    $db->silent(true);
+    require_once "db/SimpleCats.db.php";
+    foreach ($simplecats_db_uninstall as $query) {
+        $r = $db->query($query);
+    }
+    $db->silent(false);
+
+    return ($r) ? true : false;
 }

@@ -15,18 +15,9 @@
 
 class Categories {
 
-    private $cfg;
-    private $LNG;
-    private $ml;
-    private $db;
     private $categories = [];
 
-    public function __construct($cfg, $LNG, $db, $ml = null) {
-        $this->cfg = $cfg;
-        $this->LNG = $LNG;
-        $this->db = $db;
-        $this->ml = $ml;
-
+    public function __construct() {
         $this->loadCategories();
     }
 
@@ -158,18 +149,18 @@ class Categories {
         });
     }
 
-    private function loadCategories($plugin = null, $orderByViews = 0) {
+    private function loadCategories($orderByViews = 0) {
+        global $ml, $db;
         //Carga todas las categorias de todos los modulos de un solo lenguage
-        $where_ary = [];
 
-        defined('MULTILANG') && ($this->ml != null) ? $lang_id = $this->ml->getSessionLangId() : $lang_id = $this->cfg['WEB_LANG_ID'];
+        (defined('MULTILANG') && !empty($ml)) ? $lang_id = $ml->getSessionLangID() : $lang_id = 1;
+        $where_ary = [];
         !empty($lang_id) && is_numeric($lang_id) ? $where_ary['lang_id'] = $lang_id : null;
 
         $orderByViews ? $order = "views DESC" : $order = "weight ASC";
 
-        //$plugin ? $where_ary['plugin'] = $plugin : null;
-        $query = $this->db->select_all("categories", $where_ary, "ORDER BY $order");
-        while ($c_row = $this->db->fetch($query)) {
+        $query = $db->select_all("categories", $where_ary, "ORDER BY $order");
+        while ($c_row = $db->fetch($query)) {
             $this->categories[$c_row['cid']] = $c_row;
         }
     }

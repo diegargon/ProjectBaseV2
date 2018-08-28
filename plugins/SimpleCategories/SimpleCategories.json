@@ -1,0 +1,41 @@
+{
+    "plugin_name": "SimpleCategories",
+    "main_file": "SimpleCategories.php",
+    "function_init": "SimpleCats_init",
+    "function_install": "SimpleCats_install",
+    "function_admin_init": "SimpleCats_AdminInit",
+    "function_install": "SimpleCats_install",
+    "function_pre_install": "SimpleCats_preInstall",
+    "function_pre_install_info": "SimpleCats_preInstall_info",
+    "function_upgrade": "SimpleCats_upgrade",
+    "function_uninstall": "SimpleCats_uninstall",    
+    "provide": "CATS",
+    "version": 0.2,
+    "depends": [
+        {
+            "name": "CORE",
+            "min_version": 0.2,
+            "max_version": 0.9
+        },        
+        {
+            "name": "SQL",
+            "min_version": 0.2,
+            "max_version": 0.9
+        },
+        {
+            "name": "TPL",
+            "min_version": 0.2,
+            "max_version": 0.9
+        }         
+    ],    
+    "autostart": 0,
+    "priority": 6,
+    "optional": [
+        {
+            "name": "MULTILANG",
+            "min_version": 0.2,
+            "max_version": 0.9
+        }  
+    ],
+    "conflicts": []
+}
