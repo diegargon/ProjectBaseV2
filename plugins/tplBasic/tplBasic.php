@@ -26,6 +26,7 @@ function tplBasic_init() {
     register_uniq_action("index_page", "tplBasic_index_page", "5");
     register_uniq_action("message_page", "tplBasic_message_page");
     register_uniq_action("message_box", "tplBasic_message_box");
+    register_uniq_action("get_message_box", "tplBasic_get_message_box");
 }
 
 function tplBasic_Install() {
@@ -53,6 +54,12 @@ function tplBasic_message_page($box_data) {
 }
 
 function tplBasic_message_box($box_data) {
+    global $tpl;
+
+    $tpl->addto_tplvar("ADD_TO_BODY", tplBasic_get_msg_box($box_data));
+}
+
+function tplBasic_get_msg_box($box_data) {
     global $tpl, $LNG;
 
     !empty($box_data['title']) ? $data['box_title'] = $LNG[$box_data['title']] : $data['box_title'] = $LNG['L_E_ERROR'];
@@ -60,7 +67,8 @@ function tplBasic_message_box($box_data) {
     !empty($box_data['backlink_title']) ? $data['box_backlink_title'] = $LNG[$box_data['backlink_title']] : $data['box_backlink_title'] = $LNG['L_BACK'];
     $data['box_msg'] = $LNG[$box_data['msg']];
     !empty($box_data['xtra_box_msg']) ? $data['box_msg'] .= $box_data['xtra_box_msg'] : false;
-    $tpl->addto_tplvar("ADD_TO_BODY", $tpl->getTPL_file("tplBasic", "msgbox", $data));
+
+    return $tpl->getTPL_file("tplBasic", "msgbox", $data);
 }
 
 function tpl_basic_head() {
