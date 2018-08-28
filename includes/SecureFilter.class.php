@@ -153,7 +153,7 @@ class SecureFilter {
             return false;
         }
 
-        return var_alphanum_unicode($_POST[$var], $max_size, $min_size);
+        return $this->var_alphanum_unicode($_POST[$var], $max_size, $min_size);
     }
 
     //$_SERVER
