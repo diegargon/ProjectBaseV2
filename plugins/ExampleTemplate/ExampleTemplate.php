@@ -5,7 +5,10 @@
  */
 !defined('IN_WEB') ? exit : true;
 
-function ExampleTemplate_init() {  
+function ExampleTemplate_init() {
+    global $example_template;
+    !isset($example_template) ? $example_template = new ExampleTemplate(): null;
+    
 }
 
 function ExampleTemplate_install() {
