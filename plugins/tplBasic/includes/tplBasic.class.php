@@ -32,9 +32,12 @@ class TPL {
     private $css_cache_onefile;
 
     function __construct($cfg, $db = null) {
+        global $debug;
+
         $this->cfg = & $cfg;
         $this->db = & $db;
-        (defined('DEBUG') && $cfg['tplbasic_debug']) ? $this->debug = 1 : $this->debug = 0;
+
+        (defined('DEBUG') && $cfg['tplbasic_debug']) ? $this->debug = & $debug : $this->debug = false;
     }
 
     function build_page() {
@@ -76,10 +79,9 @@ class TPL {
     function getTPL_file($plugin, $filename = null, $data = null) {
         //TODO add file cache for repetetive file get
 
-        global $debug;
         empty($filename) ? $filename = $plugin : null;
 
-        $this->debug ? $debug->log("getTPL_file called by-> $plugin for get a $filename", "tplBasic", "DEBUG") : null;
+        $this->debug ? $this->debug->log("getTPL_file called by-> $plugin for get a $filename", "tplBasic", "DEBUG") : null;
 
         $USER_PATH_LANG = "tpl/{$this->cfg['tplbasic_theme']}/$filename.{$this->cfg['WEB_LANG']}.tpl.php";
         $USER_PATH = "tpl/{$this->cfg['tplbasic_theme']}/$filename.tpl.php";
@@ -91,7 +93,7 @@ class TPL {
         } else if (file_exists($DEFAULT_PATH)) {
             $tpl_file_content = $this->codetovar($DEFAULT_PATH, $data);
         } else {
-            $this->debug ? $debug->log("getTPL_file called but not find $filename", "tplBasic", "DEBUG") : null;
+            $this->debug ? $this->debug->log("getTPL_file called but not find $filename", "tplBasic", "DEBUG") : null;
             return false;
         }
 
@@ -99,10 +101,8 @@ class TPL {
     }
 
     function getCSS_filePath($plugin, $filename = null) {
-        global $debug;
 
         empty($filename) ? $filename = $plugin : null;
-
 
         $USER_PATH = "tpl/{$this->cfg['tplbasic_theme']}/css/$filename.css";
         $DEFAULT_PATH = "plugins/$plugin/tpl/css/$filename.css";
@@ -135,15 +135,14 @@ class TPL {
             if (isset($css)) {
                 $this->addto_tplvar("LINK", $css);
             } else {
-                $this->debug ? $debug->log("Get CSS called by-> $plugin for get a $filename NOT FOUND IT", "tplBasic", "DEBUG") : null;
+                $this->debug ? $this->debug->log("Get CSS called by-> $plugin for get a $filename NOT FOUND IT", "tplBasic", "DEBUG") : null;
             }
         }
     }
 
     function AddScriptFile($plugin, $filename = null, $place = "TOP", $async = "async") {
-        global $debug;
 
-        $this->debug ? $debug->log("AddScriptFile request -> $plugin for get a $filename", "tplBasic", "DEBUG") : null;
+        $this->debug ? $this->debug->log("AddScriptFile request -> $plugin for get a $filename", "tplBasic", "DEBUG") : null;
 
         if (!empty($plugin) && ($plugin == "standard")) {
             if (!$this->check_script($filename)) {
@@ -153,14 +152,14 @@ class TPL {
                     $this->addto_tplvar("SCRIPTS_" . $place . "", $script);
                     $this->scripts[] = $filename;
                     $backtrace = debug_backtrace();
-                    $this->debug ? $debug->log("AddcriptFile:CheckScript setting first time * $filename * by " . $backtrace[1]['function'] . "", "tplBasic", "DEBUG") : null;
+                    $this->debug ? $this->debug->log("AddcriptFile:CheckScript setting first time * $filename * by " . $backtrace[1]['function'] . "", "tplBasic", "DEBUG") : null;
                 } else {
                     $backtrace = debug_backtrace();
-                    $this->debug ? $debug->log("AddcriptFile:CheckScript standard script * $filename * not found called by " . $backtrace[1]['function'] . "", "tplBasic", "DEBUG") : null;
+                    $this->debug ? $this->debug->log("AddcriptFile:CheckScript standard script * $filename * not found called by " . $backtrace[1]['function'] . "", "tplBasic", "DEBUG") : null;
                 }
             } else {
                 $backtrace = debug_backtrace();
-                $this->debug ? $debug->log("AddcriptFile:CheckScript found coincidence * $filename * called by " . $backtrace[1]['function'] . "", "tplBasic", "DEBUG") : null;
+                $this->debug ? $this->debug->log("AddcriptFile:CheckScript found coincidence * $filename * called by " . $backtrace[1]['function'] . "", "tplBasic", "DEBUG") : null;
             }
             return true;
         }
@@ -184,7 +183,7 @@ class TPL {
         if (!empty($SCRIPT_PATH)) {
             $script = "<script type='text/javascript' src='{$this->cfg['STATIC_SRV_URL']}$SCRIPT_PATH' charset='UTF-8' $async></script>\n";
         } else {
-            $this->debug ? $debug->log("AddScriptFile called by-> $plugin for get a $filename but NOT FOUND IT", "tplBasic", "ERROR") : null;
+            $this->debug ? $this->debug->log("AddScriptFile called by-> $plugin for get a $filename but NOT FOUND IT", "tplBasic", "ERROR") : null;
             return false;
         }
         $this->addto_tplvar("SCRIPTS_" . $place . "", $script);
@@ -249,14 +248,13 @@ class TPL {
     }
 
     private function css_cache() {
-        global $debug;
         $css_code = "";
 
         $cssfile = $this->css_cache_onefile . ".css";
-        $this->debug ? $debug->log("CSS One file Unify $cssfile", "tplBasic", "DEBUG") : null;
+        $this->debug ? $this->debug->log("CSS One file Unify $cssfile", "tplBasic", "DEBUG") : null;
         if (!file_exists("cache/css/$cssfile")) {
             foreach ($this->css_cache_filepaths as $cssfile_path) {
-                $this->debug ? $debug->log("CSS Unify  $cssfile_path", "tplBasic", "DEBUG") : null;
+                $this->debug ? $this->debug->log("CSS Unify  $cssfile_path", "tplBasic", "DEBUG") : null;
                 $css_code .= $this->codetovar($cssfile_path);
             }
             $css_code = $this->css_strip($css_code);
@@ -294,10 +292,10 @@ class TPL {
 
     function codetovar($path, $data = null) {
         //global $cfg, $LNG, $tpl;
-        global $LNG, $tUtil, $debug;
+        global $LNG, $tUtil;
         $cfg = & $this->cfg;
 
-        $this->debug ? $debug->log("TPL code to var $path, gzip its {$cfg['tplbasic_gzip']}", "tplBasic", "DEBUG") : null;
+        $this->debug ? $this->debug->log("TPL code to var $path, gzip its {$cfg['tplbasic_gzip']}", "tplBasic", "DEBUG") : null;
 
         $tpldata = $this->get_tpldata();
 
