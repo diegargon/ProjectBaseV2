@@ -40,7 +40,6 @@ $db->set_prefix(DB_PREFIX);
 $db->set_minchar_search(DB_MINCHAR_SEARCH);
 $db->connect();
 
-
 /* GET CONFIG */
 $db->silent(true);
 $result = $db->select_all("config");
@@ -52,6 +51,8 @@ if ($result) {
         $cfg[$conf['cfg_key']] = $conf['cfg_value'];
     }
 }
+
+/* CHECK VERSION */
 
 if (CORE_VERSION != (float) $cfg["CORE_VERSION"]) {
     die("Core need upgrade");
@@ -100,10 +101,7 @@ do_action("init_core");
 $module = $filter->get_strict_chars("module");
 $page = $filter->get_strict_chars("page");
 
-if (empty($module) || empty($page)) {
-    //exit("Error module or page missed");
-    do_action("index_page");
-} else {
+if (!empty($module) && !empty($page)) {
     !$plugins->check_enabled($module) ? exit("Error plugin ins't enabled") : null;
 
     $path = "plugins/$module/$page.php";
@@ -111,28 +109,15 @@ if (empty($module) || empty($page)) {
         $msgbox['msg'] = "L_E_PLUGPAGE_NOEXISTS";
         $msgbox['backlink'] = "/";
         $msgbox['backlink_title'] = "L_HOME";
-        do_action("message_page", $msgbox);
+        $frontend->msg_box($msgbox);
     } else {
         do_action("preload_" . $module . "_" . $page);
         require_once($path);
     }
+} else {
+    do_action("index_page");
 }
 
-
-
-if (defined('DEBUG')) {
-    
-    ($cfg['smbasic_debug']) ? setSessionDebugDetails() : null;
-    
-    $q_history = $db->get_query_history();
-    foreach ($q_history as $key => $value) {
-        $debug->log($value, "MYSQL");
-    }
-
-    $tpl->addto_tplvar("ADD_TO_FOOTER", $debug->print_debug());
-    $tpl->addto_tplvar("ADD_TO_FOOTER",  "Memory usage:" . formatBytes(memory_get_usage()) ."<br/>");
-    $tpl->addto_tplvar("ADD_TO_FOOTER", "Memory peak usage:" . formatBytes(memory_get_peak_usage()). "<br/>");
-}
-$tpl->build_page();
+$frontend->send_page();
 
 do_action("finalize");
