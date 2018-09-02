@@ -109,6 +109,25 @@ if ($step == null || $step == false) {
                     echo "<hr/>";
                 }
                 ?>
+                
+                <p>Please selected the frontend manager</p>
+
+                <?php
+                $first = true;
+                $provide_results = $plugins->getPluginProvide("FRONTEND");
+
+                foreach ($provide_results as $provider) {
+                    if ($first) {
+                        $first = false;
+                        echo "<input checked type='radio' name='frontend_mgr' value='$provider->plugin_name'>$provider->plugin_name<br\>";
+                    } else {
+                        echo "<input type='radio' name='frontend_mgr' value='$provider->plugin_name'>$provider->plugin_name<br\>";
+                    }
+                    echo "<hr/>";
+                }
+                ?>
+                
+                
                 <br/><br/>
                 <input type="submit" value="Submit">
                 <br/>
@@ -119,7 +138,8 @@ if ($step == null || $step == false) {
             $session_mgr = $filter->post_AZChar("session_mgr");
             $tpl_mgr = $filter->post_AZChar("tpl_mgr");
             $admin_mgr = $filter->post_AZChar("admin_mgr");
-
+            $frontend_mgr = $filter->post_AZChar("frontend_mgr");
+            
             if (!isset($session_mgr) || !isset($tpl_mgr) || !isset($admin_mgr)) {
                 die("ERROR basic plugins empty");
 
@@ -147,6 +167,13 @@ if ($step == null || $step == false) {
                 $func_plugInstall();
             }
 
+            $plugin = $plugins->getPluginByName($frontend_mgr);
+            require_once("plugins/$plugin->plugin_name/$plugin->main_file");
+            $func_plugInstall = $plugin->function_install;
+            if (function_exists($func_plugInstall)) {
+                $func_plugInstall();
+            }
+            
             $set_ary = [
                 "enabled" => 1,
                 "core" => 1,
@@ -157,6 +184,7 @@ if ($step == null || $step == false) {
             $db->update("plugins", $set_ary, ["plugin_name" => $session_mgr]);
             $db->update("plugins", $set_ary, ["plugin_name" => $tpl_mgr]);
             $db->update("plugins", $set_ary, ["plugin_name" => $admin_mgr]);
+            $db->update("plugins", $set_ary, ["plugin_name" => $frontend_mgr]);
             $db->update("config", ["cfg_value" => 1], ["cfg_key" => "CORE_INSTALLED", "plugin" => "CORE"]);
             ?>   
             <p>Installation finished</p>
