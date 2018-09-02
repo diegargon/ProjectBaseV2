@@ -2,6 +2,8 @@
 
 /*
  *  Copyright @ 2016 - 2018 Diego Garcia
+ * 
+ * 
  */
 !defined('IN_WEB') ? exit : true;
 
@@ -10,7 +12,9 @@ class TPL {
     private $debug;
     private $cfg;
     private $db;
-    private $tpldata = null;
+    private $tpldata;
+    private $css_cache_filepaths;
+    public $css_cache_onefile;
     private $scripts = [];
     private $std_remote_scripts = array(//TODO LOAD LIST
         "jquery" => "https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js",
@@ -28,165 +32,13 @@ class TPL {
         "three" => "https://ajax.googleapis.com/ajax/libs/threejs/r76/three.min.js",
         "webfont" => "https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js",
     );
-    private $css_cache_filepaths;
-    private $css_cache_onefile;
 
     function __construct($cfg, $db = null) {
         global $debug;
 
         $this->cfg = & $cfg;
         $this->db = & $db;
-
         (defined('DEBUG') && $cfg['tplbasic_debug']) ? $this->debug = & $debug : $this->debug = false;
-    }
-
-    function build_page() {
-
-        !isset($this->tpldata['ADD_TO_FOOTER']) ? $this->tpldata['ADD_TO_FOOTER'] = "" : null;
-        !isset($this->tpldata['ADD_TO_BODY']) ? $this->tpldata['ADD_TO_BODY'] = "" : null;
-
-        // BEGIN HEAD
-        $this->css_cache_check() && !empty($this->css_cache_onefile) ? $this->css_cache() : null;
-        $web_head = do_action("get_head");
-
-        print $web_head;
-
-        //END HEAD
-        //BEGIN BODY
-        if ($this->cfg['tplbasic_nav_menu']) { //we use do_action for select order
-            !isset($this->tpldata['HEADER_MENU_ELEMENT']) ? $this->tpldata['HEADER_MENU_ELEMENT'] = "" : null;
-            $this->tpldata['HEADER_MENU_ELEMENT'] .= do_action("header_menu_element");
-        }
-
-        $this->tpldata['ADD_TO_BODY'] .= do_action("add_to_body");
-        $web_body = do_action("get_body");
-
-        print $web_body;
-
-        //END BODY
-        //BEGIN FOOTER
-        if (defined('SQL') && $this->db != null && $this->cfg['tplbasic_stats_query']) {
-            $this->tpldata['ADD_TO_FOOTER'] .= "<p class='center zero'>Querys(" . $this->db->num_querys() . ")</p>";
-        }
-        $this->tpldata['ADD_TO_FOOTER'] .= do_action("add_to_footer");
-
-        $web_footer = do_action("get_footer");
-        //END FOOTER
-
-        print($web_footer);
-    }
-
-    function getTPL_file($plugin, $filename = null, $data = null) {
-        //TODO add file cache for repetetive file get
-
-        empty($filename) ? $filename = $plugin : null;
-
-        $this->debug ? $this->debug->log("getTPL_file called by-> $plugin for get a $filename", "tplBasic", "DEBUG") : null;
-
-        $USER_PATH_LANG = "tpl/{$this->cfg['tplbasic_theme']}/$filename.{$this->cfg['WEB_LANG']}.tpl.php";
-        $USER_PATH = "tpl/{$this->cfg['tplbasic_theme']}/$filename.tpl.php";
-        $DEFAULT_PATH = "plugins/$plugin/tpl/$filename.tpl.php";
-        if (file_exists($USER_PATH_LANG)) {
-            $tpl_file_content = $this->codetovar($USER_PATH_LANG, $data);
-        } else if (file_exists($USER_PATH)) {
-            $tpl_file_content = $this->codetovar($USER_PATH, $data);
-        } else if (file_exists($DEFAULT_PATH)) {
-            $tpl_file_content = $this->codetovar($DEFAULT_PATH, $data);
-        } else {
-            $this->debug ? $this->debug->log("getTPL_file called but not find $filename", "tplBasic", "DEBUG") : null;
-            return false;
-        }
-
-        return $tpl_file_content;
-    }
-
-    function getCSS_filePath($plugin, $filename = null) {
-
-        empty($filename) ? $filename = $plugin : null;
-
-        $USER_PATH = "tpl/{$this->cfg['tplbasic_theme']}/css/$filename.css";
-        $DEFAULT_PATH = "plugins/$plugin/tpl/css/$filename.css";
-        if ($this->css_cache_check() == true) {
-            if (file_exists($USER_PATH)) {
-                $this->css_cache_filepaths[] = $USER_PATH;
-            } else {
-                $this->css_cache_filepaths[] = $DEFAULT_PATH;
-            }
-            if (empty($this->css_cache_onefile)) {
-                $this->css_cache_onefile = $filename;
-            } else {
-                $this->css_cache_onefile .= "-" . $filename;
-            }
-        } else {
-            if ($this->cfg['tplbasic_css_inline'] == 0) {
-                if (file_exists($USER_PATH)) {
-                    $css = "<link rel='stylesheet' href='/$USER_PATH'>\n";
-                } else if (file_exists($DEFAULT_PATH)) {
-                    $css = "<link rel='stylesheet' href='/$DEFAULT_PATH'>\n";
-                }
-            } else {
-                if (file_exists($USER_PATH)) {
-                    $css_code = $this->codetovar("$USER_PATH");
-                } else if (file_exists($DEFAULT_PATH)) {
-                    $css_code = $this->codetovar("$DEFAULT_PATH");
-                }
-                isset($css_code) ? $css = "<style>" . $this->css_strip($css_code) . "</style>" : null;
-            }
-            if (isset($css)) {
-                $this->addto_tplvar("LINK", $css);
-            } else {
-                $this->debug ? $this->debug->log("Get CSS called by-> $plugin for get a $filename NOT FOUND IT", "tplBasic", "DEBUG") : null;
-            }
-        }
-    }
-
-    function AddScriptFile($plugin, $filename = null, $place = "TOP", $async = "async") {
-
-        $this->debug ? $this->debug->log("AddScriptFile request -> $plugin for get a $filename", "tplBasic", "DEBUG") : null;
-
-        if (!empty($plugin) && ($plugin == "standard")) {
-            if (!$this->check_script($filename)) {
-                if (array_key_exists($filename, $this->std_remote_scripts)) {
-                    $script_url = $this->std_remote_scripts[$filename];
-                    $script = "<script type='text/javascript' src='$script_url' charset='UTF-8' $async></script>\n";
-                    $this->addto_tplvar("SCRIPTS_" . $place . "", $script);
-                    $this->scripts[] = $filename;
-                    $backtrace = debug_backtrace();
-                    $this->debug ? $this->debug->log("AddcriptFile:CheckScript setting first time * $filename * by " . $backtrace[1]['function'] . "", "tplBasic", "DEBUG") : null;
-                } else {
-                    $backtrace = debug_backtrace();
-                    $this->debug ? $this->debug->log("AddcriptFile:CheckScript standard script * $filename * not found called by " . $backtrace[1]['function'] . "", "tplBasic", "DEBUG") : null;
-                }
-            } else {
-                $backtrace = debug_backtrace();
-                $this->debug ? $this->debug->log("AddcriptFile:CheckScript found coincidence * $filename * called by " . $backtrace[1]['function'] . "", "tplBasic", "DEBUG") : null;
-            }
-            return true;
-        }
-
-        empty($filename) ? $filename = $plugin : null;
-
-        $USER_LANG_PATH = "tpl/{$this->cfg['tplbasic_theme']}/js/$filename.{$this->cfg['WEB_LANG']}.js";
-        $DEFAULT_LANG_PATH = "plugins/$plugin/js/$filename.{$this->cfg['WEB_LANG']}.js";
-        $USER_PATH = "tpl/{$this->cfg['tplbasic_theme']}/js/$filename.js";
-        $DEFAULT_PATH = "plugins/$plugin/js/$filename.js";
-
-        if (file_exists($USER_LANG_PATH)) { //TODO Recheck priority later
-            $SCRIPT_PATH = $USER_LANG_PATH;
-        } else if (file_exists($USER_PATH)) {
-            $SCRIPT_PATH = $USER_PATH;
-        } else if (file_exists($DEFAULT_LANG_PATH)) {
-            $SCRIPT_PATH = $DEFAULT_LANG_PATH;
-        } else if (file_exists($DEFAULT_PATH)) {
-            $SCRIPT_PATH = $DEFAULT_PATH;
-        }
-        if (!empty($SCRIPT_PATH)) {
-            $script = "<script type='text/javascript' src='{$this->cfg['STATIC_SRV_URL']}$SCRIPT_PATH' charset='UTF-8' $async></script>\n";
-        } else {
-            $this->debug ? $this->debug->log("AddScriptFile called by-> $plugin for get a $filename but NOT FOUND IT", "tplBasic", "ERROR") : null;
-            return false;
-        }
-        $this->addto_tplvar("SCRIPTS_" . $place . "", $script);
     }
 
     function addto_tplvar($tplvar, $data, $priority = 5) { // change name to appendTo_tplvar? TODO priority support?
@@ -218,6 +70,27 @@ class TPL {
         return $this->tpldata;
     }
 
+    function getTPL_file($plugin, $filename = null, $data = null) {
+
+        empty($filename) ? $filename = $plugin : null;
+
+        $USER_PATH_LANG = "tpl/{$this->cfg['tplbasic_theme']}/$filename.{$this->cfg['WEB_LANG']}.tpl.php";
+        $USER_PATH = "tpl/{$this->cfg['tplbasic_theme']}/$filename.tpl.php";
+        $DEFAULT_PATH = "plugins/$plugin/tpl/$filename.tpl.php";
+        if (file_exists($USER_PATH_LANG)) {
+            $tpl_file_content = $this->parse_file($USER_PATH_LANG, $data);
+        } else if (file_exists($USER_PATH)) {
+            $tpl_file_content = $this->parse_file($USER_PATH, $data);
+        } else if (file_exists($DEFAULT_PATH)) {
+            $tpl_file_content = $this->parse_file($DEFAULT_PATH, $data);
+        } else {
+            $this->debug ? $this->debug->log("getTPL_file called but not find $filename", "tplBasic", "DEBUG") : null;
+            return false;
+        }
+
+        return $tpl_file_content;
+    }
+
     function addStdScript($key, $url) {
         if (array_key_exists($key, $this->std_remote_scripts)) {
             return 0;
@@ -234,7 +107,96 @@ class TPL {
         return false;
     }
 
-    private function css_cache_check() {
+    function AddScriptFile($plugin, $filename = null, $place = "TOP", $async = "async") {
+
+        $this->debug ? $this->debug->log("AddScriptFile request -> $plugin for get a $filename", "tplBasic", "DEBUG") : null;
+
+        if (!empty($plugin) && ($plugin == "standard")) {
+            if (!$this->check_script($filename)) {
+                if (array_key_exists($filename, $this->std_remote_scripts)) {
+                    $script_url = $this->std_remote_scripts[$filename];
+                    $script = "<script type='text/javascript' src='$script_url' charset='UTF-8' $async></script>\n";
+                    $this->addto_tplvar("SCRIPTS_" . $place . "", $script);
+                    $this->scripts[] = $filename;
+                    $backtrace = debug_backtrace();
+                    $this->debug ? $this->debug->log("AddcriptFile:CheckScript setting first time * $filename * by " . $backtrace[1]['function'] . "", "tplBasic", "DEBUG") : null;
+                } else {
+                    $backtrace = debug_backtrace();
+                    $this->debug ? $this->debug->log("AddcriptFile:CheckScript standard script * $filename * not found called by " . $backtrace[1]['function'] . "", "tplBasic", "DEBUG") : null;
+                }
+            } else {
+                $backtrace = debug_backtrace();
+                $this->debug ? $this->debug->log("AddcriptFile:CheckScript found coincidence * $filename * called by " . $backtrace[1]['function'] . "", "tplBasic", "DEBUG") : null;
+            }
+            return true;
+        }
+
+        empty($filename) ? $filename = $plugin : null;
+
+        $USER_LANG_PATH = "tpl/{$this->cfg['simplefrontend_theme']}/js/$filename.{$this->cfg['WEB_LANG']}.js";
+        $DEFAULT_LANG_PATH = "plugins/$plugin/js/$filename.{$this->cfg['WEB_LANG']}.js";
+        $USER_PATH = "tpl/{$this->cfg['simplefrontend_theme']}/js/$filename.js";
+        $DEFAULT_PATH = "plugins/$plugin/js/$filename.js";
+
+        if (file_exists($USER_LANG_PATH)) { //TODO Recheck priority later
+            $SCRIPT_PATH = $USER_LANG_PATH;
+        } else if (file_exists($USER_PATH)) {
+            $SCRIPT_PATH = $USER_PATH;
+        } else if (file_exists($DEFAULT_LANG_PATH)) {
+            $SCRIPT_PATH = $DEFAULT_LANG_PATH;
+        } else if (file_exists($DEFAULT_PATH)) {
+            $SCRIPT_PATH = $DEFAULT_PATH;
+        }
+        if (!empty($SCRIPT_PATH)) {
+            $script = "<script type='text/javascript' src='{$this->cfg['STATIC_SRV_URL']}$SCRIPT_PATH' charset='UTF-8' $async></script>\n";
+        } else {
+            $this->debug ? $this->debug->log("AddScriptFile called by-> $plugin for get a $filename but NOT FOUND IT", "tplBasic", "ERROR") : null;
+            return false;
+        }
+        $this->addto_tplvar("SCRIPTS_" . $place . "", $script);
+    }
+
+    function getCSS_filePath($plugin, $filename = null) {
+
+        empty($filename) ? $filename = $plugin : null;
+
+        $USER_PATH = "tpl/{$this->cfg['tplbasic_theme']}/css/$filename.css";
+        $DEFAULT_PATH = "plugins/$plugin/tpl/css/$filename.css";
+        if ($this->css_cache_check() == true) {
+            if (file_exists($USER_PATH)) {
+                $this->css_cache_filepaths[] = $USER_PATH;
+            } else {
+                $this->css_cache_filepaths[] = $DEFAULT_PATH;
+            }
+            if (empty($this->css_cache_onefile)) {
+                $this->css_cache_onefile = $filename;
+            } else {
+                $this->css_cache_onefile .= "-" . $filename;
+            }
+        } else {
+            if ($this->cfg['tplbasic_css_inline'] == 0) {
+                if (file_exists($USER_PATH)) {
+                    $css = "<link rel='stylesheet' href='/$USER_PATH'>\n";
+                } else if (file_exists($DEFAULT_PATH)) {
+                    $css = "<link rel='stylesheet' href='/$DEFAULT_PATH'>\n";
+                }
+            } else {
+                if (file_exists($USER_PATH)) {
+                    $css_code = $this->parse_file("$USER_PATH");
+                } else if (file_exists($DEFAULT_PATH)) {
+                    $css_code = $this->parse_file("$DEFAULT_PATH");
+                }
+                isset($css_code) ? $css = "<style>" . $this->css_strip($css_code) . "</style>" : null;
+            }
+            if (isset($css)) {
+                $this->addto_tplvar("LINK", $css);
+            } else {
+                $this->debug ? $this->debug->log("Get CSS called by-> $plugin for get a $filename NOT FOUND IT", "tplBasic", "DEBUG") : null;
+            }
+        }
+    }
+
+    function css_cache_check() {
         if ($this->cfg['tplbasic_css_optimize'] == 0 || !is_writable("cache")) {
             return false;
         }
@@ -247,7 +209,12 @@ class TPL {
         return true;
     }
 
-    private function css_cache() {
+    function css_cache() {
+
+        if (!$this->css_cache_check() || empty($this->css_cache_onefile)) {
+            return false;
+        }
+
         $css_code = "";
 
         $cssfile = $this->css_cache_onefile . ".css";
@@ -255,7 +222,7 @@ class TPL {
         if (!file_exists("cache/css/$cssfile")) {
             foreach ($this->css_cache_filepaths as $cssfile_path) {
                 $this->debug ? $this->debug->log("CSS Unify  $cssfile_path", "tplBasic", "DEBUG") : null;
-                $css_code .= $this->codetovar($cssfile_path);
+                $css_code .= $this->parse_file($cssfile_path);
             }
             $css_code = $this->css_strip($css_code);
             file_put_contents("cache/css/$cssfile", $css_code);
@@ -263,9 +230,11 @@ class TPL {
         if ($this->cfg['tplbasic_css_inline'] == 0) {
             $this->addto_tplvar("LINK", "<link rel='stylesheet' href='/cache/css/$cssfile'>\n");
         } else {
-            $css_code = $this->codetovar("cache/css/$cssfile");
+            $css_code = $this->parse_file("cache/css/$cssfile");
             $this->addto_tplvar("LINK", "<style>$css_code</style>\n");
         }
+
+        return true;
     }
 
     private function css_strip($css) { #by nyctimus
@@ -290,12 +259,12 @@ class TPL {
         return trim($css);
     }
 
-    function codetovar($path, $data = null) {
+    function parse_file($path, $data = null) {
         //global $cfg, $LNG, $tpl;
         global $LNG, $tUtil;
         $cfg = & $this->cfg;
 
-        $this->debug ? $this->debug->log("TPL code to var $path, gzip its {$cfg['tplbasic_gzip']}", "tplBasic", "DEBUG") : null;
+        $this->debug ? $this->debug->log("TPL parse $path, gzip its {$cfg['tplbasic_gzip']}", "tplBasic", "DEBUG") : null;
 
         $tpldata = $this->get_tpldata();
 
