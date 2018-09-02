@@ -22,7 +22,7 @@ function AdminBasic_init() {
     $user = $sm->getSessionUser();
     if ($user) {
         global $acl_auth;
-        if (($user['isAdmin']) || (defined('ACL') && $acl_auth->acl_ask("admin_all"))) {
+        if (($user['isFounder']) || (defined('ACL') && $acl_auth->acl_ask("admin_all"))) {
             register_action("header_menu_element", "AdminBasic_menu_opt");
         }
     }

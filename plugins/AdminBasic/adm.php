@@ -31,12 +31,10 @@ if ($cfg['FRIENDLY_URL']) {
     $params['url'] = "/{$cfg['CON_FILE']}?lang={$cfg['WEB_LANG']}&module=AdminBasic&page=adm";
 }
 
-
 $tpl->addto_tplvar("ADMIN_TAB_ACTIVE", $params);
 $tpl->addto_tplvar("ADD_ADMIN_MENU", do_action("add_admin_menu", $params));
 $tpl->addto_tplvar("ADD_TOP_MENU", do_action("add_top_menu"));
 $tpl->addto_tplvar("ADD_BOTTOM_MENU", do_action("add_bottom_menu"));
-
 
 if ($params['admtab'] == $admin_id) {
     $general_content = admin_general_content($params);
@@ -57,4 +55,4 @@ if ($params['admtab'] == $admin_id) {
 }
 
 $tpl->addto_tplvar("ADD_TO_BODY", $tpl->getTPL_file("AdminBasic", "admin_main_body", $params));
-do_action("common_web_structure");
+

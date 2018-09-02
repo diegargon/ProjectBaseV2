@@ -4,7 +4,7 @@
  */
 !defined('IN_WEB') ? exit : true;
 ?>
-<p>
+<div class="adm_plug_state">
     <span><?= $LNG['L_PL_NAME'] . $LNG['L_SEP'] ?></span>
     <?= $data['plugin_name'] ?>
     <br/>
@@ -35,4 +35,5 @@
     <span><?= $LNG['L_PL_CONFLICTS'] . $LNG['L_SEP'] ?> </span><br/>
     <?= $data['conflicts'] ?>
     <br/>
-</p>
+
+</div>

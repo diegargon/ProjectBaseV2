@@ -12,14 +12,19 @@ function admin_auth($tokens) {
 
     $user = $sm->getSessionUser();
 
-    if ($user && ($user['isAdmin'] == 1 || (defined('ACL') && $acl_auth->acl_ask($tokens)))
+    if ($user && ($user['isFounder'] == 1 || (defined('ACL') && $acl_auth->acl_ask($tokens)))
     ) {
         return true;
     }
+
+    global $frontend;
+
     $msgbox['msg'] = "L_E_NOACCESS";
     $msgbox['backlink'] = $sm->getPage("login");
     $msgbox['backlink_title'] = "L_LOGIN";
-    do_action("message_page", $msgbox);
+
+    $frontend->message_box($msgbox);
+
     return false;
 }
 
@@ -27,7 +32,6 @@ function admin_load_plugin_files() {
     //Load administration side from all register plugins (all enabled) and init the admin_init function.
 
     global $plugins, $debug, $cfg;
-
 
     foreach ($plugins->getEnabled() as $plugin) {
         (defined('DEBUG') && $cfg['adminbasic_debug']) ? $debug->log("Admin processing " . $plugin['plugin_name'], "AdminBasic", "DEBUG") : null;
@@ -54,7 +58,6 @@ function Admin_GetPluginState($plugin) {
     global $plugins, $tpl;
     $content = "";
 
-
     foreach ($plugins->getEnabled() as $enabled_plugin) {
         if ($enabled_plugin['plugin_name'] == $plugin) {
             //Switch array to text for display
@@ -62,7 +65,7 @@ function Admin_GetPluginState($plugin) {
             $enabled_plugin['optional'] = AdminBasic_unserialize_forPrint($enabled_plugin['optional']);
             $enabled_plugin['conflicts'] = AdminBasic_unserialize_forPrint($enabled_plugin['conflicts']);
 
-            $content = $tpl->getTPL_file("AdminBasic", "plugin_state", (array) $enabled_plugin);
+            $content = $tpl->getTPL_file("AdminBasic", "plugin_state_info", (array) $enabled_plugin);
         }
     }
     return $content;
@@ -98,7 +101,7 @@ function admin_general_aside($params) {
 }
 
 function admin_general_content($params) {
-    global $db, $plugins, $filter, $LNG, $cfg;
+    global $db, $plugins, $filter, $LNG;
 
     $content = "";
 
@@ -150,7 +153,6 @@ function admin_general_content($params) {
             $plugins->reScanToDB();
         }
 
-
         if (isset($_POST['btnDebugChange'])) {
             if (!admin_auth("w_plugin_cfg")) {
                 return false;
@@ -171,7 +173,6 @@ function admin_general_content($params) {
         }
     }
 
-
     if ($params['opt'] == 1) {
         $content = "<h1>" . $LNG['L_PL_STATE'] . "</h1>";
         $content .= Admin_GetPluginState("AdminBasic");
@@ -182,51 +183,8 @@ function admin_general_content($params) {
 
         ($_SERVER['REQUEST_METHOD'] === 'POST') ? $force_reload = 1 : $force_reload = 0;
 
-        $all_plugins = array_merge($plugins->getEnabled($force_reload), $plugins->getDisabled($force_reload));
-
-        $content .= "<form action='#' method='post' id='formRescan'>";
-        $content .= "<p><input type='submit' name='btnReScan'  value='" . $LNG['L_PL_RESCAN'] . "'></p>";
-        $content .= "</form>";
-        $content .= "<hr/>";
-        foreach ($all_plugins as $plugin) {
-            $content .= "<form action='' method='post' id='formPlugin'> ";
-            $content .= "<p><span>{$plugin['plugin_name']}</span> {$plugin['version']}<br/>";
-            $content .= $LNG['L_PL_PROVIDE'] . $plugin['provide'] . "<br/>";
-            $content .= !empty($r = AdminBasic_unserialize_forPrint($plugin['depends'])) ? $LNG['L_PL_DEPENDS'] . "<br/>" . $r : null;
-            $content .= !empty($r = AdminBasic_unserialize_forPrint($plugin['optional'])) ? $LNG['L_PL_OPTIONAL'] . "<br/>" . $r : null;
-            $content .= !empty($r = AdminBasic_unserialize_forPrint($plugin['conflicts'])) ? $LNG['L_PL_CONFLICTS'] . "<br/>" . $r : null;
-            $content .= "</p>";
-            $content .= "<input type='hidden' name='plugin_id' value='{$plugin['plugin_id']}'/>";
-            if ($plugin['missing']) {
-                $content .= "<p>{$LNG['L_PL_E_ITSMISSING']}</p>";
-                $content .= "<input type='submit' name='btnDeleteMissing'  value='" . $LNG['L_PL_DELETE'] . "'>";
-            } else if (!$plugin['installed']) {
-                $content .= "<input type='submit' name='btnInstall'  value='" . $LNG['L_PL_INSTALL'] . "'>";
-                $content .= "<input type='submit' name='btnCleanFailed'  value='" . $LNG['L_PL_CLEAN_FAILED'] . "'>";
-            } else if ($plugin['upgrade_from'] != 0) {
-                $content .= "<input type='submit' name='btnUpgrade'  value='" . $LNG['L_PL_UPGRADE'] . "'>";
-            } else {
-                if (!$plugin['enabled']) {
-                    $content .= "<input type='submit' name='btnUninstall'  value='" . $LNG['L_PL_UNINSTALL'] . "'>";
-                    $content .= "<input type='submit' name='btnEnable' value='" . $LNG['L_PL_ENABLE'] . "'>";
-                } else {
-                    if ($plugin['core']) { //CORE PLUGINS can't be disable only switch
-                        $content .= "<input disabled name='btnDisable' type='submit' value='" . $LNG['L_PL_DISABLE'] . "'>";
-                    } else {
-                        $content .= "<input type='submit' name='btnDisable'  value='" . $LNG['L_PL_DISABLE'] . "'>";
-                        if ($plugin['autostart']) {
-                            $content .= "<input type='submit' name='btnAutostartOff'  value='" . $LNG['L_PL_AUTOSTART_TURN_OFF'] . "'>";
-                        } else {
-                            $content .= "<input type='submit' name='btnAutostartOn'  value='" . $LNG['L_PL_AUTOSTART_TURN_ON'] . "'>";
-                        }
-                    }
-                }
-            }
-
-            $content .= "</form>";
-        }
-
-        return $content;
+        $plugins_list = array_merge($plugins->getEnabled($force_reload), $plugins->getDisabled($force_reload));
+        $content .= plugins_ctrl_display($plugins_list);
     } else if ($params['opt'] == 3) {
         $content .= "<form method='post' action=''>";
 
@@ -257,8 +215,55 @@ function admin_general_content($params) {
     return $content;
 }
 
+function plugins_ctrl_display($plugins) {
+    global $LNG, $tpl;
+
+    $content = "";
+    $counter = 1;
+    $num_items = count($plugins);
+
+    foreach ($plugins as $plugin) {
+        ($counter == $num_items) ? $plugin['TPL_CTRL'] = 0 : $plugin['TPL_CTRL'] = $counter++;
+
+        $plugin['DEPENDS'] = !empty($r = AdminBasic_unserialize_forPrint($plugin['depends'])) ? $LNG['L_PL_DEPENDS'] . "<br/>" . $r : null;
+        $plugin['OPTIONAL'] = !empty($r = AdminBasic_unserialize_forPrint($plugin['optional'])) ? $LNG['L_PL_OPTIONAL'] . "<br/>" . $r : null;
+        $plugin['CONFLICTS'] = !empty($r = AdminBasic_unserialize_forPrint($plugin['conflicts'])) ? $LNG['L_PL_CONFLICTS'] . "<br/>" . $r : null;
+
+        $plugin['BUTTOMS_CODE'] = "";
+
+        if ($plugin['missing']) {
+            $plugin['BUTTOMS_CODE'] .= "<p>{$LNG['L_PL_E_ITSMISSING']}</p>";
+            $plugin['BUTTOMS_CODE'] .= "<input type='submit' name='btnDeleteMissing'  value='" . $LNG['L_PL_DELETE'] . "'>";
+        } else if (!$plugin['installed']) {
+            $plugin['BUTTOMS_CODE'] .= "<input type='submit' name='btnInstall'  value='" . $LNG['L_PL_INSTALL'] . "'>";
+            $plugin['BUTTOMS_CODE'] .= "<input type='submit' name='btnCleanFailed'  value='" . $LNG['L_PL_CLEAN_FAILED'] . "'>";
+        } else if ($plugin['upgrade_from'] != 0) {
+            $plugin['BUTTOMS_CODE'] .= "<input type='submit' name='btnUpgrade'  value='" . $LNG['L_PL_UPGRADE'] . "'>";
+        } else {
+            if (!$plugin['enabled']) {
+                $plugin['BUTTOMS_CODE'] .= "<input type='submit' name='btnUninstall'  value='" . $LNG['L_PL_UNINSTALL'] . "'>";
+                $plugin['BUTTOMS_CODE'] .= "<input type='submit' name='btnEnable' value='" . $LNG['L_PL_ENABLE'] . "'>";
+            } else {
+                if ($plugin['core']) { //CORE PLUGINS can't be disable only switch
+                    $plugin['BUTTOMS_CODE'] .= "<input disabled name='btnDisable' type='submit' value='" . $LNG['L_PL_DISABLE'] . "'>";
+                } else {
+                    $plugin['BUTTOMS_CODE'] .= "<input type='submit' name='btnDisable'  value='" . $LNG['L_PL_DISABLE'] . "'>";
+                    if ($plugin['autostart']) {
+                        $plugin['BUTTOMS_CODE'] .= "<input type='submit' name='btnAutostartOff'  value='" . $LNG['L_PL_AUTOSTART_TURN_OFF'] . "'>";
+                    } else {
+                        $plugin['BUTTOMS_CODE'] .= "<input type='submit' name='btnAutostartOn'  value='" . $LNG['L_PL_AUTOSTART_TURN_ON'] . "'>";
+                    }
+                }
+            }
+        }
+
+        $content .= $tpl->getTPL_file("AdminBasic", "plugins_list", $plugin);
+    }
+    return $content;
+}
+
 function AdminPluginConfig($plugin) {
-    global $db, $filter;
+    global $db, $filter, $tpl;
 
 
     if (($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSubmitConfig']))) {
@@ -273,21 +278,18 @@ function AdminPluginConfig($plugin) {
             $db->update("config", ["cfg_value" => $value], ["cfg_id" => $cfg_id], "LIMIT 1");
         }
     }
-    $content = "<div id='divTable' class='divTable'>";
-    $result = $db->select_all("config", ["plugin" => $plugin], "ORDER BY plugin");
-    while ($row = $db->fetch($result)) {
-        $content .= "<form method='post' action='#'>";
-        $content .= "<div id='divRow1' class='divRow'>";
-        $content .= "<div class='divCell divCellFixed'>{$row['plugin']}</div>";
-        $content .= "<div class='divCell divCellLeft'>{$row['cfg_key']}</div>";
-        $content .= "<div class='divCell divCellRight'><input type='text' maxlength='128' size='32' name='cfg_value' value='{$row['cfg_value']}'/>";
-        $content .= "<input type='hidden' name='configID' value='{$row['cfg_id']}'/>";
-        $content .= "<input type='submit' name='btnSubmitConfig'/>";
-        $content .= "</form></div>";
 
-        $content .= "</div>";
+    $cfg_result = $db->select_all("config", ["plugin" => $plugin], "ORDER BY plugin");
+
+    $content = "";
+    $counter = 1;
+    $num_items = $db->num_rows($cfg_result);
+
+    while ($cfg_row = $db->fetch($cfg_result)) {
+        ($counter == $num_items) ? $cfg_row['TPL_CTRL'] = 0 : $cfg_row['TPL_CTRL'] = $counter++;
+        $content .= $tpl->getTPL_file("AdminBasic", "plugin_config", $cfg_row);
     }
-    $content .= "</div>";
+
     return $content;
 }
 
