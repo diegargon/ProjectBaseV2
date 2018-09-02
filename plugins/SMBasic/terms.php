@@ -8,7 +8,6 @@
 $cfg['PAGE_TITLE'] = $cfg['WEB_NAME'] . ": " . $LNG['L_SM_TERMS'];
 $cfg['PAGE_DESC'] = $cfg['WEB_NAME'] . ": " . $LNG['L_SM_TERMS'];
 
-do_action("common_web_structure");
 $tpl->getCSS_filePath("SMBasic");
 $tpl->getCSS_filePath("SMBasic", "SMBasic-mobile");
 $terms_data = [

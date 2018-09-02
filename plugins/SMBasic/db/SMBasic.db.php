@@ -98,8 +98,8 @@ $smbasic_insert_database = [
     //   "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', '', '')",
     // "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', '', '')",
     // "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', '', '')",
-    /* DEFAULT ADMIN USER */
-    "INSERT INTO `" . DB_PREFIX . "users` (`username`, `password`, `email`, `isAdmin`, `active`) VALUES ('admin', 'e1da6ddee81e1d1662a9a43b64309e6229e6216d5daf0543248ae80f23b52a05d2e164a5f036c3e72460969c514330f3bed7cd5f23b00a2fd23ed404c56c1360', 'diego@envigo.net', '1', '1')"
+    /* DEFAULT ADMIN USER , PASSWORD adminadmin */
+    "INSERT INTO `" . DB_PREFIX . "users` (`username`, `password`, `email`, `isFounder`, `active`) VALUES ('admin', 'cfecaf3d2dd296bf3accb3d2a62346d37afc99e7f8df52fdbc9de7ec1b33451efbfde53ba6c69cbb657ef9a7d9498ceb9e67fd64820a8b6c05ee671d53f28d1e', 'diego@envigo.net', '1', '1')"
 ];
 
 $smbasic_database = array_merge($smbasic_database, $smbasic_insert_database);

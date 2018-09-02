@@ -17,7 +17,7 @@ $user = $sm->getSessionUser();
 if ($user && $user['uid'] > 0) {
     $msgbox['msg'] = "L_E_ALREADY_LOGGED";
     $msgbox['backlink'] = "/";
-    do_action("message_page", $msgbox);
+    $frontend->message_box($msgbox);
     return;
 }
 
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $msgbox['msg'] = "L_SM_ACTIVATION_OK";
         }
         $msgbox['backlink'] = $cfg['WEB_URL'];
-        do_action("message_page", $msgbox);
+        $frontend->message_box($msgbox);
         return;
     }
 
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $msgbox['msg'] = "L_SM_RESET_OK";
         }
         $msgbox['backlink'] = $cfg['WEB_URL'];
-        do_action("message_page", $msgbox);
+        $frontend->message_box($msgbox);
         return;
     }
 }
@@ -77,7 +77,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       }
       }
      */
-    do_action("common_web_structure");
     $tpl->getCSS_filePath("SMBasic");
     $tpl->getCSS_filePath("SMBasic", "SMBasic-mobile");
     SMBasic_LoginScript();

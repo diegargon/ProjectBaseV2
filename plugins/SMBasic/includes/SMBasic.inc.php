@@ -76,7 +76,7 @@ function SMBasic_navLogReg() {
         if ($user) {
             $debug->log("User ID: {$user['uid']}", "SMBasic", "DEBUG");
             $debug->log("Username: {$user['username']}", "SMBasic", "DEBUG");
-            $debug->log("isAdmin: {$user['isAdmin']}", "SMBasic", "DEBUG");
+            $debug->log("isFounder: {$user['isFounder']}", "SMBasic", "DEBUG");
         }
     }
     

@@ -16,7 +16,7 @@ $cfg['PAGE_DESC'] = $cfg['WEB_NAME'] . ": " . $LNG['L_REGISTER'];
 
 if ($user && $user['uid'] != 0) {
     $msgbox['msg'] = "L_E_ALREADY_LOGGED";
-    do_action("message_page", $msgbox);
+    $frontend->message_box($msgbox);
     return false;
 }
 

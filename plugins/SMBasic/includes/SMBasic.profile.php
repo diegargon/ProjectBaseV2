@@ -6,9 +6,9 @@
 !defined('IN_WEB') ? exit : true;
 
 function SMBasic_ProfileEdit($user) {
-    global $tpl, $cfg;
+    global $cfg, $tpl;
 
-    do_action("common_web_structure");
+    
     $tpl->getCSS_filePath("SMBasic");
     $tpl->getCSS_filePath("SMBasic", "SMBasic-mobile");
     $tpl->AddScriptFile("standard", "jquery", "BOTTOM");
@@ -24,22 +24,22 @@ function SMBasic_ProfileEdit($user) {
 }
 
 function SMBasic_ProfileView() {
-    global $tpl, $sm, $filter;
+    global $tpl, $sm, $filter, $frontend;
 
     $uid = $filter->get_int("viewprofile", 11, 1);
     if (empty($uid)) {
         $msgbox['msg'] = "L_SM_E_USER_NOT_EXISTS";
-        do_action("message_page", $msgbox);
+        $frontend->message_box($msgbox);
     }
     $v_user = $sm->getUserByID($uid);
     if ($v_user) {
-        do_action("common_web_structure");
+        
         $tpl->getCSS_filePath("SMBasic");
         $tpl->getCSS_filePath("SMBasic", "SMBasic-mobile");
         $tpl->addto_tplvar("ADD_TO_BODY", $tpl->getTPL_file("SMBasic", "viewprofile", $v_user));
     } else {
         $msgbox['msg'] = "L_SM_E_USER_NOT_EXISTS";
-        do_action("message_page", $msgbox);
+        $frontend->message_box($msgbox);
     }
 }
 

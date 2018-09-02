@@ -18,7 +18,6 @@ function SMBasic_Register() {
       }
      * 
      */
-    do_action("common_web_structure");
     $tpl->getCSS_filePath("SMBasic");
     $tpl->getCSS_filePath("SMBasic", "SMBasic-mobile");
     $tpl->AddScriptFile("standard", "jquery", "TOP");
