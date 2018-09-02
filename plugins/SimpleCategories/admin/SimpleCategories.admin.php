@@ -37,10 +37,10 @@ function SimpleCats_AdminAside($params) {
 }
 
 function SimpleCats_AdminContent($params) {
-    global $LNG, $tpl;
+    global $LNG;
 
     //$tpl->getCSS_filePath("SimpleCats");
-    $msg = "";
+
     $page_data = "";
 
     if ($params['opt'] == 1 || $params['opt'] == false) {
@@ -60,7 +60,7 @@ function SimpleCats_AdminContent($params) {
 }
 
 function SimpleCats_AdminCats() {
-    global $cfg, $tpl, $LNG, $ml, $db, $ctgs;
+    global $cfg, $ml, $ctgs, $tpl;
 
     if (defined('MULTILANG')) {
         $langs = $ml->get_site_langs();
@@ -69,65 +69,59 @@ function SimpleCats_AdminCats() {
         $langs['lang_name'] = $cfg['WEB_LANG'];
     }
 
-
     /* NEW CAT */
-
     $catdata['catrow_new'] = "";
     $catdata['catlist'] = "";
-
 
     foreach ($langs as $lang) {
         $catdata['catrow_new'] .= "<label>{$lang['lang_name']}</label> <input type='text' name='{$lang['lang_id']}' value='' />";
     }
-
-
     $content = $tpl->getTPL_file("SimpleCategories", "adm_create_cat", $catdata);
 
     /* MODIFY */
-
     $cats = $ctgs->getCategories(null, "father, cid");
-    $catsids = [];
-
-    foreach ($cats as $cat) {
-        $catsids[] = $cat['cid'];
-    }
-
-    $catsids = array_unique($catsids);
-    $foundit = 0;
-    $counter = 1;
-    $num_items = count($catsids);
-
-    foreach ($catsids as $catid) {
-        $catdata['catid'] = $catid;
-        ($counter == $num_items) ? $catdata['TPL_CTRL'] = 0 : $catdata['TPL_CTRL'] = $counter++;
-        foreach ($langs as $lang) {
-
-            foreach ($cats as $cat) {
-                if (($catid == $cat['cid']) && ($cat['lang_id'] == $lang['lang_id'])) {
-                    $catdata['catlist'] .= "<label>{$lang['lang_name']}</label>";
-                    $catdata['catlist'] .= "<input type='text' name='{$lang['lang_id']}' class='cat_name' value='{$cat['name']}' />";
-                    $foundit = 1;
-                    $catdata['catFather'] = $cat['father'];
-                    $catdata['catWeight'] = $cat['weight'];
-                    $catdata['plugin'] = $cat['plugin'];
-                }
-            }
-
-            if ($foundit == 0) { //Not traslated
-                $catdata['catlist'] .= "<label>{$lang['lang_name']}</label> <input type='text' name='{$lang['lang_id']}' value='' />";
-            }
-            $foundit = 0;
+    if ($cats !== false) {
+        $catsids = [];
+        foreach ($cats as $cat) {
+            $catsids[] = $cat['cid'];
         }
 
-        $content .= $tpl->getTPL_file("SimpleCategories", "adm_modify_cat", $catdata);
-        $catdata['catlist'] = "";
-    }
+        $catsids = array_unique($catsids);
+        $foundit = 0;
+        $counter = 1;
+        $num_items = count($catsids);
 
+        foreach ($catsids as $catid) {
+            $catdata['catid'] = $catid;
+            ($counter == $num_items) ? $catdata['TPL_CTRL'] = 0 : $catdata['TPL_CTRL'] = $counter++;
+            foreach ($langs as $lang) {
+
+                foreach ($cats as $cat) {
+                    if (($catid == $cat['cid']) && ($cat['lang_id'] == $lang['lang_id'])) {
+                        $catdata['catlist'] .= "<label>{$lang['lang_name']}</label>";
+                        $catdata['catlist'] .= "<input type='text' name='{$lang['lang_id']}' class='cat_name' value='{$cat['name']}' />";
+                        $foundit = 1;
+                        $catdata['catFather'] = $cat['father'];
+                        $catdata['catWeight'] = $cat['weight'];
+                        $catdata['plugin'] = $cat['plugin'];
+                    }
+                }
+
+                if ($foundit == 0) { //Not traslated
+                    $catdata['catlist'] .= "<label>{$lang['lang_name']}</label> <input type='text' name='{$lang['lang_id']}' value='' />";
+                }
+                $foundit = 0;
+            }
+
+            $content .= $tpl->getTPL_file("SimpleCategories", "adm_modify_cat", $catdata);
+            $catdata['catlist'] = "";
+        }
+    }
     return $content;
 }
 
 function SimpleCats_ModCategories() {
-    global $cfg, $ml, $db, $filter;
+    global $ml, $db, $filter;
 
     if (defined('MULTILANG')) {
         $langs = $ml->get_site_langs();
@@ -156,7 +150,7 @@ function SimpleCats_ModCategories() {
 }
 
 function SimpleCats_NewCategory() {
-    global $cfg, $filter, $ml, $db;
+    global $filter, $ml, $db;
 
     $new_cid = $db->get_next_num("categories", "cid");
 

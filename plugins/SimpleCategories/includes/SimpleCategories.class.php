@@ -157,11 +157,13 @@ class Categories {
 
         $query = $db->select_all("categories", $plugin, "ORDER BY $order");
 
-        while ($row = $db->fetch($query)) {
-            $cats[] = $row;
+        if ($db->num_rows($query) > 0) {
+            while ($row = $db->fetch($query)) {
+                $cats[] = $row;
+            }
+            return $cats;
         }
-
-        return $cats;
+        return false;
     }
 
     private function loadCategories() {
