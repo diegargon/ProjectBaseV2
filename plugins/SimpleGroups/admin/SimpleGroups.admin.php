@@ -60,7 +60,7 @@ function SimpleGroups_AdminContent($params) {
 }
 
 function SimpleGroups_ShowGroups($msg) {
-    global $LNG, $tpl, $groups;
+    global $LNG, $groups, $tpl;
 
     $groups = $groups->getGroups();
     $counter = 1;
@@ -101,7 +101,7 @@ function SimpleGroups_DeleteGroup() {
 }
 
 function SimpleGroups_UserGroups($msg) {
-    global $tpl, $LNG, $sm, $filter, $groups;
+    global $LNG, $sm, $filter, $groups, $tpl;
 
     $page_data = [];
 

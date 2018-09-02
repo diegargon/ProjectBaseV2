@@ -54,8 +54,8 @@ function SimpleGroups_install() {
         $db->update("groups", ['group_father' => $admin_grp_id], ['group_id' => $admin_limited_id]);
         $db->update("groups", ['group_father' => $admin_limited_id], ['group_id' => $registered_grp_id]);
         $db->update("groups", ['group_father' => $registered_grp_id], ['group_id' => $anon_grp_id]);
-        $db->update("users", ['groups' => $admin_grp_id . "," . $registered_grp_id], ['isAdmin' => 1]);
-        $db->update("users", ['groups' => $registered_grp_id], ['isAdmin' != 1]);
+        $db->update("users", ['groups' => $admin_grp_id . "," . $registered_grp_id], ['isFounder' => 1]);
+        $db->update("users", ['groups' => $registered_grp_id], ['isFounder' != 1]);
     }
     return ($r) ? true : false;
 }
