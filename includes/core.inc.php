@@ -115,7 +115,7 @@ if (!empty($module) && !empty($page)) {
         require_once($path);
     }
 } else {
-    do_action("index_page");
+    $frontend->index_page();
 }
 
 $frontend->send_page();
