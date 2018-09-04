@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
-    if (isset($_POST['login']) && isset($_POST['email']) && isset($_POST['password'])) {
+    if (isset($_POST['email']) && isset($_POST['password'])) {
 
         $email = $filter->post_email("email");
         $password = $filter->post_password("password");

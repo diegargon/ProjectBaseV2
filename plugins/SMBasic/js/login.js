@@ -73,7 +73,7 @@ window.addEventListener("load", function () {
             $('#password').css("box-shadow", "0 0 3px red");
             alert("Password too small");
         } else {
-            $.post("", $("#login_form").serialize() + '&login=1',
+            $.post("", $("#login_form").serialize(),
                     function (data) {
                         console.log(data); //DEBUG
                         var json = $.parseJSON(data);
