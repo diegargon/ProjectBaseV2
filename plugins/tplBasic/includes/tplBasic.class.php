@@ -17,11 +17,11 @@ class TPL {
     public $css_cache_onefile;
     private $scripts = [];
     private $std_remote_scripts = array(//TODO LOAD LIST
-        "jquery" => "https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js",
-        "font-awesome" => "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css",
-        "bootstrap" => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css",
-        "angular" => "https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js",
-        "dogo" => "https://ajax.googleapis.com/ajax/libs/dojo/1.11.2/dojo/dojo.js",
+        "jquery" => "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js",
+        "font-awesome" => "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css",
+        "bootstrap" => "https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css",
+        "angularjs" => "https://code.angularjs.org/1.7.3/angular.min.js",
+        "dojo" => "https://ajax.googleapis.com/ajax/libs/dojo/1.13.0/dojo/dojo.js",
         "ext-core" => "https://ajax.googleapis.com/ajax/libs/ext-core/3.1.0/ext-core.js",
         "hammer" => "https://ajax.googleapis.com/ajax/libs/hammerjs/2.0.8/hammer.min.js",
         "mootools" => "https://ajax.googleapis.com/ajax/libs/mootools/1.6.0/mootools.min.js",
@@ -29,7 +29,7 @@ class TPL {
         "scriptaculous" => "https://ajax.googleapis.com/ajax/libs/scriptaculous/1.9.0/scriptaculous.js",
         "spf" => "https://ajax.googleapis.com/ajax/libs/spf/2.4.0/spf.js",
         "swfobject" => "https://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js",
-        "three" => "https://ajax.googleapis.com/ajax/libs/threejs/r76/three.min.js",
+        "three" => "https://ajax.googleapis.com/ajax/libs/threejs/r84/three.min.js",
         "webfont" => "https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js",
     );
 
