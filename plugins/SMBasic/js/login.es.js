@@ -90,7 +90,7 @@ window.addEventListener("load", function () {
                             alert(json[0].msg);
                         } else {
                             alert(json[0].msg);
-                        }
+        }
                     });
         }
         $('#login').removeAttr("disabled");
