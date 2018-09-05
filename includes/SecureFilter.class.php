@@ -190,8 +190,9 @@ class SecureFilter {
     }
 
     function srv_accept_language() {
-        return filter_input(INPUT_SERVER, "HTTP_ACCEPT_LANGUAGE", FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH);        
+        return filter_input(INPUT_SERVER, "HTTP_ACCEPT_LANGUAGE", FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH);
     }
+
     //VAR
     //S_VAR_PASSWORD
     function var_password($var, $max_size = null, $min_size = null) {
