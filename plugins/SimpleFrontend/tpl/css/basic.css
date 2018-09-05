@@ -278,3 +278,36 @@ h1,h2,h3,h4,h5,h6{
 .underline {
     text-decoration: underline;
 }
+
+.cols {
+    border: 1px solid red; 
+    float:left;    
+    margin-left: 0.5%;
+    font-size: 1em;
+    padding: 1px;
+}
+
+.cols h2 {
+    font-family: 'Montserrat', sans-serif;
+    float:left;
+    width: 98.5%;
+    color:#000;
+    font-size: 1.8em;
+    /* background-color:#232323; */
+    box-shadow: 0 0 10px #ccc; 
+    border-bottom: 1px solid #dcdcdc;
+    border-right: 1px solid #dcdcdc;
+    padding-left: 4px;
+    margin-bottom: 3px;
+    border-top: 2px solid #1f6ba5;
+}
+
+.col1 {
+    width: 99.5%;    
+}
+.col2 {
+    width: 48.5%;
+}
+.col3 {
+    width: 32%;
+}

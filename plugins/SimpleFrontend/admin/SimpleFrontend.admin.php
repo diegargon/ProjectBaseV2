@@ -51,5 +51,44 @@ function SimpleFrontend_admin_content($params) {
 }
 
 function SimpleFrontEnd_index_cfg() {
-    
+    global $tpl, $cfg, $filter;
+    $page_data = [];
+    $content = "";
+
+    foreach (glob("plugins/SimpleFrontend/index_layouts/*layout.php") as $layouts) {
+        include($layouts);
+    }
+    //Plugin external layout, templates in tpl;
+    foreach (glob("index_layouts/*layout.php") as $layouts) {
+        include($layouts);
+    }
+
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        global $db;
+
+        $index_layout_opt = $filter->post_strict_chars("index_layout");
+        if (!empty($index_layout_opt) && $index_layout_opt != $cfg['index_layout']) {
+            foreach ($index_layout as $layout) {
+                if ($layout['file'] == $index_layout_opt) {
+                    $db->update("config", ["cfg_value" => $layout['file']], ["cfg_key" => "index_layout"]);
+                    $db->update("config", ["cfg_value" => $layout['sections']], ["cfg_key" => "index_sections"]);
+                    $cfg['index_layout'] = $layout['file'];
+                    $cfg['index_sections'] = $layout['sections'];
+                }
+            }
+        }
+    }
+
+
+    $page_data['layouts_select'] = "";
+    foreach ($index_layout as $layout) {
+        if ($layout['file'] == $cfg['index_layout']) {
+            $page_data['layouts_select'] .= "<option selected value='{$layout['file']}'>{$layout['name']}</option>";
+        } else {
+            $page_data['layouts_select'] .= "<option value='{$layout['file']}'>{$layout['name']}</option>";
+        }
+    }
+
+    return $tpl->getTPL_file("SimpleFrontend", "admin_index", $page_data);
 }

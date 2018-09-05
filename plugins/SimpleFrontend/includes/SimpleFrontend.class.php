@@ -17,23 +17,15 @@ class SimpleFrontend {
         $this->setConfig();
     }
 
-    private function setConfig() {
-        global $cfg, $debug, $db, $tpl;
+    function index_page() {
+        global $tpl, $cfg;
+        $page_data = [];
 
-        $this->cfg = & $cfg;
-        $this->db = & $db;
+        for ($i = 1; $i <= $cfg['index_sections']; $i++) {
+            $page_data["section_" . $i] = "<p>Hola $i</p>";
+        }
 
-        (defined('DEBUG') && $cfg['simplefrontend_debug']) ? $this->debug = & $debug : $this->debug = false;
-        global $debug;
-
-        $this->nav_menu = $cfg['simplefrontend_nav_menu'];
-        $this->theme = $cfg['simplefrontend_theme'];
-
-        $custom_lang = "tpl/lang/" . $cfg['WEB_LANG'] . "/custom.lang.php";
-        file_exists($custom_lang) ? require_once($custom_lang) : false;
-
-        $tpl->getCSS_filePath("SimpleFrontend", "basic");
-        $tpl->getCSS_filePath("SimpleFrontend", "basic-mobile");
+        $tpl->addto_tplvar("ADD_TO_BODY", $tpl->getTPL_file("SimpleFrontend", $cfg['index_layout'] . "_layout", $page_data));
     }
 
     function send_page() {
@@ -79,6 +71,25 @@ class SimpleFrontend {
         !empty($box_data['xtra_box_msg']) ? $data['box_msg'] .= $box_data['xtra_box_msg'] : false;
 
         $tpl->addto_tplvar("ADD_TO_BODY", $tpl->getTPL_file("SimpleFrontend", "msgbox", $data));
+    }
+
+    private function setConfig() {
+        global $cfg, $debug, $db, $tpl;
+
+        $this->cfg = & $cfg;
+        $this->db = & $db;
+
+        (defined('DEBUG') && $cfg['simplefrontend_debug']) ? $this->debug = & $debug : $this->debug = false;
+        global $debug;
+
+        $this->nav_menu = $cfg['simplefrontend_nav_menu'];
+        $this->theme = $cfg['simplefrontend_theme'];
+
+        $custom_lang = "tpl/lang/" . $cfg['WEB_LANG'] . "/custom.lang.php";
+        file_exists($custom_lang) ? require_once($custom_lang) : false;
+
+        $tpl->getCSS_filePath("SimpleFrontend", "basic");
+        $tpl->getCSS_filePath("SimpleFrontend", "basic-mobile");
     }
 
 }
