@@ -86,7 +86,7 @@ class SecureFilter {
             return false;
         }
 
-        return $this->var_AZNum($_POST[$var], $max_size, $min_size);
+        return $this->var_AlphaNum($_POST[$var], $max_size, $min_size);
     }
 
     //S_POST_CHAR_AZ
