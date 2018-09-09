@@ -156,6 +156,13 @@ class SecureFilter {
         return $this->var_alphanum_unicode($_POST[$var], $max_size, $min_size);
     }
 
+    function post_array($var) {
+        $val = filter_input(INPUT_POST, $var, FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
+        
+        $val == null ? $val = false : null;
+        return $val;
+    }
+
     //$_SERVER
     // S_SERVER_REQUEST_URI
     function srv_request_uri() {
