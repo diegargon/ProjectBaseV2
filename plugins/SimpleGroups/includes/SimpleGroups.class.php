@@ -12,12 +12,13 @@ class Groups {
     private $user_groups;
 
     public function __construct() {
-        $this->SetUserGroups();        
+        $this->SetUserGroups();
     }
-    
+
     function getUserGroups() {
         return $this->$user_groups;
     }
+
     function getGroups() {
         (empty($this->groups)) ? $this->setGroups() : false;
 
@@ -164,7 +165,8 @@ class Groups {
         if (!(count($this->user_groups) > 0)) {
             return ($this->user_groups = false);
         }
-        
+
         return true;
     }
+
 }

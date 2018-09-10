@@ -66,11 +66,11 @@ function SimpleGroups_ShowGroups($msg) {
     $counter = 1;
     $count = count($groups);
     $content = "";
-    $group = "";
+    $TPL_HEAD = 1;
 
     foreach ($groups as $group) {
-        ($counter == $count) ? $group['TPL_CTRL'] = 0 : $group['TPL_CTRL'] = $counter++;
-
+        $group['TPL_HEAD'] = $TPL_HEAD;
+        ($counter == $count) ? $group['TPL_FOOT'] = 1 : $group['TPL_FOOT'] = 0;
         (!empty($msg) && $counter == 1) ? $group['ACL_MSG'] = $msg : false;
         $group['MSG'] = $msg;
 
@@ -78,6 +78,8 @@ function SimpleGroups_ShowGroups($msg) {
         (preg_match("/L_/", $group['group_desc'])) ? $group['group_desc'] = $LNG[$group['group_desc']] : false;
 
         $content .= $tpl->getTPL_file("SimpleGroups", "admin_groups", $group);
+        $counter++;
+        $TPL_HEAD = 0;
     }
 
     return $content;
