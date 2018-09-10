@@ -162,7 +162,15 @@ class Blocks {
     }
 
     public function block_html_file($conf) {
-        return;
+        global $cfg;
+
+        $file = $cfg['CORE_PATH'] . $conf['file'];
+
+        if (file_exists($file)) {
+            $content = html_entity_decode(file_get_contents($file));
+            return $content;
+        }
+        return false;
     }
 
     public function block_html_file_conf() {
