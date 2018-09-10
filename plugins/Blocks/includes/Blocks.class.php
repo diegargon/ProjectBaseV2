@@ -21,8 +21,8 @@ class Blocks {
         defined('DEBUG') && $cfg['blocks_debug'] ? $this->debug = & $debug : $this->debug = false;
 
         //Default blocks
-        $this->register_block("block_html_restricted", "Bloque HTML (Max: 200 chars)", [$this, "block_html"], [$this, "block_html_conf_restricted"], null, 0);
-        $this->register_block("block_html", "Bloque HTML (Max: 200 chars)", [$this, "block_html"], [$this, "block_html_conf"], null, 1);
+        $this->register_block("block_html_restricted", "Block HTML restricted html code [Max: 200 chars]", [$this, "block_html"], [$this, "block_html_conf_restricted"], null, 0);
+        $this->register_block("block_html", "Block HTML unrestricted (admin only) [Max: 200 chars]", [$this, "block_html"], [$this, "block_html_conf"], null, 1);
         $this->register_block("block_html_file", "Bloque HTML file, create by admin only", [$this, "block_html_file"], [$this, "block_html_file_conf"], null, 1);
     }
 

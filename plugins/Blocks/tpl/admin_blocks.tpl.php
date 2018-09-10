@@ -12,13 +12,13 @@ if ($data['TPL_HEAD'] == 1) {
     <form id="addBlock" action="#" method="POST">
         <div class="divTable">
             <div class="divTableHeadRow">
-                <div class="divTableHeadCell">Page</div>
-                <div class="divTableHeadCell">Section</div>
-                <div class="divTableHeadCell">Block</div>
-                <div class="divTableHeadCell">Description</div>
-                <div class="divTableHeadCell">Weight</div>
-                <div class="divTableHeadCell">Disable By user</div>
-                <div class="divTableHeadCell">Action</div>
+                <div class="divTableHeadCell"><?= $LNG['L_BLK_PAGE'] ?></div>
+                <div class="divTableHeadCell"><?= $LNG['L_BLK_SECTION'] ?></div>
+                <div class="divTableHeadCell"><?= $LNG['L_NAME'] ?></div>
+                <div class="divTableHeadCell"><?= $LNG['L_DESC'] ?></div>
+                <div class="divTableHeadCell"><?= $LNG['L_BLK_WEIGHT'] ?></div>
+                <div class="divTableHeadCell"><?= $LNG['L_BLK_CANUSERDISABLE'] ?></div>
+                <div class="divTableHeadCell"><?= $LNG['L_BLK_ACTIONS'] ?></div>
             </div>
             <div class="divTableBody">
                 <div class="divTableRow">  
@@ -72,12 +72,12 @@ if ($data['TPL_HEAD'] == 1) {
     <h2>Eliminar Bloque</h2>
     <div class="divTable">
         <div class="divTableHeadRow">
-            <div class="divTableHeadCell">Page</div>
-            <div class="divTableHeadCell">Section</div>
-            <div class="divTableHeadCell">Block Name</div>
-            <div class="divTableHeadCell">Weight</div>
-            <div class="divTableHeadCell">Disable by User</div>
-            <div class="divTableHeadCell">Action</div>
+            <div class="divTableHeadCell"><?= $LNG['L_BLK_PAGE'] ?></div>
+            <div class="divTableHeadCell"><?= $LNG['L_BLK_SECTION'] ?></div>
+            <div class="divTableHeadCell"><?= $LNG['L_NAME'] ?></div>
+            <div class="divTableHeadCell"><?= $LNG['L_BLK_WEIGHT'] ?></div>
+            <div class="divTableHeadCell"><?= $LNG['L_BLK_CANUSERDISABLE'] ?></div>
+            <div class="divTableHeadCell"><?= $LNG['L_BLK_ACTIONS'] ?></div>
         </div>
     <?php } ?> <!--- TPL_CTRL_1 -->
     <?php if ($data['blocks_notempty']) { ?>    

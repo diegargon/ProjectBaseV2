@@ -5,7 +5,7 @@
 !defined('IN_WEB') ? exit : true;
 ?>
 <div class="adm_plug_state">
-    <span><?= $LNG['L_PL_NAME'] . $LNG['L_SEP'] ?></span>
+    <span><?= $LNG['L_NAME'] . $LNG['L_SEP'] ?></span>
     <?= $data['plugin_name'] ?>
     <br/>
     <span><?= $LNG['L_PL_VERSION'] . $LNG['L_SEP'] ?></span>

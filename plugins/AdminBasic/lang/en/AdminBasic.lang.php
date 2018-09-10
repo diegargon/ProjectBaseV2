@@ -12,7 +12,6 @@ $LNG['L_GENERAL'] = "General";
 $LNG['L_SEP'] = ": ";
 //PLUGIN_STATE
 $LNG['L_PL_STATE'] = "Plugin state";
-$LNG['L_PL_NAME'] = "Name";
 $LNG['L_PL_ENABLE'] = "Enabled";
 $LNG['L_PL_PROVIDE'] = "Provided";
 $LNG['L_PL_DEPEND'] = "Dependences";

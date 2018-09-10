@@ -9,7 +9,6 @@
 $LNG['L_ML_LANGS'] = "Languages";
 $LNG['L_ML_MODIFY_LANGS'] = "Modify langs";
 $LNG['L_ML_CREATE_LANG'] = "Create lang";
-$LNG['L_ML_NAME'] = "Name";
 $LNG['L_ML_ACTIVE'] = "Active";
 $LNG['L_ML_ISOCODE'] = "Iso code";
 $LNG['L_ML_MODIFY'] = "Modify";

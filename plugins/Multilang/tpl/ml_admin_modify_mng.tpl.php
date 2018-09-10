@@ -9,7 +9,7 @@
     <section><h3><?= $LNG['L_ML_MODIFY_LANGS'] ?></h3>
     <?php } ?>
     <form id='form_modify' action='#' method='post'>
-        <label><?= $LNG['L_ML_NAME'] ?>: </label>
+        <label><?= $LNG['L_NAME'] ?>: </label>
         <input maxlength='32' type='text' name='lang_name' id='lang_name' value='<?= $data['lang_name'] ?>' />
         <label><?= $LNG['L_ML_ACTIVE'] ?>: </label>
         <?php if ($data['active']) { ?>

@@ -13,3 +13,5 @@ $LNG['L_DELETE'] = "Eliminar";
 $LNG['L_SEND'] = "Enviar";
 $LNG['L_CREATE'] = "Crear";
 $LNG['L_MODIFY'] = "Modificar";
+$LNG['L_NAME'] = "Nombre";
+$LNG['L_DESC'] = "Descripción";

@@ -12,7 +12,6 @@ $LNG['L_GENERAL'] = "General";
 $LNG['L_SEP'] = ": ";
 //PLUGIN_STATE
 $LNG['L_PL_STATE'] = "Estado del plugin";
-$LNG['L_PL_NAME'] = "Nombre";
 $LNG['L_PL_ENABLE'] = "Habilitar";
 $LNG['L_PL_ENABLED'] = "Habilitado";
 $LNG['L_PL_PROVIDE'] = "Provee";
