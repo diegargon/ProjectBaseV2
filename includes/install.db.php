@@ -56,6 +56,7 @@ $core_inserts = [
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('CORE', 'CONFIG_VALUE_MAX', '128');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('CORE', 'WEB_NAME', '');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('CORE', 'WEB_DESC', '');",
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('CORE', 'CORE_PATH', '/var/www/html');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('CORE', 'FOOT_COPYRIGHT', 'Copyright &copy; 2016 - 2018 Diego García All Rights Reserved');",
     //"INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('CORE', '', '');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('CORE', 'BAD_BOTS', 'ia_archiver|Altavista|eStyle|MJ12bot|ips-agent|Yandex|Semrush|Baidu|Sogou|Pcore');"
