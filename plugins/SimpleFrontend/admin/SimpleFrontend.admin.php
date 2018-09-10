@@ -60,7 +60,7 @@ function SimpleFrontEnd_index_cfg() {
         include($layouts);
     }
     //Plugin external layout, templates in tpl;
-    foreach (glob("index_layouts/*layout.php") as $layouts) {
+    foreach (glob("frontpage/index_layouts/*layout.php") as $layouts) {
         include($layouts);
     }
 
