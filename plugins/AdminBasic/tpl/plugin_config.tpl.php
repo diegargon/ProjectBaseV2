@@ -4,28 +4,37 @@
  */
 !defined('IN_WEB') ? exit : true;
 
-if ($data['TPL_CTRL'] == 1) {
+if ($data['TPL_HEAD']) {
     ?>
     <div id='divTable' class='divTable'>
-    <?php } ?>
-
-    <!-- REPEAT START -->  
-
-    <form method='post' action='#'>
-        <div id='divRow1' class='divRow'>
-            <div class='divCell divCellFixed'><?= $data['plugin'] ?></div>
-            <div class='divCell divCellLeft'><?= $data['cfg_key'] ?></div>
-            <div class='divCell divCellRight'><input type='text' maxlength='128' size='32' name='cfg_value' value='<?= $data['cfg_value'] ?>'/>
-                <input type='hidden' name='configID' value='<?= $data['cfg_id'] ?>'/>
-                <input type='submit' name='btnSubmitConfig'/>                
-            </div>
+        <div class='divTableHeadRow'>
+            <div class="divTableHeadCell"></div>
+            <div class="divTableHeadCell"></div>
+            <div class="divTableHeadCell"></div>
         </div>
-    </form>
-
-    <!-- REPEAT END -->
-
-    <?php
-    if ($data['TPL_CTRL'] == 0) {
-        ?>
-    </div>
+        <div class='divTableBody'>
+        <?php } ?>
+        <!-- REPEAT START -->    
+        <div class='divTableRow'>            
+            <div class='divTableCell'><?= $data['plugin'] ?></div>
+            <div class='divTableCell'><?= $data['cfg_key'] ?></div>
+            <div class='divTableCell'>
+                <form method='post' action='#'>
+                    <input type='text' maxlength='128' size='32' name='cfg_value' value='<?= $data['cfg_value'] ?>'/>
+                    <input type='hidden' name='configID' value='<?= $data['cfg_id'] ?>'/>
+                    <input type='submit' name='btnSubmitConfig'/>                
+                </form>
+            </div>            
+        </div>
+        <!-- REPEAT END -->
+        <?php
+        if ($data['TPL_FOOT']) {
+            ?>
+        </div> <!-- table body -->
+        <div class='divTableFootRow'>
+            <div class="divTableFootCell"></div>
+            <div class="divTableFootCell"></div>
+            <div class="divTableFootCell"></div>
+        </div>    
+    </div> <!-- divTable -->
 <?php } ?>

@@ -3,7 +3,6 @@
 /*
  *  Copyright @ 2016 - 2018 Diego Garcia
  * 
- * 
  */
 !defined('IN_WEB') ? exit : true;
 
@@ -265,7 +264,6 @@ function plugins_ctrl_display($plugins) {
 function AdminPluginConfig($plugin) {
     global $db, $filter, $tpl;
 
-
     if (($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSubmitConfig']))) {
 
         if (!admin_auth("w_general_cfg", "ADMIN_CONFIG_" . $plugin)) {
@@ -280,14 +278,17 @@ function AdminPluginConfig($plugin) {
     }
 
     $cfg_result = $db->select_all("config", ["plugin" => $plugin], "ORDER BY plugin");
-
     $content = "";
     $counter = 1;
     $num_items = $db->num_rows($cfg_result);
+    $TPL_HEAD = 1;
 
     while ($cfg_row = $db->fetch($cfg_result)) {
-        ($counter == $num_items) ? $cfg_row['TPL_CTRL'] = 0 : $cfg_row['TPL_CTRL'] = $counter++;
+        $cfg_row['TPL_HEAD'] = $TPL_HEAD;
+        $counter == $num_items ? $cfg_row['TPL_FOOT'] = 1 : $cfg_row['TPL_FOOT'] = 0;
         $content .= $tpl->getTPL_file("AdminBasic", "plugin_config", $cfg_row);
+        $TPL_HEAD = 0;
+        $counter++;
     }
 
     return $content;
