@@ -21,7 +21,8 @@ class Blocks {
         defined('DEBUG') && $cfg['blocks_debug'] ? $this->debug = & $debug : $this->debug = false;
 
         //Default blocks
-        $this->register_block("block_html", "Bloque HTML (Max: 200 chars)", [$this, "block_html"], [$this, "block_html_conf"], null, 0);
+        $this->register_block("block_html_restricted", "Bloque HTML (Max: 200 chars)", [$this, "block_html"], [$this, "block_html_conf_restricted"], null, 0);
+        $this->register_block("block_html", "Bloque HTML (Max: 200 chars)", [$this, "block_html"], [$this, "block_html_conf"], null, 1);
         $this->register_block("block_html_file", "Bloque HTML file, create by admin only", [$this, "block_html_file"], [$this, "block_html_file_conf"], null, 1);
     }
 
@@ -70,7 +71,7 @@ class Blocks {
         $user_cfg['user_disable_dflt_blocks'] = 1; //TO USER CFG
 
         /*  uid = 0 mean default  */
-        $q = $db->select_all("blocks", ["uid" => $user['uid'], "uid" => 0], null, "OR");
+        $q = $db->select_all("blocks", ["uid" => $user['uid'], "uid" => 0], "ORDER BY section,weight", "OR");
         while ($result = $db->fetch($q)) {
             if ($cfg['user_can_disable_dflt_blocks'] == 1 && $user_cfg['user_disable_dflt_blocks'] &&
                     $result['canUserDisable'] && $result['uid'] == 0) {
@@ -122,6 +123,24 @@ class Blocks {
     public function block_html($conf) {
 
         return $conf['html_code'];
+    }
+
+    public function block_html_conf_restricted() {
+        global $filter;
+
+        $block_conf = $filter->post_array("block_conf");
+        $block_conf['admin_block'] = 0;
+        //TODO CHECK AND FILTER return false if something fail.
+        $content['config'] = $block_conf;
+
+        //field config its 256, reserved 56 for array serialice payload 
+        $content['content'] = "<textarea name=\"block_conf[html_code]\" maxlength=\"200\" rows=\"3\" cols=\"75\">";
+        if (isset($content['config']['html_code'])) {
+            $content['content'] .= $content['config']['html_code'];
+        }
+        $content['content'] .= "</textarea>";
+
+        return $content;
     }
 
     public function block_html_conf() {
