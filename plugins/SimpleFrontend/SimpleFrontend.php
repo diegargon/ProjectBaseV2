@@ -6,7 +6,13 @@
 !defined('IN_WEB') ? exit : true;
 
 function SimpleFrontend_init() {
-    global $frontend;
+    global $frontend, $plugins;
+
+    //require('includes/blocks.class.php');
+    //FIX: On first install $frontend its mandatory but blocks not, that going to cause problems if blocks its disable
+    //Probably make blocks optionals and check if active before express start.
+
+    $plugins->express_start("Blocks");
     !isset($frontend) ? $frontend = new SimpleFrontend() : null;
 }
 

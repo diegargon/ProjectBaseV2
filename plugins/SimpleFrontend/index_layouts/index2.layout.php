@@ -5,7 +5,7 @@
  */
 !defined('IN_WEB') ? exit : true;
 
-$index_layout[] = [
+$index_layouts[] = [
     "name" => "2 Colums",
     "file" => "index_2",
     "sections" => 2

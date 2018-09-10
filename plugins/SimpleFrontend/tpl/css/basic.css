@@ -1,5 +1,5 @@
 /*
- Copyright @ 2016 Diego Garcia
+ Copyright @ 2016 - 2018 Diego Garcia
 */
 html, body {
     position:relative;
@@ -310,4 +310,33 @@ h1,h2,h3,h4,h5,h6{
 }
 .col3 {
     width: 32%;
+}
+
+.divTable {
+    display: table;
+    width: 100%;
+}
+.divTableBody {
+    display: table-row-group;
+    background-color:#ffffcc;
+
+}
+.divTableRow {
+    display: table-row;    
+}
+.divTableHeadRow {
+    display: table-header-group;
+    background-color: #55a0db;
+    font-weight: bold;
+}
+.divTableCell, .divTableHeadCell, .divTableFootCell {
+    display: table-cell;
+    padding: 3px 10px;
+    border: 1px solid #999999;
+}
+
+.divTableFootRow {
+    display: table-footer-group;
+    font-weight: bold;
+    background-color: #55a0db;
 }

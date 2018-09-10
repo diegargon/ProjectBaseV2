@@ -7,7 +7,8 @@
 !defined('IN_WEB') ? exit : true;
 
 function SimpleFrontend_AdminInit() {
-    global $frontend, $plugins;
+    global $frontend, $plugins, $blocks;
+    !isset($blocks) ? $plugins->express_start("Blocks") : null;
     !isset($frontend) ? $plugins->express_start("SimpleFrontend") : null;
     register_action("add_admin_menu", "SimpleFrontend_AdminMenu", "5");
 }
@@ -39,10 +40,10 @@ function SimpleFrontend_admin_content($params) {
     $page_data = "";
 
     if ($params['opt'] == 1 || $params['opt'] == false) {
-        $page_data = "<h1>" . $LNG['L_GENERAL'] . ": " . $LNG['L_PL_STATE'] . "</h1>";
+        $page_data = "<h1>" . $LNG['L_PL_STATE'] . "</h1>";
         $page_data .= Admin_GetPluginState("SimpleFrontend");
     } else if ($params['opt'] == 2) {
-        $page_data = "<h1>" . $LNG['L_GENERAL'] . ": " . $LNG['L_FRONT_INDEX_CFG'] . "</h1>";
+        $page_data = "<h1>" . $LNG['L_FRONT_INDEX_CFG'] . "</h1>";
         $page_data .= SimpleFrontEnd_index_cfg();
     } else if ($params['opt'] == 4) {
         $page_data .= AdminPluginConfig("SimpleFrontend");
@@ -63,13 +64,12 @@ function SimpleFrontEnd_index_cfg() {
         include($layouts);
     }
 
-
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         global $db;
 
         $index_layout_opt = $filter->post_strict_chars("index_layout");
         if (!empty($index_layout_opt) && $index_layout_opt != $cfg['index_layout']) {
-            foreach ($index_layout as $layout) {
+            foreach ($index_layouts as $layout) {
                 if ($layout['file'] == $index_layout_opt) {
                     $db->update("config", ["cfg_value" => $layout['file']], ["cfg_key" => "index_layout"]);
                     $db->update("config", ["cfg_value" => $layout['sections']], ["cfg_key" => "index_sections"]);
@@ -80,9 +80,8 @@ function SimpleFrontEnd_index_cfg() {
         }
     }
 
-
     $page_data['layouts_select'] = "";
-    foreach ($index_layout as $layout) {
+    foreach ($index_layouts as $layout) {
         if ($layout['file'] == $cfg['index_layout']) {
             $page_data['layouts_select'] .= "<option selected value='{$layout['file']}'>{$layout['name']}</option>";
         } else {

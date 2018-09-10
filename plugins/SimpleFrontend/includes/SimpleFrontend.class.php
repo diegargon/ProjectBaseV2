@@ -3,7 +3,6 @@
 /*
  *  Copyright @ 2016 - 2018 Diego Garcia
  * 
- * 
  */
 
 class SimpleFrontend {
@@ -18,11 +17,12 @@ class SimpleFrontend {
     }
 
     function index_page() {
-        global $tpl, $cfg;
+        global $tpl, $cfg, $blocks;
         $page_data = [];
 
         for ($i = 1; $i <= $cfg['index_sections']; $i++) {
-            $page_data["section_" . $i] = "<p>Hola $i</p>";
+            //$page_data["section_" . $i] = "<p>Hola $i</p>";
+            $page_data["section_" . $i] = $blocks->get_blocks_content("index", $i);
         }
 
         $tpl->addto_tplvar("ADD_TO_BODY", $tpl->getTPL_file("SimpleFrontend", $cfg['index_layout'] . "_layout", $page_data));
@@ -74,10 +74,13 @@ class SimpleFrontend {
     }
 
     private function setConfig() {
-        global $cfg, $debug, $db, $tpl;
+        global $cfg, $debug, $db, $tpl, $blocks;
 
         $this->cfg = & $cfg;
         $this->db = & $db;
+
+        $blocks->register_page("index", $this->cfg['index_sections']);
+        $blocks->register_page("index2", 2);
 
         (defined('DEBUG') && $cfg['simplefrontend_debug']) ? $this->debug = & $debug : $this->debug = false;
         global $debug;
