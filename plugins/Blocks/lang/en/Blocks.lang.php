@@ -5,3 +5,5 @@
  *  EN
  */
 !defined('IN_WEB') ? exit : true;
+
+$LNG['L_BLK_MANAGE'] = "Manage blocks";

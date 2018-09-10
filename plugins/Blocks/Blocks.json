@@ -8,7 +8,7 @@
     "function_pre_install_info": "Blocks_preInstall_info",
     "function_upgrade": "Blocks_upgrade",
     "function_uninstall": "Blocks_uninstall",
-    "provide": "",
+    "provide": "Blocks",
     "version": 0.3,
     "depends": [
         {
@@ -17,10 +17,15 @@
             "max_version": 0.9
         },
         {
-            "name": "TPL",
+            "name": "SESSIONS",
             "min_version": 0.2,
             "max_version": 0.9
-        }           
+        },
+        {
+            "name": "SQL",
+            "min_version": 0.2,
+            "max_version": 0.9
+        }
     ],
     "priority": 5,
     "optional": [],
