@@ -4,7 +4,7 @@
  */
 !defined('IN_WEB') ? exit : true;
 
-if ($data['TPL_HEAD'] == 1) {
+if ($data['TPL_CTRL'] == 1) {
     ?>
     <br/>
     <p><?= isset($data['STATE_MSG']) ? $data['STATE_MSG'] : null; ?></p>
@@ -79,7 +79,7 @@ if ($data['TPL_HEAD'] == 1) {
             <div class="divTableHeadCell"><?= $LNG['L_BLK_CANUSERDISABLE'] ?></div>
             <div class="divTableHeadCell"><?= $LNG['L_BLK_ACTIONS'] ?></div>
         </div>
-    <?php } ?> <!--- TPL_CTRL_1 -->
+    <?php } ?> <!--- TPL_HEAD -->
     <?php if ($data['blocks_notempty']) { ?>    
         <div class="divTableBody">
             <div class="divTableRow">  

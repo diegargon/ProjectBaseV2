@@ -93,7 +93,8 @@ function SimpleCats_AdminCats() {
 
         foreach ($catsids as $catid) {
             $catdata['catid'] = $catid;
-            ($counter == $num_items) ? $catdata['TPL_CTRL'] = 0 : $catdata['TPL_CTRL'] = $counter++;
+            $catdata['TPL_CTRL'] = $counter;
+            ($counter == $num_items) ? $catdata['TPL_FOOT'] = 1 : $catdata['TPL_FOOT'] = 0;
             foreach ($langs as $lang) {
 
                 foreach ($cats as $cat) {
@@ -115,6 +116,7 @@ function SimpleCats_AdminCats() {
 
             $content .= $tpl->getTPL_file("SimpleCategories", "adm_modify_cat", $catdata);
             $catdata['catlist'] = "";
+            $counter++;
         }
     }
     return $content;

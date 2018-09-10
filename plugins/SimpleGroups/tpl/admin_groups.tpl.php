@@ -4,7 +4,7 @@
  */
 !defined('IN_WEB') ? exit : true;
 
-if ($data['TPL_HEAD']) {
+if ($data['TPL_CTRL'] == 1) {
     ?>
     <br/>
     <div class='divTable'>

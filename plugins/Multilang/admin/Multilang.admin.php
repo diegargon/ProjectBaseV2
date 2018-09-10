@@ -72,13 +72,13 @@ function Multilang_AdminLangs() {
     $langs = $ml->get_site_langs(0);
     $counter = 1;
     $count = count($langs);
-    foreach ($langs as $lang) {        
-        ($counter == $count) ? $lang['TPL_CTRL'] = 0 : $lang['TPL_CTRL'] = $counter++;
-        $content .= $tpl->getTPL_file("Multilang", "ml_admin_modify_mng", $lang);
+    foreach ($langs as $lang) {
+        $lang['TPL_CTRL'] = $counter;
+        ($counter == $count) ? $lang['TPL_FOOT'] = 1 : $lang['TPL_FOOT'] = 0;
+        $content .= $tpl->getTPL_file("Multilang", "ml_admin_lang_mng", $lang);
+        $counter++;
     }
-
-    $content .= $tpl->getTPL_file("Multilang", "ml_admin_create_mng");
-
+    
     return $content;
 }
 

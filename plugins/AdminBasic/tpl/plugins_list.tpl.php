@@ -11,8 +11,7 @@ if ($data['TPL_CTRL'] == 1) {
     </form>
     <hr/>
 
-<?php }
-?>
+<?php } ?>
 
 <!--- REPEAT START-->    
 
@@ -32,7 +31,7 @@ if ($data['TPL_CTRL'] == 1) {
 </div>
 <!--- REPEAT END -->
 <?php
-if ($data['TPL_CTRL'] == 0) {
+if ($data['TPL_FOOT'] == 1) {
     ?>
-    </form
+    
 <?php } ?>

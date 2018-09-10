@@ -23,7 +23,15 @@
         <input type='submit' id='btnModifyLang' name='btnModifyLang' value='<?= $LNG['L_ML_MODIFY'] ?>' />
         <input type='submit' id='btnDeleteLang' name='btnDeleteLang' value='<?= $LNG['L_ML_DELETE'] ?>' onclick="return confirm('<?= $LNG['L_ML_SURE'] ?>')" />
     </form>
-    <?php if ($data['TPL_CTRL'] == 0) { ?>    
+    <?php if ($data['TPL_FOOT'] == 1) { ?>    
     </section>
-<?php
+    <section><h3><?= $LNG['L_ML_CREATE_LANG'] ?></h3>
+        <form id='form_create' action='#' method='post'>
+            <label><?= $LNG['L_NAME'] ?>:</label><input required maxlength='32' type='text' name='lang_name' id='lang_name' value='' />
+            <label><?= $LNG['L_ML_ACTIVE'] ?>: </label><input checked type='checkbox' name='active' id='active' value='1' />
+            <label><?= $LNG['L_ML_ISOCODE'] ?>: </label><input required maxlength='2' type='text' name='iso_code' id='iso_code' value=''/>
+            <input type='submit' id='btnCreateLang' name='btnCreateLang' value='<?= $LNG['L_ML_CREATE'] ?>' />
+        </form>
+    </section>
+    <?php
 }

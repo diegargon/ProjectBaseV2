@@ -26,7 +26,7 @@ if ($data['TPL_CTRL'] == 1) {
             <input type='submit' name='DelCatSubmit' value='<?= $LNG['L_DELETE'] ?>' />
         </div></form>
     <?php
-    if ($data['TPL_CTRL'] == 0) {
+    if ($data['TPL_FOOT'] == 1) {
         ?>        
     </div>
 <?php } ?>

@@ -222,7 +222,8 @@ function plugins_ctrl_display($plugins) {
     $num_items = count($plugins);
 
     foreach ($plugins as $plugin) {
-        ($counter == $num_items) ? $plugin['TPL_CTRL'] = 0 : $plugin['TPL_CTRL'] = $counter++;
+        $plugin['TPL_CTRL'] = $counter;
+        ($counter == $num_items) ? $plugin['TPL_FOOT'] = 1 : $plugin['TPL_FOOT'] = 0;
 
         $plugin['DEPENDS'] = !empty($r = AdminBasic_unserialize_forPrint($plugin['depends'])) ? $LNG['L_PL_DEPENDS'] . "<br/>" . $r : null;
         $plugin['OPTIONAL'] = !empty($r = AdminBasic_unserialize_forPrint($plugin['optional'])) ? $LNG['L_PL_OPTIONAL'] . "<br/>" . $r : null;
@@ -257,6 +258,7 @@ function plugins_ctrl_display($plugins) {
         }
 
         $content .= $tpl->getTPL_file("AdminBasic", "plugins_list", $plugin);
+        $counter++;
     }
     return $content;
 }
@@ -281,13 +283,11 @@ function AdminPluginConfig($plugin) {
     $content = "";
     $counter = 1;
     $num_items = $db->num_rows($cfg_result);
-    $TPL_HEAD = 1;
 
     while ($cfg_row = $db->fetch($cfg_result)) {
-        $cfg_row['TPL_HEAD'] = $TPL_HEAD;
+        $cfg_row['TPL_CTRL'] = $counter;
         $counter == $num_items ? $cfg_row['TPL_FOOT'] = 1 : $cfg_row['TPL_FOOT'] = 0;
         $content .= $tpl->getTPL_file("AdminBasic", "plugin_config", $cfg_row);
-        $TPL_HEAD = 0;
         $counter++;
     }
 

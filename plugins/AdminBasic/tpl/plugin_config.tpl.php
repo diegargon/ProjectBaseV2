@@ -4,7 +4,7 @@
  */
 !defined('IN_WEB') ? exit : true;
 
-if ($data['TPL_HEAD']) {
+if ($data['TPL_CTRL'] == 1) {
     ?>
     <div id='divTable' class='divTable'>
         <div class='divTableHeadRow'>
@@ -28,7 +28,7 @@ if ($data['TPL_HEAD']) {
         </div>
         <!-- REPEAT END -->
         <?php
-        if ($data['TPL_FOOT']) {
+        if ($data['TPL_FOOT'] == 1) {
             ?>
         </div> <!-- table body -->
         <div class='divTableFootRow'>

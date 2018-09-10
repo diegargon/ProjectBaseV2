@@ -116,11 +116,9 @@ function Blocks_blk_config() {
 
     $counter = 1;
     $num_items = count($admin_blocks);
-    //FIX TPL_CTRL IN ALL PAGES TPL_CTRL NOT WORK IF ITEM ITS 1
-    $page_data['TPL_HEAD'] = 1;
-    $page_data['TPL_FOOT'] = 0;
 
     if (!$admin_blocks) { //NO ADMIN _BLOCKS
+        $page_data['TPL_CTRL'] = $counter;
         $page_data['TPL_FOOT'] = 1;
         $page_data['blocks_notempty'] = 0;
         $content .= $tpl->getTPL_file("Blocks", "admin_blocks", $page_data);
@@ -130,7 +128,8 @@ function Blocks_blk_config() {
     }
 
     foreach ($admin_blocks as $admin_block) {
-        $counter == $num_items ? $page_data['TPL_FOOT'] = 1 : null;
+        $page_data['TPL_CTRL'] = $counter;
+        $counter == $num_items ? $page_data['TPL_FOOT'] = 1 : $page_data['TPL_FOOT'] = 0;
         $page_data['page'] = $admin_block['page'];
         $page_data['block'] = $admin_block['blockname'];
         $page_data['weight'] = $admin_block['weight'];
@@ -139,7 +138,6 @@ function Blocks_blk_config() {
         $page_data['block_id'] = $admin_block['blocks_id'];
 
         $content .= $tpl->getTPL_file("Blocks", "admin_blocks", $page_data);
-        $page_data['TPL_HEAD'] = 0;
         $counter++;
     }
     return $content;
