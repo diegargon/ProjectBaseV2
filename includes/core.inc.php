@@ -109,7 +109,7 @@ if (!empty($module) && !empty($page)) {
         $msgbox['msg'] = "L_E_PLUGPAGE_NOEXISTS";
         $msgbox['backlink'] = "/";
         $msgbox['backlink_title'] = "L_HOME";
-        $frontend->msg_box($msgbox);
+        $frontend->message_box($msgbox);
     } else {
         do_action("preload_" . $module . "_" . $page);
         require_once($path);
