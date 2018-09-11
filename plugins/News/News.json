@@ -1,0 +1,49 @@
+{
+    "plugin_name": "News",
+    "main_file": "News.php",
+    "function_init": "News_init",
+    "function_admin_init": "News_AdminInit",
+    "function_install": "News_install",
+    "function_pre_install": "News_preInstall",
+    "function_pre_install_info": "News_preInstall_info",
+    "function_upgrade": "News_upgrade",
+    "function_uninstall": "News_uninstall",
+    "provide": "",
+    "version": 0.3,
+    "depends": [
+        {
+            "name": "CORE",
+            "min_version": 0.2,
+            "max_version": 0.9
+        },
+        {
+            "name": "SQL",
+            "min_version": 0.2,
+            "max_version": 0.9
+        },
+        {
+            "name": "TPL",
+            "min_version": 0.2,
+            "max_version": 0.9
+        },
+        {
+            "name": "CATS",
+            "min_version": 0.2,
+            "max_version": 0.9
+        }       
+    ],
+    "priority": 6,
+    "optional": [
+        {
+            "name": "MULTILANG",
+            "min_version": 0.2,
+            "max_version": 0.9
+        },
+        {
+            "name": "ACL",
+            "min_version": 0.2,
+            "max_version": 0.9
+        }        
+    ],
+    "conflicts": []
+}
