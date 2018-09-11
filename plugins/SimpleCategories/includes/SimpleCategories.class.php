@@ -153,9 +153,9 @@ class Categories {
         global $db;
         !$order ? $order = "cid" : null;
 
-        ($plugin) ? $plugin["plugin"] = $plugin : null;
+        ($plugin) ? $plugin_name["plugin"] = $plugin : $plugin_name = null;
 
-        $query = $db->select_all("categories", $plugin, "ORDER BY $order");
+        $query = $db->select_all("categories", $plugin_name, "ORDER BY $order");
 
         if ($db->num_rows($query) > 0) {
             while ($row = $db->fetch($query)) {

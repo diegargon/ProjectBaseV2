@@ -47,10 +47,6 @@ function SimpleCats_AdminContent($params) {
         $page_data = "<h1>" . $LNG['L_GENERAL'] . ": " . $LNG['L_PL_STATE'] . "</h1>";
         $page_data .= Admin_GetPluginState("SimpleCategories");
     } else if ($params['opt'] == 2) {
-        isset($_POST['ModCatSubmit']) ? SimpleCats_ModCategories() : null;
-        isset($_POST['NewCatSubmit']) ? SimpleCats_NewCategory() : null;
-        isset($_POST['DelCatSubmit']) ? SimpleCats_DelCategory() : null;
-
         $page_data .= SimpleCats_AdminCats();
     } else if ($params['opt'] == 4) {
         $page_data .= AdminPluginConfig("SimpleCategories");
@@ -59,7 +55,7 @@ function SimpleCats_AdminContent($params) {
     return $page_data;
 }
 
-function SimpleCats_AdminCats() {
+function SimpleCats_AdminCats($plugin = null) {
     global $cfg, $ml, $ctgs, $tpl;
 
     if (defined('MULTILANG')) {
@@ -68,6 +64,10 @@ function SimpleCats_AdminCats() {
         $langs['lang_id'] = 1;
         $langs['lang_name'] = $cfg['WEB_LANG'];
     }
+
+    isset($_POST['ModCatSubmit']) ? SimpleCats_ModCategories() : null;
+    isset($_POST['NewCatSubmit']) ? SimpleCats_NewCategory($plugin) : null;
+    isset($_POST['DelCatSubmit']) ? SimpleCats_DelCategory() : null;
 
     /* NEW CAT */
     $catdata['catrow_new'] = "";
@@ -79,7 +79,7 @@ function SimpleCats_AdminCats() {
     $content = $tpl->getTPL_file("SimpleCategories", "adm_create_cat", $catdata);
 
     /* MODIFY */
-    $cats = $ctgs->getCategories(null, "father, cid");
+    $cats = $ctgs->getCategories($plugin, "father, cid");
     if ($cats !== false) {
         $catsids = [];
         foreach ($cats as $cat) {
@@ -151,7 +151,7 @@ function SimpleCats_ModCategories() {
     }
 }
 
-function SimpleCats_NewCategory() {
+function SimpleCats_NewCategory($plugin) {
     global $filter, $ml, $db;
 
     $new_cid = $db->get_next_num("categories", "cid");
@@ -161,6 +161,7 @@ function SimpleCats_NewCategory() {
     } else {
         $langs['lang_id'] = 1;
     }
+    !$plugin ? $plugin = "General" : null;
 
     foreach ($langs as $lang) {
         $lang_id = $lang['lang_id'];
@@ -171,7 +172,7 @@ function SimpleCats_NewCategory() {
             $new_cat_ary = array(
                 "cid" => "$new_cid",
                 "lang_id" => "{$lang['lang_id']}",
-                "plugin" => "USER",
+                "plugin" => $plugin,
                 "name" => "$posted_name",
                 "father" => "$posted_father",
                 "weight" => "$posted_weight"
