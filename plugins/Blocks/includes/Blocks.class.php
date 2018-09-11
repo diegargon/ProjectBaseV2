@@ -16,14 +16,15 @@ class Blocks {
     }
 
     private function setConfig() {
-        global $cfg, $debug;
+        global $cfg, $debug, $LNG;
 
         defined('DEBUG') && $cfg['blocks_debug'] ? $this->debug = & $debug : $this->debug = false;
 
         //Default blocks
-        $this->register_block("block_html_restricted", "Block HTML restricted html code [Max: 200 chars]", [$this, "block_html"], [$this, "block_html_conf_restricted"], null, 0);
-        $this->register_block("block_html", "Block HTML unrestricted (admin only) [Max: 200 chars]", [$this, "block_html"], [$this, "block_html_conf"], null, 1);
-        $this->register_block("block_html_file", "Bloque HTML file, create by admin only", [$this, "block_html_file"], [$this, "block_html_file_conf"], null, 1);
+        $this->register_block("block_html_restricted", $LNG['L_BLK_HTMLRESTRIC_DESC'], [$this, "block_html"], [$this, "block_html_conf_restricted"], null, 0);
+        $this->register_block("block_html", $LNG['L_BLK_HTML_DESC'], [$this, "block_html"], [$this, "block_html_conf"], null, 1);
+        $this->register_block("block_html_file", $LNG['L_BLK_HTMLFILE_DESC'], [$this, "block_html_file"], [$this, "block_html_file_conf"], null, 1);
+        $this->register_block("block_php_file", $LNG['L_BLK_PHPFILE_DESC'], [$this, "block_php_file"], [$this, "block_php_file_conf"], null, 1);
     }
 
     function register_block($block_name, $block_desc, $func_show, $func_conf, $def_conf, $admin_block) {
@@ -181,6 +182,24 @@ class Blocks {
 
         $content['config'] = $block_conf;
         $content['content'] = "<br/><input type='text' maxlength='256' size='100' name='block_conf[file]'/>";
+
+        return $content;
+    }
+
+    public function block_php_file($conf) {
+        global $tpl;
+
+        return $tpl->getTPL_file("Blocks", $conf['php_file']);
+    }
+
+    public function block_php_file_conf() {
+        global $filter;
+        $block_conf = $filter->post_array("block_conf");
+        $block_conf['admin_block'] = 1;
+        //TODO CHECK AND FILTER return false if something fail        
+
+        $content['config'] = $block_conf;
+        $content['content'] = "<br/><input type='text' maxlength='256' size='100' name='block_conf[php_file]'/>";
 
         return $content;
     }
