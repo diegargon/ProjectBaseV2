@@ -14,7 +14,7 @@ function ExampleTemplate_init() {
 function ExampleTemplate_install() {
     global $db;
     require_once "db/ExampleTemplate.db.php";
-    foreach ($exampleTemplate_database as $query) {
+    foreach ($exampleTemplate_database_install as $query) {
         $r = $db->query($query);
     }
     return ($r) ? true : false;

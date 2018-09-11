@@ -4,7 +4,7 @@
  *  Copyright @ 2016 - 2018 Diego Garcia
  */
 
-$exampleTemplate_database[] = "
+$exampleTemplate_database_install[] = "
 CREATE TABLE `" . DB_PREFIX . "exampleTemplate` (
   `example_id` int(32) NOT NULL,
   `example_field` varchar(32) NOT NULL
