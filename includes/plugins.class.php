@@ -359,7 +359,10 @@ class Plugins {
         $inc_file = "";
 
         $lang_file = "plugins/$plugin/lang/" . $cfg['WEB_LANG'] . "/$plugin.lang.php";
-        file_exists($lang_file) ? include_once($lang_file) : false;
+        if (file_exists($lang_file)) {
+            $debug->log("Loading lang file $lang_file", "PLUGINS", "INFO");
+            include_once($lang_file);
+        }
 
         //INC FILE
         if ($admin == 0) {
@@ -368,8 +371,8 @@ class Plugins {
         } else {
             $inc_file = "plugins/$plugin/admin/$plugin.admin.inc.php";
         }
-        !empty($inc_file) && file_exists($inc_file) ? include_once($inc_file) : false;
-        !empty($inc_file) && file_exists($class_file) ? include_once($class_file) : false;
+        !empty($inc_file) && file_exists($inc_file) ? include_once($inc_file) : null;
+        !empty($inc_file) && file_exists($class_file) ? include_once($class_file) : null;
         if ($this->debug) {
             if (!empty($inc_file) && file_exists($inc_file)) {
                 include_once($inc_file);
