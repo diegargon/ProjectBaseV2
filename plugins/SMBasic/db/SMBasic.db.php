@@ -45,6 +45,7 @@ CREATE TABLE `" . DB_PREFIX . "users` (
   `active` int(12) NOT NULL DEFAULT '0',
   `disable` tinyint(4) NOT NULL DEFAULT '0',
   `isFounder` tinyint(1) NOT NULL DEFAULT '0',
+  `isAdmin` tinyint(1) NOT NULL DEFAULT '0',
   `last_login` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `reset` int(11) DEFAULT NULL,
   `avatar` varchar(255) DEFAULT NULL,
