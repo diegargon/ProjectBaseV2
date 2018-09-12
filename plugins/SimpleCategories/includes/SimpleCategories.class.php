@@ -149,7 +149,7 @@ class Categories {
         });
     }
 
-    function getCategories($plugin = null, $order = null) {
+    function getCategories_all_lang($plugin = null, $order = null) {
         global $db;
         !$order ? $order = "cid" : null;
 
@@ -166,6 +166,20 @@ class Categories {
         return false;
     }
 
+    function getCategories($plugin_name = null) {
+
+        if ($plugin_name == null) {
+            return $this->categories;
+        }
+
+        foreach ($this->categories as $category) {
+            if ($category['plugin'] == $plugin_name) {
+                $plugin_categories[$category['cid']] = $category;
+            }
+        }
+        return ($plugin_categories) ? $plugin_categories : false;
+    }
+
     private function loadCategories() {
         global $ml, $db;
         //Carga todas las categorias de todos los modulos de un solo lenguage
@@ -174,7 +188,7 @@ class Categories {
         $where_ary = [];
         !empty($lang_id) && is_numeric($lang_id) ? $where_ary['lang_id'] = $lang_id : null;
 
-        $query = $db->select_all("categories", $where_ary, "ORDER BY weight");
+        $query = $db->select_all("categories", $where_ary, "ORDER BY father,cid, weight");
         while ($c_row = $db->fetch($query)) {
             $this->categories[$c_row['cid']] = $c_row;
         }
