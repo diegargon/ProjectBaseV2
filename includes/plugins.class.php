@@ -303,7 +303,7 @@ class Plugins {
     function express_start($pluginname) {
         global $debug;
 
-        $this->debug ? $debug->log("Express order to start $pluginname", "PLUGINS", "INFO") : null;
+        $this->debug ? $debug->log("Express order to start plugin-> $pluginname", "PLUGINS", "INFO") : null;
 
         foreach ($this->enabled_plugins as $plugin) {
             if ($plugin['plugin_name'] == $pluginname) {
@@ -321,6 +321,31 @@ class Plugins {
             }
         }
         $this->debug ? $debug->log("Plugin $pluginname not exist", "PLUGINS", "ERROR") : null;
+
+        return false;
+    }
+
+    function express_start_provider($provider) {
+        global $debug;
+
+        $this->debug ? $debug->log("Express order to start provider $provider", "PLUGINS", "INFO") : null;
+
+        foreach ($this->enabled_plugins as $plugin) {
+            if ($plugin['provide'] == $provider) {
+                if ($this->check_started($plugin)) {
+                    $this->debug ? $debug->log("Plugin {$plugin['plugin_name']} providing $provider already started", "PLUGINS", "INFO") : null;
+                    return true;
+                }
+                if ($this->plugin_check($plugin)) {
+                    $this->start_plugin($plugin);
+                    return true;
+                } else {
+                    //exist but already starter
+                    return false;
+                }
+            }
+        }
+        $this->debug ? $debug->log("Plugin provided $provider not exist", "PLUGINS", "ERROR") : null;
 
         return false;
     }
@@ -517,4 +542,5 @@ class Plugins {
         $this->debug ? $debug->log("Failed finding dependence $depend_name", "PLUGINS", "ERROR") : null;
         return false;
     }
+
 }
