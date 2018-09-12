@@ -71,7 +71,7 @@ class Plugins {
 
     function start_plugin($plugin) {
         global $debug;
-        $this->debug ? $debug->log("Initation plugin " . $plugin['plugin_name'] . " ...", "PLUGINS", "INFO") : null;
+        $this->debug ? $debug->log("STARTING plugin " . $plugin['plugin_name'] . " ...", "PLUGINS", "INFO") : null;
 
         require_once("plugins/" . $plugin['plugin_name'] . "/" . $plugin['main_file'] . "");
         $this->includePluginFiles($plugin['plugin_name']);
