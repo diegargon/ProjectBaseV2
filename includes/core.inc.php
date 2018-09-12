@@ -87,8 +87,15 @@ require_once "includes/time-utils.inc.php";
 global $tUtil;
 $tUtil = new TimeUtils($cfg, $db);
 
-mobileDetect() ? $cfg['ITS_MOBIL'] = 1 : $cfg['ITS_MOBIL'] = 0;
+if (mobileDetect()) {
+    $cfg['ITS_MOBIL'] = 1;
+    $cfg['img_platform_selector'] = "mobil";
+} else {
+    $cfg['ITS_MOBIL'] = 0;
+    $cfg['img_platform_selector'] = "desktop";
+}
 $cfg['ITS_BOT'] = botDetect();
+
 
 $plugins->Init();
 
