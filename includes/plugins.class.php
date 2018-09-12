@@ -457,7 +457,7 @@ class Plugins {
             if (!$result) {
                 $this->debug ? $debug->log("Searching for the necessary dependencies... ", "PLUGINS", "INFO") : null;
                 if ($this->find_dependencies_and_start($depend->name, $depend->min_version, $depend->max_version)) {
-                    $this->debug ? $debug->log("We found and start dependencie {$depend->name} for {$plugin['plugin_name']}", "PLUGINS", "INFO") : null;
+                    $this->debug ? $debug->log("We found dependencie {$depend->name} for {$plugin['plugin_name']}", "PLUGINS", "INFO") : null;
                 } else {
                     $this->debug ? $debug->log("No depedences " . $depend->name . " for {$plugin['plugin_name']} in the registered plugins", "PLUGINS", "ERROR") : null;
                     return false;
@@ -503,8 +503,12 @@ class Plugins {
                 if (($provide == $depend_name) && ($plugin['version'] >= $min_version) && ($plugin['version'] <= $max_version)
                 ) {
                     if ($this->plugin_resolve_depends($plugin)) {//resolv de dependes of the depends
-                        $this->debug ? $debug->log("Starting {$depend_name} as depend", "PLUGINS", "INFO") : null;
-                        $this->start_plugin($plugin);
+                        if ($plugin['autostart']) {
+                            $this->debug ? $debug->log("Starting {$depend_name} as depend", "PLUGINS", "INFO") : null;
+                            $this->start_plugin($plugin);
+                        } else {
+                            $this->debug ? $debug->log("NOT Starting  as depend {$depend_name} because autostart its off, express start need", "PLUGINS", "INFO") : null;
+                        }
                         return true;
                     }
                 }
@@ -513,5 +517,4 @@ class Plugins {
         $this->debug ? $debug->log("Failed finding dependence $depend_name", "PLUGINS", "ERROR") : null;
         return false;
     }
-
 }
