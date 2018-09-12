@@ -160,6 +160,8 @@ class TPL {
 
         empty($filename) ? $filename = $plugin : null;
 
+        $this->debug ? $this->debug->log("Get CSS called by-> $plugin for get a $filename", "tplBasic", "DEBUG") : null;
+
         $USER_PATH = "tpl/{$this->cfg['tplbasic_theme']}/css/$filename.css";
         $DEFAULT_PATH = "plugins/$plugin/tpl/css/$filename.css";
         if ($this->css_cache_check() == true) {
