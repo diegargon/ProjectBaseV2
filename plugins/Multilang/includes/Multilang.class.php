@@ -7,7 +7,7 @@
 
 class Multilang {
 
-    //private $weblang;
+    private $web_lang;
     private $set_to_visit_lang;
     private $active_langs;
     private $site_langs;
@@ -17,6 +17,7 @@ class Multilang {
         $this->set_to_visit_lang = $cfg['ml_set_to_visit_lang'];
         register_action("header_menu_element", [$this, "get_nav"], 6);
         $this->setLang();
+        $this->web_lang = $cfg['WEB_LANG'];
     }
 
     function setLang() {
@@ -123,7 +124,7 @@ class Multilang {
 
     function getSessionLang() {
         global $cfg;
-        
+
         $lid = $this->iso_to_id($cfg['WEB_LANG']);
         return $this->active_langs[$lid];
     }
@@ -135,6 +136,27 @@ class Multilang {
             }
         }
         return false;
+    }
+
+    function get_sitelangs_select($name) {
+
+        $site_langs = $this->get_site_langs();
+
+        if (empty($site_langs)) {
+            return false;
+        }
+
+        $select = "<select name='. $name .' id='. $name. '>";
+        foreach ($site_langs as $site_lang) {
+            if ($site_lang['iso_code'] == $this->web_lang) {
+                $select .= "<option selected value='{$site_lang['iso_code']}'>{$site_lang['lang_name']}</option>";
+            } else {
+                $select .= "<option value='{$site_lang['iso_code']}'>{$site_lang['lang_name']}</option>";
+            }
+        }
+        $select .= "</select>";
+
+        return $select;
     }
 
     private function retrieve_db_langs() {
