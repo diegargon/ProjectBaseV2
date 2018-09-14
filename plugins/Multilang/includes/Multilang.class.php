@@ -146,7 +146,7 @@ class Multilang {
             return false;
         }
 
-        $select = "<select name='. $name .' id='. $name. '>";
+        $select = "<select name='$name' id='$name'>";
         foreach ($site_langs as $site_lang) {
             if ($site_lang['iso_code'] == $this->web_lang) {
                 $select .= "<option selected value='{$site_lang['iso_code']}'>{$site_lang['lang_name']}</option>";
