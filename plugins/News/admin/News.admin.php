@@ -71,9 +71,9 @@ function News_AdminModeration() {
     }
     while ($news_row = $db->fetch($query)) {
         $content .= "<p>"
-                . "[<a href='/{$cfg['CON_FILE']}?module=News&page=news&nid={$news_row['nid']}&lang={$news_row['lang']}&news_delete=1&npage={$news_row['page']}&admin=1'>{$LNG['L_NEWS_DELETE']}</a>]"
-                . "[<a href='/{$cfg['CON_FILE']}?module=News&page=news&nid={$news_row['nid']}&lang={$news_row['lang']}&news_approved={$news_row['nid']}&lang_id={$news_row['lang_id']}&npage={$news_row['page']}&admin=1'>{$LNG['L_NEWS_APPROVED']}</a>]"
-                . "<a href='/{$cfg['CON_FILE']}?module=News&page=news&nid={$news_row['nid']}&lang={$news_row['lang']}&npage={$news_row['page']}&admin=1' target='_blank'>{$news_row['title']}</a>"
+                . "[<a href='/{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_row['nid']}&lang={$news_row['lang']}&news_delete=1&npage={$news_row['page']}&admin=1'>{$LNG['L_NEWS_DELETE']}</a>]"
+                . "[<a href='/{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_row['nid']}&lang={$news_row['lang']}&news_approved={$news_row['nid']}&lang_id={$news_row['lang_id']}&npage={$news_row['page']}&admin=1'>{$LNG['L_NEWS_APPROVED']}</a>]"
+                . "<a href='/{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_row['nid']}&lang={$news_row['lang']}&npage={$news_row['page']}&admin=1' target='_blank'>{$news_row['title']}</a>"
                 . "</p>";
     }
     $content .= "</div>";

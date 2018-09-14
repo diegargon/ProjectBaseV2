@@ -11,8 +11,8 @@ RewriteRule  ^admin index.php?module=AdminBasic&page=adm [L]
 RewriteRule  ^([a-zA-z]{2})\/searchTag/(.*)$   index.php?module=NewsSearch&page=search&lang=$1&searchTag=$2
 RewriteRule  ^([a-zA-z]{2})\/search/?(.*)   index.php?$2&module=NewsSearch&page=search&lang=$1 [QSA]
 
-#Newspage
-RewriteRule  ^([a-zA-Z]{2})\/news/([0-9]+)\/([0-9]+)\/(.*)$   index.php?module=News&page=news&lang=$1&nid=$2&npage=$3 [NC]
+#News
+RewriteRule  ^([a-zA-Z]{2})\/news/([0-9]+)\/([0-9]+)\/(.*)$   index.php?module=News&page=view_news&lang=$1&nid=$2&npage=$3 [NC]
 RewriteRule  ^([a-zA-z]{2})\/submit_news$   index.php?module=News&page=submit_news&lang=$1 [NC]
 RewriteRule  ^([a-zA-z]{2})\/sec.*/(.*)$   index.php?module=News&page=section&lang=$1&section=$2 [NC]
 

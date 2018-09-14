@@ -1,0 +1,117 @@
+/*
+ Copyright @ 2016 Diego Garcia
+*/
+@media only screen and (max-width: 900px) {
+    .col {
+        margin-left: 5px;
+    }
+    .featured {
+        height: 300px;
+    }
+    .featured article h3, .featured article p {        
+        display: none;
+    }
+    .featured h1 {
+        font-size: 1.2em;
+    }
+    
+}
+@media only screen and (max-width: 700px) {
+    .newsbox {
+        margin-left: 5px;
+    }
+    .submit_items {
+        width: 100%;
+    }
+    .col1, .col2, .col3 {
+        width:96%;
+    }
+    .featured {
+        float:none;
+        height:100%;
+    }
+    .featured article h3, .featured article p {        
+        display: block;
+    }    
+    .featured img {
+        max-width: 300px;
+        float:left;
+    }
+    .featured_col1, .featured_col2, .featured_col3, .featured_col4 {
+        width:97%;
+    }
+    .featured h1 {
+        font-size: 1.5em;
+    }
+    .featured h3 {
+        font-size: 1.2em;
+    }
+}
+@media only screen and (max-width: 640px) {
+    .submit_box {
+        width: 98%;
+        padding: 1px;
+    }
+    .feature_article{
+        display:block;
+    }
+    .article_title {
+        font-size: 2.0rem;
+    }
+    .article_body {
+        margin: 0px 0px 3px 3px;
+        width: 98%;
+    }
+    .article_side {
+        width: 98%;
+        margin: 3px 3px 3px 3px;
+    }
+    .featured_wrap {
+        margin: 0 auto;
+    }
+    .video-center-container {
+        width:100%;
+    }
+}
+@media only screen and (max-width: 400px) {
+    .newsbox {
+	margin-left: 1px;
+    }
+    .featured {
+        margin-left: 2px;
+    }
+    .featured img {
+        margin-left: 1px;
+        max-width: none;
+    }
+    .submit_box h1 {
+        font-size: 16px;
+    }
+    .article_text {
+	padding: 5px;
+    }
+    .related ul {
+        padding-left: 10px;
+        list-style: none;
+    }
+    .article_body h1 {
+        font-size: 1.5rem;
+    }
+    .col {
+        margin-left: 1px;
+    }
+    .page {
+        border: none;
+    }
+    .footer {
+        font-size: 0.7rem;
+    }
+    .news_img_float_r {
+        padding-left:1px;
+        width: 100%;
+    }
+    .news_img_float_l {    
+        padding-right: 1px;
+        width: 100%;
+    }
+}

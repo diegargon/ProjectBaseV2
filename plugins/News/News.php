@@ -7,6 +7,7 @@
 
 function News_init() {
     define("News", true);
+    register_action("header_menu_element", "submit_news_menu");
 }
 
 function News_install() {

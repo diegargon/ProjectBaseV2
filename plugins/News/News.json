@@ -30,7 +30,12 @@
             "name": "CATS",
             "min_version": 0.2,
             "max_version": 0.9
-        }       
+        },
+        {
+            "name": "EDITOR",
+            "min_version": 0.2,
+            "max_version": 0.9
+        }          
     ],
     "priority": 6,
     "optional": [
