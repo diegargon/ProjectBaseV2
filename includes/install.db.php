@@ -17,6 +17,7 @@ $core_database = [];
   ";
  */
 
+//CONFIG
 $core_database[] = "
 CREATE TABLE `" . DB_PREFIX . "config` (
   `cfg_id` int(32) NOT NULL,
@@ -39,6 +40,28 @@ ALTER TABLE `" . DB_PREFIX . "config`
   MODIFY `cfg_id` int(32) NOT NULL AUTO_INCREMENT;
 ";
 
+//LINKS
+$core_database[] = "
+CREATE TABLE `pb_links` (
+  `link_id` int(11) NOT NULL,
+  `plugin` varchar(32) NOT NULL,
+  `source_id` int(11) NOT NULL,
+  `type` varchar(11) NOT NULL,
+  `link` varchar(256) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . ";  
+";
+
+$core_database[] = "
+ALTER TABLE `" . DB_PREFIX . "links`
+  ADD PRIMARY KEY (`link_id`),
+  ADD UNIQUE KEY `link_id` (`link_id`);
+";
+
+$core_database[] = "
+ALTER TABLE `" . DB_PREFIX . "links`
+  MODIFY `link_id` int(11) NOT NULL AUTO_INCREMENT;
+";
 
 $core_inserts = [
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('CORE', 'plugins_debug', '1');",
@@ -62,7 +85,9 @@ $core_inserts = [
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('CORE', 'BAD_BOTS', 'ia_archiver|Altavista|eStyle|MJ12bot|ips-agent|Yandex|Semrush|Baidu|Sogou|Pcore');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('CORE', 'WEB_DIR', 'ltr');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('CORE', 'WEB_LANG', 'en');",
-    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('CORE', 'PAGE_VIEWPORT', 'width=device-width,minimum-scale=1,initial-scale=1');"
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('CORE', 'PAGE_VIEWPORT', 'width=device-width,minimum-scale=1,initial-scale=1');",
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('CORE', 'CHARSET', 'UTF-8');",
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('CORE', 'CON_FILE', 'index.php');"
 ];
 
 
