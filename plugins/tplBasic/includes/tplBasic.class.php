@@ -148,9 +148,9 @@ class TPL {
 
         empty($filename) ? $filename = $plugin : null;
 
-        $USER_LANG_PATH = "tpl/{$this->cfg['simplefrontend_theme']}/js/$filename.{$this->cfg['WEB_LANG']}.js";
-        $DEFAULT_LANG_PATH = "plugins/$plugin/js/$filename.{$this->cfg['WEB_LANG']}.js";
-        $USER_PATH = "tpl/{$this->cfg['simplefrontend_theme']}/js/$filename.js";
+        $USER_LANG_PATH = "tpl/{$this->theme}/js/$filename.{$this->lang}.js";
+        $DEFAULT_LANG_PATH = "plugins/$plugin/js/$filename.{$this->lang}.js";
+        $USER_PATH = "tpl/{$this->theme}/js/$filename.js";
         $DEFAULT_PATH = "plugins/$plugin/js/$filename.js";
 
         if (file_exists($USER_LANG_PATH)) { //TODO Recheck priority later
