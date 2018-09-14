@@ -17,7 +17,7 @@ file_exists("config/config.inc.php") ? require_once "config/config.inc.php" : nu
 
 if (defined('DEBUG')) {
     require_once "includes/" . DEBUG_CORE . ".class.php";
-    global $debug;
+
     $debug = new Debug();
 }
 
@@ -33,7 +33,7 @@ if (!defined('SQL')) {
     exit("ERROR: Database ins't configured, please read config.default.php");
 }
 require_once "includes/" . DB_TYPE . ".class.php";
-global $db;
+
 $db = new Database(DB_HOST, DB, DB_USER, DB_PASSWORD);
 $db->set_charset(DB_CHARSET);
 $db->set_prefix(DB_PREFIX);
@@ -61,7 +61,6 @@ if (CORE_VERSION != (float) $cfg["CORE_VERSION"]) {
 /* PLUGINS */
 
 require_once "includes/plugins.class.php";
-global $plugins;
 
 $plugins = new Plugins();
 
@@ -84,7 +83,7 @@ if (!isset($cfg['CORE_INSTALLED']) || $cfg['CORE_INSTALLED'] != 1) {
 
 /* TIME UTILS */
 require_once "includes/time-utils.inc.php";
-global $tUtil;
+
 $tUtil = new TimeUtils($cfg, $db);
 
 if (mobileDetect()) {

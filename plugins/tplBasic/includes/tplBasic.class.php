@@ -39,7 +39,7 @@ class TPL {
     );
 
     function __construct($db = null) {
-        
+        $this->setConfig($db);
     }
 
     function setConfig($db) {
