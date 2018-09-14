@@ -39,21 +39,21 @@ class TPL {
     );
 
     function __construct($db = null) {
+        
     }
-    
+
     function setConfig($db) {
-        global $debug,  $cfg; 
+        global $debug, $cfg;
 
         $this->db = & $db;
         (defined('DEBUG') && $cfg['tplbasic_debug']) ? $this->debug = & $debug : $this->debug = false;
-        
+
         $this->theme = $cfg['tplbasic_theme'];
         $this->static_url = $cfg['STATIC_SRV_URL'];
         $this->css_optimize = $cfg['tplbasic_css_optimize'];
         $this->gzip = $cfg['tplbasic_gzip'];
         $this->css_inline = $cfg['tplbasic_css_inline'];
         $this->lang = $cfg['WEB_LANG'];
-        
     }
 
     function addto_tplvar($tplvar, $data, $priority = 5) { // change name to appendTo_tplvar? TODO priority support?
