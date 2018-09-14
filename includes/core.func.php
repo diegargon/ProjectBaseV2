@@ -60,6 +60,31 @@ function formatBytes($size, $precision = 2)
     return round(pow(1024, $base - floor($base)), $precision) .' '. $suffixes[floor($base)];
 }
 
+function remote_check($url) {
+
+    if ((strpos($url, 'http://') !== 0) && (strpos($url, 'https://') !== 0)) {
+        $url = "http://" . $url;
+    }
+
+    if (strpos($url, 'https://') !== 0) {
+        stream_context_set_default( ['https' => [ 'method' => 'HEAD' ] ]);
+    } else {
+        stream_context_set_default( ['http' => [ 'method' => 'HEAD' ] ]);
+    }
+
+    $host = parse_url($url, PHP_URL_HOST);
+    //FIX: gethostbyname sometimes not reliable, sometimes or in some servers resolv things like this http://jeihfw and return a IP :/ :?
+    if (gethostbyname($host) === $host) { //get host resolv ip if fail return the host
+        return false;
+    } else {
+        defined('DEBUG') ? $headers = get_headers($url) : $headers = @get_headers($url);
+        if ($headers['0'] == 'HTTP/1.1 404 Not Found') {
+            return false;
+        }
+    }
+    return true;
+}
+
 /*
 
 
@@ -90,30 +115,7 @@ function its_server_stressed() {
 }
 
 
-function remote_check($url) {
 
-    if ((strpos($url, 'http://') !== 0) && (strpos($url, 'https://') !== 0)) {
-        $url = "http://" . $url;
-    }
-
-    if (strpos($url, 'https://') !== 0) {
-        stream_context_set_default( ['https' => [ 'method' => 'HEAD' ] ]);
-    } else {
-        stream_context_set_default( ['http' => [ 'method' => 'HEAD' ] ]);
-    }
-
-    $host = parse_url($url, PHP_URL_HOST);
-    //FIX: gethostbyname sometimes not reliable, sometimes or in some servers resolv things like this http://jeihfw and return a IP :/ :?
-    if (gethostbyname($host) === $host) { //get host resolv ip if fail return the host
-        return false;
-    } else {
-        defined('DEBUG') ? $headers = get_headers($url) : $headers = @get_headers($url);
-        if ($headers['0'] == 'HTTP/1.1 404 Not Found') {
-            return false;
-        }
-    }
-    return true;
-}
 
 function getLib($libname, $version) {
     //1.0 to 1.9 minor version must be 100% compatible

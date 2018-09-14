@@ -134,7 +134,7 @@ class SecureFilter {
         if (is_array($_POST[$var])) {
             $var_ary = $_POST[$var];
             foreach ($var_ary as $key => $value) {
-                $ret = var_URL($value, $max_size, $min_size);
+                $ret = $this->var_URL($value, $max_size, $min_size);
                 if (!$ret) {
                     $var_ary[$key] = false;
                 } else {
@@ -158,7 +158,7 @@ class SecureFilter {
 
     function post_array($var) {
         $val = filter_input(INPUT_POST, $var, FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
-        
+
         $val == null ? $val = false : null;
         return $val;
     }
@@ -283,7 +283,7 @@ class SecureFilter {
         if (empty($url)) {
             return false;
         }
-        if ($cfg['REMOTE_CHECKS'] && (!remote_check($url))) {
+        if ($cfg['remote_checks'] && (!remote_check($url))) {
             return false;
         }
         return $url;
