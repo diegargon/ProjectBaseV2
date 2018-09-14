@@ -10,8 +10,13 @@
 class TPL {
 
     private $debug;
-    private $cfg;
+    private $theme;
+    private $static_url;
+    private $css_optimize;
+    private $gzip;
+    private $css_inline;
     private $db;
+    private $lang;
     private $tpldata;
     private $css_cache_filepaths;
     public $css_cache_onefile;
@@ -33,12 +38,22 @@ class TPL {
         "webfont" => "https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js",
     );
 
-    function __construct($cfg, $db = null) {
-        global $debug;
+    function __construct($db = null) {
+    }
+    
+    function setConfig($db) {
+        global $debug,  $cfg; 
 
-        $this->cfg = & $cfg;
         $this->db = & $db;
         (defined('DEBUG') && $cfg['tplbasic_debug']) ? $this->debug = & $debug : $this->debug = false;
+        
+        $this->theme = $cfg['tplbasic_theme'];
+        $this->static_url = $cfg['STATIC_SRV_URL'];
+        $this->css_optimize = $cfg['tplbasic_css_optimize'];
+        $this->gzip = $cfg['tplbasic_gzip'];
+        $this->css_inline = $cfg['tplbasic_css_inline'];
+        $this->lang = $cfg['WEB_LANG'];
+        
     }
 
     function addto_tplvar($tplvar, $data, $priority = 5) { // change name to appendTo_tplvar? TODO priority support?
@@ -74,8 +89,8 @@ class TPL {
 
         empty($filename) ? $filename = $plugin : null;
 
-        $USER_PATH_LANG = "tpl/{$this->cfg['tplbasic_theme']}/$filename.{$this->cfg['WEB_LANG']}.tpl.php";
-        $USER_PATH = "tpl/{$this->cfg['tplbasic_theme']}/$filename.tpl.php";
+        $USER_PATH_LANG = "tpl/{$this->theme}/$filename.{$this->lang}.tpl.php";
+        $USER_PATH = "tpl/{$this->theme}/$filename.tpl.php";
         $DEFAULT_PATH = "plugins/$plugin/tpl/$filename.tpl.php";
         if (file_exists($USER_PATH_LANG)) {
             $tpl_file_content = $this->parse_file($USER_PATH_LANG, $data);
@@ -148,7 +163,7 @@ class TPL {
             $SCRIPT_PATH = $DEFAULT_PATH;
         }
         if (!empty($SCRIPT_PATH)) {
-            $script = "<script type='text/javascript' src='{$this->cfg['STATIC_SRV_URL']}$SCRIPT_PATH' charset='UTF-8' $async></script>\n";
+            $script = "<script type='text/javascript' src='{$this->static_url}$SCRIPT_PATH' charset='UTF-8' $async></script>\n";
         } else {
             $this->debug ? $this->debug->log("AddScriptFile called by-> $plugin for get a $filename but NOT FOUND IT", "tplBasic", "ERROR") : null;
             return false;
@@ -162,7 +177,7 @@ class TPL {
 
         $this->debug ? $this->debug->log("Get CSS called by-> $plugin for get a $filename", "tplBasic", "DEBUG") : null;
 
-        $USER_PATH = "tpl/{$this->cfg['tplbasic_theme']}/css/$filename.css";
+        $USER_PATH = "tpl/{$this->theme}/css/$filename.css";
         $DEFAULT_PATH = "plugins/$plugin/tpl/css/$filename.css";
         if ($this->css_cache_check() == true) {
             if (file_exists($USER_PATH)) {
@@ -176,7 +191,7 @@ class TPL {
                 $this->css_cache_onefile .= "-" . $filename;
             }
         } else {
-            if ($this->cfg['tplbasic_css_inline'] == 0) {
+            if ($this->css_inline == 0) {
                 if (file_exists($USER_PATH)) {
                     $css = "<link rel='stylesheet' href='/$USER_PATH'>\n";
                 } else if (file_exists($DEFAULT_PATH)) {
@@ -199,7 +214,7 @@ class TPL {
     }
 
     function css_cache_check() {
-        if ($this->cfg['tplbasic_css_optimize'] == 0 || !is_writable("cache")) {
+        if ($this->css_optimize == 0 || !is_writable("cache")) {
             return false;
         }
 
@@ -262,15 +277,13 @@ class TPL {
     }
 
     function parse_file($path, $data = null) {
-        //global $cfg, $LNG, $tpl;
-        global $LNG, $tUtil;
-        $cfg = & $this->cfg;
+        global $LNG, $tUtil, $cfg;
 
         $this->debug ? $this->debug->log("TPL parse $path, gzip its {$cfg['tplbasic_gzip']}", "tplBasic", "DEBUG") : null;
 
         $tpldata = $this->get_tpldata();
 
-        isset($cfg['tplbasic_gzip']) && $cfg['tplbasic_gzip'] ? ob_start("ob_gzhandler") : ob_start();
+        isset($this->gzip) && $this->gzip == 1 ? ob_start("ob_gzhandler") : ob_start();
 
         include ($path);
         $content = ob_get_contents();
