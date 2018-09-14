@@ -57,14 +57,12 @@
     float:left;
     min-height: 100px;
     min-width: 50px; 
-
 }
 
 #admin_content aside ul {
     margin: 0;
     padding: 0;
     list-style-type: none;    
-
 }
 #admin_content aside li a{
     display:block;    
@@ -78,7 +76,7 @@
 }
 
 #admin_content section {
-    border: 0x solid #000;
+    /* border: 0x solid #000; */
     float:left;
     min-height: 100px;
     min-width: 150px; 
@@ -87,7 +85,6 @@
 }
 
 #admin_content section p {
-
     font-size: 1em;
     line-height: .9em;
 }
