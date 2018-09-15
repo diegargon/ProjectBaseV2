@@ -14,8 +14,8 @@ html, body {
     color: #000;
 }
 .container {
-    margin: 0 auto;
-    max-width: 1300px;  
+    margin:0 auto;
+    max-width:1300px;
 }
 .bodysize {
     display:block;
