@@ -52,7 +52,7 @@ function SMBasic_user_activate_account($activation_code) {
 }
 
 function SMBasic_RequestResetOrActivation() {
-    global $LNG, $cfg, $db;
+    global $LNG, $cfg, $db, $filter;
 
     if (($email = $filter->post_email("email")) == false) {
         die('[{"status": "1", "msg": "' . $LNG['L_E_EMAIL'] . '"}]');

@@ -17,8 +17,8 @@ RewriteRule  ^([a-zA-z]{2})\/submit_news$   index.php?module=News&page=submit_ne
 RewriteRule  ^([a-zA-z]{2})\/sec.*/(.*)$   index.php?module=News&page=section&lang=$1&section=$2 [NC]
 
 #SMBasic
-RewriteRule  ^([a-zA-z]{2})\/login?(.*)$   index.php?$2module=SMBasic&page=login&lang=$1 [QSA]
-RewriteRule  ^([a-zA-z]{2})\/logout$   index.php?module=SMBasic&page=logout&lang=$1
+RewriteRule  ^([a-zA-z]{2})\/login?(.*)$   index.php?$2&module=SMBasic&page=login&lang=$1 [QSA]
+RewriteRule  ^([a-zA-z]{2})\/logout$   index.php?&module=SMBasic&page=logout&lang=$1
 RewriteRule  ^([a-zA-z]{2})\/profile(.*)$   index.php?module=SMBasic&page=profile&lang=$1$2
 RewriteRule  ^([a-zA-z]{2})\/register?(.*)   index.php?$2&module=SMBasic&page=register&lang=$1 [QSA]
 #RewriteRule  ^([a-zA-z]{2})\/terms?(.*)   index.php?$2&module=SMBasic&page=termslang=$1 [QSA]

@@ -25,9 +25,9 @@ function SMBasic_navLogReg() {
 
     if ($user) {
         $elements .= "<li class='nav_right'><a href='$logout_url'>{$LNG['L_LOGOUT']}</a></li>\n";
-        $elements .= "<li class='nav_right'><a href='$profile_url'>" . $user['username'] . "</a></li>\n";
+        $elements .= "<li class='nav_right'><a href='$profile_url'>{$user['username']}</a></li>\n";
         if (!empty($user['avatar'])) {
-            $elements .= "<li class='nav_right zero'><a href='$profile_url'><img src=" . $user['avatar'] . " /></a></li>";
+            $elements .= "<li class='nav_right zero'><a href='$profile_url'><img src='{$user['avatar']}'/></a></li>";
         }
     } else {
         $elements .= "<li class='nav_right'><a href='$login_url'>{$LNG['L_LOGIN']}</a></li>\n";
@@ -85,14 +85,14 @@ function SMBasic_create_reg_mail($active) {
 
     if ($active > 1) {
         if ($cfg['FRIENDLY_URL']) {
-            $URL = $cfg['WEB_URL'] . "login&active=$active";
+            $URL = $cfg['WEB_URL'] . $cfg['WEB_LANG'] . "/login&active=$active";
         } else {
             $URL = $cfg['CON_FILE'] . "?module=SMBasic&page=login&active=$active";
         }
         $msg = $LNG['L_REG_EMAIL_MSG_ACTIVE'] . "\n" . "$URL";
     } else {
         if ($cfg['FRIENDLY_URL']) {
-            $URL = $cfg['WEB_URL'] . "login";
+            $URL = $cfg['WEB_URL'] . $cfg['WEB_LANG'] . "/login";
         } else {
             $URL = $cfg['CON_FILE'] . "?module=SMBasic&page=login";
         }

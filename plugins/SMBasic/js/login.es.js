@@ -38,6 +38,8 @@ window.addEventListener("load", function () {
                         $('#reset_password_btn').toggle();
                         alert(json[0].msg);
                         return true;
+                    } else {
+                        alert(json[0].msg);
                     }
                 });
         return false;
@@ -90,7 +92,7 @@ window.addEventListener("load", function () {
                             alert(json[0].msg);
                         } else {
                             alert(json[0].msg);
-        }
+                        }
                     });
         }
         $('#login').removeAttr("disabled");

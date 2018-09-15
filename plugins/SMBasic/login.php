@@ -5,7 +5,6 @@
  */
 !defined('IN_WEB') ? exit : true;
 
-
 if (!($sm->getPerm("login_enable"))) {
     $frontend->message_box(['msg' => "L_E_LOGGIN_DISABLE"]);
     return;
@@ -55,10 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-
-    if (isset($_POST['email']) && isset($_POST['password'])) {
-
+    if (isset($_POST['btnLogin'])) {
         $email = $filter->post_email("email");
         $password = $filter->post_password("password");
         ($filter->post_int("rememberme") == 1) ? $rememberme = 1 : $rememberme = 0;
