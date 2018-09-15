@@ -12,6 +12,7 @@ do_action("news_page_begin");
 
 $plugins->express_start_provider("EDITOR");
 $tpl->getCSS_filePath("News");
+$tpl->getCSS_filePath("News", "News-mobile");
 
 do_action("begin_newsshow");
 

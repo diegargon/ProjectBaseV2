@@ -77,6 +77,7 @@
 }
 .article_text {
     min-height: 330px;
+    padding: 10px;
 }
 .article_text a {
     text-decoration:none;
@@ -184,7 +185,6 @@
     color: white;
 }
 
-
 .breadcrumb { 
     list-style: none; 
     overflow: hidden; 
@@ -262,10 +262,10 @@
 .related {
     font-size: 0.85em;
     padding:5px;
-    margin: 10px;
+    margin: auto;
     border: 1px solid #999;
     background: #cccccc;
-    max-width: 70%;
+    max-width: 50%;
 }
 .related span {
     font-weight: bold;
