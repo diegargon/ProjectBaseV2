@@ -40,7 +40,7 @@ function news_show_page() {
     if (!$news_perms['news_view']) {
         return $frontend->message_box(["msg" => "L_E_NOVIEWACCESS"]);
     }
-    
+
     news_process_admin_actions($news_data, $news_perms);
 
     if ($cfg['news_moderation'] && $news_data['moderation'] && !$news_perms['news_moderation']) {
@@ -77,7 +77,7 @@ function news_show_page() {
         $news_data['news_sources'] = news_format_source($news_source);
     }
     if ($cfg['display_news_related'] && ($news_related = news_get_related($news_data['nid'])) != false) {
-        $related_content = "<span>{$LNG['L_NEWS_RELATED']}:</span>";
+        $related_content = "";
         foreach ($news_related as $related) {
             $related_content .= "<li><a rel='nofollow' target='_blank' href='{$related['link']}'>{$related['link']}</a></li>";
         }
