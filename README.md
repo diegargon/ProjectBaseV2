@@ -48,6 +48,12 @@ Author
 
 Lastest add/canges? first latest
 ================================
+* Links/Core - Table for keep links
+  Added to core
+* MiniEditor - Text editor and formating for news and others
+  added.
+* News
+  added, rewrite...
 * CORE
   added install, upgrade, uninstall procedure, 
   added plugin managaner
