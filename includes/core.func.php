@@ -5,8 +5,7 @@
  */
 !defined('IN_WEB') ? exit : true;
 
-
-function botDetect($match_type = 0) {    
+function botDetect($match_type = 0) {
     global $cfg, $filter;
 
     if ($match_type == 1) {
@@ -17,21 +16,20 @@ function botDetect($match_type = 0) {
         $botList = $cfg['WELCOME_BOTS'] . "|" . $cfg['BAD_BOTS'];
     }
 
-    preg_match("/$botList/i",  $filter->srv_user_agent(), $matches);
+    preg_match("/$botList/i", $filter->srv_user_agent(), $matches);
 
     return (empty($matches)) ? false : true;
 }
 
 function mobileDetect() {
     global $filter;
-    
+
     $user_agent = $filter->srv_user_agent();
-    
+
     if (
             preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)'
                     . '|iris|kindle|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0'
-                    . '|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i', $user_agent) 
-            ||
+                    . '|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i', $user_agent) ||
             preg_match('/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)'
                     . '|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm'
                     . '|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)'
@@ -45,19 +43,18 @@ function mobileDetect() {
                     . '|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)'
                     . '|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )'
                     . '|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i', substr($user_agent, 0, 4))
-            ) {
+    ) {
         return true;
     } else {
         return false;
     }
 }
 
-function formatBytes($size, $precision = 2)
-{
+function formatBytes($size, $precision = 2) {
     $base = log($size, 1024);
-    $suffixes = array('', 'K', 'M', 'G', 'T');   
+    $suffixes = array('', 'K', 'M', 'G', 'T');
 
-    return round(pow(1024, $base - floor($base)), $precision) .' '. $suffixes[floor($base)];
+    return round(pow(1024, $base - floor($base)), $precision) . ' ' . $suffixes[floor($base)];
 }
 
 function remote_check($url) {
@@ -67,12 +64,15 @@ function remote_check($url) {
     }
 
     if (strpos($url, 'https://') !== 0) {
-        stream_context_set_default( ['https' => [ 'method' => 'HEAD' ] ]);
+        stream_context_set_default(['https' => ['method' => 'HEAD']]);
     } else {
-        stream_context_set_default( ['http' => [ 'method' => 'HEAD' ] ]);
+        stream_context_set_default(['http' => ['method' => 'HEAD']]);
     }
 
     $host = parse_url($url, PHP_URL_HOST);
+    $host = $host . "."; // Fully qualified domain ending in dot.
+
+    putenv('RES_OPTIONS=retrans:1 retry:1 timeout:1 attempts:1');
     //FIX: gethostbyname sometimes not reliable, sometimes or in some servers resolv things like this http://jeihfw and return a IP :/ :?
     if (gethostbyname($host) === $host) { //get host resolv ip if fail return the host
         return false;
