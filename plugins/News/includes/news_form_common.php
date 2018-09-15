@@ -28,7 +28,7 @@ function news_getCatsSelect($news_data = null) {
         }
         $row['father'] ? $fathers_name = $fathers[$row['father']] : null;
 
-        if (($cfg['news_allow_send_main_cats'] && $row['father'] == 0) || $row['father'] != 0) {
+        if (($cfg['news_allow_submit_main_cats'] && $row['father'] == 0) || $row['father'] != 0) {
             if (($news_data != null) && ($row['cid'] == $news_data['category'])) {
                 $select .= "<option selected value='{$row['cid']}'>$fathers_name{$row['name']}</option>";
             } else {
