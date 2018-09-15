@@ -68,3 +68,4 @@ $LNG['L_E_NOEDITACCESS'] = "No tienes acceso de edicion";
 /* NEW */
 
 $LNG['L_NEWS_ALREADY_EXIST'] = "Noticia ya existe";
+$LNG['L_E_NOVIEWACCESS'] = "No tienes permiso para ver esta noticia";

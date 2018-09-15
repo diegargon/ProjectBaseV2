@@ -23,6 +23,10 @@ function news_new_page($news_nid, $news_lang_id, $news_page) {
 
     $news_perms = get_news_perms("new_page");
 
+    if (!$news_perms['news_create_new_page']) {
+        return $frontend->message_box(["msg" => "L_E_NOEDITACCESS"]);
+    }
+
     $form_data['author_readonly'] = !$news_perms['news_can_change_author'];
     $form_data['news_add_source'] = $news_perms['news_add_source'];
     $form_data['news_add_related'] = $news_perms['news_add_related'];
@@ -43,6 +47,12 @@ function news_newpage_form_process() {
         return false;
     }
     $news_data = news_form_getPost();
+
+    $news_perms = get_news_perms("new_page");
+
+    if (!$news_perms['news_edit']) {
+        die('[{"status": "4", "msg": "' . $LNG['L_E_NOEDITACCESS'] . '"}]');
+    }
 
     if ($news_data['nid'] == false) {
         die('[{"status": "8", "msg": "' . $LNG['L_NEWS_INTERNAL_ERROR'] . '"}]');

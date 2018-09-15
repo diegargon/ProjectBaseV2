@@ -8,18 +8,15 @@
 require_once 'includes/news_form_common.php';
 require_once 'includes/news_submit.inc.php';
 
-$plugins->express_start_provider("EDITOR");
-$plugins->express_start_provider("CATS");
+$news_perms = get_news_perms("new_submit", null);
 
-$editor = new Editor();
-
-if (!empty($_POST['editor_preview'])) {
-    $editor->preview();
-    die();
+if (!$news_perms['news_submit_new']) {
+    $frontend->message_box(["msg" => "L_E_NOACCESS"]);
+    return false;
 }
 
 if (!empty($_POST['submitForm'])) {
-    news_form_submit_process();
+    news_submit_new_process();
 } else {
     $tpl->getCSS_filePath("News");
     $tpl->getCSS_filePath("MiniEditor");
@@ -27,5 +24,5 @@ if (!empty($_POST['submitForm'])) {
     $tpl->AddScriptFile("standard", "jquery", "TOP", null);
     $tpl->AddScriptFile("MiniEditor", "editor");
     $tpl->AddScriptFile("News", "newsform");
-    news_new_form($editor);
+    news_new_form($news_perms);
 }

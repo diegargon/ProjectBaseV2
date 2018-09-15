@@ -37,6 +37,10 @@ function news_show_page() {
     }
 
     $news_perms = get_news_perms("view_news", $news_data);
+    if (!$news_perms['news_view']) {
+        return $frontend->message_box(["msg" => "L_E_NOVIEWACCESS"]);
+    }
+    
     news_process_admin_actions($news_data, $news_perms);
 
     if ($cfg['news_moderation'] && $news_data['moderation'] && !$news_perms['news_moderation']) {

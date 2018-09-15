@@ -63,6 +63,11 @@ function news_form_newlang_process() {
 
     $news_data = news_form_getPost();
 
+    $news_perms = get_news_perms("news_new_lang", $news_data);
+    if (!$news_perms['news_translate']) {
+        die('[{"status": "4", "msg": "' . $LNG['L_E_NOEDITACCESS'] . '"}]');
+    }
+
     if (!news_newlang_form_process($news_data)) {
         return false;
     }
