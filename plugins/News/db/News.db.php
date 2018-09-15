@@ -70,7 +70,8 @@ $news_database_inserts = [
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_translate', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_users_translate', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_translate_own_news', '1');",
-    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_pager_max', '8');"    
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_pager_max', '8');",
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_side_news', '0');"
 ];
 
 $news_database_install = array_merge($news_database_install, $news_database_inserts);

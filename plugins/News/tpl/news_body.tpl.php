@@ -78,13 +78,15 @@
                 !empty($tpldata['ADD_TO_NEWSSHOW_BOTTOM']) ? print $tpldata['ADD_TO_NEWSSHOW_BOTTOM'] : null;
                 ?>                        
             </section>
-            <section class="article_side">            
-                <?php
-                !empty($tpldata['ADD_TO_NEWS_SIDE_PRE']) ? print $tpldata['ADD_TO_NEWS_SIDE_PRE'] : null;
-                !empty($data['SIDE_NEWS']) ? print $data['SIDE_NEWS'] : null;
-                !empty($tpldata['ADD_TO_NEWS_SIDE_POST']) ? print $tpldata['ADD_TO_NEWS_SIDE_POST'] : null;
-                ?>
-            </section>
+            <?php if ($cfg['news_side_news']) { ?>
+                <section class="article_side">            
+                    <?php
+                    !empty($tpldata['ADD_TO_NEWS_SIDE_PRE']) ? print $tpldata['ADD_TO_NEWS_SIDE_PRE'] : null;
+                    !empty($data['SIDE_NEWS']) ? print $data['SIDE_NEWS'] : null;
+                    !empty($tpldata['ADD_TO_NEWS_SIDE_POST']) ? print $tpldata['ADD_TO_NEWS_SIDE_POST'] : null;
+                    ?>
+                </section>
+                <?php } ?>
         </div>
     </div>
 </div>
