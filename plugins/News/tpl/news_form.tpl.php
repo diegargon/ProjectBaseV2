@@ -14,18 +14,16 @@
                     <div class="submit_items">
                         <p>
                             <label for="news_author"><?= $LNG['L_NEWS_AUTHOR'] ?> </label>
-                            <input <?= $data['author_readonly'] ?>   id="news_author" name="news_author" required="required" type="text"  maxlength="13" value="<?= $data['author'] ?>"/>
+                            <input <?= $data['author_readonly'] ? "readonly=\"readonly\"" : null ?>  id="news_author" name="news_author" required="required" type="text"  maxlength="13" value="<?= $data['author'] ?>"/>
+                            <input  name="news_author_id"  type="hidden" value="<?= $data['author_id'] ?>"/>
                         </p>
                     </div>
                     <?php if (!empty($data['translator'])) { ?>
                         <div class="submit_items">
                             <p>
                                 <label for="news_translator"><?= $LNG['L_NEWS_TRANSLATOR'] ?> </label>
-                                <input <?= !empty($data['author_readonly']) ? $data['author_readonly'] : null ?> id="news_translator" name="news_translator"  type="text"  maxlength="13" value="<?= $data['translator'] ?>"/>
+                                <input <?= $data['author_readonly'] ? "readonly=\"readonly\"" : null ?> id="news_translator" name="news_translator"  type="text"  maxlength="13" value="<?= $data['translator'] ?>"/>
                                 <input  name="news_translator_id"  type="hidden" value="<?= $data['translator_id'] ?>"/>
-                                <?php if (!empty($data['author_readonly'])) { ?>
-                                    <input  name="news_translator"  type="hidden" value="<?= $data['translator'] ?>"/>                                    
-                                <?php } ?>
                             </p>
                         </div>
                     <?php } ?>
@@ -45,7 +43,7 @@
                     </div>
                     <?= !empty($tpldata['NEWS_FORM_MIDDLE_OPTION']) ? $tpldata['NEWS_FORM_MIDDLE_OPTION'] : null ?>
 
-                    <?php if ($cfg['display_news_source'] && $data['can_add_source']) { ?>
+                    <?php if ($data['news_add_source']) { ?>
                         <div class="submit_items">
                             <p> 
                                 <label for="news_source"><?= $LNG['L_NEWS_SOURCE'] ?> </label>
@@ -53,11 +51,11 @@
                             </p>
                         </div>
                     <?php } ?>
-                    <?php if ($cfg['display_news_related'] && $data['can_add_source']) { ?>
+                    <?php if ($data['news_add_related']) { ?>
                         <div class="submit_items">
                             <p>
                                 <label for="news_new_related"><?= $LNG['L_NEWS_RELATED'] ?> </label>
-                                <input  value="<?= isset($data['news_new_related']) ? $data['news_new_related'] : null ?>"  minlength="<?= $cfg['news_link_min_legth'] ?>" maxlength="<?= $cfg['news_link_min_legth'] ?>" id="news_new_related" class="news_link" name="news_new_related" type="text" placeholder="http://site.com"/>
+                                <input  value="<?= isset($data['news_new_related']) ? $data['news_new_related'] : null ?>"  minlength="<?= $cfg['news_link_min_legth'] ?>" maxlength="<?= $cfg['news_link_max_legth'] ?>" id="news_new_related" class="news_link" name="news_new_related" type="text" placeholder="http://site.com"/>
                                 <?= isset($data['news_related']) ? $data['news_related'] : null ?>
                             </p>
                         </div>

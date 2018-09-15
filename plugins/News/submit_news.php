@@ -6,7 +6,7 @@
 !defined('IN_WEB') ? exit : true;
 
 require_once 'includes/news_form_common.php';
-require_once 'includes/news_form_submit.php';
+require_once 'includes/news_submit.inc.php';
 
 $plugins->express_start_provider("EDITOR");
 $plugins->express_start_provider("CATS");

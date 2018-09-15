@@ -4,7 +4,6 @@
  *  Copyright @ 2016 - 2018 Diego Garcia
  * 
  * news_new_form
-
  */
 
 function news_new_form($editor) {
@@ -24,7 +23,10 @@ function news_new_form($editor) {
     $user ? $form_data['author'] = $user['username'] : null;
     $user ? $form_data['tos_checked'] = 1 : null;
 
-    $form_data['author_readonly'] = "";
+    $news_perms = get_news_perms("new_submit", null);
+    $form_data['author_readonly'] = !$news_perms['news_can_change_author'];
+    $form_data['news_add_source'] = $news_perms['news_add_source'];
+    $form_data['news_add_related'] = $news_perms['news_add_related'];
 
     if (defined('MULTILANG') && ($site_langs = $ml->get_sitelangs_select("news_lang")) != false) {
         $form_data['select_langs'] = $site_langs;
@@ -39,12 +41,6 @@ function news_new_form($editor) {
       }
 
      */
-    if ($user && !defined('ACL') && $user['isFounder']) {
-        $form_data['author_readonly'] = "readonly=\"readonly\"";
-        $form_data['can_add_related'] = 1;
-        $form_data['can_add_source'] = 1;
-    }
-
     $form_data['select_categories'] = news_getCatsSelect();
 
     $form_data['terms_url'] = ""; // $cfg['TERMS_URL'];

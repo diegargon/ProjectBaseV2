@@ -60,3 +60,11 @@ $LNG['L_NEWS_TRANSLATOR'] = "Traductor";
 $LNG['L_NEWS_TRANSLATE_SUCCESSFUL'] = "Noticia traducida enviada con exito";
 $LNG['L_NEWS_TRANSLATE_BY'] = "Traducido por ";
 $LNG['L_NEWS_CREATE_NEW_PAGE'] = "Crear pagina nueva";
+
+$LNG['L_NEWS_NOLANG'] = "No existe en ese idioma";
+$LNG['L_NEWS_DELETE_NOEXISTS'] = "Noticia borrada o no existe";
+$LNG['L_E_NOEDITACCESS'] = "No tienes acceso de edicion";
+
+/* NEW */
+
+$LNG['L_NEWS_ALREADY_EXIST'] = "Noticia ya existe";

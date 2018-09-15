@@ -12,7 +12,7 @@ CREATE TABLE `" . DB_PREFIX . "news` (
   `title` varchar(128) NOT NULL,
   `lead` text,
   `text` longtext NOT NULL,
-  `acl` varchar(11) NOT NULL,
+  `acl` varchar(11) DEFAULT NULL,
   `author` varchar(32) NOT NULL,
   `author_id` int(11) NOT NULL,
   `lang` varchar(2) NOT NULL,
@@ -42,8 +42,6 @@ $news_database_inserts = [
     /* CONFIG */
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_debug', '0');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_list_moderation_limits', '200');",
-    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_source', '1');",
-    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_related', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_allow_send_main_cats', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_link_min_length', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_link_max_length', '256');",
@@ -55,16 +53,19 @@ $news_database_inserts = [
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_text_max_length', '10000');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'display_news_related', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'display_news_source', '1');",
-    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_moderation, '1');",
-    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'allow_multiple_pages, '1');",
-    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_stats, '1');",
-    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_adv_stats, '1');",
-    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_meta_opengraph, '1');",
-    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_anon_translate, '1');",
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_moderation', '1');",
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'allow_multiple_pages', '1');",
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_stats', '1');",
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_adv_stats', '1');",
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_meta_opengraph', '1');",
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_anon_translate', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_page_sidenews', '1');",
-    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_breadcrum, '1');",
-    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_breadcrum_separator, '');"
-    
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_breadcrum', '1');",
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_breadcrum_separator', '');",
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_translate', '1');",
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_users_translate', '1');",
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_translate_own_news', '1');",
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_pager_max', '8');"
 ];
 
 $news_database_install = array_merge($news_database_install, $news_database_inserts);

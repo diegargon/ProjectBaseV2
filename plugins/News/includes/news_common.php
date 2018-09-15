@@ -116,15 +116,14 @@ function get_news($news_select, $xtr_data = null) {
     return $content;
 }
 
-
 function fetch_news_data($row) {
     global $cfg, $acl_auth, $tUtil, $editor;
 
     /*
-    if ($cfg['NEWS_ACL_PREVIEW_CHECK'] && defined('ACL') &&
-            !empty($acl_auth) && !empty($row['acl']) && !$acl_auth->acl_ask($row['acl'])) {
-        return false;
-    }
+      if ($cfg['NEWS_ACL_PREVIEW_CHECK'] && defined('ACL') &&
+      !empty($acl_auth) && !empty($row['acl']) && !$acl_auth->acl_ask($row['acl'])) {
+      return false;
+      }
      */
     $news['nid'] = $row['nid'];
     $news['title'] = $row['title'];
@@ -155,9 +154,6 @@ function news_determine_main_image($news) {
     return !empty($match[0]) ? $match[0] : false;
 }
 
-
-
-
 function news_get_related($nid) {
     global $db;
 
@@ -178,23 +174,20 @@ function get_news_byId($nid, $lang_id, $page = null) {
     empty($page) ? $page = 1 : false;
 
     $where_ary = ["nid" => "$nid", "lang_id" => "$lang_id", "page" => "$page"];
-
     $query = $db->select_all("news", $where_ary, "LIMIT 1");
 
     if ($db->num_rows($query) <= 0) {
         $query = $db->select_all("news", ["nid" => $nid, "page" => $page], "LIMIT 1");
-        return $db->num_rows($query) > 0 ? $frontend->message_box(["msg" => "L_NEWS_WARN_NOLANG"]) : $frontend->message_box(["msg" => "L_NEWS_DELETE_NOEXISTS"]);
+        return $db->num_rows($query) > 0 ? "L_NEWS_NOLANG" : "L_NEWS_DELETE_NOEXISTS";
     }
     $news_row = $db->fetch($query);
 
-    if ('ACL' && !empty($news_row['acl']) && !$acl_auth->acl_ask($news_row['acl'])) {
-        return $frontend->message_box(['msg' => "L_E_NOACCESS"]);
-    }
+    /*
+      if ('ACL' && !empty($news_row['acl']) && !$acl_auth->acl_ask($news_row['acl'])) {
+      return $frontend->message_box(['msg' => "L_E_NOACCESS"]);
+      }
+     */
     $db->free($query);
-
-    if ($cfg['news_moderation'] && $news_row['moderation'] && !$filter->get_int("admin")) {
-        return $frontend->message_box(["msg" => "L_NEWS_ERROR_WAITINGMOD"]);
-    }
 
     return $news_row;
 }
@@ -212,7 +205,6 @@ function get_news_source_byID($nid) {
 
     return $source_link;
 }
-
 
 function news_friendly_title($title) {
     //FIX: better way for clean all those character?
