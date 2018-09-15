@@ -24,6 +24,7 @@ $LNG['L_E_EMAIL'] = "Email incorrect";
 $LNG['L_E_USERNAME'] = "Username contain invalid characters or too long";
 $LNG['L_E_PASSWORD'] = "Password contain invalid characters or too long";
 $LNG['L_E_PASSWORD_MIN'] = "Password too short";
+$LNG['L_E_PASSWORD_MAX'] = "Password too big";
 $LNG['L_E_USERNAME_EXISTS'] = "Username exists";
 $LNG['L_E_EMAIL_EXISTS'] = "Email exists";
 $LNG['L_REG_ERROR_WHILE_REG'] = "Register Error, please try again";

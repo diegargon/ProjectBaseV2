@@ -42,11 +42,14 @@ function SMBasic_RegisterSubmit() {
     ) {
         die('[{"status": "2", "msg": "' . $LNG['L_USERNAME_SHORT'] . '"}]');
     }
-    if (($password = $filter->post_password("password")) == false) {
+    if (($password = $filter->post_password("password", 64, 1)) == false) {
         die('[{"status": "3", "msg": "' . $LNG['L_E_PASSWORD'] . '"}]');
     }
-    if (strlen($_POST['password']) < $cfg['sm_min_password']) {
+    if (strlen($_POST['password']) < $cfg['smbasic_min_password']) {
         die('[{"status": "3", "msg": "' . $LNG['L_E_PASSWORD_MIN'] . '"}]');
+    }
+    if (strlen($_POST['password']) > $cfg['smbasic_max_password']) {
+        die('[{"status": "3", "msg": "' . $LNG['L_E_PASSWORD_MAX'] . '"}]');
     }
 
     $query = $db->select_all("users", array("username" => "$username"), "LIMIT 1");
@@ -74,7 +77,7 @@ function SMBasic_RegisterSubmit() {
     $query = $db->insert("users", array("username" => "$username", "password" => "$password", "email" => "$email", "active" => "$active"));
 
     if ($query) {
-        mail($email, $LNG['L_REG_EMAIL_SUBJECT'], $mail_msg, "From: {$cfg['EMAIL_SENDMAIL']} \r\n");
+        mail($email, $LNG['L_REG_EMAIL_SUBJECT'], $mail_msg, "From: {$cfg['smbasic_register_reply_email']} \r\n");
         die('[{"status": "ok", "msg": "' . $register_message . '", "url": "' . $cfg['WEB_URL'] . '"}]');
     } else {
         die('[{"status": "7", "msg": "' . $LNG['L_REG_ERROR_WHILE_REG'] . '"}]');

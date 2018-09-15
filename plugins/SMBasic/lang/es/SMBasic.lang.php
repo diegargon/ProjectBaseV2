@@ -24,6 +24,7 @@ $LNG['L_E_EMAIL'] = "Email incorrecto";
 $LNG['L_E_USERNAME'] = "Nombre de usuario con caracteres no permitidos o demasiado largo";
 $LNG['L_E_PASSWORD'] = "Contraseña con caracteres no permitidos o demasiado largo";
 $LNG['L_E_PASSWORD_MIN'] = "Contraseña demasiado corta";
+$LNG['L_E_PASSWORD_MAX'] = "Contraseña demasiado larga";
 $LNG['L_E_USERNAME_EXISTS'] = "Nombre de usuario ya esta siendo utilizado";
 $LNG['L_E_EMAIL_EXISTS'] = "Correo electronico ya esta siendo utilizado";
 $LNG['L_REG_ERROR_WHILE_REG'] = "Error durante el registro, por favor intentelo de nuevo";

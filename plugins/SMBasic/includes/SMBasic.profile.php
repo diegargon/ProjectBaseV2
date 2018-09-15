@@ -46,7 +46,7 @@ function SMBasic_ProfileView() {
 function SMBasic_ProfileChange() {
     global $LNG, $cfg, $db, $sm, $filter;
 
-    if (empty($_POST['cur_password']) || strlen($_POST['cur_password']) < $cfg['sm_min_password']) {
+    if (empty($_POST['cur_password']) || strlen($_POST['cur_password']) < $cfg['smbasic_min_password']) {
         die('[{"status": "1", "msg": "' . $LNG['L_E_PASSWORD_EMPTY_SHORT'] . '"}]');
     }
     if (!$password = $filter->post_password("cur_password")) {
@@ -91,7 +91,7 @@ function SMBasic_ProfileChange() {
         if ($_POST['new_password'] != $_POST['r_password']) {
             die('[{"status": "3", "msg": "' . $LNG['L_E_NEW_PASSWORD_NOTMATCH'] . '"}]');
         }
-        if ((strlen($_POST['new_password']) < $cfg['sm_min_password'])) {
+        if ((strlen($_POST['new_password']) < $cfg['smbasic_min_password'])) {
             die('[{"status": "3", "msg": "' . $LNG['L_E_NEWPASS_TOOSHORT'] . '"}]');
         }
         if (($new_password = $filter->post_password("new_password")) != false) {

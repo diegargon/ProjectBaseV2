@@ -36,52 +36,49 @@ function SMBasic_navLogReg() {
     return $elements;
 }
 
-    function setSessionDebugDetails() {
-        global $db, $sm, $tUtil, $debug;
+function setSessionDebugDetails() {
+    global $db, $sm, $tUtil, $debug;
 
-        $debug->log("Session Details", "SMBasic", "DEBUG");
-        $debug->log("Time Now: " . $tUtil->format_date(time(), true) . "", "SMBasic", "DEBUG");
-        if (!($user = $sm->getSessionUser())) {
-            $debug->log("Anonymous Session", "SMBasic", "DEBUG");
-            return false;
-        }
-
-        if (isset($_SESSION)) {
-            if (!empty($sm->getData("uid"))) {
-                $debug->log("Session VAR ID:" . $sm->getData("uid"), "SMBasic", "DEBUG");
-            }
-        } else {
-            $debug->log("Session ins't set", "SMBasic", "DEBUG");
-        }
-
-        $query = $db->select_all("sessions", array("session_uid" => "{$user['uid']}"), "LIMIT 1");
-        $session = $db->fetch($query);
-        if ($session) {
-
-            $debug->log("Session DB IP: {$session['session_ip']}", "SMBasic", "DEBUG");
-            $debug->log("Session DB Browser: {$session['session_browser']}", "SMBasic", "DEBUG");
-            $debug->log("Session DB Create: {$session['session_created']}", "SMBasic");
-            $debug->log("Session DB Expire:" . $tUtil->format_date("{$session['session_expire']}", true) . "", "SMBasic", "DEBUG");
-        }
-        $debug->log("PHP Session expire: " . ini_get('session.gc_maxlifetime'), "SMBasic", "DEBUG");
-        if (isset($_COOKIE)) {
-            $debug->log("Cookie State is set", "SMBasic", "DEBUG");
-            foreach ($_COOKIE as $key => $val) {
-                $debug->log("Cookie array $key -> $val", "SMBasic", "DEBUG");
-            }
-        } else {
-            $debug->log("Cookie not set", "SMBasic", "DEBUG");
-        }
-        $user = $sm->getSessionUSer();
-        if ($user) {
-            $debug->log("User ID: {$user['uid']}", "SMBasic", "DEBUG");
-            $debug->log("Username: {$user['username']}", "SMBasic", "DEBUG");
-            $debug->log("isFounder: {$user['isFounder']}", "SMBasic", "DEBUG");
-        }
+    $debug->log("Session Details", "SMBasic", "DEBUG");
+    $debug->log("Time Now: " . $tUtil->format_date(time(), true) . "", "SMBasic", "DEBUG");
+    if (!($user = $sm->getSessionUser())) {
+        $debug->log("Anonymous Session", "SMBasic", "DEBUG");
+        return false;
     }
-    
 
-/*
+    if (isset($_SESSION)) {
+        if (!empty($sm->getData("uid"))) {
+            $debug->log("Session VAR ID:" . $sm->getData("uid"), "SMBasic", "DEBUG");
+        }
+    } else {
+        $debug->log("Session ins't set", "SMBasic", "DEBUG");
+    }
+
+    $query = $db->select_all("sessions", array("session_uid" => "{$user['uid']}"), "LIMIT 1");
+    $session = $db->fetch($query);
+    if ($session) {
+
+        $debug->log("Session DB IP: {$session['session_ip']}", "SMBasic", "DEBUG");
+        $debug->log("Session DB Browser: {$session['session_browser']}", "SMBasic", "DEBUG");
+        $debug->log("Session DB Create: {$session['session_created']}", "SMBasic");
+        $debug->log("Session DB Expire:" . $tUtil->format_date("{$session['session_expire']}", true) . "", "SMBasic", "DEBUG");
+    }
+    $debug->log("PHP Session expire: " . ini_get('session.gc_maxlifetime'), "SMBasic", "DEBUG");
+    if (isset($_COOKIE)) {
+        $debug->log("Cookie State is set", "SMBasic", "DEBUG");
+        foreach ($_COOKIE as $key => $val) {
+            $debug->log("Cookie array $key -> $val", "SMBasic", "DEBUG");
+        }
+    } else {
+        $debug->log("Cookie not set", "SMBasic", "DEBUG");
+    }
+    $user = $sm->getSessionUSer();
+    if ($user) {
+        $debug->log("User ID: {$user['uid']}", "SMBasic", "DEBUG");
+        $debug->log("Username: {$user['username']}", "SMBasic", "DEBUG");
+        $debug->log("isFounder: {$user['isFounder']}", "SMBasic", "DEBUG");
+    }
+}
 
 function SMBasic_create_reg_mail($active) {
     global $LNG, $cfg;
@@ -103,6 +100,3 @@ function SMBasic_create_reg_mail($active) {
     }
     return $msg;
 }
-
-
-*/

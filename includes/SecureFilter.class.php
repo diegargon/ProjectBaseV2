@@ -203,11 +203,6 @@ class SecureFilter {
     //VAR
     //S_VAR_PASSWORD
     function var_password($var, $max_size = null, $min_size = null) {
-        global $cfg;
-        if (defined('SM') && empty($max_size) && empty($min_size)) {
-            $max_size = $cfg['sm_max_password'];
-            $min_size = $cfg['sm_min_password'];
-        }
 
         if ((!empty($max_size) && (strlen($var) > $max_size) ) || (!empty($min_size) && (strlen($var) < $min_size))
         ) {

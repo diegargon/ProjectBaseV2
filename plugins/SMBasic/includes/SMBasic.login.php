@@ -28,7 +28,7 @@ function SMBasic_Login($email, $password, $rememberme) {
         } else {
             if ($user['active'] == 0 || $user['active'] > 1) { //-1 disable by admin not send email
                 $mail_msg = SMBasic_create_reg_mail($user['active']);
-                mail($user['email'], $LNG['L_REG_EMAIL_SUBJECT'], $mail_msg, "From: {$cfg['EMAIL_SENDMAIL']} \r\n");
+                mail($user['email'], $LNG['L_REG_EMAIL_SUBJECT'], $mail_msg, "From: {$cfg['smbasic_register_reply_email']} \r\n");
             }
             die('[{"status": "error", "msg": "' . $LNG['L_ACCOUNT_INACTIVE'] . '"}]');
         }
@@ -69,14 +69,14 @@ function SMBasic_RequestResetOrActivation() {
         $user = $db->fetch($query);
         if ($user['active'] > 1) {
             $mail_msg = SMBasic_create_reg_mail($user['active']);
-            mail($email, $LNG['L_REG_EMAIL_SUBJECT'], $mail_msg, "From: {$cfg['EMAIL_SENDMAIL']} \r\n");
+            mail($email, $LNG['L_REG_EMAIL_SUBJECT'], $mail_msg, "From: {$cfg['smbasic_register_reply_email']} \r\n");
             die('[{"status": "2", "msg": "' . $LNG['L_ACTIVATION_EMAIL'] . '"}]');
         } else {
             $reset = mt_rand(11111111, 2147483647);
             $db->update("users", array("reset" => "$reset"), array("email" => "$email"));
             $URL = $cfg['WEB_URL'] . "login" . "&reset=$reset&email=$email";
             $msg = $LNG['L_RESET_EMAIL_MSG'] . "\n" . "$URL";
-            mail($email, $LNG['L_RESET_EMAIL_SUBJECT'], $msg, "From: {$cfg['EMAIL_SENDMAIL']} \r\n");
+            mail($email, $LNG['L_RESET_EMAIL_SUBJECT'], $msg, "From: {$cfg['smbasic_register_reply_email']} \r\n");
             die('[{"status": "2", "msg": "' . $LNG['L_RESET_EMAIL'] . '"}]');
         }
     }
@@ -100,7 +100,7 @@ function SMBasic_user_reset_password() {
         $db->update("users", array("password" => "$password_encrypted", "reset" => "0"), array("uid" => "{$user['uid']}"));
         $URL = "{$cfg['WEB_URL']}" . "login";
         $msg = $LNG['L_RESET_SEND_NEWMAIL_MSG'] . "\n" . "$password\n" . "$URL";
-        mail($email, $LNG['L_RESET_SEND_NEWMAIL_SUBJECT'], $msg, "From: {$cfg['EMAIL_SENDMAIL']} \r\n");
+        mail($email, $LNG['L_RESET_SEND_NEWMAIL_SUBJECT'], $msg, "From: {$cfg['smbasic_register_reply_email']} \r\n");
         echo $LNG['L_RESET_PASSWORD_SUCCESS'];
         exit(0); // TODO MSG RESET OK
     } else {

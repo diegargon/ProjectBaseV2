@@ -48,6 +48,8 @@ Author
 
 Lastest add/canges? first latest
 ================================
+* SMBasic * Perms
+* News * Perms
 * Links/Core - Table for keep links
   Added to core
 * MiniEditor - Text editor and formating for news and others
