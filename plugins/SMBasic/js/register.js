@@ -47,10 +47,6 @@ window.addEventListener("load", function() {
                 $('#password').css("border","2px solid red");
                 $('#password').css("box-shadow","0 0 3px red");
                 alert("Password required");
-        } else if( password.length < 8 ){
-            $('#password').css("border","2px solid red");
-            $('#password').css("box-shadow","0 0 3px red");
-            alert("Password too small");
         } else if( password != rpassword ){
             $('#password').css("border","2px solid red");
             $('#password').css("box-shadow","0 0 3px red");
