@@ -1,5 +1,6 @@
 <?php
-/* 
+
+/*
  *  Copyright @ 2016 - 2018 Diego Garcia
  * ES
  */
@@ -113,3 +114,5 @@ $LNG['L_SM_OAUTH_LINKED'] = "Una cuenta con ese email ya existe, ambas quedaran 
 $LNG['L_SM_OAUTH_USERNAME'] = "Imposible crear una cuenta via oauth";
 $LNG['L_SM_DELETED'] = "Eliminado";
 $LNG['L_SM_TERMS'] = "Terminos";
+$LNG['L_E_LOGGIN_DISABLE'] = "Identificacion deshabilitada";
+$LNG['L_E_REGISTER_DISABLE'] = "Registro deshabilitado";

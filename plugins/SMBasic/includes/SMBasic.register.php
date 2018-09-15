@@ -22,10 +22,9 @@ function SMBasic_Register() {
     $tpl->getCSS_filePath("SMBasic", "SMBasic-mobile");
     $tpl->AddScriptFile("standard", "jquery", "TOP");
     $tpl->AddScriptFile("SMBasic", "register", "BOTTOM");
-    
+
     $register_data['terms_url'] = $sm->getPage("terms");
     $tpl->addto_tplvar("ADD_TO_BODY", $tpl->getTPL_file("SMBasic", "register", $register_data));
-
 }
 
 function SMBasic_RegisterSubmit() {

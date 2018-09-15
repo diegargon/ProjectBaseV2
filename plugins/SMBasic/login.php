@@ -5,21 +5,25 @@
  */
 !defined('IN_WEB') ? exit : true;
 
-require_once("includes/SMBasic.login.php");
+
+if (!($sm->getPerm("login_enable"))) {
+    $frontend->message_box(['msg' => "L_E_LOGGIN_DISABLE"]);
+    return;
+}
 
 $user = $sm->getSessionUser();
 
 //HEAD MOD
-//$cfg['PAGE_TITLE'] = $cfg['WEB_NAME'] . ": " . $LNG['L_LOGIN'];
-//$cfg['PAGE_DESC'] = $cfg['WEB_NAME'] . ": " . $LNG['L_LOGIN'];
+$cfg['PAGE_TITLE'] = $cfg['WEB_NAME'] . ": " . $LNG['L_LOGIN'];
+$cfg['PAGE_DESC'] = $cfg['WEB_NAME'] . ": " . $LNG['L_LOGIN'];
 //END HEAD MOD
 
 if ($user && $user['uid'] > 0) {
-    $msgbox['msg'] = "L_E_ALREADY_LOGGED";
-    $msgbox['backlink'] = "/";
-    $frontend->message_box($msgbox);
+    $frontend->message_box(['msg' => 'L_E_ALREADY_LOGGED']);
     return;
 }
+
+require_once("includes/SMBasic.login.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if (isset($_GET['active'])) {

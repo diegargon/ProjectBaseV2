@@ -10,6 +10,7 @@ class SessionManager {
     private $user;
     private $users_cache_db = [];
     private $debug;
+    private $perms;
 
     /*
      * 1 php default php 2 custom 
@@ -320,10 +321,41 @@ class SessionManager {
         }
     }
 
+    function setPerms($cfg) {
+
+        $this->perms['register_enable'] = $cfg['smbasic_register_enable'];
+        $this->perms['login_enable'] = $cfg['smbasic_login_enable'];
+        /*
+          if(defined('ACL')) {
+          $this->setACLPerms();
+          } else {
+          $this->setNoNACLPerms();
+          }
+         */
+    }
+
+    function setACLPerms() {
+        
+    }
+
+    function setNonACLPerms() {
+        
+    }
+
+    function getPerms() {
+        return $this->perms;
+    }
+
+    function getPerm($perm) {
+        return ($this->perms[$perm]) ? $this->perms[$perm] : false;
+    }
+
     private function setConfig() {
         global $cfg;
 
         (defined('DEBUG') && $cfg['smbasic_debug']) ? $this->debug = 1 : $this->debug = 0;
+
+        $this->setPerms($cfg);
 
         if ($cfg['FRIENDLY_URL']) {
             $this->file_path = "/" . $cfg['WEB_LANG'] . "/";

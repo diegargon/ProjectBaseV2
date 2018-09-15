@@ -1,5 +1,6 @@
 <?php
-/* 
+
+/*
  *  Copyright @ 2016 - 2018 Diego Garcia
  *  EN
  */
@@ -103,3 +104,5 @@ $LNG['L_SM_LOG_FB'] = "Log in with Facebook!";
 $LNG['L_SM_REG_FB'] = "Register with Facebook!";
 $LNG['L_SM_DELETED'] = "Deleted";
 $LNG['L_SM_TERMS'] = "Terms";
+$LNG['L_E_LOGGIN_DISABLE'] = "Login disable";
+$LNG['L_E_REGISTER_DISABLE'] = "Register disable";

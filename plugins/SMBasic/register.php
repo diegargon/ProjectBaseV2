@@ -5,6 +5,11 @@
  */
 !defined('IN_WEB') ? exit : true;
 
+if (!($sm->getPerm("register_enable"))) {
+    $frontend->message_box(['msg' => "L_E_REGISTER_DISABLE"]);
+    return;
+}
+
 require_once("includes/SMBasic.register.php");
 
 $user = $sm->getSessionUser();
@@ -15,8 +20,7 @@ $cfg['PAGE_DESC'] = $cfg['WEB_NAME'] . ": " . $LNG['L_REGISTER'];
 //END HEAD MOD
 
 if ($user && $user['uid'] != 0) {
-    $msgbox['msg'] = "L_E_ALREADY_LOGGED";
-    $frontend->message_box($msgbox);
+    $frontend->message_box(['msg' => 'L_E_ALREADY_LOGGED']);
     return false;
 }
 
