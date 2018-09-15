@@ -23,7 +23,8 @@ CREATE TABLE `" . DB_PREFIX . "config` (
   `cfg_id` int(32) NOT NULL,
   `cfg_key` varchar(32) NOT NULL,
   `plugin` varchar (64) NOT NULL,
-  `cfg_value` varchar(128) NOT NULL
+  `cfg_value` varchar(128) NOT NULL,
+  `group` varchar(64) NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . ";
 
 ";
