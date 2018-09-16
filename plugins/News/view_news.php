@@ -11,6 +11,7 @@ require_once("includes/news_view.php");
 do_action("news_page_begin");
 
 $plugins->express_start_provider("EDITOR");
+$plugins->express_start_provider("CATS");
 $tpl->getCSS_filePath("News");
 $tpl->getCSS_filePath("News", "News-mobile");
 

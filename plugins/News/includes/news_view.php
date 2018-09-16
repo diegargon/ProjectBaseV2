@@ -431,13 +431,16 @@ function news_add_social_meta($news) { // TODO: Move to plugin NewsSocialExtra
 }
 
 function getNewsCatBreadcrumb($news_data) {
-    global $db, $cfg;
+    global $db, $cfg, $ctgs;
     $content = "";
 
+    /*
     $query = $db->select_all("categories", ["plugin" => "News", "lang_id" => $news_data['lang_id']]);
     while ($cat_row = $db->fetch($query)) {
         $categories[$cat_row['cid']] = $cat_row;
     }
+     */   
+    $categories = $ctgs->getCategories("News");
     $news_cat_id = $news_data['category'];
 
     if ($categories[$news_cat_id]['father'] != 0) {
