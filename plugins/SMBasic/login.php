@@ -54,11 +54,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['btnLogin'])) {
+    if (isset($_POST['email']) && isset($_POST['password'])) {
         $email = $filter->post_email("email");
         $password = $filter->post_password("password");
-        ($filter->post_int("rememberme") == 1) ? $rememberme = 1 : $rememberme = 0;
-        if ($email != false || $password != false || $rememberme != false) {
+        ($filter->post_int("rememberme")) ? $rememberme = 1 : $rememberme = 0;
+        if ($email != false && $password != false) {
             SMBasic_Login($email, $password, $rememberme);
         } else {
             die('[{"status": "error", "msg": "' . $LNG['L_E_EMAILPASSWORD'] . '"}]');
