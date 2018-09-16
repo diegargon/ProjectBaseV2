@@ -106,19 +106,24 @@ do_action("init_core");
 
 $module = $filter->get_strict_chars("module");
 $page = $filter->get_strict_chars("page");
+$vpage = $filter->get_strict_chars("vpage");
 
-if (!empty($module) && !empty($page)) {
+if (!empty($module) && (!empty($page) || !empty($vpage))) {
     !$plugins->check_enabled($module) ? exit("Error plugin ins't enabled") : null;
+    !$plugins->check_started($module) ? $plugins->express_start($module) : null;
+    
+    if (!empty($vpage)) {
+        $frontend->vpage($module, $page);
+    } else if (!empty($page)) {
+        
+        $path = "plugins/$module/$page.php";
+        if (!file_exists($path)) {
+            $frontend->message_box(['msg' => 'L_E_PLUGPAGE_NOEXISTS']);
+        } else {
+            do_action("preload_" . $module . "_" . $page);
+            require_once($path);
+        }
 
-    $path = "plugins/$module/$page.php";
-    if (!file_exists($path)) {
-        $msgbox['msg'] = "L_E_PLUGPAGE_NOEXISTS";
-        $msgbox['backlink'] = "/";
-        $msgbox['backlink_title'] = "L_HOME";
-        $frontend->message_box($msgbox);
-    } else {
-        do_action("preload_" . $module . "_" . $page);
-        require_once($path);
     }
 } else {
     $frontend->index_page();
