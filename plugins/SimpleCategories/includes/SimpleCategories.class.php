@@ -101,7 +101,7 @@ class Categories {
             }
         }
         //loop
-        !empty($cat_ids) ? $cat_ids .= $this->getCatChildsId($plugin, $cat_ids) : false;
+        !empty($cat_ids) ? $cat_ids .= $this->getCatChildsId($plugin, $cat_ids, $separator) : false;
 
         return $cat_ids;
     }
@@ -149,13 +149,42 @@ class Categories {
         });
     }
 
-    function getCategories_all_lang($plugin = null, $order = null) {
+    function getRootCatID($catid) {
+
+        foreach ($this->categories as $category) {
+            if ($category['cid'] == $catid) {
+                $cat = $category;
+                break;
+            }
+        }
+
+        if (!isset($cat)) {
+            return false;
+        }
+
+        if ($cat['father'] == 0) {
+            return $cat['cid'];
+        }
+        $father = $cat['father'];
+
+        while ($father != 0) {
+            foreach ($this->categories as $category) {
+                if ($category['cid'] == $father) {
+                    $father = $category['father'];
+                    ($father == 0) ? $father_id = $category['cid'] : null;
+                }
+            }
+        }
+        return isset($father_id) ? $father_id : false;
+    }
+
+    function getCategories_all_lang($plugin = null) {
         global $db;
-        !$order ? $order = "cid" : null;
+        //!$order ? $order = "cid" : null;
 
         ($plugin) ? $plugin_name["plugin"] = $plugin : $plugin_name = null;
 
-        $query = $db->select_all("categories", $plugin_name, "ORDER BY $order");
+        $query = $db->select_all("categories", $plugin_name, "ORDER BY father,weight");
 
         if ($db->num_rows($query) > 0) {
             while ($row = $db->fetch($query)) {

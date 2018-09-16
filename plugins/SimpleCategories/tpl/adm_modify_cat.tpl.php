@@ -12,7 +12,7 @@ if ($data['TPL_CTRL'] == 1) {
         <p><?= $LNG['L_CATS_MODIFY_CATS'] ?></p>        
     <?php } ?>        
     <form id='cat_mod' method='post' action=''>
-        <div>
+        <div class='cat_row <?=$data['catFather'] == 0 ?  "cat_row_main_cat" : null ?>'>
             <label>Id</label>
             <input type='text' readonly  name='cid' class='cat_id' size='1' value='<?= $data['catid'] ?>'/>    
             <?= isset($data['catlist']) ? $data['catlist'] : null ?>
@@ -27,6 +27,6 @@ if ($data['TPL_CTRL'] == 1) {
         </div></form>
     <?php
     if ($data['TPL_FOOT'] == 1) {
-        ?>        
+        ?>
     </div>
 <?php } ?>

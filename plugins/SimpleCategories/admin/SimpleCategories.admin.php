@@ -58,6 +58,8 @@ function SimpleCats_AdminContent($params) {
 function SimpleCats_AdminCats($plugin = null) {
     global $cfg, $ml, $ctgs, $tpl;
 
+    $tpl->getCSS_filePath("SimpleCategories");
+
     if (defined('MULTILANG')) {
         $langs = $ml->get_site_langs();
     } else {
@@ -80,6 +82,7 @@ function SimpleCats_AdminCats($plugin = null) {
 
     /* MODIFY */
     $cats = $ctgs->getCategories_all_lang($plugin);
+
     if ($cats !== false) {
         $catsids = [];
         foreach ($cats as $cat) {
@@ -119,6 +122,7 @@ function SimpleCats_AdminCats($plugin = null) {
             $counter++;
         }
     }
+
     return $content;
 }
 
