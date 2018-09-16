@@ -10,10 +10,8 @@
 
 define('CORE_VERSION', 0.2);
 
-
 require_once "config.default.php";
 file_exists("config/config.inc.php") ? require_once "config/config.inc.php" : null; //rewrite config
-
 
 if (defined('DEBUG')) {
     require_once "includes/" . DEBUG_CORE . ".class.php";
@@ -23,9 +21,8 @@ if (defined('DEBUG')) {
 
 require_once "includes/core.func.php";
 require_once "includes/actions.inc.php";
-
-
 require_once "includes/" . FILTER . ".class.php";
+
 $filter = new SecureFilter();
 
 /* SQL */
@@ -68,8 +65,6 @@ $plugins->setDepend("CORE", CORE_VERSION);
 $plugins->setDepend("DEBUG", CORE_VERSION);
 $plugins->setDepend("SQL", CORE_VERSION);
 
-
-
 /* CHECK FOR INSTALL */
 if (!isset($cfg['CORE_INSTALLED']) || $cfg['CORE_INSTALLED'] != 1) {
     $debug->log("Software ins't intalled", "CORE", "WARNING");
@@ -94,7 +89,6 @@ if (mobileDetect()) {
     $cfg['img_selector'] = "desktop";
 }
 $cfg['ITS_BOT'] = botDetect();
-
 
 $plugins->Init();
 
