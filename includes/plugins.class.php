@@ -409,6 +409,16 @@ class Plugins {
             }
         }
     }
+    
+    function check_started($plugin_name) {
+
+        foreach ($this->started_plugins as $started_plugin) {
+            if ($started_plugin['plugin_name'] == $plugin_name) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     private function plugin_check($plugin) {
         global $debug;
@@ -420,16 +430,6 @@ class Plugins {
 
         if (empty($plugin['depends']) || $this->plugin_resolve_depends($plugin)) {
             return true;
-        }
-        return false;
-    }
-
-    private function check_started($plugin_name) {
-
-        foreach ($this->started_plugins as $started_plugin) {
-            if ($started_plugin['plugin_name'] == $plugin_name) {
-                return true;
-            }
         }
         return false;
     }
