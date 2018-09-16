@@ -33,7 +33,7 @@ class Plugins {
         foreach ($this->getEnabled() as $plugin) {
             if ($plugin['autostart']) {
                 $this->debug ? $debug->log("WORKING on " . $plugin['plugin_name'] . "...", "PLUGINS", "INFO") : null;
-                if (!$this->check_started($plugin)) {
+                if (!$this->check_started($plugin['plugin_name'])) {
                     if ($this->plugin_check($plugin)) {
                         $this->debug ? $debug->log("Check sucessfull " . $plugin['plugin_name'] . "...", "PLUGINS", "INFO") : null;
                         $this->start_plugin($plugin);
@@ -307,7 +307,7 @@ class Plugins {
 
         foreach ($this->enabled_plugins as $plugin) {
             if ($plugin['plugin_name'] == $pluginname) {
-                if ($this->check_started($plugin)) {
+                if ($this->check_started($plugin['plugin_name'])) {
                     $this->debug ? $debug->log("Plugin " . $plugin['plugin_name'] . " already started", "PLUGINS", "INFO") : null;
                     return true;
                 }
@@ -332,7 +332,7 @@ class Plugins {
 
         foreach ($this->enabled_plugins as $plugin) {
             if ($plugin['provide'] == $provider) {
-                if ($this->check_started($plugin)) {
+                if ($this->check_started($plugin['plugin_name'])) {
                     $this->debug ? $debug->log("Plugin {$plugin['plugin_name']} providing $provider already started", "PLUGINS", "INFO") : null;
                     return true;
                 }
@@ -424,10 +424,10 @@ class Plugins {
         return false;
     }
 
-    private function check_started($plugin) {
+    private function check_started($plugin_name) {
 
         foreach ($this->started_plugins as $started_plugin) {
-            if ($started_plugin['plugin_name'] == $plugin['plugin_name']) {
+            if ($started_plugin['plugin_name'] == $plugin_name) {
                 return true;
             }
         }
