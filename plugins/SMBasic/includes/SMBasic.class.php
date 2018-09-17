@@ -272,6 +272,11 @@ class SessionManager {
         $this->destroyData();
     }
 
+    function logout() {
+        $this->destroy();
+        header('Location: /');
+    }
+
     function setAnonSession() {
         global $debug;
 

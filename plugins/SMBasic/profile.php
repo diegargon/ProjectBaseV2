@@ -17,7 +17,7 @@ $cfg['PAGE_DESC'] = $cfg['WEB_NAME'] . ": " . $LNG['L_PROFILE'];
 $user = $sm->getSessionUser();
 
 if (empty($user) || $user === false || $user['uid'] <= 0) {
-    //$sm->destroy();
+    $sm->destroy();
     $msgbox['msg'] = "L_E_NOT_LOGGED";
     $frontend->message_box($msgbox);
     return false;
