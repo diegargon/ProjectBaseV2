@@ -11,13 +11,10 @@ function DebugWindow_init() {
 }
 
 function stats_window() {
-    $content = "<center>";
-    $content .= "<p>Memory usage: " . formatBytes(memory_get_usage()) . " / Mememory peak: ";
+    $content = "<p>Memory usage: " . formatBytes(memory_get_usage()) . " / Mememory peak: ";
     $content .= formatBytes(memory_get_peak_usage()) . "</p>";
     $content .= "<p>Memory  real usage: " . formatBytes(memory_get_usage(true)) . " / Mememory real peak: ";
     $content .= formatBytes(memory_get_peak_usage(true)) . "</p>";
-    $content .= "</center>";
-
     return $content;
 }
 
