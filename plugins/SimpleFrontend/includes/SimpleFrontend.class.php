@@ -64,6 +64,21 @@ class SimpleFrontend {
         return false;
     }
 
+    function register_page_array($pages_array) {
+        // TODO avoid duplicates
+        foreach ($pages_array as $page) {
+            if (!empty($page['module']) && !empty($page['page']) &&
+                    ( ($page['type'] == "virtual" && !empty($page['func'])) || ( $page['type'] == "disk" && empty($page['func'])) )
+            ) {
+                $this->pages[] = $page;
+            } else {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     function index_page() {
         global $tpl, $cfg, $blocks;
         $page_data = [];
