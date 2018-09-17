@@ -9,7 +9,8 @@ function get_news_query($where, $q_conf = null, $order = null) {
     global $cfg, $db, $ml, $ctgs;
 
     empty($q_conf['limit']) ? $limit = " LIMIT " . $cfg['news_dflt_getnews_limit'] : $limit = " LIMIT " . $q_conf['limit'];
-    empty($order) ? $order = "ORDER BY created" : $order = "ORDER BY " . $order;
+    empty($order) ? $order = "ORDER BY created DESC" : $order = "ORDER BY " . $order;
+    empty($q_conf['page']) ? $where['page'] = 1 : $where['page'] = $q_conf['page'];
 
     if (!isset($where['lang_id'])) {
         if (defined('MULTILANG')) {
@@ -33,7 +34,7 @@ function get_news_query($where, $q_conf = null, $order = null) {
 
     if (isset($q_conf['headlines'])) {
         $what = "nid, title, created, page, featured, visits";
-    } else if ($q_conf['lead']) {
+    } else if (isset($q_conf['lead'])) {
         $what = "nid, title, lead, page, created, featured, visits";
     } else {
         $what = "nid, title, lead, text, page, author_id, created, last_edited, featured, visits, translator_id, tags";

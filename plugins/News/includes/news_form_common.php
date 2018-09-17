@@ -4,8 +4,8 @@
  *  Copyright @ 2016 - 2018 Diego Garcia
  */
 
-function news_getCatsSelect($news_data = null) {
-    global $db, $acl_auth, $sm, $cfg, $ctgs;
+function news_getCatsSelect($news_data = null, $select_name = "news_category") {
+    global $cfg, $ctgs;
 
     if (defined('MULTILANG')) {
         global $ml;
@@ -13,7 +13,7 @@ function news_getCatsSelect($news_data = null) {
     } else {
         $lang_id = 1;
     }
-    $select = "<select name='news_category' id='news_category'>";
+    $select = "<select name='{$select_name}' id='news_category'>";
     $fathers = [];
 
     $cats = $ctgs->getCategories("News");
@@ -41,7 +41,7 @@ function news_getCatsSelect($news_data = null) {
 }
 
 function news_form_getPost() {
-    global $acl_auth, $sm, $LNG, $db, $filter;
+    global $db, $filter;
 
     //GET
     $form_data['nid'] = $filter->get_int("nid", 11, 1);
@@ -184,7 +184,7 @@ function news_submit_edit_form_check($news_data) {
 }
 
 function news_form_news_update($news_data) {
-    global $cfg, $db, $ml, $filter;
+    global $db, $ml, $filter;
 
     empty($news_data['featured']) ? $news_data['featured'] = 0 : false;
     !isset($news_data['news_translator']) ? $news_data['news_translator'] = "" : false;
