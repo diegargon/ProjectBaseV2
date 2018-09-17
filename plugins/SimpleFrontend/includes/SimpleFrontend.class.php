@@ -21,7 +21,7 @@ class SimpleFrontend {
         foreach ($this->vpages as $vpage) {
             if ($vpage['module'] == $module && $vpage['vpage'] = $vpage) {
                 if (is_array($vpage['func']) && method_exists($vpage['func'][0], $vpage['func'][1]) ||
-                        (!is_array($vpage['func']) && function_exists($vpage['func_show']))) {
+                        (!is_array($vpage['func']) && function_exists($vpage['func']))) {
                     call_user_func($vpage['func']);
                     break;
                 }
