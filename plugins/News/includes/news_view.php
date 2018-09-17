@@ -107,7 +107,7 @@ function news_show_page() {
         $tpl->addto_tplvar("POST_ACTION_ADD_TO_BODY", $tpl->getTPL_file("News", "news_body_struct", $news_data));
     }
 
-    /*
+    /* OLD REPLACE
       if ($cfg['news_page_sidenews']) {
       //require_once("news_portal.php");
       $getnews_config['category'] = 0;
@@ -434,12 +434,6 @@ function getNewsCatBreadcrumb($news_data) {
     global $db, $cfg, $ctgs;
     $content = "";
 
-    /*
-    $query = $db->select_all("categories", ["plugin" => "News", "lang_id" => $news_data['lang_id']]);
-    while ($cat_row = $db->fetch($query)) {
-        $categories[$cat_row['cid']] = $cat_row;
-    }
-     */   
     $categories = $ctgs->getCategories("News");
     $news_cat_id = $news_data['category'];
 

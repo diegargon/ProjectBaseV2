@@ -5,16 +5,13 @@
     .col {
         margin-left: 5px;
     }
-    .featured {
-        height: 300px;
-    }
     .featured article h3, .featured article p {        
         display: none;
     }
     .featured h1 {
         font-size: 1.2em;
     }
-    
+
 }
 @media only screen and (max-width: 700px) {
     .newsbox {
@@ -75,7 +72,7 @@
 }
 @media only screen and (max-width: 400px) {
     .newsbox {
-	margin-left: 1px;
+        margin-left: 1px;
     }
     .featured {
         margin-left: 2px;
@@ -88,7 +85,7 @@
         font-size: 16px;
     }
     .article_text {
-	padding: 5px;
+        padding: 5px;
     }
     .related ul {
         padding-left: 10px;

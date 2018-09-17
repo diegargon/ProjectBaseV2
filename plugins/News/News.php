@@ -6,10 +6,22 @@
 !defined('IN_WEB') ? exit : true;
 
 function News_init() {
+    global $frontend;
+
     define("News", true);
     $news_perms = get_news_perms("init");
     if ($news_perms['news_submit_new']) {
         register_action("header_menu_element", "submit_news_menu");
+    }
+
+    $pages_array = [
+        ['module' => 'News', 'page' => 'section', 'type' => 'disk'],
+        ['module' => 'News', 'page' => 'view_news', 'type' => 'disk'],
+        ['module' => 'News', 'page' => 'submit_news', 'type' => 'disk'],
+        ['module' => 'News', 'page' => 'edit_news', 'type' => 'disk']
+    ];
+    if (!$frontend->register_page_array($pages_array)) {
+        die("Register pages faild on News module");
     }
 }
 
