@@ -49,6 +49,7 @@ Author
 
 Lastest add/canges? first latest
 ================================
+* News - rewrite phase.3
 * CORE.inc && frontend, 
 use frontent for load pages, each plugin must register the pages allowed to get
 added the option for load a page on disk or a virtual page (function based)
