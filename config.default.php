@@ -7,6 +7,8 @@
  */
 !defined('IN_WEB') ? exit : true;
 
+define('ABSPATH', dirname(__FILE__));
+
 error_reporting(E_ALL);
 
 global $cfg;
