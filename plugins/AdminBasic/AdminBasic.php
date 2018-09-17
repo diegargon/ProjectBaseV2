@@ -6,7 +6,7 @@
 !defined('IN_WEB') ? exit : true;
 
 function AdminBasic_init() {
-    global $sm, $cfg;
+    global $sm, $cfg, $frontend;
 
     define('ADMIN', TRUE);
 
@@ -26,6 +26,8 @@ function AdminBasic_init() {
             register_action("header_menu_element", "AdminBasic_menu_opt");
         }
     }
+
+    $frontend->register_page(['module' => 'AdminBasic', 'page' => 'adm', 'type' => 'disk']);
 }
 
 function AdminBasic_menu_opt() {

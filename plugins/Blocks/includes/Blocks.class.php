@@ -63,6 +63,11 @@ class Blocks {
     }
 
     function set_user_blocks($page) {
+        /* TODO: Blocks need session but if we as ask and start as depend  we got a cycle problem
+         *  Sessions need frontend
+         *  Frontend need blocks
+         *  blocks need session
+         */
         global $db, $sm;
         $user = $sm->getSessionUser();
 

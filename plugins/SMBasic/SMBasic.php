@@ -8,7 +8,7 @@
 !defined('IN_WEB') ? exit : true;
 
 function SMBasic_Init() {
-    global $sm;
+    global $sm, $frontend;
     
     define ('SESSIONS', TRUE);
 
@@ -16,6 +16,11 @@ function SMBasic_Init() {
     $sm->start();
 
     register_action("header_menu_element", "SMBasic_navLogReg");
+    
+    $frontend->register_page(['module' => 'SMBasic', 'page' => 'login', 'type' => 'disk']);
+    $frontend->register_page(['module' => 'SMBasic', 'page' => 'logout', 'type' => 'disk']);
+    $frontend->register_page(['module' => 'SMBasic', 'page' => 'profile', 'type' => 'disk']);
+    $frontend->register_page(['module' => 'SMBasic', 'page' => 'register', 'type' => 'disk']);
 }
 
 function SMBasic_Install() {

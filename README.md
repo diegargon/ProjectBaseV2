@@ -21,6 +21,7 @@ Early example XXXX (sometimes not work since its the production web)
 BUGS
 =========
 Android: JQUERY/JS Login, not prompt for remember.
+Cyclic problem, Blocks need session (later use) but sessions need frontend and frontend blocks, works if we remove sessions as depend of blocks.
 and many other...
 
 LICENSING
@@ -48,6 +49,9 @@ Author
 
 Lastest add/canges? first latest
 ================================
+* CORE.inc && frontend, 
+use frontent for load pages, each plugin must register the pages allowed to get
+added the option for load a page on disk or a virtual page (function based)
 * SMBasic * Perms
 * News * Perms
 * Links/Core - Table for keep links

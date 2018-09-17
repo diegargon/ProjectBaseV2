@@ -11,29 +11,54 @@ class SimpleFrontend {
     private $cfg;
     private $nav_menu;
     private $theme;
-    private $vpages;
+    private $pages;
 
     public function __construct() {
         $this->setConfig();
     }
 
-    function vpage($module, $vpage) {
-        foreach ($this->vpages as $vpage) {
-            if ($vpage['module'] == $module && $vpage['vpage'] = $vpage) {
-                if (is_array($vpage['func']) && method_exists($vpage['func'][0], $vpage['func'][1]) ||
-                        (!is_array($vpage['func']) && function_exists($vpage['func']))) {
-                    call_user_func($vpage['func']);
-                    break;
-                }
+    function vpage($page) {
+        if (empty($this->pages)) {
+            $this->message_box(['msg' => 'L_E_PLUGPAGE_NOEXISTS']);
+            return;
+        }
+
+        if ($page['type'] == 'virtual' && !empty($page['func'])) {
+            if (is_array($page['func']) && method_exists($page['func'][0], $page['func'][1]) ||
+                    (!is_array($page['func']) && function_exists($page['func']))) {
+                call_user_func($page['func']);
+                return;
             } else {
                 $this->message_box(['msg' => 'L_E_PLUGPAGE_NOEXISTS']);
             }
+        } else {
+            $this->message_box(['msg' => 'L_E_PLUGPAGE_NOEXISTS']);
         }
     }
 
-    function register_vpage($vpage) {
-        if (!empty($vpage['module']) && !empty($vpage['vpage']) && !empty($vpage['func'])) {
-            $this->vpages[] = $vpage;
+    function getPage($request_module, $request_page) {
+        //var_dump($this->pages);
+        if (empty($this->pages)) {
+
+            $this->message_box(['msg' => 'L_E_PLUGPAGE_NOEXISTS']);
+            return;
+        }
+
+        foreach ($this->pages as $page) {
+            if ($page['module'] == $request_module && $page['page'] == $request_page) {
+                return $page;
+            }
+        }
+
+        return false;
+    }
+
+    function register_page($page) {
+        // TODO avoid duplicates
+        if (!empty($page['module']) && !empty($page['page']) &&
+                ( ($page['type'] == "virtual" && !empty($page['func'])) || ( $page['type'] == "disk" && empty($page['func'])) )
+        ) {
+            $this->pages[] = $page;
             return true;
         }
         return false;
