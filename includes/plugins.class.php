@@ -385,7 +385,7 @@ class Plugins {
 
         $lang_file = "plugins/$plugin/lang/" . $cfg['WEB_LANG'] . "/$plugin.lang.php";
         if (file_exists($lang_file)) {
-            $this->debug ? $debug->debug->log("Loading lang file $lang_file", "PLUGINS", "INFO"): null;
+            $this->debug ? $debug->log("Loading lang file $lang_file", "PLUGINS", "INFO"): null;
             include_once($lang_file);
         }
 
