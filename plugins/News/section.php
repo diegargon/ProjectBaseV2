@@ -30,9 +30,20 @@ if (defined('MULTILANG')) {
 $cfg['PAGE_TITLE'] = $cfg['WEB_NAME'] . ": " . $category_list;
 $cfg['PAGE_DESC'] = $cfg['WEB_NAME'] . ": " . $category_list;
 //END HEAD MOD
-//TODO: MESSY TEMPLATE LOGIC DO CLEARLY?
+/*
+ * TODO:  VERY MESSY TEMPLATE LOGIC FIX
+ */
 $limit = $cfg['news_section_getnews_limit'];
-$per_section = $cfg['news_section_getnews_limit'] / $cfg['news_section_sections'];
+
+$news_db = get_news_query(['category' => $category], ['lead' => 1, 'get_childs' => 1, 'limit' => $limit]);
+$num_items = count($news_db);
+
+if ($num_items < $cfg['news_section_getnews_limit']) {
+    $per_section = $num_items / $cfg['news_section_sections'];
+} else {
+    $per_section = $cfg['news_section_getnews_limit'] / $cfg['news_section_sections'];
+}
+
 $whole = floor($per_section);
 $fraction = $per_section - $whole;
 
@@ -43,10 +54,9 @@ if ($fraction > 0) { // Fraction mean +1 article in first section
 }
 //echo $whole . "-" . "-" . $fraction . "-" . $section_limit;
 
-$news_db = get_news_query(['category' => $category], ['lead' => 1, 'get_childs' => 1, 'limit' => $limit]);
-$num_items = count($news_db);
-
 $counter = 1;
+$num_items_section = 1;
+
 $section_data['TPL_CTRL'] = 1;
 $section_data['START_SECTION'] = 1;
 $section_data['END_SECTION'] = 0;
@@ -56,7 +66,7 @@ $content = "";
 
 foreach ($news_db as $news) {
     $num_items == $counter ? $section_data['TPL_FOOT'] = 1 : $section_data['TPL_FOOT'] = 0;
-    ($counter == $section_limit || $counter == $num_items) ? $section_data['END_SECTION'] = 1 : null;
+    ($counter == $section_limit || $counter == $num_items || $num_items_section >= $section_limit ) ? $section_data['END_SECTION'] = 1 : null;
     //ARTICLE DATA
     if ($cfg['FRIENDLY_URL']) {
         $friendly_title = news_friendly_title($news['title']);
@@ -74,7 +84,11 @@ foreach ($news_db as $news) {
     if ($section_data['END_SECTION'] == 1) {
         $section_data['START_SECTION'] = 1;
         $section_data['END_SECTION'] = 0;
+        $num_items_section = 1;
+    } else {
+        $num_items_section++;
     }
+    $counter == 1 ? $section_limit-- : null; //first the fraction    
     $counter++;
     $section_data['TPL_CTRL'] = $counter;
 }
