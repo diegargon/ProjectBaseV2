@@ -13,11 +13,11 @@ $simpleacl_database_install [] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin
 /* PERMISSIONS */
 
 $simpleacl_database_install[] = "CREATE TABLE `" . DB_PREFIX . "permissions` (
-  `perm_id` int(11) NOT NULL,
-  `perm_name` varchar(64) NOT NULL,
+  `perm_id` int(10) UNSIGNED NOT NULL,
+  `perm_name` char(255) NOT NULL,
   `perm_desc` varchar(255) NULL,
-  `groups` varchar(128) NULL,
-  `plugin` varchar(64) NOT NULL
+  `groups` char(255) NULL,
+  `plugin` char(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . ";"
 ;
 

@@ -12,17 +12,17 @@ $simplegroups_database_install [] = "INSERT INTO `" . DB_PREFIX . "config` (`plu
 /* GROUPS */
 
 $simplegroups_database_install[] = "CREATE TABLE `" . DB_PREFIX . "groups` (
-  `group_id` int(11) NOT NULL,
-  `group_name` varchar(18) NOT NULL, 
-  `group_father` int(2) NOT NULL,
+  `group_id` int(10) UNSIGNED NOT NULL,
+  `group_name` char(255) NOT NULL, 
+  `group_father` smallint(5) UNSIGNED NOT NULL,
   `group_desc` varchar(255) NULL,
   `group_type` varchar(64) NOT NULL,
-  `plugin` varchar(64) NULL
+  `plugin` char(255) NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . ";"
 ;
 
 $simplegroups_database_install [] = "ALTER TABLE `" . DB_PREFIX . "groups` ADD PRIMARY KEY (`group_id`), ADD UNIQUE KEY `group_id` (`group_id`);";
-$simplegroups_database_install [] = "ALTER TABLE `" . DB_PREFIX . "groups` MODIFY `group_id` int(11) NOT NULL AUTO_INCREMENT;";
+$simplegroups_database_install [] = "ALTER TABLE `" . DB_PREFIX . "groups` MODIFY `group_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;";
 
 /* GROUPS_INSERTS */
 $simplegroups_database_install_insert_admin_group = "INSERT INTO `" . DB_PREFIX . "groups` (`group_name`, `group_father`, `group_desc`, `group_type`, `plugin`) VALUES

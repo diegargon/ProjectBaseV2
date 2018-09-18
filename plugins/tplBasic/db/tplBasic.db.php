@@ -18,7 +18,7 @@ $tplbasic_database = [
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('tplBasic', 'tplbasic_css_inline', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('tplBasic', 'tplbasic_stats_query', '1')",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('tplBasic', 'tplbasic_theme', 'default');",
-    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('tplBasic', 'tplbasic_gzip', '1');"
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('tplBasic', 'tplbasic_gzip', '0');"
 ];
 
 $tplbasic_database_uninstall = [

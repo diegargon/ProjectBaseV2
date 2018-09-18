@@ -6,13 +6,13 @@
 
 $blocks_database_install[] = "
 CREATE TABLE `" . DB_PREFIX . "blocks` (
-  `blocks_id` int(8) NOT NULL,
-  `uid` int(11) NOT NULL,
-  `blockname` varchar(64) NOT NULL,
-  `plugin` varchar(64) NOT NULL,
-  `blockconf` varchar(256) NOT NULL,
-  `page` varchar(32) NOT NULL,
-  `section` int(8) NOT NULL,
+  `blocks_id` int(10) UNSIGNED NOT NULL,
+  `uid` int(10) UNSIGNED NOT NULL,
+  `blockname` char(255) NOT NULL,
+  `plugin` char(255) NOT NULL,
+  `blockconf` varchar(255) NOT NULL,
+  `page` char(255) NOT NULL,
+  `section` int(10) UNSIGNED NOT NULL,
   `weight` tinyint(1) NOT NULL DEFAULT '5',
   `canUserDisable` tinyint(1) NOT NULL DEFAULT '1',
   `admin_block` tinyint(1) NOT NULL 
@@ -28,7 +28,7 @@ ALTER TABLE `" . DB_PREFIX . "blocks`
 
 $blocks_database_install[] = "
 ALTER TABLE `" . DB_PREFIX . "blocks`
-  MODIFY `blocks_id` int(8) NOT NULL AUTO_INCREMENT;
+  MODIFY `blocks_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 ";
 
 $blocks_database_install[] = "

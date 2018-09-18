@@ -13,15 +13,15 @@
 /* SESSIONS */
 $smbasic_database [] = "
 CREATE TABLE `" . DB_PREFIX . "sessions` (
-  `session_id` varchar(64) NOT NULL,
-  `session_uid` int(11) NOT NULL,
+  `session_id` varchar(255) NOT NULL,
+  `session_uid` int(10) UNSIGNED NOT NULL,
   `session_data` varchar(512) DEFAULT NULL,
-  `session_ip` varchar(15) NOT NULL,
+  `session_ip` char(255) NOT NULL,
   `session_browser` text NOT NULL,
   `session_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `session_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `session_expire` int(11) NOT NULL,
-  `last_login` int(11) NOT NULL DEFAULT '0'
+  `session_expire` int(10) UNSIGNED NOT NULL,
+  `last_login` int(10) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . ";
         
 ";
@@ -37,19 +37,19 @@ ALTER TABLE `" . DB_PREFIX . "sessions`
 
 $smbasic_database[] = "
 CREATE TABLE `" . DB_PREFIX . "users` (
-  `uid` int(16) NOT NULL,
-  `username` varchar(32) NOT NULL,
+  `uid` int(10) UNSIGNED NOT NULL,
+  `username` char(255) NOT NULL,
   `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `email` varchar(100) NOT NULL,
+  `email` char(255) NOT NULL,
   `regdate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `active` int(12) NOT NULL DEFAULT '0',
-  `disable` tinyint(4) NOT NULL DEFAULT '0',
+  `active` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `disable` tinyint(1) NOT NULL DEFAULT '0',
   `isFounder` tinyint(1) NOT NULL DEFAULT '0',
   `isAdmin` tinyint(1) NOT NULL DEFAULT '0',
   `last_login` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `reset` int(11) DEFAULT NULL,
-  `avatar` varchar(255) DEFAULT NULL,
-  `tos` int(1) NOT NULL DEFAULT '0'
+  `reset` int(10) UNSIGNED DEFAULT NULL,
+  `avatar` char(255) DEFAULT NULL,
+  `tos` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . ";
 ";
 
@@ -62,7 +62,7 @@ ALTER TABLE `" . DB_PREFIX . "users`
 
 $smbasic_database[] = "
 ALTER TABLE `" . DB_PREFIX . "users`
-  MODIFY `uid` int(32) NOT NULL AUTO_INCREMENT;
+  MODIFY `uid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 ";
 
 /* INSERTS */

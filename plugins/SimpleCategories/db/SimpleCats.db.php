@@ -14,13 +14,13 @@ $simplecats_db_install [] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `c
 
 $simplecats_db_install [] = "
 CREATE TABLE `" . DB_PREFIX . "categories` (
-  `cid` int(11) NOT NULL,
-  `plugin` varchar(11) NOT NULL,
-  `lang_id` int(11) NOT NULL,
-  `name` varchar(32) NOT NULL,
-  `father` smallint(3) NOT NULL DEFAULT '0',
-  `weight` smallint(3) NOT NULL DEFAULT '0',
-  `views` int(11) NOT NULL DEFAULT '0'
+  `cid` int(10) UNSIGNED NOT NULL,
+  `plugin` char(255) NOT NULL,
+  `lang_id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `father` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
+  `weight` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `views` int(10) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . ";
 ";
 

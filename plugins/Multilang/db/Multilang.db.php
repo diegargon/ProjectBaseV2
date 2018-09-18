@@ -5,11 +5,11 @@
  */
 
 $multilang_database = [
-    "CREATE TABLE `" . DB_PREFIX . "lang` (
-  `lang_id` int(11) NOT NULL,
-  `lang_name` varchar(11) NOT NULL,
-  `iso_code` varchar(11) NOT NULL,
-  `active` tinyint(1) NOT NULL DEFAULT '0'
+"CREATE TABLE `" . DB_PREFIX . "lang` (
+    `lang_id` int(10) UNSIGNED NOT NULL,
+    `lang_name` char(255) NOT NULL,
+    `iso_code` char(255) NOT NULL,
+    `active` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . ";",
     
     "ALTER TABLE `" . DB_PREFIX . "lang`
@@ -17,7 +17,7 @@ $multilang_database = [
   ADD UNIQUE KEY `lang_id` (`lang_id`);",
      
     "ALTER TABLE `" . DB_PREFIX . "lang`
-  MODIFY `lang_id` int(11) NOT NULL AUTO_INCREMENT",
+  MODIFY `lang_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT",
  
     "ALTER TABLE `" . DB_PREFIX . "lang` ADD UNIQUE(`iso_code`);",
     "ALTER TABLE `" . DB_PREFIX . "lang` ADD UNIQUE(`lang_name`);",
