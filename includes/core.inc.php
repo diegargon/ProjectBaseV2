@@ -103,7 +103,12 @@ $page = $filter->get_strict_chars("page");
 
 if (!empty($module) && !empty($page)) {
     !$plugins->check_enabled($module) ? exit("Error plugin ins't enabled") : null;
-    !$plugins->check_started($module) ? $plugins->express_start($module) : null;
+    if(!$plugins->check_started($module)) {
+        if(!$plugins->express_start($module)) {
+            $frontend->message_box(['msg' => 'L_E_PL_CANTEXPRESS']);
+            return false;
+        }
+    }
 
     if (!($request_page = $frontend->getPage($module, $page))) {
         $frontend->message_box(['msg' => 'L_E_PLUGPAGE_NOEXISTS']);

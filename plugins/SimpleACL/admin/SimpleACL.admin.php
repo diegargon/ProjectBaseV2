@@ -6,12 +6,9 @@
 !defined('IN_WEB') ? exit : true;
 
 function SimpleACL_AdminInit() {
-    global $acl_auth, $plugins;
+    global $plugins;
 
-    !isset($acl_auth) ? ( $plugins->express_start("SimpleACL")) : null;
-    if (defined('ACL')) {
-        register_action("add_admin_menu", "SimpleACL_AdminMenu", 5);
-    }
+    $plugins->express_start("SimpleACL") ? register_action("add_admin_menu", "SimpleACL_AdminMenu", 5) : null;
 }
 
 function SimpleACL_AdminMenu($params) {

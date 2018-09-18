@@ -8,8 +8,7 @@
 function News_AdminInit() {
     global $plugins;
 
-    $plugins->express_start("News");
-    defined('News') ? register_action("add_admin_menu", "News_AdminMenu", "5") : null;
+    $plugins->express_start("News") ? register_action("add_admin_menu", "News_AdminMenu", "5") : null;
 }
 
 function News_AdminMenu($params) {

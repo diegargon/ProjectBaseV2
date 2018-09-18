@@ -18,8 +18,12 @@ function news_getCatsSelect($news_data = null, $select_name = "news_category") {
 
     $cats = $ctgs->getCategories("News");
 
+    if (!$cats) {
+        return false;
+    }
     foreach ($cats as $row) {
         $fathers_name = "";
+        $added_one = false;
 
         if (array_key_exists($row['father'], $fathers)) {
             $fathers[$row['cid']] = $fathers[$row['father']] . $row['name'] . "->";
@@ -31,13 +35,15 @@ function news_getCatsSelect($news_data = null, $select_name = "news_category") {
         if (($cfg['news_allow_submit_main_cats'] && $row['father'] == 0) || $row['father'] != 0) {
             if (($news_data != null) && ($row['cid'] == $news_data['category'])) {
                 $select .= "<option selected value='{$row['cid']}'>$fathers_name{$row['name']}</option>";
+                $added_one = true;
             } else {
                 $select .= "<option value='{$row['cid']}'>$fathers_name{$row['name']}</option>";
+                $added_one = true;
             }
         }
     }
     $select .= "</select>";
-    return $select;
+    return $added_one ? $select : false;
 }
 
 function news_form_getPost() {

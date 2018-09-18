@@ -12,7 +12,9 @@ function SimpleFrontend_init() {
     //FIX: On first install $frontend its mandatory but blocks not, that going to cause problems if blocks its disable
     //Probably make blocks optionals and check if active before express start.
 
-    $plugins->express_start("Blocks");
+    if (!$plugins->express_start("Blocks")) {
+        $frontend->message_box(['msg' => 'L_E_PL_CANTEXPRESS']);
+    }
     !isset($frontend) ? $frontend = new SimpleFrontend() : null;
 }
 

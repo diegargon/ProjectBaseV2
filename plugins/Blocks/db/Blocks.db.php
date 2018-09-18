@@ -13,9 +13,9 @@ CREATE TABLE `" . DB_PREFIX . "blocks` (
   `blockconf` varchar(256) NOT NULL,
   `page` varchar(32) NOT NULL,
   `section` int(8) NOT NULL,
-  `weight` tinyint(2) NOT NULL DEFAULT '5',
-  `canUserDisable` tinyint(1) NOT NULL DEFAULT '1
-  `admin_block` tinyint(1) NOT NULL
+  `weight` tinyint(1) NOT NULL DEFAULT '5',
+  `canUserDisable` tinyint(1) NOT NULL DEFAULT '1',
+  `admin_block` tinyint(1) NOT NULL 
 ) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . ";
 ";
 

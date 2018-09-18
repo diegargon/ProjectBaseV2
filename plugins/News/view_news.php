@@ -10,8 +10,11 @@ require_once("includes/news_view.php");
 
 do_action("news_page_begin");
 
-$plugins->express_start_provider("EDITOR");
-$plugins->express_start_provider("CATS");
+if (!($plugins->express_start_provider("EDITOR")) || !($plugins->express_start_provider("CATS"))) {
+    $frontend->message_box(['msg' => 'L_E_PL_CANTEXPRESS']);
+    return false;
+}
+
 $tpl->getCSS_filePath("News");
 $tpl->getCSS_filePath("News", "News-mobile");
 

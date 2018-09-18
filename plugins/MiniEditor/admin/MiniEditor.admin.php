@@ -6,9 +6,8 @@
 !defined('IN_WEB') ? exit : true;
 
 function MiniEditor_AdminInit() {
-    global  $plugins;
-    $plugins->express_start("MiniEditor");
-    register_action("add_admin_menu", "MiniEditor_AdminMenu", "5");
+    global $plugins;
+    $plugins->express_start("MiniEditor") ? register_action("add_admin_menu", "MiniEditor_AdminMenu", "5") : null;
 }
 
 function MiniEditor_AdminMenu($params) {

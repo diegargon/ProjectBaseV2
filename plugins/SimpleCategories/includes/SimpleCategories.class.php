@@ -206,7 +206,7 @@ class Categories {
                 $plugin_categories[$category['cid']] = $category;
             }
         }
-        return ($plugin_categories) ? $plugin_categories : false;
+        return !empty($plugin_categories) ? $plugin_categories : false;
     }
 
     private function loadCategories() {

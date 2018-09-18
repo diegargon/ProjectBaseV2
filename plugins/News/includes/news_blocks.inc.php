@@ -6,12 +6,14 @@
 !defined('IN_WEB') ? exit : true;
 
 function news_block($block_conf) {
-    global $tpl, $plugins, $tUtil, $cfg;
+    global $tpl, $plugins, $tUtil, $cfg, $frontend;
 
     require_once __DIR__ . '/news_common.php';
 
-    $plugins->express_start_provider("EDITOR");
-    $plugins->express_start_provider("CATS");
+    if (!($plugins->express_start_provider("EDITOR")) || !($plugins->express_start_provider("CATS"))) {
+        $frontend->message_box(['msg' => 'L_E_PL_CANTEXPRESS']);
+        return false;
+    }
     $tpl->getCSS_filePath("News");
     $tpl->getCSS_filePath("News", "News-mobile");
 
@@ -31,7 +33,6 @@ function news_block($block_conf) {
     $news_where['lang_id'] = $block_conf['news_lang'];
 
     $news_db = get_news_query($news_where, $news_conf);
-
     $content = "";
     foreach ($news_db as $news_data) {
         if ($cfg['FRIENDLY_URL']) {
@@ -45,6 +46,7 @@ function news_block($block_conf) {
         $news_data['date'] = $tUtil->format_date($news_data['created']);
         $content .= $tpl->getTPL_file("News", "news_block", $news_data);
     }
+
     return $content;
 }
 

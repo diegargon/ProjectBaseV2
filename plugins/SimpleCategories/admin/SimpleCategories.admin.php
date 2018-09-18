@@ -6,13 +6,9 @@
 !defined('IN_WEB') ? exit : true;
 
 function SimpleCats_AdminInit() {
-    global $ctgs, $plugins;
+    global $plugins;
 
-    !isset($ctgs) ? ( $plugins->express_start("SimpleCategories")) : null;
-
-    if (defined('CATS')) {
-        register_action("add_admin_menu", "SimpleCats_AdminMenu", 5);
-    }
+    $plugins->express_start("SimpleCategories") ? register_action("add_admin_menu", "SimpleCats_AdminMenu", 5) : null;
 }
 
 function SimpleCats_AdminMenu($params) {

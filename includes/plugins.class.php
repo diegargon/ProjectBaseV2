@@ -312,11 +312,11 @@ class Plugins {
                     return true;
                 }
                 if ($this->plugin_check($plugin)) {
-                    $this->start_plugin($plugin);
-                    return true;
-                } else {
-                    //exist but already starter
-                    return false;
+                    if ($this->start_plugin($plugin)) {
+                        return true;
+                    } else {
+                        return false;
+                    }
                 }
             }
         }
@@ -337,11 +337,11 @@ class Plugins {
                     return true;
                 }
                 if ($this->plugin_check($plugin)) {
-                    $this->start_plugin($plugin);
-                    return true;
-                } else {
-                    //exist but already starter
-                    return false;
+                    if ($this->start_plugin($plugin)) {
+                        return true;
+                    } else {
+                        return false;
+                    }
                 }
             }
         }
@@ -385,7 +385,7 @@ class Plugins {
 
         $lang_file = "plugins/$plugin/lang/" . $cfg['WEB_LANG'] . "/$plugin.lang.php";
         if (file_exists($lang_file)) {
-            $this->debug ? $debug->log("Loading lang file $lang_file", "PLUGINS", "INFO"): null;
+            $this->debug ? $debug->log("Loading lang file $lang_file", "PLUGINS", "INFO") : null;
             include_once($lang_file);
         }
 
@@ -409,7 +409,7 @@ class Plugins {
             }
         }
     }
-    
+
     function check_started($plugin_name) {
 
         foreach ($this->started_plugins as $started_plugin) {

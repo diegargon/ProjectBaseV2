@@ -6,10 +6,9 @@
 !defined('IN_WEB') ? exit : true;
 
 function SimpleGroups_AdminInit() {
-    global $groups, $plugins;
+    global $plugins;
 
-    !isset($groups) ? $plugins->express_start("SimpleGroups") : null;
-    register_action("add_admin_menu", "SimpleGroups_AdminMenu", 5);
+    $plugins->express_start("SimpleGroups") ? register_action("add_admin_menu", "SimpleGroups_AdminMenu", 5) : null;
 }
 
 function SimpleGroups_AdminMenu($params) {

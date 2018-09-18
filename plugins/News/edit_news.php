@@ -5,7 +5,10 @@
  */
 !defined('IN_WEB') ? exit : true;
 
-$plugins->express_start_provider("EDITOR");
+if (!$plugins->express_start_provider("EDITOR")) {
+    $frontend->message_box(['msg' => 'L_E_PL_CANTEXPRESS']);
+    return false;
+}
 $editor = new Editor();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -28,7 +31,10 @@ require_once("includes/news_common.php");
 require_once ("includes/news_form_common.php");
 if (!isset($_POST['submitForm'])) {
 
-    $plugins->express_start_provider("CATS");
+    if (!$plugins->express_start_provider("CATS")) {
+        $frontend->message_box(['msg' => 'L_E_PL_CANTEXPRESS']);
+        return false;
+    }
 
     $tpl->getCSS_filePath("News");
     $tpl->getCSS_filePath("MiniEditor");

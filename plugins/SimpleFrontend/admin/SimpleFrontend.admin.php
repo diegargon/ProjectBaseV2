@@ -7,9 +7,11 @@
 !defined('IN_WEB') ? exit : true;
 
 function SimpleFrontend_AdminInit() {
-    global $frontend, $plugins, $blocks;
-    !isset($blocks) ? $plugins->express_start("Blocks") : null;
-    !isset($frontend) ? $plugins->express_start("SimpleFrontend") : null;
+    global $frontend, $plugins;
+    if ((!$plugins->express_start("Blocks")) || (!$plugins->express_start("SimpleFrontend"))) {
+        $frontend->message_box(['msg' => 'L_E_PL_CANTEXPRESS']);
+        return false;
+    }
     register_action("add_admin_menu", "SimpleFrontend_AdminMenu", "5");
 }
 

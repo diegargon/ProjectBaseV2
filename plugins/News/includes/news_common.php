@@ -40,7 +40,6 @@ function get_news_query($where, $q_conf = null, $order = null) {
         $what = "nid, title, lead, text, page, author_id, created, last_edited, featured, visits, translator_id, tags";
     }
     $extra = $order . $limit;
-
     $result = $db->select("news", $what, $where, $extra);
     return $db->fetch_all($result);
 }

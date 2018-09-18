@@ -8,9 +8,7 @@
 function Multilang_AdminInit() {
     global $plugins, $ml;
     /* Check if start for configure */
-    !isset($ml) ? $plugins->express_start("Multilang") : null;
-
-    register_action("add_admin_menu", "Multilang_AdminMenu");
+    $plugins->express_start("Multilang") ? register_action("add_admin_menu", "Multilang_AdminMenu") : null;
 }
 
 function Multilang_AdminMenu($params) {
@@ -78,7 +76,7 @@ function Multilang_AdminLangs() {
         $content .= $tpl->getTPL_file("Multilang", "ml_admin_lang_mng", $lang);
         $counter++;
     }
-    
+
     return $content;
 }
 

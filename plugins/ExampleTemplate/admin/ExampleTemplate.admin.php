@@ -6,9 +6,8 @@
 !defined('IN_WEB') ? exit : true;
 
 function ExampleTemplate_AdminInit() {
-    global  $plugins;
-    $plugins->express_start("ExampleTemplate");
-    register_action("add_admin_menu", "ExampleTemplate_AdminMenu", "5");
+    global $plugins;
+    $plugins->express_start("ExampleTemplate") ? register_action("add_admin_menu", "ExampleTemplate_AdminMenu", "5") : null;
 }
 
 function ExampleTemplate_AdminMenu($params) {

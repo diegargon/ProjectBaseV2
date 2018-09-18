@@ -12,7 +12,10 @@ do_action("section_page_begin");
 $tpl->getCSS_filePath("News");
 $tpl->getCSS_filePath("News", "News-mobile");
 
-$plugins->express_start_provider("CATS");
+if (!($plugins->express_start_provider("CATS"))) {
+    $frontend->message_box(['msg' => 'L_E_PL_CANTEXPRESS']);
+    return false;
+}
 
 if (empty($category_list = $filter->get_UTF8_txt("section")) || preg_match("/\s+/", $category_list)) {
     return $frontend->message_box(['msg' => 'L_NEWS_E_SEC_NOEXISTS']);
