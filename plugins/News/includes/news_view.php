@@ -420,7 +420,7 @@ function news_add_social_meta($news) { // TODO: Move to plugin NewsSocialExtra
     $news['url'] = $protocol . $_SERVER['HTTP_HOST'] . $filter->srv_request_uri();
     $news['PAGE_TITLE'] = $news['title'];
     $match_regex = "/\[.*img.*\](.*)\[\/.*img\]/";
-    $match = "";    
+    $match = "";
     preg_match($match_regex, $news['text'], $match);
     if (!empty($match[1])) {
         $url = preg_replace('/\[S\]/si', $cfg['img_selector'] . "/", $match[1]);
