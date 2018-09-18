@@ -19,8 +19,8 @@ if (!empty($_POST['submitForm'])) {
     news_submit_new_process();
 } else {
     $tpl->getCSS_filePath("News");
-    $tpl->getCSS_filePath("MiniEditor");
     $tpl->getCSS_filePath("News", "News-mobile");
+    $tpl->getCSS_filePath("MiniEditor");
     $tpl->AddScriptFile("standard", "jquery", "TOP", null);
     $tpl->AddScriptFile("MiniEditor", "editor");
     $tpl->AddScriptFile("News", "newsform");

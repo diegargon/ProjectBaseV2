@@ -304,29 +304,29 @@
     color: blue;
 }
 .newsbox h2 {
-    font-size: 1.5em;
+    font-size: 1.2em;
     margin-bottom: 10px;
 }
 .newsbox h3 {
-    font-size: 1.4em;
+    font-size: 1.0em;
     margin-bottom: 10px;
     color:#000;
 }
 .newsbox h4 {
-    font-size: 1em;
+    font-size: 0.9em;
     color:#000;
 }
 .newsbox p{
-    font-size: 1.2em;
+    font-size: 0.8em;
     margin-top:0px;
 }
 
 .p-small {
-    font-size: 1em !important;
+    font-size: 0.6em !important;
     margin:0 auto;
 }
 .p-extra-small {
-    font-size: 0.9em !important;
+    font-size: 0.4em !important;
     margin:0 auto;
 }
 .featured_wrap {

@@ -18,6 +18,7 @@ class TPL {
     private $db;
     private $lang;
     private $tpldata;
+    private $css_added = [];
     private $css_cache_filepaths;
     public $css_cache_onefile;
     private $scripts = [];
@@ -174,7 +175,10 @@ class TPL {
     function getCSS_filePath($plugin, $filename = null) {
 
         empty($filename) ? $filename = $plugin : null;
-
+        if (in_array($filename, $this->css_added)) {
+            return;
+        }
+        $this->css_added[] = $filename;
         $this->debug ? $this->debug->log("Get CSS called by-> $plugin for get a $filename", "tplBasic", "DEBUG") : null;
 
         $USER_PATH = "tpl/{$this->theme}/css/$filename.css";
