@@ -278,15 +278,21 @@ h1,h2,h3,h4,h5,h6{
 .underline {
     text-decoration: underline;
 }
-
 .cols {
-    border: 1px solid red; 
+    /* border: 1px solid red; */
     float:left;    
     margin-left: 0.5%;
     font-size: 1em;
     padding: 1px;
 }
-
+.cols:first-of-type {
+    border-right: 1px solid black;
+    padding-right: 8px;
+}
+.cols:last-of-type {
+    border-left: 1px solid black;
+    padding-left: 8px;
+}
 .cols h2 {
     font-family: 'Montserrat', sans-serif;
     float:left;
@@ -301,17 +307,15 @@ h1,h2,h3,h4,h5,h6{
     margin-bottom: 3px;
     border-top: 2px solid #1f6ba5;
 }
-
 .col1 {
-    width: 99.5%;    
+    width: 99.5%;
 }
 .col2 {
-    width: 48.5%;
+    width: 48.5%;   
 }
 .col3 {
     width: 32%;
 }
-
 .divTable {
     display: table;
     width: 100%;
@@ -334,7 +338,6 @@ h1,h2,h3,h4,h5,h6{
     padding: 3px 10px;
     border: 1px solid #999999;
 }
-
 .divTableFootRow {
     display: table-footer-group;
     font-weight: bold;

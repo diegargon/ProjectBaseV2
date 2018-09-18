@@ -1,10 +1,7 @@
 /*
- Copyright @ 2016 Diego Garcia
+ Copyright @ 2016 - 2018 Diego Garcia
 */
 @media only screen and (max-width: 900px) {
-    .col {
-        margin-left: 5px;
-    }
     .featured article h3, .featured article p {        
         display: none;
     }
@@ -19,9 +16,6 @@
     }
     .submit_items {
         width: 100%;
-    }
-    .col1, .col2, .col3 {
-        width:96%;
     }
     .featured {
         float:none;
@@ -93,9 +87,6 @@
     }
     .article_body h1 {
         font-size: 1.5rem;
-    }
-    .col {
-        margin-left: 1px;
     }
     .page {
         border: none;

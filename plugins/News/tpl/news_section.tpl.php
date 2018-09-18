@@ -12,7 +12,7 @@ if ($data['TPL_CTRL'] == 1) {
     }
     ?>
     <?php if ($data['START_SECTION']) { ?>
-        <div class="col col<?= $data['SECTIONS'] ?>">            
+        <div class="cols col<?= $data['SECTIONS'] ?>">            
         <?php } ?>
 
         <a href="<?= $data['url'] ?>">
