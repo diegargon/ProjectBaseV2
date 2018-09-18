@@ -59,7 +59,7 @@ function news_form_edit_process() {
 
     $news_perms = get_news_perms("page_edit", $news_data);
 
-    if ($news_perm['news_create_new_page']) {
+    if (!$news_perms['news_edit']) {
         die('[{"status": "4", "msg": "' . $LNG['L_E_NOEDITACCESS'] . '"}]');
     }
 
