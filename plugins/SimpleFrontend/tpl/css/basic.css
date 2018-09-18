@@ -311,7 +311,7 @@ h1,h2,h3,h4,h5,h6{
     width: 99.5%;
 }
 .col2 {
-    width: 48.5%;   
+    width: 48.5%;  
 }
 .col3 {
     width: 32%;
@@ -323,7 +323,6 @@ h1,h2,h3,h4,h5,h6{
 .divTableBody {
     display: table-row-group;
     background-color:#ffffcc;
-
 }
 .divTableRow {
     display: table-row;    

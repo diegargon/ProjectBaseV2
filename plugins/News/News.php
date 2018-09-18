@@ -33,9 +33,11 @@ function News_install() {
     global $db;
     require_once "db/News.db.php";
     foreach ($news_database_install as $query) {
-        $r = $db->query($query);
+        if (!$db->query($query)) {
+            return false;
+        }
     }
-    return ($r) ? true : false;
+    return true;
 }
 
 function News_preInstall() {
@@ -65,7 +67,9 @@ function News_uninstall() {
     global $db;
     require_once "db/News.db.php";
     foreach ($news_database_uninstall as $query) {
-        $r = $db->query($query);
+        if (!$db->query($query)) {
+            return false;
+        }
     }
-    return ($r) ? true : false;
+    return true;
 }

@@ -54,6 +54,9 @@ function SMBasic_admin_content($params) {
 function SMBasic_UserSearch() {
     global $cfg, $LNG, $tpl, $sm, $filter;
 
+    $tpl->getCSS_filePath("SMBasic");
+    $tpl->getCSS_filePath("SMBasic", "SMBasic-mobile");
+
     if (isset($_POST['btnDeleteSubmit']) && ( ($member_id = $filter->post_int("member_uid") )) > 0) {
         SMBasic_DeleteUser($member_id);
     }
@@ -91,6 +94,9 @@ function SMBasic_UserSearch() {
 
 function SMBasic_UserList() {
     global $cfg, $LNG, $tpl, $sm;
+
+    $tpl->getCSS_filePath("SMBasic");
+    $tpl->getCSS_filePath("SMBasic", "SMBasic-mobile");
 
     if (isset($_POST['btnDeleteSubmit']) && ( ($member_id = $filter->post_int("member_uid") )) > 0) {
         SMBasic_DeleteUser($member_id);

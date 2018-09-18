@@ -40,13 +40,17 @@ function AdminBasic_Install() {
     global $db;
     require_once "db/AdminBasic.db.php";
     foreach ($adminbasic_database_install as $query) {
-        $db->query($query);
+        if (!$db->query($query)) {
+            return false;
+        }
     }
 
     if (defined('ACL')) {
         foreach ($admin_acl_install as $query) {
-            $db->query($query);
+            if (!$db->query($query)) {
+                return false;
+            }
         }
     }
-    return;
+    return true;
 }

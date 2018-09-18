@@ -21,9 +21,11 @@ function SimpleFrontend_install() {
 
     require_once "db/SimpleFrontend.db.php";
     foreach ($simplefrontend_db_install as $query) {
-        $r = $db->query($query);
+        if (!$db->query($query)) {
+            return false;
+        }
     }
-    return ($r) ? true : false;
+    return true;
 }
 
 function SimpleFrontend_preInstall() {
@@ -54,7 +56,9 @@ function SimpleFrontend_uninstall() {
     global $db, $cfg;
     require_once "db/SimpleFrontend.db.php";
     foreach ($simplefrontend_db_uninstall as $query) {
-        $r = $db->query($query);
+        if (!$db->query($query)) {
+            return false;
+        }
     }
-    return ($r) ? true : false;
+    return true;
 }

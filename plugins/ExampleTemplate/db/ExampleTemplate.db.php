@@ -18,7 +18,7 @@ DROP TABLE `" . DB_PREFIX . "exampleTemplate`
 ";
 
 $exampleTemplate_database_uninstall [] = "DELETE FROM `" . DB_PREFIX . "plugins` WHERE plugin_name = 'exampleTemplate'";
-$exampleTemplate_database_uninstall [] = "DELETE FROM `" . DB_PREFIX . "config` WHERE plugin_name = 'exampleTemplate'";
+$exampleTemplate_database_uninstall [] = "DELETE FROM `" . DB_PREFIX . "config` WHERE plugin = 'exampleTemplate'";
 /*
  * UPGRADE
  */

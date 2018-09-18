@@ -16,10 +16,11 @@ function GoogleAnalytics_install() {
 
     require_once "db/GoogleAnalytics.db.php";
     foreach ($google_analytics_db_install as $query) {
-        $r = $db->query($query);
+        if ($db->query($query) == false) {
+            return false;
+        }
     }
-
-    return ($r) ? true : false;
+    return true;
 }
 
 function GoogleAnalytics_uninstall() {
@@ -27,9 +28,11 @@ function GoogleAnalytics_uninstall() {
 
     require_once "db/GoogleAnalytics.db.php";
     foreach ($google_analytics_db_uninstall as $query) {
-        $r = $db->query($query);
+        if ($db->query($query) == false) {
+            return false;
+        }
     }
-    return ($r) ? true : false;
+    return true;
 }
 
 function GoogleAnalytics_preInstall() {

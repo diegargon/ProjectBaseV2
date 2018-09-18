@@ -6,15 +6,18 @@
 !defined('IN_WEB') ? exit : true;
 
 function MiniEditor_init() {
+    
 }
 
 function MiniEditor_install() {
     global $db;
     require_once "db/MiniEditor.db.php";
     foreach ($minieditor_database_install as $query) {
-        $r = $db->query($query);
+        if ($db->query($query) == false) {
+            return false;
+        }
     }
-    return ($r) ? true : false;
+    return true;
 }
 
 function MiniEditor_preInstall() {
@@ -33,7 +36,9 @@ function MiniEditor_uninstall() {
     global $db;
     require_once "db/MiniEditor.db.php";
     foreach ($minieditor_database_uninstall as $query) {
-        $r = $db->query($query);
+        if ($db->query($query) == false) {
+            return false;
+        }
     }
-    return ($r) ? true : false;
+    return true;
 }

@@ -28,9 +28,11 @@ function SMBasic_Install() {
     global $db;
     require_once "db/SMBasic.db.php";
     foreach ($smbasic_database as $query) {
-        $db->query($query);
+        if ($db->query($query) == false) {
+            return false;
+        }
     }
-    return;
+    return true;
 }
 
 function SMBasic_preInstall() {

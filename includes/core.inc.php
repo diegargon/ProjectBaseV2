@@ -49,21 +49,10 @@ if ($result) {
     }
 }
 
-/* CHECK VERSION */
-
-if (CORE_VERSION != (float) $cfg["CORE_VERSION"]) {
-    die("Core need upgrade");
-}
-
 /* PLUGINS */
 
 require_once "includes/plugins.class.php";
-
 $plugins = new Plugins();
-
-$plugins->setDepend("CORE", CORE_VERSION);
-$plugins->setDepend("DEBUG", CORE_VERSION);
-$plugins->setDepend("SQL", CORE_VERSION);
 
 /* CHECK FOR INSTALL */
 if (!isset($cfg['CORE_INSTALLED']) || $cfg['CORE_INSTALLED'] != 1) {
@@ -75,6 +64,17 @@ if (!isset($cfg['CORE_INSTALLED']) || $cfg['CORE_INSTALLED'] != 1) {
     //$debug->$debug->log();
     exit();
 }
+
+/* CHECK VERSION */
+
+if (CORE_VERSION != (float) $cfg["CORE_VERSION"]) {
+    die("Core need upgrade");
+}
+
+//SET CORE VERSIONS
+$plugins->setDepend("CORE", CORE_VERSION);
+$plugins->setDepend("DEBUG", CORE_VERSION);
+$plugins->setDepend("SQL", CORE_VERSION);
 
 /* TIME UTILS */
 require_once "includes/time-utils.inc.php";
@@ -100,7 +100,6 @@ do_action("init_core");
 
 $module = $filter->get_strict_chars("module");
 $page = $filter->get_strict_chars("page");
-
 
 if (!empty($module) && !empty($page)) {
     !$plugins->check_enabled($module) ? exit("Error plugin ins't enabled") : null;

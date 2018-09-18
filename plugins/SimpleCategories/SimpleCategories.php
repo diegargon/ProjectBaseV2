@@ -18,10 +18,11 @@ function SimpleCats_install() {
 
     require_once "db/SimpleCats.db.php";
     foreach ($simplecats_db_install as $query) {
-        $r = $db->query($query);
+        if (!$db->query($query)) {
+            return false;
+        }
     }
-
-    return ($r) ? true : false;
+    return true;
 }
 
 function SimpleCats_preInstall() {
@@ -42,9 +43,9 @@ function SimpleCats_uninstall() {
     $db->silent(true);
     require_once "db/SimpleCats.db.php";
     foreach ($simplecats_db_uninstall as $query) {
-        $r = $db->query($query);
+        if (!$db->query($query)) {
+            return false;
+        }
     }
-    $db->silent(false);
-
-    return ($r) ? true : false;
+    return true;
 }

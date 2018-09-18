@@ -15,9 +15,11 @@ function Blocks_install() {
     global $db;
     require_once "db/Blocks.db.php";
     foreach ($blocks_database_install as $query) {
-        $r = $db->query($query);
+        if (!$db->query($query)) {
+            return false;
+        }
     }
-    return ($r) ? true : false;
+    return true;
 }
 
 function Blocks_preInstall() {
@@ -36,7 +38,9 @@ function Blocks_uninstall() {
     global $db;
     require_once "db/Blocks.db.php";
     foreach ($blocks_database_uninstall as $query) {
-        $r = $db->query($query);
+        if (!$db->query($query)) {
+            return false;
+        }
     }
-    return ($r) ? true : false;
+    return true;
 }

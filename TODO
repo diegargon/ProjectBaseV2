@@ -1,0 +1,11 @@
+* Cuando habilitas un plugin o autostart debiria comprobar y activar si se cumplen las dependencias o avisar 
+de la dependencia no habilitada.
+
+* Admin actualmente instala ACL si ACL esta activo, al instalar no esta activo y no hay opcion para instalar las opciones admin ACL
+que necesitan la tabla permissions
+ - Solucion 1 dar opcion para habilitar ACL en el plugin si el ACL esta activo despues y luego dar opcion para insertar lo necesario
+ - Solucion 2, utilizar un register para permisos y no utilizar database.
+
+* Añadir config por grupos para luego presentarlos por grupos, ej: L_NEWS_SUBMIT, L_NEWS_VIEW
+
+*

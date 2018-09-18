@@ -13,6 +13,8 @@ $adminbasic_database_install = [
 
 /*
  * ACL INSTALL
+ * 
+ * TODO: FIX: if ACL not defined choice for install this later or do a "register perm" better
  */
 
 $adminbasic_acl_install [] = "INSERT INTO `" . DB_PREFIX . "permissions` (`perm_name`, `perm_desc`, `plugin`) VALUES    

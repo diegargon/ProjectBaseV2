@@ -244,7 +244,7 @@ class TPL {
             $css_code = $this->css_strip($css_code);
             file_put_contents("cache/css/$cssfile", $css_code);
         }
-        if ($this->cfg['tplbasic_css_inline'] == 0) {
+        if ($this->css_inline == 0) {
             $this->addto_tplvar("LINK", "<link rel='stylesheet' href='/cache/css/$cssfile'>\n");
         } else {
             $css_code = $this->parse_file("cache/css/$cssfile");
@@ -257,7 +257,8 @@ class TPL {
     private function css_strip($css) { #by nyctimus
         $preg_replace = array(
             "#/\*.*?\*/#s" => "", // Strip C style comments.
-            "#\s\s+#" => " ", // Strip excess whitespace.
+            //"#\s\s+#" => "", // Strip excess whitespace.
+            "/\s+/" => " " // Strip excess whitespace.
         );
         $css = preg_replace(array_keys($preg_replace), $preg_replace, $css);
         $str_replace = array(
