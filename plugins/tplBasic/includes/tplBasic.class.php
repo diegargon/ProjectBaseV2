@@ -293,8 +293,8 @@ class TPL {
         include ($path);
         $content = ob_get_contents();
         ob_end_clean();
-        if($cfg['tplbasic_remove_spaces']) { // that going to give problems...
-            $content = preg_replace('/(\>)\s*(\<)/m', '$1$2', $content);
+        if ($cfg['tplbasic_html_optimize']) { // that going to give problems... :)
+            $content = preg_replace('/(\>)\s+(\<)/S', '$1$2', $content);
         }
         return $content;
     }
