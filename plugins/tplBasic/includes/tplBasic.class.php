@@ -293,6 +293,9 @@ class TPL {
         include ($path);
         $content = ob_get_contents();
         ob_end_clean();
+        if($cfg['tplbasic_remove_spaces']) { // that going to give problems...
+            $content = preg_replace('/(\>)\s*(\<)/m', '$1$2', $content);
+        }
         return $content;
     }
 
