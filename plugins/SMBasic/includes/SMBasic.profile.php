@@ -60,7 +60,7 @@ function SMBasic_ProfileChange() {
         die('[{"status": "0", "msg": "' . $LNG['L_E_INTERNAL'] . '"}]');
     }
     //Check USER password
-    $query = $db->select_all("users", array("uid" => $user['uid'], "password" => "$password_encrypted"), "LIMIT 1");
+    $query = $db->select_all("users", ["uid" => $user['uid'], "password" => "$password_encrypted"], "LIMIT 1");
     if ($db->num_rows($query) <= 0) {
         die('[{"status": "2", "msg": "' . $LNG['L_WRONG_PASSWORD'] . '"}]');
     }
@@ -77,7 +77,7 @@ function SMBasic_ProfileChange() {
                     die('[{"status": "6", "msg": "' . $LNG['L_SM_E_HTTPS'] . $avatar . '"}]');
                 }
             }
-            $user['avatar'] != $avatar ? $q_set_ary['avatar'] = $db->escape_strip($avatar) : false;
+            $user['avatar'] != $avatar ? $q_set_ary['avatar'] = $db->escape_strip(urldecode($avatar)) : false;
         }
     }
 
@@ -120,7 +120,7 @@ function SMBasic_ProfileChange() {
                 if ($db->num_rows($query) > 0) {
                     die('[{"status": "4", "msg": "' . $LNG['L_E_USERNAME_EXISTS'] . '"}]');
                 } else {
-                    $q_set_ary['username'] = $username;
+                    $q_set_ary['username'] = $db->escape_strip($username);
                 }
             }
         }
@@ -134,18 +134,18 @@ function SMBasic_ProfileChange() {
             die('[{"status": "4", "msg": "' . $LNG['L_EMAIL_LONG'] . '"}]');
         }
         if ($email != $user['email']) {
-            $query = $db->select_all("users", array("email" => "$email"), "LIMIT 1");
+            $query = $db->select_all("users", ["email" => "$email"], "LIMIT 1");
             if ($db->num_rows($query) > 0) {
                 die('[{"status": "5", "msg": "' . $LNG['L_E_EMAIL_EXISTS'] . '"}]');
             } else {
-                $q_set_ary["email"] = $email;
+                $q_set_ary["email"] = $db->escape_strip($email);
             }
         }
     }
 
     do_action("SMBasic_ProfileChange", $q_set_ary);
 
-    !empty($q_set_ary) ? $db->update("users", $q_set_ary, array("uid" => $user['uid']), "LIMIT 1") : false;
+    !empty($q_set_ary) ? $db->update("users", $q_set_ary, ["uid" => $user['uid']], "LIMIT 1") : false;
 
     die('[{"status": "ok", "msg": "' . $LNG['L_UPDATE_SUCCESSFUL'] . '", "url": "' . $filter->srv_request_uri() . '"}]');
 }

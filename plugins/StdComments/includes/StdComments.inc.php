@@ -54,7 +54,7 @@ function scNewComment() {
 
 function scAddComment($comment) {
     global $db;
-
+    $comment['comment'] = $db->escape_strip($comment['comment']);
     $db->insert("comments", $comment);
 }
 

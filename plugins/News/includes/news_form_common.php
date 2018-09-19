@@ -202,10 +202,10 @@ function news_form_news_update($news_data) {
     }
 
     $set_ary = [
-        "title" => $news_data['title'],
-        "lead" => $news_data['lead'],
-        "text" => $news_data['editor_text'],
-        "author" => $news_data['author'],
+        "title" => $db->escape_strip($news_data['title']),
+        "lead" => $db->escape_strip($news_data['lead']),
+        "text" => $db->escape_strip($news_data['editor_text']),
+        "author" => $db->escape_strip($news_data['author']),
         "author_id" => $news_data['author_id'],
         "category" => $news_data['category'],
     ];
@@ -233,11 +233,14 @@ function news_form_news_update($news_data) {
 
         $query = $db->select_all("links", ["source_id" => $source_id, "type" => $type, "plugin" => $plugin], "LIMIT 1");
         if ($db->num_rows($query) > 0) {
-            $db->update("links", ["link" => $news_data['news_source']], ["source_id" => $source_id, "type" => $type, "plugin" => $plugin]);
+
+            $db->update("links", ["link" => $db->escape_strip(urldecode($news_data['news_source']))], ["source_id" => $source_id, "type" => $type, "plugin" => $plugin]);
         } else {
             $insert_ary = [
-                "source_id" => $source_id, "plugin" => $plugin,
-                "type" => $type, "link" => $news_data['news_source'],
+                "source_id" => $source_id, 
+                "plugin" => $plugin,
+                "type" => $type,
+                "link" => $db->escape_strip(urldecode($news_data['news_source'])),
             ];
             $db->insert("links", $insert_ary);
         }
@@ -254,7 +257,7 @@ function news_form_news_update($news_data) {
         $type = "related";
         $insert_ary = [
             "source_id" => $source_id, "plugin" => $plugin,
-            "type" => $type, "link" => $news_data['news_new_related'],
+            "type" => $type, "link" => $db->escape_strip(urldecode($news_data['news_new_related'])),
         ];
         $db->insert("links", $insert_ary);
     }
@@ -265,7 +268,7 @@ function news_form_news_update($news_data) {
                 if (empty($value)) {
                     $db->delete("links", ["link_id" => $link_id], "LIMIT 1");
                 } else {
-                    $db->update("links", ["link" => $value], ["link_id" => $link_id], "LIMIT 1");
+                    $db->update("links", ["link" => $db->escape_strip(urldecode($value))], ["link_id" => $link_id], "LIMIT 1");
                 }
             }
         }

@@ -79,6 +79,7 @@ function news_show_page() {
     if ($cfg['display_news_related'] && ($news_related = news_get_related($news_data['nid'])) != false) {
         $related_content = "";
         foreach ($news_related as $related) {
+            $related['link'] = urldecode($related['link']);
             $related_content .= "<li><a rel='nofollow' target='_blank' href='{$related['link']}'>{$related['link']}</a></li>";
         }
         $news_data['news_related'] = $related_content;
@@ -475,6 +476,7 @@ function getNewsCatBreadcrumb($news_data) {
 }
 
 function news_format_source($link) {
+    $link['link'] = urldecode($link['link']);
     if ($link['type'] == 'source') {
         $url = parse_url($link['link']);
         $domain = $url['host'];

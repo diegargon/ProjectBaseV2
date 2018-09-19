@@ -74,7 +74,7 @@ function SMBasic_RegisterSubmit() {
         $register_message = $LNG['L_REGISTER_OKMSG'];
     }
     $mail_msg = SMBasic_create_reg_mail($active);
-    $query = $db->insert("users", array("username" => "$username", "password" => "$password", "email" => "$email", "active" => "$active"));
+    $query = $db->insert("users", array("username" => $db->escape_strip($username), "password" => "$password", "email" => $db->escape_strip($email), "active" => "$active"));
 
     if ($query) {
         mail($email, $LNG['L_REG_EMAIL_SUBJECT'], $mail_msg, "From: {$cfg['smbasic_register_reply_email']} \r\n");

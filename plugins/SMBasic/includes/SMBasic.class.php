@@ -63,7 +63,7 @@ class SessionManager {
             return $this->users_cache_db[$uid];
         }
 
-        $query = $db->select_all("users", array("uid" => $uid), "LIMIT 1");
+        $query = $db->select_all("users", ["uid" => $uid], "LIMIT 1");
         if ($db->num_rows($query) <= 0) {
             return false;
         }
@@ -84,7 +84,7 @@ class SessionManager {
         if (($uid = array_search($username, array_column($this->users_cache_db, 'username')))) {
             return $this->users_cache_db[$uid];
         }
-        $query = $db->select_all("users", array("username" => $username), "LIMIT 1");
+        $query = $db->select_all("users", ["username" => $username], "LIMIT 1");
 
         if ($db->num_rows($query) <= 0) {
             return false;
@@ -139,15 +139,15 @@ class SessionManager {
 
         if (!empty($email)) {
             if (empty($glob)) {
-                $where_ary = array("email" => array("value" => "'" . $string . "'", "operator" => "LIKE"));
+                $where_ary = ["email" => ["value" => "'" . $string . "'", "operator" => "LIKE"]];
             } else {
-                $where_ary = array("email" => array("value" => "'%" . $string . "%'", "operator" => "LIKE"));
+                $where_ary = ["email" => ["value" => "'%" . $string . "%'", "operator" => "LIKE"]];
             }
         } else {
             if (empty($glob)) {
-                $where_ary = array("username" => array("value" => "'" . $string . "'", "operator" => "LIKE"));
+                $where_ary = ["username" => ["value" => "'" . $string . "'", "operator" => "LIKE"]];
             } else {
-                $where_ary = array("username" => array("value" => "'%" . $string . "%'", "operator" => "LIKE"));
+                $where_ary = ["username" => ["value" => "'%" . $string . "%'", "operator" => "LIKE"]];
             }
         }
         $query = $db->select_all("users", $where_ary);
@@ -204,12 +204,12 @@ class SessionManager {
 
         $data = serialize($this->s_data);
         $next_expire = time() + $this->session_expire;
-        $db->update("sessions", array("session_data", "$data", "session_expire", $next_expire), array("uid", $this->user['uid']), "LIMIT 1");
+        $db->update("sessions", ["session_data" => "$data", "session_expire" => $next_expire], ["uid" => $this->user['uid']], "LIMIT 1");
     }
 
     private function loadData() {
         global $db;
-        $query = $db->select_all("sessions", array("uid", $this->user['uid']), "LIMIT 1");
+        $query = $db->select_all("sessions", ["uid" => $this->user['uid']], "LIMIT 1");
         $session = $db->fetch($query);
 
         if ($session['session_expire'] < time()) {
@@ -242,21 +242,20 @@ class SessionManager {
 
         if (!($this->session_type == 1) || ($this->persistence && $remember)) {
 
-            $db->delete("sessions", array("session_uid" => "{$user['uid']}"), "LIMIT 1");
+            $db->delete("sessions", ["session_uid" => "{$user['uid']}"], "LIMIT 1");
 
             $q_ary = [
                 "session_id" => $sid,
                 "session_uid" => $user['uid'],
-                "session_ip" => $filter->srv_remote_addr(), //$db->escape_strip($this->getData("ip")),
-                "session_browser" => $filter->srv_user_agent(), //$db->escape_strip($this->getData("session_user_agent")),
+                "session_ip" => $db->escape_strip($filter->srv_remote_addr()),
+                "session_browser" => $db->escape_strip($filter->srv_user_agent()),
                 "session_expire" => $session_expire
             ];
 
             $db->insert("sessions", $q_ary);
             $this->setCookies($sid, $user['uid']);
-            $db->update("users", array("last_login" => date("Y-m-d H:i:s", time())), array("uid" => $user['uid']));
+            $db->update("users", ["last_login" => date("Y-m-d H:i:s", time())], ["uid" => $user['uid']]);
         }
-
 
         return $sid;
     }
@@ -266,7 +265,7 @@ class SessionManager {
         $this->debug ? $debug->log("Session destroy called", "SMBasic", "DEBUG") : null;
 
         $this->user = false;
-        $db->delete("sessions", array("session_uid" => $this->user['uid']));
+        $db->delete("sessions", ["session_uid" => $this->user['uid']]);
         $this->clearCookies();
         isset($_SESSION) ? session_destroy() : false;
         $this->destroyData();
@@ -560,7 +559,7 @@ class SessionManager {
         $uid = $cookies['uid'];
 
         $this->debug ? $debug->log("Check persistence $uid, $sid", "SMBasic", "DEBUG") : null;
-        $query = $db->select_all("sessions", array("session_id" => "$sid", "session_uid" => "$uid"), "LIMIT 1");
+        $query = $db->select_all("sessions", ["session_id" => "$sid", "session_uid" => "$uid"], "LIMIT 1");
 
         if ($db->num_rows($query) <= 0) {
             return false;

@@ -41,12 +41,14 @@ function SMBasic_Login($email, $password, $rememberme) {
 function SMBasic_user_activate_account($activation_code) {
     global $db;
 
-    $query = $db->select_all("users", array("active" => "$activation_code"), "LIMIT 1");
+    $activation_code = $db->escape_strip($activation_code);
+
+    $query = $db->select_all("users", ["active" => $activation_code], "LIMIT 1");
     if ($db->num_rows($query) <= 0) {
         return false;
     }
 
-    $db->update("users", array("active" => 1), array("active" => $activation_code));
+    $db->update("users", ["active" => 1], ["active" => $activation_code]);
 
     return true;
 }
@@ -62,7 +64,7 @@ function SMBasic_RequestResetOrActivation() {
         die('[{"status": "1", "msg": "' . $LNG['L_EMAIL_LONG'] . '"}]');
         return false;
     }
-    $query = $db->select_all("users", array("email" => "$email"), "LIMIT 1");
+    $query = $db->select_all("users", ["email" => "$email"], "LIMIT 1");
     if ($db->num_rows($query) <= 0) {
         die('[{"status": "1", "msg": "' . $LNG['L_E_EMAIL_NOEXISTS'] . '"}]');
     } else {
@@ -73,7 +75,7 @@ function SMBasic_RequestResetOrActivation() {
             die('[{"status": "2", "msg": "' . $LNG['L_ACTIVATION_EMAIL'] . '"}]');
         } else {
             $reset = mt_rand(11111111, 2147483647);
-            $db->update("users", array("reset" => "$reset"), array("email" => "$email"));
+            $db->update("users", ["reset" => "$reset"], ["email" => $db->escape_strip($email)]);
             $URL = $cfg['WEB_URL'] . "login" . "&reset=$reset&email=$email";
             $msg = $LNG['L_RESET_EMAIL_MSG'] . "\n" . "$URL";
             mail($email, $LNG['L_RESET_EMAIL_SUBJECT'], $msg, "From: {$cfg['smbasic_register_reply_email']} \r\n");
@@ -97,7 +99,7 @@ function SMBasic_user_reset_password() {
         $user = $db->fetch($query);
         $password = SMBasic_randomPassword();
         $password_encrypted = $sm->encrypt_password($password);
-        $db->update("users", array("password" => "$password_encrypted", "reset" => "0"), array("uid" => "{$user['uid']}"));
+        $db->update("users", ["password" => "$password_encrypted", "reset" => "0"], ["uid" => "{$user['uid']}"]);
         $URL = "{$cfg['WEB_URL']}" . "login";
         $msg = $LNG['L_RESET_SEND_NEWMAIL_MSG'] . "\n" . "$password\n" . "$URL";
         mail($email, $LNG['L_RESET_SEND_NEWMAIL_SUBJECT'], $msg, "From: {$cfg['smbasic_register_reply_email']} \r\n");
