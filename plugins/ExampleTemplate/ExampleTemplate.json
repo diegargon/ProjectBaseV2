@@ -8,8 +8,8 @@
     "function_pre_install_info": "ExampleTemplate_preInstall_info",
     "function_upgrade": "ExampleTemplate_upgrade",
     "function_uninstall": "ExampleTemplate_uninstall",
-    "provide": "",
-    "version": 0.3,
+    "provide": "ExampleTemplate",
+    "version": 0.2,
     "depends": [
         {
             "name": "CORE",
