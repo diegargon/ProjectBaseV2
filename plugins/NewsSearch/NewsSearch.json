@@ -1,0 +1,23 @@
+{
+    "plugin_name": "NewsSearch",
+    "main_file": "NewsSearch.php",
+    "function_init": "NewsSearch_init",
+    "function_admin_init": "NewsSearch_AdminInit",
+    "function_install": "NewsSearch_install",
+    "function_pre_install": "NewsSearch_preInstall",
+    "function_pre_install_info": "NewsSearch_preInstall_info",
+    "function_upgrade": "NewsSearch_upgrade",
+    "function_uninstall": "NewsSearch_uninstall",
+    "provide": "NewsSearch",
+    "version": 0.2,
+    "depends": [
+        {
+            "name": "News",
+            "min_version": 0.2,
+            "max_version": 0.9
+        }
+    ],
+    "priority": 5,
+    "optional": [],
+    "conflicts": []
+}

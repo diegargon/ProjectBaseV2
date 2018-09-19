@@ -1,0 +1,64 @@
+/*
+ Copyright @ 2016 - 2018 Diego Garcia
+*/
+#searchResult h2 {
+    color: #C0BAB6;
+}
+#searchResult table {
+    width:100%;
+    margin: 0 auto;
+    border: 0px solid yellow;
+    font-size:0.8em;
+    border-spacing: 10px;
+}
+#searchResult table a {
+    text-decoration: none;
+    color:#000;
+}
+#searchResult tr:first-child td{
+    border: 1px solid #242424;
+    font-size:1em;
+    background-color: #232323;
+    color: #C0BAB6;
+    text-align: center;
+}
+#searchResult td {
+    border:1px solid #232323;
+    border-left: 15px solid #660000;
+    padding:0px;
+    margin-left:4px;
+    margin-bottom: 4px;
+}
+#searchTextInput {
+    margin-top:3px;
+    /* border: 0px;*/
+}
+.s_news_title {
+    font-weight: bold;
+    font-size: 1em;
+    background-color: #2C2D2C;
+    color: #C0BAB6;
+    padding-left: 5px;
+}
+.s_news_lead {
+    padding-left: 5px;
+}
+.news_tags {
+    width: 99%;
+    margin-top: 5px;
+}
+.tags {
+    font-size: 0.9em;
+    line-height: 2.5em;
+}
+.tags p{
+    background-color: #ffffcc;
+    padding:8px;
+    font-weight: bold;
+    font-size: 0.8em;
+}
+.tags a{
+    border: 1px solid #b3b283;
+    padding:8px;
+    text-decoration: none;
+}
