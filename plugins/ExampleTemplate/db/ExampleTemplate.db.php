@@ -13,12 +13,11 @@ CREATE TABLE `" . DB_PREFIX . "exampleTemplate` (
 
 /* UNINSTALL */
 
-$exampleTemplate_database_uninstall[] = "
-DROP TABLE `" . DB_PREFIX . "exampleTemplate`
-";
-
-$exampleTemplate_database_uninstall [] = "DELETE FROM `" . DB_PREFIX . "plugins` WHERE plugin_name = 'exampleTemplate'";
-$exampleTemplate_database_uninstall [] = "DELETE FROM `" . DB_PREFIX . "config` WHERE plugin = 'exampleTemplate'";
+$exampleTemplate_database_uninstall = [
+    "DROP TABLE `" . DB_PREFIX . "exampletemplate`",
+    "DELETE FROM `" . DB_PREFIX . "plugins` WHERE plugin_name = 'ExampleTemplate'",
+    "DELETE FROM `" . DB_PREFIX . "config` WHERE plugin = 'ExampleTemplate'"
+];
 /*
  * UPGRADE
  */
