@@ -9,13 +9,8 @@
     "function_upgrade": "MiniEditor_upgrade",
     "function_uninstall": "MiniEditor_uninstall",
     "provide": "EDITOR",
-    "version": 0.3,
+    "version": 0.2,
     "depends": [
-        {
-            "name": "CORE",
-            "min_version": 0.2,
-            "max_version": 0.9
-        },
         {
             "name": "SQL",
             "min_version": 0.2,

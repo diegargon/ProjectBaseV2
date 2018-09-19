@@ -8,14 +8,10 @@
     "function_pre_install_info": "News_preInstall_info",
     "function_upgrade": "News_upgrade",
     "function_uninstall": "News_uninstall",
-    "provide": "",
-    "version": 0.3,
+    "provide": "NEWS",
+    "version": 0.2,
     "depends": [
-        {
-            "name": "CORE",
-            "min_version": 0.2,
-            "max_version": 0.9
-        },
+
         {
             "name": "SQL",
             "min_version": 0.2,

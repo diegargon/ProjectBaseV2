@@ -8,8 +8,8 @@
     "function_pre_install_info": "DebugWindow_preInstall_info",
     "function_upgrade": "DebugWindow_upgrade",
     "function_uninstall": "DebugWindow_uninstall",
-    "provide": "",
-    "version": 0.3,
+    "provide": "DEBUG_WINDOW",
+    "version": 0.2,
     "depends": [
         {
             "name": "CORE",

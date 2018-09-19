@@ -8,19 +8,9 @@
     "function_pre_install_info": "StdComments_preInstall_info",
     "function_upgrade": "StdComments_upgrade",
     "function_uninstall": "StdComments_uninstall",
-    "provide": "",
-    "version": 0.3,
+    "provide": "COMMENTS",
+    "version": 0.2,
     "depends": [
-        {
-            "name": "CORE",
-            "min_version": 0.2,
-            "max_version": 0.9
-        },
-        {
-            "name": "SQL",
-            "min_version": 0.2,
-            "max_version": 0.9
-        },
         {
             "name": "SESSIONS",
             "min_version": 0.2,

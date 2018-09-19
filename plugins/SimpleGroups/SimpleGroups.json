@@ -10,17 +10,7 @@
     "function_uninstall": "SimpleGroups_uninstall",
     "provide": "GROUPS",
     "version": 0.2,
-    "depends": [
-        {
-            "name": "CORE",
-            "min_version": 0.2,
-            "max_version": 0.9
-        },
-        {
-            "name": "SQL",
-            "min_version": 0.2,
-            "max_version": 0.9
-        },        
+    "depends": [    
         {
             "name": "SESSIONS",
             "min_version": 0.2,
