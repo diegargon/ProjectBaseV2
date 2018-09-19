@@ -3,6 +3,7 @@
 /*
  *  Copyright @ 2016 - 2018 Diego Garcia
  */
+!defined('IN_WEB') ? exit : true;
 
 $exampleTemplate_database_install[] = "
 CREATE TABLE `" . DB_PREFIX . "exampleTemplate` (
