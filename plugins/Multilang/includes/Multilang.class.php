@@ -138,6 +138,15 @@ class Multilang {
         return false;
     }
 
+    function id_to_iso($lang_id) {
+        foreach ($this->get_site_langs() as $lang) {
+            if ($lang['lang_id'] == $lang_id) {
+                return $lang['iso_code'];
+            }
+        }
+        return false;
+    }
+
     function get_sitelangs_select($name) {
 
         $site_langs = $this->get_site_langs();
