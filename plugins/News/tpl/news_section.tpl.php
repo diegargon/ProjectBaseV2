@@ -8,7 +8,7 @@ if ($data['TPL_CTRL'] == 1) {
     ?>
     <div  class="clear bodysize page">
         <?php
-        isset($tpldata['ADD_TOP_SECTION']) ? print $tpldata['ADD_TOP_SECTION'] : false;
+        isset($tpldata['ADD_TOP_SECTION']) ? print $tpldata['ADD_TOP_SECTION'] : null;
     }
     ?>
     <?php if ($data['START_SECTION']) { ?>

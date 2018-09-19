@@ -5,14 +5,12 @@
 !defined('IN_WEB') ? exit : true;
 ?>
 <!DOCTYPE html>
-<html <?php isset($cfg['WEB_DIR']) ? print "dir=\"" . $cfg['WEB_DIR'] . "\"" : null ?> <?php isset($cfg['WEB_LANG']) ? print "lang=\"" . $cfg['WEB_LANG'] . "\"" : null ?> > 
+<html <?= isset($cfg['WEB_DIR']) ? "dir=\"" . $cfg['WEB_DIR'] . "\"" : null ?> <?= isset($cfg['WEB_LANG']) ? "lang=\"" . $cfg['WEB_LANG'] . "\"" : null ?> > 
     <head>
-        <?php
-        isset($cfg['CHARSET']) ? print "<meta charset=\"" . $cfg['CHARSET'] . "\" />" : null;
-        isset($cfg['PAGE_VIEWPORT']) ? print "<meta name=\"viewport\" content=\"" . $cfg['PAGE_VIEWPORT'] . "\" /> " : null;
-        ?>
+        <?= isset($cfg['CHARSET']) ? "<meta charset=\"" . $cfg['CHARSET'] . "\" />" : null; ?>
+        <?= isset($cfg['PAGE_VIEWPORT']) ? "<meta name=\"viewport\" content=\"" . $cfg['PAGE_VIEWPORT'] . "\" /> " : null; ?>
         <title>
-            <?php isset($cfg['PAGE_TITLE']) ? print $cfg['PAGE_TITLE'] : null ?>
+            <?= isset($cfg['PAGE_TITLE']) ? $cfg['PAGE_TITLE'] : null ?>
         </title>
         <meta name='robots' content='all' />
         <meta name="referrer" content="origin-when-crossorigin" />

@@ -76,7 +76,7 @@
                 }
                 !empty($data['pager']) ? print $data['pager'] : null;
                 !empty($tpldata['ADD_TO_NEWSSHOW_BOTTOM']) ? print $tpldata['ADD_TO_NEWSSHOW_BOTTOM'] : null;
-                ?>                        
+                ?>
             </section>
             <?php if ($cfg['news_side_news']) { ?>
                 <section class="article_side">            

@@ -6,7 +6,7 @@
 ?>
 
 <div  class="clear bodysize page">
-    <?php isset($tpldata['ADD_TOP_INDEX']) ? print $tpldata['ADD_TOP_INDEX'] : null; ?>    
+    <?= isset($tpldata['ADD_TOP_INDEX']) ? $tpldata['ADD_TOP_INDEX'] : null; ?>    
     <div class="cols col3">
         <?= isset($data['section_' . "1"]) ? $data['section_' . "1"] : null ?>
     </div>
@@ -16,5 +16,5 @@
     <div class="cols col3">
         <?= isset($data['section_' . "3"]) ? $data['section_' . "3"] : null ?>
     </div>
-    <?php isset($tpldata['ADD_BOTTOM_INDEX']) ? print $tpldata['ADD_BOTTOM_INDEX'] : null; ?>
+    <?= isset($tpldata['ADD_BOTTOM_INDEX']) ? $tpldata['ADD_BOTTOM_INDEX'] : null; ?>
 </div>
