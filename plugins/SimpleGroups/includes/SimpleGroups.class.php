@@ -47,11 +47,11 @@ class Groups {
         if ($db->num_rows($query) > 0) {
             return $LNG['L_GROUP_DUPLICATE'];
         } else {
-            $insert_ary = array(
+            $insert_ary = [
                 "group_name" => $group['group_name'],
                 "group_desc" => $db->escape_strip($group['group_desc']),
                 "plugin" => $group['plugin'],
-            );
+            ];
 
             $db->insert("groups", $insert_ary);
         }

@@ -237,7 +237,7 @@ function news_form_news_update($news_data) {
             $db->update("links", ["link" => $db->escape_strip(urldecode($news_data['news_source']))], ["source_id" => $source_id, "type" => $type, "plugin" => $plugin]);
         } else {
             $insert_ary = [
-                "source_id" => $source_id, 
+                "source_id" => $source_id,
                 "plugin" => $plugin,
                 "type" => $type,
                 "link" => $db->escape_strip(urldecode($news_data['news_source'])),

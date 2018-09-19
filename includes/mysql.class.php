@@ -160,9 +160,9 @@ class Database {
     }
 
     /*
-     * $db->select_all("users", array('uid' => 1, 'username' => "myname"), "LIMIT 1"); 
+     * $db->select_all("users", ['uid' => 1, 'username' => "myname"], "LIMIT 1"); 
      * Especify operator default '=';
-     * $query = $db->select_all("news", array ("frontpage" => array("value"=> 1, "operator" => "="), "moderation" => 0, "disabled" => 0));
+     * $query = $db->select_all("news", ["frontpage" => ["value"=> 1, "operator" => "="], "moderation" => 0, "disabled" => 0]);
      * extra not array 
      */
 

@@ -142,9 +142,9 @@ function SimpleCats_ModCategories() {
             if ($posted_cid != false) {
                 empty($posted_father) ? $posted_father = 0 : null;
                 empty($posted_weight) ? $posted_weight = 0 : null;
-                $query = $db->select_all("categories", array("cid" => "$posted_cid", "lang_id" => "$lang_id"));
+                $query = $db->select_all("categories", ["cid" => "$posted_cid", "lang_id" => "$lang_id"]);
                 if ($db->num_rows($query) > 0) {
-                    $db->update("categories", array("name" => "$posted_name", "father" => "$posted_father", "weight" => "$posted_weight"), array("cid" => "$posted_cid", "lang_id" => "$lang_id"));
+                    $db->update("categories", ["name" => "$posted_name", "father" => "$posted_father", "weight" => "$posted_weight"], ["cid" => "$posted_cid", "lang_id" => "$lang_id"]);
                 }
             }
         }
@@ -169,14 +169,14 @@ function SimpleCats_NewCategory($plugin) {
         $posted_father = $filter->post_int("father", 3, 1);
         $posted_weight = $filter->post_int("weight", 3, 1);
         if (!empty($posted_name)) {
-            $new_cat_ary = array(
+            $new_cat_ary = [
                 "cid" => "$new_cid",
                 "lang_id" => "{$lang['lang_id']}",
                 "plugin" => $plugin,
                 "name" => "$posted_name",
                 "father" => "$posted_father",
                 "weight" => "$posted_weight"
-            );
+            ];
             $db->insert("categories", $new_cat_ary);
         }
     }

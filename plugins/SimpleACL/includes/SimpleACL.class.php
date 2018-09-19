@@ -29,7 +29,7 @@ class ACL {
         global $db;
 
         $this->permissions = null;
-        
+
         $query = $db->select_all("permissions", null, "ORDER BY plugin");
         if ($db->num_rows($query) > 0) {
             while ($row = $db->fetch($query)) {
@@ -254,8 +254,6 @@ class ACL {
     }
 
     /*
-
-
       function newRole($perm) {
       global $LNG, $db;
 
@@ -263,13 +261,13 @@ class ACL {
       return $msg = $LNG['L_ACL_E_EMPTY_NEWROLE'];
       }
 
-      $insert_ary = array(
+      $insert_ary = [
       "level" => $perm['level'],
       "perm_group" => $perm['group'],
       "perm_type" => $perm['type'],
       "perm_name" => $perm['name'],
       "perm_description" => $db->escape_strip($perm['description'])
-      );
+      ];
 
       $db->insert("acl_perms", $insert_ary);
       return $LNG['L_ACL_ROLE_SUBMIT_SUCCESFUL'];
@@ -288,8 +286,6 @@ class ACL {
 
       function addUserRole($uid, $perm_id) {
       global $db, $LNG;
-
-
 
       $actual_user_perms = $this->getUserRolesByUID($uid);
       $new_perms = "";
@@ -339,14 +335,8 @@ class ACL {
       return $LNG['L_ACL_E_ID'];
       }
 
-
-
-
      */
     /*
-
-
-
 
       function get_perms_select($acl_group = null, $selected = null) {
       global $LNG, $db;
@@ -371,23 +361,17 @@ class ACL {
       return $select;
       }
 
-
-
-
-
-
       private function get_perms_query($acl_group = null) {
       global $db;
 
       if (!empty($acl_group)) {
-      $query = $db->select_all("acl_perms", array("perm_group" => "$acl_group"));
+      $query = $db->select_all("acl_perms", ["perm_group" => "$acl_group"]);
       } else {
       $query = $db->select_all("acl_perms");
       }
 
       return $query;
       }
-
 
      */
 }

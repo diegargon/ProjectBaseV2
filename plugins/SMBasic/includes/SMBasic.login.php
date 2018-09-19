@@ -14,7 +14,7 @@ function SMBasic_Login($email, $password, $rememberme) {
         die('[{"status": "error", "msg": "' . $LNG['L_E_INTERNAL'] . '"}]');
     }
 
-    $query = $db->select_all("users", array("email" => "$email", "password" => "$password_encrypt"), "LIMIT 1");
+    $query = $db->select_all("users", ["email" => "$email", "password" => "$password_encrypt"], "LIMIT 1");
     if (($user = $db->fetch($query))) {
         $db->free($query);
 
@@ -94,7 +94,7 @@ function SMBasic_user_reset_password() {
     if ($reset == false || $email == false) {
         return false;
     }
-    $query = $db->select_all("users", array("email" => "$email", "reset" => "$reset"));
+    $query = $db->select_all("users", ["email" => "$email", "reset" => "$reset"]);
     if ($db->num_rows($query) > 0) {
         $user = $db->fetch($query);
         $password = SMBasic_randomPassword();

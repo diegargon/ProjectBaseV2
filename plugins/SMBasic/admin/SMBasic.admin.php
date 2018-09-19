@@ -142,11 +142,11 @@ function SMBasic_UserList() {
 
 function SMBasic_DeleteUser($uid) {
     global $db;
-    $db->delete("users", array("uid" => $uid), "LIMIT 1");
+    $db->delete("users", ["uid" => $uid], "LIMIT 1");
 }
 
 function SMBasic_DisableUser($uid, $state) {
     global $db;
     empty($state) ? $new_state = 1 : $new_state = 0;
-    $db->update("users", array("disable" => $new_state), array("uid" => $uid), "LIMIT 1");
+    $db->update("users", ["disable" => $new_state], ["uid" => $uid], "LIMIT 1");
 }

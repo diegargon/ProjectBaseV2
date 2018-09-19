@@ -54,7 +54,7 @@ function setSessionDebugDetails() {
         $debug->log("Session ins't set", "SMBasic", "DEBUG");
     }
 
-    $query = $db->select_all("sessions", array("session_uid" => "{$user['uid']}"), "LIMIT 1");
+    $query = $db->select_all("sessions", ["session_uid" => $user['uid']], "LIMIT 1");
     $session = $db->fetch($query);
     if ($session) {
 

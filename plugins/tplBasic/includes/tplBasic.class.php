@@ -22,7 +22,7 @@ class TPL {
     private $css_cache_filepaths;
     public $css_cache_onefile;
     private $scripts = [];
-    private $std_remote_scripts = array(//TODO LOAD LIST
+    private $std_remote_scripts = [//TODO LOAD LIST
         "jquery" => "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js",
         "font-awesome" => "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css",
         "bootstrap" => "https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css",
@@ -37,7 +37,7 @@ class TPL {
         "swfobject" => "https://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js",
         "three" => "https://ajax.googleapis.com/ajax/libs/threejs/r84/three.min.js",
         "webfont" => "https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js",
-    );
+    ];
 
     function __construct($db = null) {
         $this->setConfig($db);
@@ -259,13 +259,13 @@ class TPL {
     }
 
     private function css_strip($css) { #by nyctimus
-        $preg_replace = array(
+        $preg_replace = [
             "#/\*.*?\*/#s" => "", // Strip C style comments.
             //"#\s\s+#" => "", // Strip excess whitespace.
             "/\s+/" => " " // Strip excess whitespace.
-        );
+        ];
         $css = preg_replace(array_keys($preg_replace), $preg_replace, $css);
-        $str_replace = array(
+        $str_replace = [
             ": " => ":",
             "; " => ";",
             " {" => "{",
@@ -275,7 +275,7 @@ class TPL {
             ";}" => "}", // Strip optional semicolons.
             ",\n" => ",", // Don't wrap multiple selectors.
             "\n}" => "}", // Don't wrap closing braces.
-        );
+        ];
         $css = str_replace(array_keys($str_replace), $str_replace, $css);
 
         return trim($css);

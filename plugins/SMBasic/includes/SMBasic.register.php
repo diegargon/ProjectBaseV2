@@ -52,13 +52,13 @@ function SMBasic_RegisterSubmit() {
         die('[{"status": "3", "msg": "' . $LNG['L_E_PASSWORD_MAX'] . '"}]');
     }
 
-    $query = $db->select_all("users", array("username" => "$username"), "LIMIT 1");
+    $query = $db->select_all("users", ["username" => "$username"], "LIMIT 1");
 
     if (($db->num_rows($query)) > 0) {
         die('[{"status": "2", "msg": "' . $LNG['L_E_USERNAME_EXISTS'] . '"}]');
     }
 
-    $query = $db->select_all("users", array("email" => "$email"));
+    $query = $db->select_all("users", ["email" => "$email"]);
     if (($db->num_rows($query)) > 0) {
         die('[{"status": "1", "msg": "' . $LNG['L_E_EMAIL_EXISTS'] . '"}]');
     }
@@ -74,7 +74,7 @@ function SMBasic_RegisterSubmit() {
         $register_message = $LNG['L_REGISTER_OKMSG'];
     }
     $mail_msg = SMBasic_create_reg_mail($active);
-    $query = $db->insert("users", array("username" => $db->escape_strip($username), "password" => "$password", "email" => $db->escape_strip($email), "active" => "$active"));
+    $query = $db->insert("users", ["username" => $db->escape_strip($username), "password" => "$password", "email" => $db->escape_strip($email), "active" => "$active"]);
 
     if ($query) {
         mail($email, $LNG['L_REG_EMAIL_SUBJECT'], $mail_msg, "From: {$cfg['smbasic_register_reply_email']} \r\n");

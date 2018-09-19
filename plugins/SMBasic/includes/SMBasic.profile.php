@@ -116,7 +116,7 @@ function SMBasic_ProfileChange() {
                 die('[{"status": "4", "msg": "' . $LNG['L_USERNAME_CHARS'] . '"}]');
             }
             if ($user['username'] != $username && !empty($username)) {
-                $query = $db->select_all("users", array("username" => "$username"), "LIMIT 1");
+                $query = $db->select_all("users", ["username" => "$username"], "LIMIT 1");
                 if ($db->num_rows($query) > 0) {
                     die('[{"status": "4", "msg": "' . $LNG['L_E_USERNAME_EXISTS'] . '"}]');
                 } else {

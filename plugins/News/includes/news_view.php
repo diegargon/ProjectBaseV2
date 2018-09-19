@@ -311,7 +311,7 @@ function news_approved($nid, $lang_id) {
     if (empty($nid) || empty($lang_id)) {
         return false;
     }
-    $db->update("news", array("moderation" => 0), ["nid" => $nid, "lang_id" => $lang_id]);
+    $db->update("news", ["moderation" => 0], ["nid" => $nid, "lang_id" => $lang_id]);
 
     return true;
 }
