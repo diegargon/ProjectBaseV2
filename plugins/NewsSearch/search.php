@@ -5,36 +5,35 @@
  */
 !defined('IN_WEB') ? exit : true;
 
-plugin_start("NewsSearch");
-require_once 'plugins/NewsSearch/includes/NewsSearchPage.inc.php';
+$plugins->express_start("NewsSearch");
+
+require_once __DIR__ . '/includes/NewsSearchPage.inc.php';
 
 if (!empty($_GET['q'])) {
-    $q = S_GET_TEXT_UTF8("q", $cfg['NS_MAX_S_TEXT'], $cfg['NS_MIN_S_TEXT']);
-    
+    $q = $filter->get_UTF8_txt("q", $cfg['ns_max_s_text'], $cfg['ns_min_s_text']);
+
     if (empty($q)) {
-        $msg['MSG'] = "L_NS_SEARCH_ERROR";
-        NS_msgbox($msg);
+        $frontend->message_box(['title' => 'L_NS_SEARCH', 'msg' => 'L_NS_SEARCH_ERROR']);
     }
     $q = $db->escape_strip($q);
     $where_ary['lang'] = $cfg['WEB_LANG'];
-    $cfg['NEWS_MODERATION'] ? $where_ary['moderation'] = 0 : null;
+    $cfg['news_moderation'] ? $where_ary['moderation'] = 0 : null;
 
-    $query = $db->search("news", "title lead text", $q, $where_ary, " LIMIT {$cfg['NS_RESULT_LIMIT']} ");
+    $query = $db->search("news", "title lead text", $q, $where_ary, " LIMIT {$cfg['ns_result_limit']} ");
 
     NS_build_result_page($query);
 }
 
 if (!empty($_GET["searchTag"])) {
-    $searchTag = S_GET_TEXT_UTF8("searchTag", $cfg['NS_TAGS_SZ_LIMIT'], $cfg['NS_MIN_S_TEXT']);
+    $searchTag = $filter->get_UTF8_txt("searchTag", $cfg['ns_tag_size_limit'], $cfg['ns_min_s_textT']);
 
     if (empty($searchTag)) {
-        $msg['MSG'] = "L_NS_SEARCH_ERROR";
-        NS_msgbox($msg);
+        $frontend->message_box(['title' => 'L_NS_SEARCH', 'msg' => 'L_NS_SEARCH_ERROR']);
     }
     $searchTag = $db->escape_strip($searchTag);
     $where_ary['lang'] = $cfg['WEB_LANG'];
-    $cfg['NEWS_MODERATION'] ? $where_ary['moderation'] = 0 : null;
-    $query = $db->search("news", "tags", $searchTag, $where_ary, " LIMIT {$cfg['NS_RESULT_LIMIT']} ");
+    $cfg['news_modedration'] ? $where_ary['moderation'] = 0 : null;
+    $query = $db->search("news", "tags", $searchTag, $where_ary, " LIMIT {$cfg['ns_result_limit']} ");
     if ($query) {
         NS_build_result_page($query);
     } else {
@@ -42,6 +41,5 @@ if (!empty($_GET["searchTag"])) {
     }
 }
 if (empty($_GET['q']) && empty($_GET["searchTag"])) {
-    $msg['MSG'] = "L_NS_SEARCH_ERROR";
-    NS_msgbox($msg);
+    $frontend->message_box(['title' => 'L_NS_SEARCH', 'msg' => 'L_NS_SEARCH_ERROR']);
 }
