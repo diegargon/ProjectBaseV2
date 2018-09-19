@@ -13,3 +13,5 @@ que necesitan la tabla permissions
 * Añadir realname
    - Usar nombre real o usuario para noticias? seria caos
    - Lo mejor seria pasar del nombre de usuario y permitir nombres reales 
+
+* Añadir opcion en la admin bar para desabilitar comentarios de determinada noticia, accesible a admins y si $cfg lo permitiera a usuarios.
