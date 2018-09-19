@@ -28,13 +28,14 @@ function news_edit($news_nid, $news_lang_id, $news_page) {
     $news_data['select_categories'] = news_getCatsSelect($news_data);
     if ($news_perms['news_add_source']) {
         if (($news_source = get_news_source_byID($news_data['nid'])) != false) {
-            $news_data['news_source'] = $news_source['link'];
+            $news_data['news_source'] = urldecode($news_source['link']);
         }
     }
     if ($news_perms['news_add_related']) {
         if (($news_related = news_get_related($news_data['nid']))) {
             $news_data['news_related'] = "";
             foreach ($news_related as $related) {
+                $related['link'] = urldecode($related['link']);
                 $news_data['news_related'] .= "<input type='text' class='news_link' name='news_related[{$related['link_id']}]' value='{$related['link']}' />\n";
             }
         }
