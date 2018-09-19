@@ -10,4 +10,4 @@
         <textarea id='new_comment' name="news_comment" ></textarea>
         <input id="btnSendNewComment" name="btnSendNewComment" type="submit" value="<?= $LNG['L_SEND'] ?>" />
     </form>
-</div>        
+</div>
