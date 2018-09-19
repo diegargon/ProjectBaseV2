@@ -429,13 +429,6 @@
 .featured_container_section section {
     height: 100%;
 }
-.button_switch {
-    background:url(/plugins/Newspage/tpl/images/newsswitch.png) no-repeat;
-    background-size: 18px 20px;
-    cursor:pointer;
-    margin-top: 4px;
-    border: 0px;
-}
 .news_msg {
     font-size:12em;
     font-weight: bold;

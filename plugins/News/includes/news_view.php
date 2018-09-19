@@ -234,9 +234,9 @@ function news_pager($news_page) {
     $news_page['page'] == 1 ? $a_class = "class='active'" : $a_class = '';
     if ($cfg['FRIENDLY_URL']) {
         $friendly_title = news_friendly_title($news_page['title']);
-        $content .= "<li><a $a_class href='/{$news_page['lang']}/news/{$news_page['nid']}/1/$friendly_title'>1</a></li>";
+        $content .= "<li><a $a_class href='/{$cfg['WEB_LANG']}}/news/{$news_page['nid']}/1/{$news_page['lang_id']}/$friendly_title'>1</a></li>";
     } else {
-        $content .= "<li><a $a_class href='{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_page['nid']}&lang={$news_page['lang']}&npage=1'>1</a></li>";
+        $content .= "<li><a $a_class href='{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_page['nid']}&lang={$cfg['WEB_LANG']}&news_lang_id={$news_page['lang_id']}&npage=1&news_lang_id={$news_page['lang_id']}'>1</a></li>";
     }
 
     $pager = page_pager($cfg['news_pager_max'], $num_pages, $news_page['page']);
@@ -245,17 +245,17 @@ function news_pager($news_page) {
         $news_page['page'] == $i ? $a_class = "class='active'" : $a_class = '';
         if ($cfg['FRIENDLY_URL']) {
             $friendly_title = news_friendly_title($news_page['title']);
-            $content .= "<li><a $a_class href='/{$news_page['lang']}/news/{$news_page['nid']}/$i/$friendly_title'>$i</a></li>";
+            $content .= "<li><a $a_class href='/{$news_page['lang']}/news/{$news_page['nid']}/$i/{$news_page['lang_id']}/$friendly_title'>$i</a></li>";
         } else {
-            $content .= "<li><a $a_class href='{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_page['nid']}&lang={$news_page['lang']}&npage=$i'>$i</a></li>";
+            $content .= "<li><a $a_class href='{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_page['nid']}&lang={$cfg['WEB_LANG']}&npage=$i&news_lang_id={$news_page['lang_id']}'>$i</a></li>";
         }
     }
     $news_page['page'] == $num_pages ? $a_class = "class='active'" : $a_class = '';
     if ($cfg['FRIENDLY_URL']) {
         $friendly_title = news_friendly_title($news_page['title']);
-        $content .= "<li><a $a_class href='/{$news_page['lang']}/news/{$news_page['nid']}/$num_pages/$friendly_title'>$num_pages</a></li>";
+        $content .= "<li><a $a_class href='/{$news_page['lang']}/news/{$news_page['nid']}/$num_pages/{$news_page['lang_id']}/$friendly_title'>$num_pages</a></li>";
     } else {
-        $content .= "<li><a $a_class href='{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_page['nid']}&lang={$news_page['lang']}&npage=$num_pages'>$num_pages</a></li>";
+        $content .= "<li><a $a_class href='{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_page['nid']}&lang={$cfg['WEB_LANG']}&npage=$num_pages&news_lang_id={$news_page['lang_id']}'>$num_pages</a></li>";
     }
     $content .= "</ul></div>";
 

@@ -50,7 +50,7 @@ function News_admin_content($params) {
     } else if ($params['opt'] == 4) {
         $page_data .= AdminPluginConfig("News");
     } else {
-        $page_data .= do_action("ADD_ADM_NEWSPAGE_OPT");
+        $page_data .= do_action("ADD_ADM_NEWS_OPT");
     }
 
     return $page_data;

@@ -8,7 +8,7 @@
 function NS_build_result_page(& $query) {
     global $db, $cfg, $tpl, $frontend;
     $content = "";
-    
+
     if ($query && ($num_rows = $db->num_rows($query)) > 0) {
         $counter = 0;
         while ($result = $db->fetch($query)) {
@@ -17,9 +17,9 @@ function NS_build_result_page(& $query) {
             $counter++;
             if ($cfg['FRIENDLY_URL']) {
                 $friendly_title = news_friendly_title($result['title']);
-                $result['url'] = "/{$result['lang']}/news/{$result['nid']}/{$result['page']}/$friendly_title";
+                $result['url'] = "/{$result['lang']}/news/{$result['nid']}/{$result['page']}/{$result['lang_id']}/$friendly_title";
             } else {
-                $result['url'] = "/{$cfg['CON_FILE']}?module=Newspage&page=news&nid={$result['nid']}&lang={$result['lang']}&npage={$result['page']}";
+                $result['url'] = "/{$cfg['CON_FILE']}?module=News&page=news&nid={$result['nid']}&lang={$result['lang']}&npage={$result['page']}&news_lang_id={$result['news_lang']}";
             }
             $content .= $tpl->getTPL_file("NewsSearch", "NewsSearch-results", $result);
         }
@@ -28,4 +28,3 @@ function NS_build_result_page(& $query) {
         $frontend->message_box(['title' => 'L_NS_SEARCH', 'msg' => 'L_NS_NORESULT']);
     }
 }
-

@@ -71,7 +71,7 @@ if (defined('MULTILANG') && !empty($_GET['news_new_lang'])) {
 }
 
 if (!empty($_GET['newpage'])) {
-    do_action("begin_newspage");
+    do_action("begin_news_new_page");
     require_once ("includes/news_new_page.php");
 
     if (!empty($_POST['submitForm'])) {

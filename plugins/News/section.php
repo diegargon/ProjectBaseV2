@@ -72,9 +72,9 @@ foreach ($news_db as $news) {
     //ARTICLE DATA
     if ($cfg['FRIENDLY_URL']) {
         $friendly_title = news_friendly_title($news['title']);
-        $section_data['url'] = "/" . $cfg['WEB_LANG'] . "/news/{$news['nid']}/{$news['page']}/$friendly_title";
+        $section_data['url'] = "/" . $cfg['WEB_LANG'] . "/news/{$news['nid']}/{$news['page']}/{$news['lang_id']}/$friendly_title";
     } else {
-        $section_data['url'] = "/{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news['nid']}&lang=" . $cfg['WEB_LANG'] . "&npage={$news['page']}";
+        $section_data['url'] = "/{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news['nid']}&lang=" . $cfg['WEB_LANG'] . "&npage={$news['page']}&news_lang_id={$news['lang_id']}";
     }
     $section_data['title'] = $news['title'];
     $section_data['lead'] = $news['lead'];

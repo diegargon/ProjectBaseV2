@@ -33,11 +33,11 @@ function get_news_query($where, $q_conf = null, $order = null) {
     }
 
     if (isset($q_conf['headlines'])) {
-        $what = "nid, title, created, page, featured, visits";
+        $what = "nid, lang_id, title, created, page, featured, visits";
     } else if (isset($q_conf['lead'])) {
-        $what = "nid, title, lead, page, created, featured, visits";
+        $what = "nid, lang_id, title, lead, page, created, featured, visits";
     } else {
-        $what = "nid, title, lead, text, page, author_id, created, last_edited, featured, visits, translator_id, tags";
+        $what = "nid, lang_id, title, lead, text, page, author_id, created, last_edited, featured, visits, translator_id, tags";
     }
     $extra = $order . $limit;
     $result = $db->select("news", $what, $where, $extra);

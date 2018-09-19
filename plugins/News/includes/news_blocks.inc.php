@@ -37,9 +37,9 @@ function news_block($block_conf) {
     foreach ($news_db as $news_data) {
         if ($cfg['FRIENDLY_URL']) {
             $friendly_title = news_friendly_title($news_data['title']);
-            $news_data['url'] = "/" . $cfg['WEB_LANG'] . "/news/{$news_data['nid']}/{$news_data['page']}/$friendly_title";
+            $news_data['url'] = "/" . $cfg['WEB_LANG'] . "/news/{$news_data['nid']}/{$news_data['page']}/{$block_conf['news_lang']}/$friendly_title";
         } else {
-            $news_data['url'] = "/{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_data['nid']}&lang=" . $cfg['WEB_LANG'] . "&npage={$news_data['page']}";
+            $news_data['url'] = "/{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_data['nid']}&lang=" . $cfg['WEB_LANG'] . "&npage={$news_data['page']}&news_lang_id={$block_conf['news_lang']}";
         }
 
         $news_data['date'] = format_date($news_data['created']);
