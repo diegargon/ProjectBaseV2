@@ -7,7 +7,7 @@
 
 /* */
 $newsComments_database_install[] = "
-    ALTER TABLE `" . DB_PREFIX . "news` ADD `comments_disabled` TINYINT(1) NOT NULL DEFAULT '1' AFTER `tags`;
+    ALTER TABLE `" . DB_PREFIX . "news` ADD `comments_disabled` TINYINT(1) NOT NULL DEFAULT '1';
 ";
 /* Config */
 $newsComments_database_install[] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('NewsComments', 'newscomments_debug', '0');";
