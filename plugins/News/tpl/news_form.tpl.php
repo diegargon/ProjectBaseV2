@@ -60,7 +60,7 @@
                             </p>
                         </div>
                     <?php } ?>
-                    <?php !empty($tpldata['NEWS_FORM_BOTTOM_OPTION']) ? $tpldata['NEWS_FORM_BOTTOM_OPTION'] : null ?>
+                    <?= !empty($tpldata['NEWS_FORM_BOTTOM_OPTION']) ? $tpldata['NEWS_FORM_BOTTOM_OPTION'] : null ?>
                     <div class="submit_items">
                         <p>
                             <span class="submit_others_label"><?= $LNG['L_NEWS_OTHER_OPTIONS'] ?> </span>

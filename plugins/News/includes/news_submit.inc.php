@@ -47,7 +47,7 @@ function news_new_form($news_perms) {
         $frontend->message_box(['msg' => 'L_NEWS_NOCATS']);
         return false;
     }
-    $form_data['terms_url'] = ""; // $cfg['TERMS_URL'];
+    $form_data['terms_url'] = ""; // $cfg['TERMS_URL'];    
     do_action("news_new_form_add", $form_data);
 
     /* EDITOR */
