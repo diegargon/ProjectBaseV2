@@ -1,0 +1,23 @@
+{
+    "plugin_name": "NewsComments",
+    "main_file": "NewsComments.php",
+    "function_init": "NewsComments_init",
+    "function_admin_init": "NewsComments_AdminInit",
+    "function_install": "NewsComments_install",
+    "function_pre_install": "NewsComments_preInstall",
+    "function_pre_install_info": "NewsComments_preInstall_info",
+    "function_upgrade": "NewsComments_upgrade",
+    "function_uninstall": "NewsComments_uninstall",
+    "provide": "NEWS_COMMENTS",
+    "version": 0.2,
+    "depends": [
+        {
+            "name": "COMMENTS",
+            "min_version": 0.2,
+            "max_version": 0.9
+        }
+    ],
+    "priority": 5,
+    "optional": [],
+    "conflicts": []
+}
