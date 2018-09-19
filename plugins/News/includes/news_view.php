@@ -6,7 +6,7 @@
 !defined('IN_WEB') ? exit : true;
 
 function news_show_page() {
-    global $cfg, $LNG, $tpl, $sm, $ml, $acl_auth, $filter, $tUtil, $frontend;
+    global $cfg, $LNG, $tpl, $sm, $ml, $acl_auth, $filter, $frontend;
 
     $news_data = [];
     $editor = new Editor();
@@ -59,7 +59,7 @@ function news_show_page() {
     $news_data['title'] = str_replace('\r\n', '', $news_data['title']);
     $news_data['lead'] = str_replace('\r\n', PHP_EOL, $news_data['lead']);
     $news_data['news_url'] = "view_news.php?nid={$news_data['nid']}";
-    $news_data['date'] = $tUtil->format_date($news_data['date']);
+    $news_data['date'] = format_date($news_data['date']);
     $news_data['author'] = $news_data['author'];
     $news_data['author_uid'] = $news_data['author_id'];
 
@@ -122,10 +122,7 @@ function news_show_page() {
 }
 
 function news_process_admin_actions(&$news_data, $perms) {
-    global $cfg, $acl_auth, $sm, $ml, $filter;
-
-    //if we enter with &admin=1 already passing the admin check in news_show_page, check if not enter with admin=1 , do again and remove if?
-    $user = $sm->getSessionUser();
+    global $filter;
 
     $news_lang_id = $filter->get_int("news_lang_id", 2, 1);
     $news_nid = $filter->get_int("nid", 11, 1);
@@ -161,14 +158,12 @@ function news_process_admin_actions(&$news_data, $perms) {
 }
 
 function news_nav_options($news, $perms) {
-    global $LNG, $cfg, $sm;
+    global $LNG, $cfg;
     $content = "";
     $news_url_args = "&nid={$news['nid']}&news_lang_id={$news['lang_id']}&npage={$news['page']}";
 
     $view_news_url = "/{$cfg['CON_FILE']}?module=News&page=view_news" . $news_url_args;
     $edit_news_url = "/{$cfg['CON_FILE']}?module=News&page=edit_news" . $news_url_args;
-
-    $perm['news_new_page'] = ($cfg['allow_multiple_pages']) ? true : false;
 
     //Only admin can change but show link disabled to all in frontpage, and feature
 
@@ -432,7 +427,7 @@ function news_add_social_meta($news) { // TODO: Move to plugin NewsSocialExtra
 }
 
 function getNewsCatBreadcrumb($news_data) {
-    global $db, $cfg, $ctgs;
+    global $cfg, $ctgs;
     $content = "";
 
     $categories = $ctgs->getCategories("News");

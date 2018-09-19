@@ -1,10 +1,9 @@
 <?php
 /*
- *  Copyright @ 2016 Diego Garcia
+ *  Copyright @ 2016 - 2018 Diego Garcia
  */
 !defined('IN_WEB') ? exit : true;
 ?>
-
 <div class='catlist'>
     <p><?= $LNG['L_NEWS_CREATE_CAT'] ?></p>
     <form id='cat_new' method='post' action=''>

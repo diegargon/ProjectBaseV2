@@ -14,9 +14,8 @@ if (!empty($data['TPL_FIRST'])) {
             <span class="avatar">
                 <a href="<?= $data['p_url'] ?>"><img width="35"  src="<?= $data['avatar'] ?>" alt="" /></a>
             </span>
-
             <span class="c_author"><a href="<?= $data['p_url'] ?>"><?= $data['username'] ?></a></span>
-            <span class="c_date"><?= $tUtil->format_date($data['date']) ?></span>
+            <span class="c_date"><?= format_date($data['date']) ?></span>
             <?php !empty($data['COMMENT_EXTRA']) ? print $data['COMMENT_EXTRA'] : false; ?>
             <p class="comment_body"><?= $data['comment'] ?></p>
             <?php !empty($data['COMMENT_POST_MESSAGE_EXTRA']) ? print $data['COMMENT_POST_MESSAGE_EXTRA'] : false; ?>                    

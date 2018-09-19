@@ -1,6 +1,6 @@
 <?php
 /*
- *  Copyright @ 2016 Diego Garcia
+ *  Copyright @ 2016 - 2018 Diego Garcia
  */
 !defined('IN_WEB') ? exit : true;
 ?>
@@ -8,8 +8,8 @@
 <tr>
     <td><a href='<?= $data['profile_url'] ?>'><?= $data['username'] ?></a></td>
     <td><?= $data['email'] ?></td>
-    <td><?= $tUtil->format_date($data['regdate']) ?></td>
-    <td><?= $tUtil->format_date($data['last_login']) ?> </td>
+    <td><?= format_date($data['regdate']) ?></td>
+    <td><?= format_date($data['last_login']) ?> </td>
     <td>
         <form action='' method='post'>
             <input type='hidden' name='member_uid'  value='<?= $data['uid'] ?>' />

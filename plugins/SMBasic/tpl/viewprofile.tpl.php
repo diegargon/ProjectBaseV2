@@ -25,11 +25,11 @@
             </dl>
             <dl>
                 <dt><label><?= $LNG['L_SM_REGISTERED'] ?></label></dt>
-                <dd><span><?= $tUtil->format_date($data['regdate']) ?> </span></dd>
+                <dd><span><?= format_date($data['regdate']) ?> </span></dd>
             </dl>
             <dl>
                 <dt><label><?= $LNG['L_SM_LASTLOGIN'] ?> </label></dt>
-                <dd><span><?= $tUtil->format_date($data['last_login']) ?> </span></dd>
+                <dd><span><?= format_date($data['last_login']) ?> </span></dd>
             </dl>
             <?= !empty($tpldata['SMB_VIEWPROFILE_FIELDS_BOTTOM']) ? $tpldata['SMB_VIEWPROFILE_FIELDS_BOTTOM'] : false; ?>            
         </div>

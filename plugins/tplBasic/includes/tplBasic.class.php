@@ -282,7 +282,7 @@ class TPL {
     }
 
     function parse_file($path, $data = null) {
-        global $LNG, $tUtil, $cfg;
+        global $LNG, $cfg;
 
         $this->debug ? $this->debug->log("TPL parse $path, gzip its {$cfg['tplbasic_gzip']}", "tplBasic", "DEBUG") : null;
 
@@ -293,7 +293,9 @@ class TPL {
         include ($path);
         $content = ob_get_contents();
         ob_end_clean();
+
         if ($cfg['tplbasic_html_optimize']) { // that going to give problems... :)
+            //TODO...
             $content = preg_replace('/(\>)\s+(\<)/S', '$1$2', $content);
         }
         return $content;

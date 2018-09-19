@@ -79,8 +79,6 @@ $plugins->setDepend("SQL", CORE_VERSION);
 /* TIME UTILS */
 require_once "includes/time-utils.inc.php";
 
-$tUtil = new TimeUtils($cfg, $db);
-
 if (mobileDetect()) {
     $cfg['ITS_MOBIL'] = 1;
     $cfg['img_selector'] = "mobil";
@@ -103,8 +101,8 @@ $page = $filter->get_strict_chars("page");
 
 if (!empty($module) && !empty($page)) {
     !$plugins->check_enabled($module) ? exit("Error plugin ins't enabled") : null;
-    if(!$plugins->check_started($module)) {
-        if(!$plugins->express_start($module)) {
+    if (!$plugins->check_started($module)) {
+        if (!$plugins->express_start($module)) {
             $frontend->message_box(['msg' => 'L_E_PL_CANTEXPRESS']);
             return false;
         }

@@ -5,64 +5,40 @@
  */
 !defined('IN_WEB') ? exit : true;
 
-class TimeUtils {
+//TODO: Check user preferences
 
-    private $cfg;
-    private $db;
-    private $timezone;
-    private $server_timezone;
-    private $db_dateformat;
-    private $dateformat;
+date_default_timezone_set($cfg['DEFAULT_TIMEZONE']);
+$cfg['dateformat'] = $cfg['DEFAULT_DATEFORMAT'];
+$cfg['timezone'] = date_default_timezone_get();
 
-    public function __construct($cfg, $db) {
-        $this->cfg = $cfg;
-        $this->db = $db;
-        $this->server_timezone = date_default_timezone_get();
-        $this->setTimezone();
-        $this->setDateformat();
-        $this->db_dateformat = $cfg['DEFAULT_DB_DATEFORMAT'];
+function getTimeNow() {
+    global $cfg;
+    return new DateTime(date($cfg['dateformat'], time()));
+}
+
+function format_date($date, $timestamp = false) {
+    global $cfg;
+    //TODO DateTime
+    if ($timestamp) {
+        return date($cfg['dateformat'], $date);
+    } else {
+        return date($cfg['dateformat'], strtotime($date));
     }
+}
 
-    public function getTimeNow() {
-        return new DateTime(date($this->dateformat, time()));
-    }
+function timeNowDiff($time) {
+    global $cfg;
 
-    public function format_date($date, $timestamp = false) {
-        //TODO DateTime
-        if ($timestamp) {
-            return date($this->dateformat, $date);
-        } else {
-            return date($this->dateformat, strtotime($date));
-        }
-    }
+    $_time = new DateTime($time);
+    $_time->setTimezone(new DateTimeZone($cfg['server_timezone']));
+    $time_now = new DateTime(date($cfg['default_db_dateformat'], time()));
+    $time_now->setTimezone(new DateTimeZone($this->timezone));
+    $time_diff = $_time->diff($time_now);
 
-    public function timeNowDiff($time) {
-        $_time = new DateTime($time);
-        $_time->setTimezone(new DateTimeZone($this->timezone));
+    $result_time['days'] = $time_diff->format("%d");
+    $result_time['hours'] = $time_diff->format("%H");
+    $result_time['minutes'] = $time_diff->format("%i");
+    $result_time['seconds'] = $time_diff->format("%s");
 
-        $time_now = new DateTime(date($this->db_dateformat, time()));
-        $time_now->setTimezone(new DateTimeZone($this->timezone));
-
-        $time_diff = $_time->diff($time_now);
-
-        $result_time['days'] = $time_diff->format("%d");
-        $result_time['hours'] = $time_diff->format("%H");
-        $result_time['minutes'] = $time_diff->format("%i");
-        $result_time['seconds'] = $time_diff->format("%s");
-
-        return $result_time;
-    }
-
-    private function setTimezone() {
-        //TODO: LANG to TIME ZONE OR DETECT USER TIMEZONE WITH Javascript        
-        // OR USER PREF
-        date_default_timezone_set($this->cfg['DEFAULT_TIMEZONE']);
-        $this->timezone = date_default_timezone_get();
-    }
-
-    private function setDateFormat() {
-        //TODO: Check user preferences
-        $this->dateformat = $this->cfg['DEFAULT_DATEFORMAT'];
-    }
-
+    return $result_time;
 }

@@ -66,7 +66,6 @@ $section_data['END_SECTION'] = 0;
 $section_data['SECTIONS'] = $cfg['news_section_sections'];
 $content = "";
 
-
 foreach ($news_db as $news) {
     $num_items == $counter ? $section_data['TPL_FOOT'] = 1 : $section_data['TPL_FOOT'] = 0;
     ($counter == $section_limit || $counter == $num_items || $num_items_section >= $section_limit ) ? $section_data['END_SECTION'] = 1 : null;
@@ -80,7 +79,7 @@ foreach ($news_db as $news) {
     $section_data['title'] = $news['title'];
     $section_data['lead'] = $news['lead'];
     $section_data['featured'] = $news['featured'];
-    $section_data['date'] = $tUtil->format_date($news['created']);
+    $section_data['date'] = format_date($news['created']);
     $content .= $tpl->getTPL_file("News", "news_section", $section_data);
     //
     $section_data['START_SECTION'] = 0;

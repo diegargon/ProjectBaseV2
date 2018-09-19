@@ -6,7 +6,7 @@
 !defined('IN_WEB') ? exit : true;
 
 function news_block($block_conf) {
-    global $tpl, $plugins, $tUtil, $cfg, $frontend;
+    global $tpl, $plugins, $cfg, $frontend;
 
     require_once __DIR__ . '/news_common.php';
 
@@ -42,8 +42,7 @@ function news_block($block_conf) {
             $news_data['url'] = "/{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_data['nid']}&lang=" . $cfg['WEB_LANG'] . "&npage={$news_data['page']}";
         }
 
-
-        $news_data['date'] = $tUtil->format_date($news_data['created']);
+        $news_data['date'] = format_date($news_data['created']);
         $content .= $tpl->getTPL_file("News", "news_block", $news_data);
     }
 

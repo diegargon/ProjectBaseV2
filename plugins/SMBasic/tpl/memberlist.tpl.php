@@ -1,6 +1,6 @@
 <?php
 /*
- *  Copyright @ 2016 Diego Garcia
+ *  Copyright @ 2016 - 2018 Diego Garcia
  */
 !defined('IN_WEB') ? exit : true;
 ?>
@@ -16,6 +16,5 @@
         <?= isset($data['ADM_TABLE_TH']) ? $data['ADM_TABLE_TH'] : false ?>        
     </tr>
     <?= isset($data['ADM_TABLE_ROW']) ? $data['ADM_TABLE_ROW'] : false ?>
-
 </table>
 <br/>

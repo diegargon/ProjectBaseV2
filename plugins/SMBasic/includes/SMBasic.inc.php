@@ -37,10 +37,10 @@ function SMBasic_navLogReg() {
 }
 
 function setSessionDebugDetails() {
-    global $db, $sm, $tUtil, $debug;
+    global $db, $sm, $debug;
 
     $debug->log("Session Details", "SMBasic", "DEBUG");
-    $debug->log("Time Now: " . $tUtil->format_date(time(), true) . "", "SMBasic", "DEBUG");
+    $debug->log("Time Now: " . format_date(time(), true) . "", "SMBasic", "DEBUG");
     if (!($user = $sm->getSessionUser())) {
         $debug->log("Anonymous Session", "SMBasic", "DEBUG");
         return false;
@@ -61,7 +61,7 @@ function setSessionDebugDetails() {
         $debug->log("Session DB IP: {$session['session_ip']}", "SMBasic", "DEBUG");
         $debug->log("Session DB Browser: {$session['session_browser']}", "SMBasic", "DEBUG");
         $debug->log("Session DB Create: {$session['session_created']}", "SMBasic");
-        $debug->log("Session DB Expire:" . $tUtil->format_date("{$session['session_expire']}", true) . "", "SMBasic", "DEBUG");
+        $debug->log("Session DB Expire:" . format_date("{$session['session_expire']}", true) . "", "SMBasic", "DEBUG");
     }
     $debug->log("PHP Session expire: " . ini_get('session.gc_maxlifetime'), "SMBasic", "DEBUG");
     if (isset($_COOKIE)) {
