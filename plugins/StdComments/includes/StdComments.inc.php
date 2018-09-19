@@ -4,81 +4,67 @@
  *  Copyright @ 2016 - 2018 Diego Garcia
  */
 
-function SC_GetComments($plugin, $resource_id, $lang_id = null, $limit = null) {
-    global $tpl, $db;
-    $content = "";
+function scGetComments($comm_conf) {
 
-    if (empty($plugin) || empty($resource_id)) {
+    global $tpl, $db, $filter, $sm, $cfg;
+
+    if (empty($comm_conf['plugin']) || empty($comm_conf['resource_id'])) {
         return false;
     }
 
-    $select_ary = array(
-        "plugin" => "$plugin",
-        "resource_id" => "$resource_id",
-        "lang_id" => "$lang_id"
-    );
-
-    if (!empty($limit) && S_VAR_INTEGER($limit)) {
-        $LIMIT = "LIMIT " . $limit;
+    if (!empty($comm_conf['limit']) && $filter->var_int($comm_conf['limit'])) {
+        $LIMIT = "LIMIT " . $comm_conf['limit'];
     } else {
         $LIMIT = "";
     }
+    if (isset($comm_conf['limit'])) {
+        unset($comm_conf['limit']);
+    }
 
-    $query = $db->select_all("comments", $select_ary, "$LIMIT");
+    $query = $db->select_all("comments", $comm_conf, "$LIMIT");
     $num_comments = $db->num_rows($query);
     $counter = 0;
 
+    $content = "";
     while ($comment_row = $db->fetch($query)) {
         $counter == 0 ? $comment_row['TPL_FIRST'] = 1 : false;
         $counter == ($num_comments - 1 ) ? $comment_row['TPL_LAST'] = 1 : false;
         $counter++;
 
-        do_action($plugin . "_get_comments", $comment_row);
+        $author_data = $sm->getUserByID($comment_row['author_id']);
+        $comment_row = array_merge($author_data, $comment_row);
+        do_action($comm_conf['plugin'] . "_get_comments", $comment_row);
 
-        $content .= $tpl->getTPL_file("SimpleComments", "comments", $comment_row);
+        if ($cfg['FRIENDLY_URL']) {
+            $comment_row['p_url'] = "/{$cfg['WEB_LANG']}/profile&viewprofile={$author_data['uid']}";
+        } else {
+            $comment_row['p_url'] = "/{$cfg['CON_FILE']}?module=SMBasic&page=profile&viewprofile={$author_data['uid']}&lang={$cfg['WEB_LANG']}";
+        }
+
+        $content .= $tpl->getTPL_file("StdComments", "comments", $comment_row);
     }
     return $content;
 }
 
-function SC_NewComment($plugin, $resource_id, $lang_id = null) {
+function scNewComment() {
     global $tpl;
-    $content = "";
 
-    $content .= $tpl->getTPL_file("SimpleComments", "new_comment");
-    return $content;
+    return $tpl->getTPL_file("StdComments", "new_comment");
 }
 
-function SC_AddComment($plugin, $comment, $resource_id, $lang_id = null) {
-    global $sm, $db, $LNG;
-
-    $user = $sm->getSessionUser();
-    if (empty($user)) {
-        $user['uid'] = 0;
-    }
-    $new_ary = array(
-        "plugin" => "$plugin",
-        "resource_id" => "$resource_id",
-        "lang_id" => "$lang_id",
-        "message" => $db->escape_strip($comment),
-        "author_id" => $user['uid']
-    );
-
-    $db->insert("comments", $new_ary);
-}
-
-function SC_GetNumComm($plugin, $resource_id, $lang_id) {
+function scAddComment($comment) {
     global $db;
 
-    if (empty($plugin) || empty($resource_id)) {
+    $db->insert("comments", $comment);
+}
+
+function scGetNumComm($conf) {
+    global $db;
+
+    if (empty($conf['plugin']) || empty($conf['resource_id'])) {
         return false;
     }
 
-    $select_ary = array(
-        "plugin" => "$plugin",
-        "resource_id" => "$resource_id",
-        "lang_id" => "$lang_id"
-    );
-
-    $query = $db->select_all("comments", $select_ary);
+    $query = $db->select_all("comments", $conf);
     return $db->num_rows($query);
 }

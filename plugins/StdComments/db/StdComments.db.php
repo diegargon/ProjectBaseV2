@@ -10,7 +10,7 @@ CREATE TABLE `" . DB_PREFIX . "comments` (
   `plugin` char(255) NOT NULL,
   `resource_id` int(10) UNSIGNED NOT NULL,
   `lang_id` tinyint(2) NOT NULL,
-  `message` longtext NOT NULL,
+  `comment` longtext NOT NULL,
   `author_id` int(10) UNSIGNED NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . ";
