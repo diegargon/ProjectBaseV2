@@ -26,7 +26,7 @@ function News_Comments($news) {
         $comm_conf['author_id'] = $user['uid'];
     }
 
-    if (!empty($_POST['btnSendNewComment']) && $cfg['nc_allow_new_comments'] && !$news['comment_disabled']) {
+    if (!empty($_POST['btnSendNewComment']) && $cfg['nc_allow_new_comments'] && !$news['comments_disabled']) {
         if (!empty($user) || $cfg['nc_allow_anon_comments']) {
             $comm_conf['comment'] = $filter->post_UTF8_txt("news_comment");
             $comm_conf['comment'] ? scAddComment($comm_conf) : false;
@@ -40,7 +40,7 @@ function News_Comments($news) {
     }
     $content = scGetComments($comm_conf);
 
-    if ($cfg['nc_allow_new_comments'] && !$news['comment_disabled']) {
+    if ($cfg['nc_allow_new_comments'] && !$news['comments_disabled']) {
         if ($user || $cfg['nc_allow_anon_comments']) {
             $content .= scNewComment();
         }
