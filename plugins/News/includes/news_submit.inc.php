@@ -93,7 +93,7 @@ function news_create_new($news_data) {
         "moderation" => $moderation
     ];
 
-    do_action("news_mod_submit_insert", $insert_ary);
+    do_action("news_submit_insert", $insert_ary);
     $db->insert("news", $insert_ary);
 
     /* Custom / MOD */

@@ -215,7 +215,7 @@ function news_form_news_update($news_data) {
         $set_ary['lang'] = $news_data['news_lang'];
     }
 
-    do_action("news_fulledit_mod_set", $set_ary);
+    do_action("news_form_update_set", $set_ary);
 
     $where_ary = [
         "nid" => "{$news_data['nid']}", "lang_id" => "{$news_data['old_news_lang_id']}", "page" => "{$news_data['page']}"

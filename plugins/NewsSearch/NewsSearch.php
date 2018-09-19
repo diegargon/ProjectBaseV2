@@ -23,11 +23,11 @@ function NewsSearch_init() {
     /* TAGS */
     if ($cfg['ns_tag_support']) {
         register_action("news_new_form_add", "NS_tag_add_form");
-        register_action("news_mod_submit_insert", "NS_news_mod_insert");
+        register_action("news_submit_insert", "NS_news_mod_insert");
         register_action("news_show_page", "NS_news_tag_show_page");
-        register_action("news_edit_form_add", "NS_tags_edit_form_add");
-        register_action("news_fulledit_mod_set", "NS_news_edit_set_tag");
-        register_action("news_limitededit_mod_set", "NS_news_edit_set_tag");
+        register_action("news_edit_page_add", "NS_tags_edit_form_add");
+        register_action("news_form_update_set", "NS_news_edit_set_tag");
+
     }
 }
 

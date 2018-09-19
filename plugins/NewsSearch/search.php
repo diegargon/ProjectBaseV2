@@ -25,14 +25,14 @@ if (!empty($_GET['q'])) {
 }
 
 if (!empty($_GET["searchTag"])) {
-    $searchTag = $filter->get_UTF8_txt("searchTag", $cfg['ns_tag_size_limit'], $cfg['ns_min_s_textT']);
+    $searchTag = $filter->get_UTF8_txt("searchTag", $cfg['ns_tag_size_limit'], $cfg['ns_min_s_text']);
 
     if (empty($searchTag)) {
         $frontend->message_box(['title' => 'L_NS_SEARCH', 'msg' => 'L_NS_SEARCH_ERROR']);
     }
     $searchTag = $db->escape_strip($searchTag);
     $where_ary['lang'] = $cfg['WEB_LANG'];
-    $cfg['news_modedration'] ? $where_ary['moderation'] = 0 : null;
+    $cfg['news_moderation'] ? $where_ary['moderation'] = 0 : null;
     $query = $db->search("news", "tags", $searchTag, $where_ary, " LIMIT {$cfg['ns_result_limit']} ");
     if ($query) {
         NS_build_result_page($query);
