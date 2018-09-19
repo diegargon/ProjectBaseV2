@@ -104,12 +104,3 @@ function get_news_source_byID($nid) {
 
     return $source_link;
 }
-
-function news_friendly_title($title) {
-    //FIX: better way for clean all those character?
-    $friendly_filter = ['"', '\'', '?', '$', ',', '.', '‘', '’', ':', ';', '[', ']', '{', '}', '*', '!', '¡', '¿', '+', '<', '>', '#', '@', '|', '~', '%', '&', '(', ')', '=', '`', '´', '/', 'º', 'ª', '\\'];
-    $friendly = str_replace(' ', "-", $title);
-    $friendly = str_replace($friendly_filter, "", $friendly);
-
-    return $friendly;
-}

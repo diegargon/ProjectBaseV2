@@ -6,7 +6,7 @@
 !defined('IN_WEB') ? exit : true;
 
 function News_init() {
-    define("News", true);
+    define("NEWS", true);
     global $frontend, $blocks;
 
     require_once "includes/news_blocks.inc.php";

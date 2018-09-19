@@ -168,3 +168,12 @@ function news_noacl_anon(&$perm, $news_data) {
         $perm['news_translate'] = true;
     }
 }
+
+function news_friendly_title($title) {
+    //FIX: better way for clean all those character?
+    $friendly_filter = ['"', '\'', '?', '$', ',', '.', '‘', '’', ':', ';', '[', ']', '{', '}', '*', '!', '¡', '¿', '+', '<', '>', '#', '@', '|', '~', '%', '&', '(', ')', '=', '`', '´', '/', 'º', 'ª', '\\'];
+    $friendly = str_replace(' ', "-", $title);
+    $friendly = str_replace($friendly_filter, "", $friendly);
+
+    return $friendly;
+}
