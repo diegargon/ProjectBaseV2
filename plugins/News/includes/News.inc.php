@@ -110,20 +110,21 @@ function news_acl_perms(&$perm, $news_data) {
     if ($cfg['display_news_source'] && $acl_auth->acl_ask("news_add_source")) {
         $perm['news_add_source'] = true;
     }
-
     //$perm['news_'] = $acl_auth->acl_ask("news_");    
 
     return $perm;
 }
 
 function news_noacl_admin_perms(&$perm, $news_data) {
+    global $cfg;
+
     $perm['news_feature'] = true;
     $perm['news_frontpage'] = true;
     $perm['news_edit'] = true;
     $perm['news_translate'] = true;
     $perm['news_delete'] = true;
     $perm['news_moderation'] = true;
-    $perm['news_create_new_page'] = true;
+    $perm['news_create_new_page'] = ($cfg['allow_multiple_pages']) ? true : false;
     $perm['news_can_change_author'] = true;
     $perm['news_submit_new'] = true;
     $perm['news_view'] = true;
@@ -151,11 +152,18 @@ function news_noacl_user(&$perm, $news_data) {
     if (!$perm['news_view']) {
         $perm['news_view'] = $cfg['news_view_user'] ? true : false;
     }
+
+    $perm['news_create_new_page'] = ($cfg['allow_multiple_pages'] && $perm['news_submit_new']) ? true : false;
 }
 
 function news_noacl_anon(&$perm, $news_data) {
     global $cfg;
 
+    /* SUBMIT */
+    $cfg['news_allow_submit_anon'] ? $perm['news_submit_new'] = true : $perm['news_submit_new'] = false;
+    $perm['news_create_new_page'] = ($cfg['allow_multiple_pages'] && $perm['news_submit_new']) ? true : false;
+
+    /* TRANSLATE */
     if ($cfg['news_translate'] && $cfg['news_anon_translate']) {
         $perm['news_translate'] = true;
     }
