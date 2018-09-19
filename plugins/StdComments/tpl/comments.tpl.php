@@ -6,7 +6,7 @@
 
 if (!empty($data['TPL_FIRST'])) {
     ?>
-    <div id="comments">
+    <div id="comments" class="comment_box">
         <section>
             <h2><?= $LNG['L_SC_COMMENTS'] ?></h2>
         <?php } ?>

@@ -1,6 +1,11 @@
 /*
  Copyright @ 2016 - 2018 Diego Garcia
 */
+
+.comment_box {
+    margin:0 auto;
+    width:80%;
+}
 #comments { 
     border: 0px solid #000;
     margin-top: 10px;
