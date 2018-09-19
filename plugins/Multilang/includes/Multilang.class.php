@@ -36,7 +36,7 @@ class Multilang {
         if (isset($_POST['choose_lang']) && (($choosed_lang = $filter->post_AZChar("choose_lang", 2, 2)) != false)) {
             if ($this->checkExists($choosed_lang)) {
                 $cfg['WEB_LANG'] = $choosed_lang;
-                setcookie("WEB_LANG", $choosed_lang, 2147483647);
+                setcookie("WEB_LANG", $choosed_lang, 2147483647, '/');
                 return;
             }
         } else {
