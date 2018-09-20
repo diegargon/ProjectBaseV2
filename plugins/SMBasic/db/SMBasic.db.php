@@ -86,7 +86,7 @@ $smbasic_insert_database = [
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', 'smbasic_need_username', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', 'smbasic_email_confirmation', '1');",
     /* PROFILE CONFIG */
-    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', 'smbasic_can_change_username', '0');",
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', 'smbasic_can_change_username', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', 'smbasic_can_change_email', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', 'smbasic_dflt_avatar_img', 'plugins/SMBasic/tpl/img/avatar.png');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', 'smbasic_https_remove_avatar', '1');",

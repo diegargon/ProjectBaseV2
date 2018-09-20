@@ -5,9 +5,7 @@
  */
 !defined('IN_WEB') ? exit : true;
 
-
 require_once("includes/SMBasic.profile.php");
-
 
 //HEAD MOD
 $cfg['PAGE_TITLE'] = $cfg['WEB_NAME'] . ": " . $LNG['L_PROFILE'];
