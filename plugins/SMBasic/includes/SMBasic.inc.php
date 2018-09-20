@@ -77,6 +77,7 @@ function setSessionDebugDetails() {
         $debug->log("User ID: {$user['uid']}", "SMBasic", "DEBUG");
         $debug->log("Username: {$user['username']}", "SMBasic", "DEBUG");
         $debug->log("isFounder: {$user['isFounder']}", "SMBasic", "DEBUG");
+        $debug->log("isAdmin: {$user['isAdmin']}", "SMBasic", "DEBUG");
     }
 }
 

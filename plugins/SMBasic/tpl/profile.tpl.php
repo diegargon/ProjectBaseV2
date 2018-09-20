@@ -30,7 +30,7 @@
                         <?php
                         if ($cfg['smbasic_can_change_username'] && isset($data['username'])) {
                             ?>
-                            <input required id="username" name="username" type="text" value="<?= $data['username'] ?>" title="<?= $LNG['L_USERNAME_H'] ?>" autocomplete="off" />
+                            <input required id="username" name="username" type="text" value="<?= $data['username'] ?>" title="<?= $LNG['L_USERNAME_H'] ?>" maxlength="<?= $cfg['smbasic_max_username'] ?>" minlength="<?= $cfg['smbasic_min_username'] ?>" autocomplete="off" />
                             <?php
                         } else if (isset($data['username'])) {
                             ?>
@@ -43,7 +43,7 @@
                 <dl>
                     <dt><label>Avatar</label></dt>
                     <dd>
-                        <input class="avatar_field" name="avatar" type="text"  value="<?= $data['avatar'] ?>" title="" autocomplete="off"/>
+                        <input class="avatar_field" name="avatar" type="text"  value="<?= $data['avatar'] ?>" title="" autocomplete="off" maxlength="<?= $cfg['smbasic_max_avatar'] ?>" minlength="<?= $cfg['smbasic_min_avatar'] ?>"  />
                     </dd>
                 </dl>
                 <dl>
@@ -54,11 +54,11 @@
                         <?php
                         if ($cfg['smbasic_can_change_email']) {
                             ?>
-                            <input required id="email" name="email" type="text"  value="<?= $data['email'] ?>" title="<?= $LNG['L_EMAIL_H'] ?>" autocomplete="off"/>
+                            <input required id="email" name="email" type="text"  value="<?= $data['email'] ?>" title="<?= $LNG['L_EMAIL_H'] ?>" autocomplete="off" maxlength="<?= $cfg['smbasic_max_email'] ?>" minlength="<?= $cfg['smbasic_min_email'] ?>" />
                             <?php
                         } else if (isset($data['email'])) {
                             ?>
-                            <input disabled id="email" name="email" type="text" value="<?= $data['email'] ?>" title="<?= $LNG['L_EMAIL_H'] ?>"/>                
+                            <input disabled id="email" name="email" type="text" value="<?= $data['email'] ?>" title="<?= $LNG['L_EMAIL_H'] ?>"/>
                             <?php
                         }
                         ?>
@@ -69,15 +69,15 @@
                         <span class="profile_subtext"><?= $LNG['L_NEW_PASSWORD_H'] ?> </span>
                     </dt>
                     <dd>
-                        <input  readonly onfocus="this.removeAttribute('readonly');"  type="password" name="new_password" id="new_password" title="<?= $LNG['L_NEW_PASSWORD_H'] ?>" autocomplete="off"/>
+                        <input  readonly onfocus="this.removeAttribute('readonly');"  type="password" name="new_password" id="new_password" title="<?= $LNG['L_NEW_PASSWORD_H'] ?>" autocomplete="off" maxlength="<?= $cfg['smbasic_max_password'] ?>" minlength="<?= $cfg['smbasic_min_password'] ?>" />
                     </dd>
                 </dl>
                 <dl>
-                    <dt><label><?=$LNG['L_RPASSWORD'] ?></label><br/>
+                    <dt><label><?= $LNG['L_RPASSWORD'] ?></label><br/>
                         <span class="profile_subtext"><?= $LNG['L_R_PASSWORD_H'] ?> </span>
                     </dt>
                     <dd>
-                        <input  type="password" name="r_password" id="r_password" title="<?= $LNG['L_R_PASSWORD_H'] ?>" autocomplete="off"/>
+                        <input  type="password" name="r_password" id="r_password" title="<?= $LNG['L_R_PASSWORD_H'] ?>" autocomplete="off"  maxlength="<?= $cfg['smbasic_max_password'] ?>" minlength="<?= $cfg['smbasic_min_password'] ?>"/>
                     </dd>
                 </dl> 
                 <dl>
@@ -85,7 +85,7 @@
                         <span class="profile_subtext"><?= $LNG['L_CUR_PASSWORD_H'] ?> </span>
                     </dt>
                     <dd>
-                        <input required type="password" name="cur_password" id="cur_password" title="<?= $LNG['L_CUR_PASSWORD_H'] ?>" autocomplete="off"/>
+                        <input required type="password" name="cur_password" id="cur_password" title="<?= $LNG['L_CUR_PASSWORD_H'] ?>" autocomplete="off"  maxlength="<?= $cfg['smbasic_max_password'] ?>" minlength="<?= $cfg['smbasic_min_password'] ?>"/>
                     </dd>
                 </dl>
             </div>

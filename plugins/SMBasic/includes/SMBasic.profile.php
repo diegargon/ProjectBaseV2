@@ -8,7 +8,7 @@
 function SMBasic_ProfileEdit($user) {
     global $cfg, $tpl;
 
-    
+
     $tpl->getCSS_filePath("SMBasic");
     $tpl->getCSS_filePath("SMBasic", "SMBasic-mobile");
     $tpl->AddScriptFile("standard", "jquery", "BOTTOM");
@@ -26,20 +26,17 @@ function SMBasic_ProfileEdit($user) {
 function SMBasic_ProfileView() {
     global $tpl, $sm, $filter, $frontend;
 
-    $uid = $filter->get_int("viewprofile", 11, 1);
+    $uid = $filter->get_int("viewprofile", 10, 1);
     if (empty($uid)) {
-        $msgbox['msg'] = "L_SM_E_USER_NOT_EXISTS";
-        $frontend->message_box($msgbox);
+        $frontend->message_box(['msg' => 'L_SM_E_USER_NOT_EXISTS']);
     }
     $v_user = $sm->getUserByID($uid);
     if ($v_user) {
-        
         $tpl->getCSS_filePath("SMBasic");
         $tpl->getCSS_filePath("SMBasic", "SMBasic-mobile");
         $tpl->addto_tplvar("ADD_TO_BODY", $tpl->getTPL_file("SMBasic", "viewprofile", $v_user));
     } else {
-        $msgbox['msg'] = "L_SM_E_USER_NOT_EXISTS";
-        $frontend->message_box($msgbox);
+        $frontend->message_box(['msg' => 'L_SM_E_USER_NOT_EXISTS']);
     }
 }
 

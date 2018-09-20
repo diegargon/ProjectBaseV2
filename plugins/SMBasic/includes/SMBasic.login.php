@@ -87,7 +87,7 @@ function SMBasic_RequestResetOrActivation() {
 }
 
 function SMBasic_user_reset_password() {
-    global $cfg, $LNG, $db, $filter, $sm;
+    global $cfg, $LNG, $db, $filter, $sm, $frontend;
 
     $reset = $filter->get_int('reset');
     $email = $filter->get_email('email');
@@ -103,8 +103,8 @@ function SMBasic_user_reset_password() {
         $URL = "{$cfg['WEB_URL']}" . "login";
         $msg = $LNG['L_RESET_SEND_NEWMAIL_MSG'] . "\n" . "$password\n" . "$URL";
         mail($email, $LNG['L_RESET_SEND_NEWMAIL_SUBJECT'], $msg, "From: {$cfg['smbasic_register_reply_email']} \r\n");
-        echo $LNG['L_RESET_PASSWORD_SUCCESS'];
-        exit(0); // TODO MSG RESET OK
+        $frontend->message_box(['msg' => 'L_RESET_PASSWORD_SUCCESS']);
+        return true;
     } else {
         return false;
     }
@@ -122,7 +122,7 @@ function SMBasic_randomPassword() {
     return implode($pass);
 }
 
-function SMBasic_LoginScript() {
+function SMBasic_LoginScripts() {
     global $tpl;
 
     $tpl->AddScriptFile("standard", "jquery", "TOP");

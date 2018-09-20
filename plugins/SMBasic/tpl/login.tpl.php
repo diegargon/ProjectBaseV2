@@ -15,11 +15,11 @@
             <h1><?= $LNG['L_LOGIN'] ?></h1>
             <p>
                 <label for="email"><?= $LNG['L_EMAIL'] ?></label>
-                <input id="email" name="email" required="required" type="text" placeholder="<?= $LNG['L_EMAIL_EXAMPLE'] ?>"/>
+                <input id="email" name="email" required="required" type="text" maxlength="<?= $cfg['smbasic_max_email'] ?>" minlength="<?= $cfg['smbasic_min_email'] ?>" placeholder="<?= $LNG['L_EMAIL_EXAMPLE'] ?>"/>
             </p>
             <p>
                 <label id="label_password" for="password"><?= $LNG['L_PASSWORD'] ?></label>
-                <input id="password" name="password" required="required" type="password"  placeholder="<?= $LNG['L_PASSWORD_EXAMPLE'] ?>" />
+                <input id="password" name="password" required="required" type="password"  maxlength="<?= $cfg['smbasic_max_password'] ?>" minlength="<?= $cfg['smbasic_min_password'] ?>"placeholder="<?= $LNG['L_PASSWORD_EXAMPLE'] ?>" />
             </p>
             <p class="rememberme">
                 <?php if ($cfg['smbasic_persistence']) { ?>

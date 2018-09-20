@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
      */
     $tpl->getCSS_filePath("SMBasic");
     $tpl->getCSS_filePath("SMBasic", "SMBasic-mobile");
-    SMBasic_LoginScript();
+    SMBasic_LoginScripts();
     if ($cfg['FRIENDLY_URL']) {
         $login_data['register_url'] = "/{$cfg['WEB_LANG']}/register";
     } else {
