@@ -296,7 +296,7 @@ class TPL {
 
         if ($cfg['tplbasic_html_optimize']) { // that going to give problems... :)
             //TODO...
-            $content = preg_replace('/(\>)\s+(\<)/S', '$1$2', $content);
+            $content = preg_replace('/(\>)\s+(\<)/S', '$1$2', $content); //spaces between > <            
         }
         return $content;
     }
