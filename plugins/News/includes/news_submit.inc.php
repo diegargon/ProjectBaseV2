@@ -86,7 +86,6 @@ function news_create_new($news_data) {
         "lead" => $db->escape_strip($news_data['lead']),
         "text" => $db->escape_strip($news_data['editor_text']),
         "featured" => $news_data['featured'],
-        "author" => $db->escape_strip($news_data['author']),
         "author_id" => $news_data['author_id'],
         "category" => $news_data['category'],
         "lang" => $news_data['news_lang'],

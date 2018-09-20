@@ -13,6 +13,9 @@ function news_new_lang($news_nid, $news_lang_id, $news_page) {
         return false;
     }
 
+    $author_data = $sm->getUserByID($news_data['author_id']);
+    $news_data['author'] = $author_data['username'];
+
     $news_perms = get_news_perms("news_new_lang", $news_data);
     $news_data['author_readonly'] = !$news_perms['news_can_change_author'];
     $news_data['news_add_source'] = $news_perms['news_add_source'];
@@ -104,12 +107,10 @@ function news_newlang_submit($news_data) {
         "nid" => $news_data['nid'],
         "lang_id" => $news_lang_id,
         "page" => $news_data['page'],
-        "translator" => $db->escape_strip($news_data['news_translator']),
         "translator_id" => $news_data['news_translator_id'],
         "title" => $db->escape_strip($news_data['title']),
         "lead" => $db->escape_strip($news_data['lead']),
         "text" => $db->escape_strip($news_data['editor_text']),
-        "author" => $db->escape_strip($orig_news['author']),
         "author_id" => $orig_news['author_id'],
         "category" => $orig_news['category'],
         "lang" => $news_data['news_lang'],

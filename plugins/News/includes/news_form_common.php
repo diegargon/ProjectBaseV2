@@ -47,26 +47,58 @@ function news_getCatsSelect($news_data = null, $select_name = "news_category") {
 }
 
 function news_form_getPost() {
-    global $db, $filter;
+    global $db, $filter, $sm, $cfg, $LNG;
+
+    $perms = get_news_perms("news_get_post");
 
     //GET
-    $form_data['nid'] = $filter->get_int("nid", 11, 1);
-    $form_data['old_news_lang_id'] = $filter->get_int("news_lang_id", 8, 1);
-    $form_data['news_lang_id'] = $filter->get_int("news_lang_id", 8, 1);
-    $form_data['page'] = $filter->get_int("npage", 11, 1);
-    //POST
-    $form_data['author'] = $filter->post_strict_chars("news_author", 25, 3);
-    $form_data['author_id'] = $filter->post_int("news_author_id", 11, 1);
+    $form_data['nid'] = $filter->get_int("nid", 10, 1);
+    $form_data['old_news_lang_id'] = $filter->get_int("news_lang_id", 10, 1);
+    $form_data['news_lang_id'] = $filter->get_int("news_lang_id", 10, 1);
+    $form_data['page'] = $filter->get_int("npage", 10, 1);
+    //POST    
+    $form_data['author_id'] = $filter->post_int("news_author_id", 10, 1);
     $form_data['title'] = $db->escape_strip($filter->post_UTF8_txt("news_title"));
     $form_data['lead'] = $db->escape_strip($filter->post_UTF8_txt("news_lead"));
     $form_data['editor_text'] = $db->escape_strip($filter->post_UTF8_txt("editor_text"));
-    $form_data['category'] = $filter->post_int("news_category", 8);
+    $form_data['category'] = $filter->post_int("news_category", 10, 1);
     $form_data['news_lang'] = $filter->post_AZChar("news_lang", 2, 2);
     $form_data['news_source'] = $filter->post_url("news_source");
     $form_data['news_new_related'] = $filter->post_url("news_new_related");
     $form_data['news_related'] = $filter->post_url("news_related");
-    $form_data['news_translator'] = $filter->post_strict_chars("news_translator", 25, 3);
-    $form_data['news_translator_id'] = $filter->post_int("news_translator_id", 11, 1);
+    $form_data['news_translator_id'] = $filter->post_int("news_translator_id", 10, 1);
+
+    //Author Changes
+    if ($perms['news_can_change_author']) {
+        $author = $filter->post_strict_chars("news_author", $cfg['smbasic_max_username'], $cfg['smbasic_min_username']);
+        if ($author != false) {
+            if (!empty($author) && !($author_data = $sm->getUserByUsername($author))) {
+                $form_data['author_id'] = false;
+            } else {
+                $form_data['author_id'] = $author_data['uid'];
+            }
+        } else if ($author == $LNG['L_NEWS_ANONYMOUS']) {
+            $form_data['author_id'] = 0; //Change to anonymousM
+        } else {
+            $form_data['author_id'] = false;
+        }
+    }
+
+    //TRANSLATOR CHANGES
+    if ($perms['news_can_change_author']) {
+        $translator = $filter->post_strict_chars("news_translator", $cfg['smbasic_max_username'], $cfg['smbasic_min_username']);
+        if ($translator != false) {
+            if (!empty($translator) && !($translator_data = $sm->getUserByUsername($translator))) {
+                $form_data['news_translator_id'] = false;
+            } else {
+                $form_data['news_translator_id'] = $translator_data['uid'];
+            }
+        } else if ($translator == $LNG['L_NEWS_ANONYMOUS']) {
+            $form_data['news_translator_id'] = 0; //Change to anonymousM
+        } else {
+            $form_data['news_translator_id'] = false;
+        }
+    }
 
     return $form_data;
 }
@@ -80,11 +112,9 @@ function news_get_available_langs($news_data) {
         return false;
     }
 
-    empty($news_data['lang']) ? $match_lang = $news_data['lang'] : $match_lang = $cfg['WEB_LANG'];
-
     $select = "<select name='news_lang' id='news_lang'>";
     foreach ($site_langs as $site_lang) {
-        if ($site_lang['iso_code'] == $match_lang) {
+        if ($site_lang['lang_id'] == $news_data['lang_id']) {
             $select .= "<option selected value='{$site_lang['iso_code']}'>{$site_lang['lang_name']}</option>";
         } else {
             $query = $db->select_all("news", ["nid" => $news_data['nid'], "lang_id" => $site_lang['lang_id']], "LIMIT 1");
@@ -126,7 +156,7 @@ function news_submit_edit_form_check($news_data) {
     global $LNG, $cfg;
 
     //USERNAME/AUTHOR
-    if ($news_data['author'] == false) {
+    if ($news_data['author_id'] == false) {
         die('[{"status": "2", "msg": "' . $LNG['L_NEWS_ERROR_INCORRECT_AUTHOR'] . '"}]');
     }
     //TITLE
@@ -193,7 +223,7 @@ function news_form_news_update($news_data) {
     global $db, $ml, $filter;
 
     empty($news_data['featured']) ? $news_data['featured'] = 0 : false;
-    !isset($news_data['news_translator']) ? $news_data['news_translator'] = "" : false;
+    //!isset($news_data['news_translator']) ? $news_data['news_translator'] = "" : false;
 
     if (defined('MULTILANG')) {
         $news_lang_id = $ml->iso_to_id($news_data['news_lang']);
@@ -205,14 +235,12 @@ function news_form_news_update($news_data) {
         "title" => $db->escape_strip($news_data['title']),
         "lead" => $db->escape_strip($news_data['lead']),
         "text" => $db->escape_strip($news_data['editor_text']),
-        "author" => $db->escape_strip($news_data['author']),
         "author_id" => $news_data['author_id'],
         "category" => $news_data['category'],
     ];
 
     if ($news_data['old_news_lang_id'] != $news_lang_id) {
         $set_ary["lang_id"] = $news_lang_id;
-        $set_ary['lang'] = $news_data['news_lang'];
     }
 
     do_action("news_form_update_set", $set_ary);

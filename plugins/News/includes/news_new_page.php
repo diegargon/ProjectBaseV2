@@ -105,10 +105,8 @@ function news_newpage_submit_new($news_data) {
         "title" => $db->escape_strip($news_data['title']),
         "text" => $db->escape_strip($news_data['editor_text']),
         "featured" => $news_father['featured'],
-        "author" => $db->escape_strip($news_father['author']),
         "author_id" => $news_father['author_id'],
         "category" => $news_father['category'],
-        "lang" => $news_father['lang'],
         "moderation" => $cfg['news_moderation'],
         "page" => ++$num_pages
     ];

@@ -144,7 +144,10 @@ function news_noacl_user(&$perm, $news_data) {
         }
     }
     /* EDIT_NEWS */
-    if ($cfg['news_allow_users_edit_own_news'] && isset($news_data['author_id']) && $news_data['author_id'] == $user['uid']) {
+    if ($cfg['news_allow_users_edit_own_news'] && (
+            (isset($news_data['author_id']) && $news_data['author_id'] == $user['uid']) ||
+            (isset($news_data['translator_id']) && $news_data['translator_id'] == $user['uid'])
+            )) {
         $perm['news_edit'] = true;
     }
     !$cfg['news_allow_submit_anon'] ? $perm['news_submit_new'] = $cfg['news_allow_submit_users'] : $perm['news_submit_new'] = true;

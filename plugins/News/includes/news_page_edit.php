@@ -6,11 +6,18 @@
 !defined('IN_WEB') ? exit : true;
 
 function news_edit($news_nid, $news_lang_id, $news_page) {
-    global $cfg, $LNG, $acl_auth, $tpl, $filter, $frontend, $sm;
+    global $LNG, $tpl, $frontend, $sm;
 
     if (!is_array($news_data = get_news_byId($news_nid, $news_lang_id, $news_page))) {
         $frontend->message_box(["msg" => $news_data]);
         return false; // error already setting in get_news
+    }
+
+    $author_data = $sm->getUserByID($news_data['author_id']);
+    $news_data['author'] = $author_data['username'];
+    if (!empty($news_data['translator_id'])) {
+        $translator_data = $sm->getUserByID($news_data['author_id']);
+        $news_data['translator'] = $translator_data['username'];
     }
 
     $news_perms = get_news_perms("news_edit", $news_data);
@@ -53,7 +60,7 @@ function news_edit($news_nid, $news_lang_id, $news_page) {
 }
 
 function news_form_edit_process() {
-    global $LNG, $cfg, $frontend;
+    global $LNG, $cfg;
 
     $news_data = news_form_getPost();
 
