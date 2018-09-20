@@ -17,7 +17,7 @@
         if (!empty($data['news_breadcrum'])) {
             ?>
             <div id='news_breadcrum'>
-                <ol <?= $data['ITEM_OL'] ?> class='breadcrumb'>
+                <ol <?= isset($data['ITEM_OL']) ? "itemscope itemtype=\"http://schema.org/BreadcrumbList\"" : null; ?> class='breadcrumb'>
                     <?= $data['news_breadcrum'] ?>
                 </ol>
             </div>
@@ -86,7 +86,7 @@
                     !empty($tpldata['ADD_TO_NEWS_SIDE_POST']) ? print $tpldata['ADD_TO_NEWS_SIDE_POST'] : null;
                     ?>
                 </section>
-                <?php } ?>
+            <?php } ?>
         </div>
     </div>
 </div>

@@ -18,20 +18,12 @@ function news_show_page() {
     if (!empty($_GET['news_lang_id'])) {
         $news_lang_id = $filter->get_int("news_lang_id", 2, 1);
     } else {
-        if (defined('MULTILANG')) {
-            $news_lang_id = $ml->getSessionLangID();
-        } else {
-            $news_lang_id = 1;
-        }
+        (defined('MULTILANG')) ? $news_lang_id = $ml->getSessionLangID() : $news_lang_id = 1;
     }
 
-    if ($cfg['allow_multiple_pages'] && !empty($_GET['npage'])) {
-        $page = $filter->get_int("npage", 11, 1);
-    } else {
-        $page = 1;
-    }
+    ($cfg['allow_multiple_pages'] && !empty($_GET['npage'])) ? $page = $filter->get_int("npage", 11, 1) : $page = 1;
 
-    if (!is_array($news_data = get_news_byId($nid, $news_lang_id, $page))) {
+    if (!is_array($news_data = get_news_byId($nid, $news_lang_id, $page))) { //Not array, its a error
         $frontend->message_box(['msg' => $news_data]);
         return false;
     }
@@ -46,12 +38,6 @@ function news_show_page() {
     if ($cfg['news_moderation'] && $news_data['moderation'] && !$news_perms['news_moderation']) {
         return $frontend->message_box(["msg" => "L_NEWS_ERROR_WAITINGMOD"]);
     }
-    //HEAD MOD
-    //$cfg['news_stats'] ? news_stats($nid, $lang, $page, $news_data['visits']) : false;
-    $cfg['PAGE_TITLE'] = $news_data['title'];
-    $cfg['news_meta_opengraph'] ? news_add_social_meta($news_data) : false;
-    $cfg['PAGE_DESC'] = $news_data['title'] . ":" . $news_data['lead'];
-    //END HEAD MOD
 
     $news_data['news_admin_nav'] = news_nav_options($news_data, $news_perms);
     $cfg['allow_multiple_pages'] ? $news_data['pager'] = news_pager($news_data) : false;
@@ -62,7 +48,6 @@ function news_show_page() {
     $news_data['date'] = format_date($news_data['date']);
     $news_data['author'] = $news_data['author'];
     $news_data['author_uid'] = $news_data['author_id'];
-
     $news_data['text'] = $editor->parse($news_data['text']);
 
     if (!empty($news_data['translator_id'])) {
@@ -70,8 +55,15 @@ function news_show_page() {
         $news_data['translator'] = "<a rel='nofollow' href='/{$cfg['WEB_LANG']}/profile&viewprofile={$translator['uid']}'>{$translator['username']}</a>";
     }
     $author = $sm->getUserByID($news_data['author_id']);
+
+    //HEAD MOD
+    //$cfg['news_stats'] ? news_stats($nid, $lang, $page, $news_data['visits']) : false;
+    $cfg['PAGE_TITLE'] = $news_data['title'];
+    $cfg['news_meta_opengraph'] ? news_add_social_meta($news_data) : false;
+    $cfg['PAGE_DESC'] = $news_data['title'] . ":" . $news_data['lead'];
     $cfg['PAGE_AUTHOR'] = $author['username'];
-    $news_data['author_avatar'] = $author['avatar'];
+    //END HEAD MOD
+    !empty($author['avatar']) ? $news_data['author_avatar'] = $author['avatar'] : null;
 
     if ($cfg['display_news_source'] && ($news_source = get_news_source_byID($news_data['nid'])) != false) {
         $news_data['news_sources'] = news_format_source($news_source);
@@ -88,11 +80,8 @@ function news_show_page() {
 
     do_action("news_show_page", $news_data);
 
-    if ($cfg['ITS_BOT'] && $cfg['INCLUDE_MICRODATA']) {
-        $news_data['ITEM_OL'] = "itemscope itemtype=\"http://schema.org/BreadcrumbList\"";
-    } else {
-        $news_data['ITEM_OL'] = "";
-    }
+    ($cfg['ITS_BOT'] && $cfg['INCLUDE_MICRODATA']) ? $news_data['ITEM_OL'] = 1 : null;
+
     if ($cfg['ITS_BOT'] && $cfg['INCLUDE_DATA_STRUCTURE']) {
         preg_match("/src=\"(.*?)\"/i", $news_data['text'], $matchs);
         $news_data['ITEM_MAINIMAGE'] = $matchs[1];

@@ -27,12 +27,14 @@ class SimpleFrontend {
             if (is_array($page['func']) && method_exists($page['func'][0], $page['func'][1]) ||
                     (!is_array($page['func']) && function_exists($page['func']))) {
                 call_user_func($page['func']);
-                return;
+                return true;
             } else {
                 $this->message_box(['msg' => 'L_E_PLUGPAGE_NOEXISTS']);
+                return false;
             }
         } else {
             $this->message_box(['msg' => 'L_E_PLUGPAGE_NOEXISTS']);
+            return false;
         }
     }
 
