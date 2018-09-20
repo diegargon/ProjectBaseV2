@@ -16,7 +16,9 @@ if (!empty($_GET['q'])) {
         $frontend->message_box(['title' => 'L_NS_SEARCH', 'msg' => 'L_NS_SEARCH_ERROR']);
     }
     $q = $db->escape_strip($q);
-    $where_ary['lang'] = $cfg['WEB_LANG'];
+
+    (defined('MULTILANG')) ? $where_ary['lang_id'] = $ml->iso_to_id($cfg['WEB_LANG']) : $where_ary['lang_id'] = 1;
+
     $cfg['news_moderation'] ? $where_ary['moderation'] = 0 : null;
 
     $query = $db->search("news", "title lead text", $q, $where_ary, " LIMIT {$cfg['ns_result_limit']} ");
@@ -31,7 +33,9 @@ if (!empty($_GET["searchTag"])) {
         $frontend->message_box(['title' => 'L_NS_SEARCH', 'msg' => 'L_NS_SEARCH_ERROR']);
     }
     $searchTag = $db->escape_strip($searchTag);
-    $where_ary['lang'] = $cfg['WEB_LANG'];
+
+    (defined('MULTILANG')) ? $where_ary['lang_id'] = $ml->iso_to_id($cfg['WEB_LANG']) : $where_ary['lang_id'] = 1;
+
     $cfg['news_moderation'] ? $where_ary['moderation'] = 0 : null;
     $query = $db->search("news", "tags", $searchTag, $where_ary, " LIMIT {$cfg['ns_result_limit']} ");
     if ($query) {
