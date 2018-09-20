@@ -38,7 +38,7 @@ $cfg['PAGE_DESC'] = $cfg['WEB_NAME'] . ": " . $category_list;
  */
 $limit = $cfg['news_section_getnews_limit'];
 
-$news_db = get_news_query(['category' => $category], ['lead' => 1, 'get_childs' => 1, 'limit' => $limit]);
+$news_db = get_news_query(['category' => $category], ['lead' => 1, 'childs' => 1, 'limit' => $limit]);
 $num_items = count($news_db);
 
 if ($num_items < $cfg['news_section_getnews_limit']) {

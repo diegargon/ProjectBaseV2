@@ -549,4 +549,9 @@
 .soc_tweeter {
     background-position: 0px -56px !important;
 }
-
+.block_conf{
+    border:1px solid  #999999;
+    margin:0 auto;
+    margin-top: 5px;
+    padding:5px;
+}

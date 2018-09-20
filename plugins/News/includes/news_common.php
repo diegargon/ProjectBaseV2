@@ -27,7 +27,7 @@ function get_news_query($where, $q_conf = null, $order = null) {
     if (!isset($where['disabled'])) {
         $where['disabled'] = 0;
     }
-    if (!isset($q_conf['get_childs']) || $q_conf['get_childs'] == 1) {
+    if (!isset($q_conf['childs']) || $q_conf['childs'] == 1) {
         $childs_cats_ids = $ctgs->getCatChildsId("News", $where['category']);
         $where['category'] = ["value" => "({$where['category']}$childs_cats_ids)", "operator" => "IN"];
     }
