@@ -34,7 +34,7 @@ function SMBasic_RegisterSubmit() {
         die('[{"status": "1", "msg": "' . $LNG['L_E_EMAIL'] . '"}]');
     }
     if (($cfg['smbasic_need_username'] == 1) &&
-            (($username = $filter->post_strict_chars("username", $cfg['smbasic_max_username'])) == false)) {
+            (($username = $filter->post_user_name("username", $cfg['smbasic_max_username'])) == false)) {
         die('[{"status": "2", "msg": "' . $LNG['L_E_USERNAME'] . '"}]');
     }
     if (($cfg['smbasic_need_username'] == 1) &&

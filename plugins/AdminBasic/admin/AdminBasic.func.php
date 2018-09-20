@@ -271,7 +271,7 @@ function AdminPluginConfig($plugin) {
         if (!admin_auth("w_general_cfg", "ADMIN_CONFIG_" . $plugin)) {
             return false;
         }
-        $cfg_id = $filter->post_int("configID", 8, 1);
+        $cfg_id = $filter->post_int("configID");
         //TODO: UNFILTERING, UNCHECKING
         $value = $_POST['cfg_value'];
         if (!empty($cfg_id) && ($cfg_id != false) && ($value !== false)) {

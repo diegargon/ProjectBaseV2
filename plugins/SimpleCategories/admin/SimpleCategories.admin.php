@@ -136,9 +136,9 @@ function SimpleCats_ModCategories() {
         $posted_name = $filter->post_alphanum_middle_underscore_unicode("$lang_id"); // field name value its 1 or 2 depend of lang_id, we get GET['1']
 
         if (!empty($posted_name)) {
-            $posted_cid = $filter->post_int("cid", 11, 1);
-            $posted_father = $filter->post_int("father", 3, 1);
-            $posted_weight = $filter->post_int("weight", 3, 1);
+            $posted_cid = $filter->post_int("cid");
+            $posted_father = $filter->post_int("father", 32767, 1);
+            $posted_weight = $filter->post_int("weight", 128, 1);
             if ($posted_cid != false) {
                 empty($posted_father) ? $posted_father = 0 : null;
                 empty($posted_weight) ? $posted_weight = 0 : null;
@@ -166,8 +166,8 @@ function SimpleCats_NewCategory($plugin) {
     foreach ($langs as $lang) {
         $lang_id = $lang['lang_id'];
         $posted_name = $filter->post_alphanum_middle_underscore_unicode("$lang_id"); //POST['1'] 2... id return text value
-        $posted_father = $filter->post_int("father", 3, 1);
-        $posted_weight = $filter->post_int("weight", 3, 1);
+        $posted_father = $filter->post_int("father", 32767, 1);
+        $posted_weight = $filter->post_int("weight", 127, 1);
         if (!empty($posted_name)) {
             $new_cat_ary = [
                 "cid" => "$new_cid",
@@ -185,7 +185,7 @@ function SimpleCats_NewCategory($plugin) {
 function SimpleCats_DelCategory() {
     global $filter, $db;
 
-    if (( $posted_cid = $filter->post_int("cid", 11, 1))) {
+    if (( $posted_cid = $filter->post_int("cid"))) {
         $db->delete("categories", ['cid' => $posted_cid]);
     }
 }

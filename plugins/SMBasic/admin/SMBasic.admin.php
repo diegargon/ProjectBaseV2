@@ -72,7 +72,7 @@ function SMBasic_UserSearch() {
 
     isset($_POST['posted_glob']) ? $glob = 1 : $glob = 0;
     isset($_POST['posted_email']) ? $email = 1 : $email = 0;
-    $s_string = $filter->post_strict_chars("search_user", 32, 1);
+    $s_string = $filter->post_user_name("search_user", 255, 1);
 
     if (!empty($_POST['btnSearchUser']) && !empty($s_string)) {
         if (($users_ary = $sm->searchUser($s_string, $email, $glob))) {

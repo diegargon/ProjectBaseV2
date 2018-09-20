@@ -134,7 +134,7 @@ class Blocks {
     public function block_html_conf_restricted() {
         global $filter;
 
-        $block_conf = $filter->post_array("block_conf");
+        $block_conf = $filter->post_array("block_conf", 255, 1);
         $block_conf['admin_block'] = 0;
         //TODO CHECK AND FILTER return false if something fail.
         $content['config'] = $block_conf;
@@ -152,7 +152,7 @@ class Blocks {
     public function block_html_conf() {
         global $filter;
 
-        $block_conf = $filter->post_array("block_conf");
+        $block_conf = $filter->post_array("block_conf", 255, 1);
         $block_conf['admin_block'] = 0;
         //TODO CHECK AND FILTER return false if something fail.
         $content['config'] = $block_conf;
@@ -181,7 +181,7 @@ class Blocks {
 
     public function block_html_file_conf() {
         global $filter;
-        $block_conf = $filter->post_array("block_conf");
+        $block_conf = $filter->post_array("block_conf", 255, 1);
         $block_conf['admin_block'] = 1;
         //TODO CHECK AND FILTER return false if something fail        
 
@@ -199,7 +199,7 @@ class Blocks {
 
     public function block_php_file_conf() {
         global $filter;
-        $block_conf = $filter->post_array("block_conf");
+        $block_conf = $filter->post_array("block_conf", 255, 1);
         $block_conf['admin_block'] = 1;
         //TODO CHECK AND FILTER return false if something fail        
 

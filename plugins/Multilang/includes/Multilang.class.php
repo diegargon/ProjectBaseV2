@@ -40,7 +40,7 @@ class Multilang {
                 return;
             }
         } else {
-            if (!empty(($cookie_lang = $filter->cookie_AlphaNum("WEB_LANG"))) && $cookie_lang != false) {
+            if (!empty(($cookie_lang = $filter->cookie_AlphaNum("WEB_LANG", 255, 1))) && $cookie_lang != false) {
                 $cfg['WEB_LANG'] = $cookie_lang;
                 return;
             }

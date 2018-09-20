@@ -89,7 +89,7 @@ function SMBasic_RequestResetOrActivation() {
 function SMBasic_user_reset_password() {
     global $cfg, $LNG, $db, $filter, $sm, $frontend;
 
-    $reset = $filter->get_int('reset');
+    $reset = $filter->get_int('reset', 1, 1);
     $email = $filter->get_email('email');
     if ($reset == false || $email == false) {
         return false;

@@ -26,7 +26,7 @@ function SMBasic_ProfileEdit($user) {
 function SMBasic_ProfileView() {
     global $tpl, $sm, $filter, $frontend;
 
-    $uid = $filter->get_int("viewprofile", 10, 1);
+    $uid = $filter->get_int("viewprofile");
     if (empty($uid)) {
         $frontend->message_box(['msg' => 'L_SM_E_USER_NOT_EXISTS']);
     }
@@ -46,7 +46,7 @@ function SMBasic_ProfileChange() {
     if (empty($_POST['cur_password']) || strlen($_POST['cur_password']) < $cfg['smbasic_min_password']) {
         die('[{"status": "1", "msg": "' . $LNG['L_E_PASSWORD_EMPTY_SHORT'] . '"}]');
     }
-    if (!$password = $filter->post_password("cur_password")) {
+    if (!$password = $filter->post_password("cur_password", $cfg['smbasic_max_password'], $cfg['smbasic_min_password'])) {
         die('[{"status": "2", "msg": "' . $LNG['L_E_PASSWORD'] . '"}]');
     }
 
@@ -65,7 +65,7 @@ function SMBasic_ProfileChange() {
     $q_set_ary = [];
 
     if (!empty($_POST['avatar'])) {
-        $avatar = $filter->validate_media($_POST['avatar'], 256);
+        $avatar = $filter->validate_media($_POST['avatar'], 255, 1);
         if ($avatar < 0) {
             die('[{"status": "6", "msg": "' . $LNG['L_SM_E_AVATAR'] . '"}]');
         } else {
@@ -91,7 +91,7 @@ function SMBasic_ProfileChange() {
         if ((strlen($_POST['new_password']) < $cfg['smbasic_min_password'])) {
             die('[{"status": "3", "msg": "' . $LNG['L_E_NEWPASS_TOOSHORT'] . '"}]');
         }
-        if (($new_password = $filter->post_password("new_password")) != false) {
+        if (($new_password = $filter->post_password("new_password", $cfg['smbasic_max_password'], $cfg['smbasic_min_password'])) != false) {
             $new_password_encrypt = $sm->encrypt_password($new_password);
             $q_set_ary['password'] = $new_password_encrypt;
         }
@@ -109,7 +109,7 @@ function SMBasic_ProfileChange() {
             if (strlen($_POST['username']) > $cfg['smbasic_max_username']) {
                 die('[{"status": "4", "msg": "' . $LNG['L_USERNAME_LONG'] . '"}]');
             }
-            if (($username = $filter->post_strict_chars("username", $cfg['smbasic_max_username'], $cfg['smbasic_min_username'])) == false) {
+            if (($username = $filter->post_user_name("username", $cfg['smbasic_max_username'], $cfg['smbasic_min_username'])) == false) {
                 die('[{"status": "4", "msg": "' . $LNG['L_USERNAME_CHARS'] . '"}]');
             }
             if ($user['username'] != $username && !empty($username)) {

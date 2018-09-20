@@ -57,7 +57,7 @@ function news_block_conf() {
     $tpl->getCSS_filePath("News");
     $tpl->getCSS_filePath("News", "News-mobile");
 
-    $block_conf = $filter->post_array("block_conf");
+    $block_conf = $filter->post_array("block_conf", 255, 1);
     $block_conf['admin_block'] = 0;
 
     $content['config'] = $block_conf;

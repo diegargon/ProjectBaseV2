@@ -85,8 +85,8 @@ function Multilang_ModifyLang() {
 
     $error = false;
 
-    $lang_id = $filter->post_int("lang_id", 11, 1);
-    $lang_name = $filter->post_utf8_txt("lang_name", 11, 2);
+    $lang_id = $filter->post_int("lang_id");
+    $lang_name = $filter->post_utf8_txt("lang_name", 255, 1);
     $iso_code = $filter->post_AZChar("iso_code", 2, 2);
     $active = $filter->post_int("active", 1, 1);
     empty($active) ? $active = 0 : false;
@@ -157,7 +157,7 @@ function Multilang_DeleteLang() {
     global $db, $LNG, $filter;
 
     $error = false;
-    $lid = $filter->post_int("lang_id", 11);
+    $lid = $filter->post_int("lang_id");
     if ($lid != false) {
         $db->delete("lang", ["lang_id" => "$lid"]);
     } else {

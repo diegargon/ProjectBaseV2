@@ -143,11 +143,10 @@ if ($step == null || $step == false) {
                 "installed" => 1
             ];
 
-            $session_mgr = $filter->post_AZChar("session_mgr");
-            $tpl_mgr = $filter->post_AZChar("tpl_mgr");
-            $admin_mgr = $filter->post_AZChar("admin_mgr");
-            $frontend_mgr = $filter->post_AZChar("frontend_mgr");
-
+            $session_mgr = $filter->post_AZChar("session_mgr", 255, 1);
+            $tpl_mgr = $filter->post_AZChar("tpl_mgr", 255, 1);
+            $admin_mgr = $filter->post_AZChar("admin_mgr", 255, 1);
+            $frontend_mgr = $filter->post_AZChar("frontend_mgr", 255, 1);
 
             if (!isset($session_mgr) || !isset($tpl_mgr) || !isset($admin_mgr)) {
                 die("ERROR basic core plugins missing");

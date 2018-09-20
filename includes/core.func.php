@@ -7,7 +7,7 @@
 
 function core_set_config() {
     global $db, $cfg;
-    
+
     $db->silent(true);
     $result = $db->select_all("config");
     $db->silent(false);

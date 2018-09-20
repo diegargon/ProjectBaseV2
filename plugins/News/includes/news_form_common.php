@@ -52,25 +52,25 @@ function news_form_getPost() {
     $perms = get_news_perms("news_get_post");
 
     //GET
-    $form_data['nid'] = $filter->get_int("nid", 10, 1);
-    $form_data['old_news_lang_id'] = $filter->get_int("news_lang_id", 10, 1);
-    $form_data['news_lang_id'] = $filter->get_int("news_lang_id", 10, 1);
-    $form_data['page'] = $filter->get_int("npage", 10, 1);
+    $form_data['nid'] = $filter->get_int("nid");
+    $form_data['old_news_lang_id'] = $filter->get_int("news_lang_id");
+    $form_data['news_lang_id'] = $filter->get_int("news_lang_id");
+    $form_data['page'] = $filter->get_int("npage");
     //POST    
-    $form_data['author_id'] = $filter->post_int("news_author_id", 10, 1);
+    $form_data['author_id'] = $filter->post_int("news_author_id");
     $form_data['title'] = $db->escape_strip($filter->post_UTF8_txt("news_title"));
     $form_data['lead'] = $db->escape_strip($filter->post_UTF8_txt("news_lead"));
     $form_data['editor_text'] = $db->escape_strip($filter->post_UTF8_txt("editor_text"));
-    $form_data['category'] = $filter->post_int("news_category", 10, 1);
+    $form_data['category'] = $filter->post_int("news_category");
     $form_data['news_lang'] = $filter->post_AZChar("news_lang", 2, 2);
-    $form_data['news_source'] = $filter->post_url("news_source");
-    $form_data['news_new_related'] = $filter->post_url("news_new_related");
-    $form_data['news_related'] = $filter->post_url("news_related");
-    $form_data['news_translator_id'] = $filter->post_int("news_translator_id", 10, 1);
+    $form_data['news_source'] = $filter->post_url("news_source", 255, 1);
+    $form_data['news_new_related'] = $filter->post_url("news_new_related", 255, 1);
+    $form_data['news_related'] = $filter->post_url("news_related", 255, 1);
+    $form_data['news_translator_id'] = $filter->post_int("news_translator_id");
 
     //Author Changes
     if ($perms['news_can_change_author']) {
-        $author = $filter->post_strict_chars("news_author", $cfg['smbasic_max_username'], $cfg['smbasic_min_username']);
+        $author = $filter->post_user_name("news_author", $cfg['smbasic_max_username'], $cfg['smbasic_min_username']);
         if ($author != false) {
             if (!empty($author) && !($author_data = $sm->getUserByUsername($author))) {
                 $form_data['author_id'] = false;
@@ -86,7 +86,7 @@ function news_form_getPost() {
 
     //TRANSLATOR CHANGES
     if ($perms['news_can_change_author']) {
-        $translator = $filter->post_strict_chars("news_translator", $cfg['smbasic_max_username'], $cfg['smbasic_min_username']);
+        $translator = $filter->post_user_name("news_translator", $cfg['smbasic_max_username'], $cfg['smbasic_min_username']);
         if ($translator != false) {
             if (!empty($translator) && !($translator_data = $sm->getUserByUsername($translator))) {
                 $form_data['news_translator_id'] = false;

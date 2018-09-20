@@ -18,9 +18,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$news_nid = $filter->get_int("nid", 11, 1);
-$news_lang_id = $filter->get_int("news_lang_id", 4, 1);
-$news_page = $filter->get_int("npage", 11, 1);
+$news_nid = $filter->get_int("nid");
+$news_lang_id = $filter->get_int("news_lang_id");
+$news_page = $filter->get_int("npage");
 
 if (empty($news_nid) || empty($news_lang_id) || empty($news_page)) {
     $frontend->message_box(['msg' => "L_NEWS_NOT_EXIST"]);

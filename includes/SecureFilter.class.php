@@ -9,12 +9,29 @@
 
 class SecureFilter {
 
+    private $max_int; //MYSQL INT
+    private $remote_checks;
+    private $media_regex;
+    private $user_name_regex;
+
+    public function __construct() {
+        global $cfg;
+
+        $this->max_int = $cfg['max_int'];
+        $this->remote_checks = $cfg['remote_checks'];
+        $this->user_name_regex = $cfg['user_name_regex'];
+        $this->media_regex = $cfg['accepted_media_regex'];
+    }
+
 //$_GET
     //S_GET_INT
     function get_int($var, $max_size = null, $min_size = null) {
-
-        if ((!isset($_GET[$var])) || (!empty($max_size) && (strlen($_GET[$var]) > $max_size) ) || (!empty($min_size) && (strlen($_GET[$var]) < $min_size)) || !is_numeric($_GET[$var])
+        if ((!isset($_GET[$var])) || !is_numeric($_GET[$var]) || (!empty($max_size) && ($_GET[$var] > $max_size) ) ||
+                (!empty($min_size) && ($_GET[$var] < $min_size))
         ) {
+            return false;
+        }
+        if ($_GET[$var] > $this->max_int) {
             return false;
         }
 
@@ -118,11 +135,16 @@ class SecureFilter {
 
     //S_POST_INT
     function post_int($var, $max_size = null, $min_size = null) {
-        if (!isset($_POST[$var]) || !is_numeric($_POST[$var])) {
+        if ((!isset($_POST[$var])) || !is_numeric($_POST[$var]) || (!empty($max_size) && ($_POST[$var] > $max_size) ) ||
+                (!empty($min_size) && ($_POST[$var] < $min_size))
+        ) {
+            return false;
+        }
+        if ($_POST[$var] > $this->max_int) {
             return false;
         }
 
-        return $this->var_int($_POST[$var], $max_size, $min_size);
+        return filter_input(INPUT_POST, $var, FILTER_VALIDATE_INT);
     }
 
     //S_POST_URL
@@ -145,6 +167,14 @@ class SecureFilter {
         } else {
             return $this->var_URL($_POST[$var], $max_size, $min_size);
         }
+    }
+
+    function post_user_name($var, $max_size = null, $min_size = null) {
+        if (!isset($_POST[$var])) {
+            return false;
+        }
+
+        return $this->var_user_name($_POST[$var], $max_size, $min_size);
     }
 
     //S_POST_CHARNUM_MIDDLE_UNDERSCORE_UNICODE
@@ -223,8 +253,11 @@ class SecureFilter {
     //S_VAR_INTEGER
     function var_int($var, $max_size = null, $min_size = null) {
 
-        if ((!isset($var) ) || (!empty($max_size) && (strlen($var) > $max_size) ) || (!empty($min_size) && (strlen($var) < $min_size)) || !is_numeric($var)
+        if ((!isset($var) ) || (!empty($max_size) && ($var > $max_size) ) || (!empty($min_size) && ($var < $min_size)) || !is_numeric($var)
         ) {
+            return false;
+        }
+        if ($var > $this->max_int) {
             return false;
         }
 
@@ -259,8 +292,8 @@ class SecureFilter {
     }
 
     //S_VAR_URL
-    function var_URL($var, $max_size = null, $min_size = null, $force_no_remote_check = null) {
-        global $cfg;
+    function var_URL($var, $max_size = null, $min_size = null, $force_no_remote_checks = null) {
+
 
         if (empty($var)) {
             return false;
@@ -278,7 +311,7 @@ class SecureFilter {
         if (empty($url)) {
             return false;
         }
-        if ($cfg['remote_checks'] && (!remote_check($url))) {
+        if ($this->remote_checks && (!remote_checks($url))) {
             return false;
         }
         return $url;
@@ -393,6 +426,21 @@ class SecureFilter {
         return $var;
     }
 
+    //REALNAME
+    function var_user_name($var, $max_size = null, $min_size = null) {
+
+
+        if ((empty($var) ) || (!empty($max_size) && (strlen($var) > $max_size) ) || (!empty($min_size) && (strlen($var) < $min_size))
+        ) {
+            return false;
+        }
+        if (!preg_match($this->user_name_regex, $var)) {
+            return false;
+        }
+
+        return $var;
+    }
+
 //COOKIE
     //S_COOKIE_INT
     function cookie_int($var, $max_size = null, $min_size = null) {
@@ -413,9 +461,9 @@ class SecureFilter {
 
     //S_VALIDATE_MEDIA
     function validate_media($url, $max_size = null, $min_size = null, $force_no_remote_check = null) {
-        global $cfg;
 
-        $regex = '/\.(' . $cfg['ACCEPTED_MEDIA_REGEX'] . ')(?:[\?\#].*)?$/';
+
+        $regex = '/\.(' . $this->media_regex . ')(?:[\?\#].*)?$/';
 
         if (($url = var_URL($url, $max_size, $min_size, $force_no_remote_check)) == false) {
             return -1;

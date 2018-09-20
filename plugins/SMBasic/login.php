@@ -26,7 +26,7 @@ require_once("includes/SMBasic.login.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if (isset($_GET['active'])) {
-        if (($activation_code = $filter->get_int('active', 12)) &&
+        if (($activation_code = $filter->get_int('active', 1, 1)) &&
                 !SMBasic_user_activate_account($activation_code)
         ) {
             $msgbox['title'] = "L_SM_REGISTERED";

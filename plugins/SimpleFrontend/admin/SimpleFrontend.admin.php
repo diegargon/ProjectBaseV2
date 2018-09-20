@@ -69,7 +69,7 @@ function SimpleFrontEnd_index_cfg() {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         global $db;
 
-        $index_layout_opt = $filter->post_strict_chars("index_layout");
+        $index_layout_opt = $filter->post_strict_chars("index_layout", 255, 1);
         if (!empty($index_layout_opt) && $index_layout_opt != $cfg['index_layout']) {
             foreach ($index_layouts as $layout) {
                 if ($layout['file'] == $index_layout_opt) {

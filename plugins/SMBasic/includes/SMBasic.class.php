@@ -401,8 +401,8 @@ class SessionManager {
     private function getCookies() {
         global $filter;
 
-        $c['uid'] = $filter->cookie_int($this->cookie_prefix . "uid", 11);
-        $c['sid'] = $filter->cookie_AlphaNum($this->cookie_prefix . "sid", 64);
+        $c['uid'] = $filter->cookie_int($this->cookie_prefix . "uid");
+        $c['sid'] = $filter->cookie_AlphaNum($this->cookie_prefix . "sid", 255);
 
         return $c;
     }

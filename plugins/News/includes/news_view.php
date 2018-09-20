@@ -11,17 +11,17 @@ function news_show_page() {
     $news_data = [];
     $editor = new Editor();
 
-    if ((empty($_GET['nid'])) || ($nid = $filter->get_int("nid", 8, 1)) == false) {
+    if ((empty($_GET['nid'])) || ($nid = $filter->get_int("nid")) == false) {
         return $frontend->message_box(['msg' => "L_NEWS_NOT_EXIST"]);
     }
 
     if (!empty($_GET['news_lang_id'])) {
-        $news_lang_id = $filter->get_int("news_lang_id", 2, 1);
+        $news_lang_id = $filter->get_int("news_lang_id");
     } else {
         (defined('MULTILANG')) ? $news_lang_id = $ml->getSessionLangID() : $news_lang_id = 1;
     }
 
-    ($cfg['allow_multiple_pages'] && !empty($_GET['npage'])) ? $page = $filter->get_int("npage", 11, 1) : $page = 1;
+    ($cfg['allow_multiple_pages'] && !empty($_GET['npage'])) ? $page = $filter->get_int("npage") : $page = 1;
 
     if (!is_array($news_data = get_news_byId($nid, $news_lang_id, $page))) { //Not array, its a error
         $frontend->message_box(['msg' => $news_data]);
@@ -115,8 +115,8 @@ function news_show_page() {
 function news_process_admin_actions(&$news_data, $perms) {
     global $filter;
 
-    $news_lang_id = $filter->get_int("news_lang_id", 2, 1);
-    $news_nid = $filter->get_int("nid", 11, 1);
+    $news_lang_id = $filter->get_int("news_lang_id");
+    $news_nid = $filter->get_int("nid");
 
     if (empty($news_lang_id) || empty($news_nid)) {
         return false;

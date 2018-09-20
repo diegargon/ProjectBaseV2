@@ -21,9 +21,6 @@ if (defined('DEBUG')) {
 require_once "includes/core.func.php";
 require_once "includes/core.utils.php";
 require_once "includes/actions.inc.php";
-require_once "includes/" . FILTER . ".class.php";
-
-$filter = new SecureFilter();
 
 /* SQL */
 if (!defined('SQL')) {
@@ -34,6 +31,10 @@ if (!defined('SQL')) {
 
 /* GET CONFIG */
 core_set_config();
+
+/* FILTER */
+require_once "includes/" . FILTER . ".class.php";
+$filter = new SecureFilter();
 
 /* PLUGINS */
 require_once "includes/plugins.class.php";
@@ -65,8 +66,8 @@ do_action("init_core");
 /*
  * FIN LOAD
  */
-$module = $filter->get_strict_chars("module");
-$page = $filter->get_strict_chars("page");
+$module = $filter->get_strict_chars("module", 255, 1);
+$page = $filter->get_strict_chars("page", 255, 1);
 
 if (!empty($module) && !empty($page)) {
     if (!core_check_module($module)) {

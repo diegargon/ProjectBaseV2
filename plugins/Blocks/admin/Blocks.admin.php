@@ -53,9 +53,9 @@ function Blocks_blk_config() {
     global $blocks, $tpl, $filter;
 
     $content = "";
-    $selected_page = $filter->post_AlphaNum("block_page");
-    $selected_blockname = $filter->post_strict_chars("blockname");
-    $selected_section = $filter->post_int("block_section");
+    $selected_page = $filter->post_AlphaNum("block_page", 255, 1);
+    $selected_blockname = $filter->post_strict_chars("blockname", 255, 1);
+    $selected_section = $filter->post_int("block_section", 255, 1);
     $page_data['page_options'] = "";
     $page_data['sections'] = "";
     $page_data['reg_blocks'] = "";
@@ -145,7 +145,7 @@ function Blocks_blk_config() {
 function Blocks_delBlock() {
     global $filter, $blocks;
 
-    $block_id = $filter->post_int("block_id", 3, 1);
+    $block_id = $filter->post_int("block_id");
     if ($block_id != false) {
         $blocks->deleteBlock($block_id);
     }
@@ -156,11 +156,11 @@ function Blocks_addBlock($config_array) {
 
     /* WARNING: BLOCK PROVIDED MUST FILTER HIS CONFIG ARRAY */
 
-    $block_page = $filter->post_AlphaNum("block_page");
-    $block_section = $filter->post_AlphaNum("block_section");
-    $blockname = $filter->post_strict_chars("blockname");
-    $block_weight = $filter->post_int("block_weight", 2, 1);
-    $canUserDisable = $filter->post_AlphaNum("disable_by_user");
+    $block_page = $filter->post_AlphaNum("block_page", 255, 1);
+    $block_section = $filter->post_AlphaNum("block_section", 255, 1);
+    $blockname = $filter->post_strict_chars("blockname", 255, 1);
+    $block_weight = $filter->post_int("block_weight", 127, 1);
+    $canUserDisable = $filter->post_AlphaNum("disable_by_user", 1, 1);
 
     !empty($canUserDisable) ? $canUserDisable = 0 : $canUserDisable = 1;
 
