@@ -67,6 +67,10 @@ class Multilang {
         return;
     }
 
+    function get_web_lang() {
+        return $this->web_lang;
+    }
+
     function get_nav() {
         global $tpl, $cfg;
 
