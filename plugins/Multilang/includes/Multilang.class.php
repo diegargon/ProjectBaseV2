@@ -127,11 +127,6 @@ class Multilang {
         }
     }
 
-    function getSessionLangID() {
-        global $cfg;
-        return $this->iso_to_id($cfg['WEB_LANG']);
-    }
-
     function getSessionLang() {
         global $cfg;
 
