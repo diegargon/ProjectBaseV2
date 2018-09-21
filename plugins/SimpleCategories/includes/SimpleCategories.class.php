@@ -57,11 +57,13 @@ class Categories {
         return $category['cid'];
     }
 
-    function getCatIDbyName_path($plugin, $cat_path, $separator = ".") {
+    function getCatIDbyName_path($plugin, $cat_path) {
+        global $cfg;
+
         if (empty($plugin) || empty($cat_path)) {
             return false;
         }
-        $cat_path_ary = explode($separator, $cat_path);
+        $cat_path_ary = explode($cfg['categories_separator'], $cat_path);
         if (count($cat_path_ary) > 1) {
             $catname = array_pop($cat_path_ary);
             $catparent = array_pop($cat_path_ary);
@@ -121,7 +123,7 @@ class Categories {
         return $cat_data;
     }
 
-    function childcats($plugin, $cat_path, $separator = ".") {
+    function childcats($plugin, $cat_path) {
         $cats = [];
 
         if (empty($plugin) || empty($cat_path) || empty($this->categories)) {

@@ -457,7 +457,7 @@ function getNewsCatBreadcrumb($news_data) {
             $breadcrumb .= "<li $ITEM_LI>";
             $breadcrumb .= "<a $ITEM_HREF href='/{$cfg['WEB_LANG']}/section/$cat_path'>";
             $breadcrumb .= "<span $ITEM_NAME>$cat</span></a>$ITEM_POS</li> ";
-            $cat_path .= ".";
+            $cat_path .= $cfg['categories_separator'];
             $list_counter++;
         }
         $content .= $breadcrumb;

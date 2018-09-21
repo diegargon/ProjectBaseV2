@@ -19,30 +19,9 @@ $simplefrontend_db_install = [
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SimpleFrontend', 'simplefrontend_css_inline', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SimpleFrontend', 'simplefrontend_css_optimize', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SimpleFrontend', 'index_layout', 'index_layout_1');",
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SimpleFrontend', 'index_layout', 'display_section_menu', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SimpleFrontend', 'index_sections', '3');"
 ];
-/* TABLE */
-/*
-  $simplefrontend_database[] = "
-  CREATE TABLE `" . DB_PREFIX . "simplefrontend` (
-  `example_id` int(32) NOT NULL,
-  `example_field` varchar(32) NOT NULL
-  ) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . ";
-  ";
- */
-/* UNINSTALL */
-
-//$simplefrontend_db_uninstall[] = "DROP TABLE `" . DB_PREFIX . "simplefrontend`";
 
 $simplefrontend_db_uninstall [] = "DELETE FROM `" . DB_PREFIX . "plugins` WHERE plugin_name = 'SimpleFrontend'";
 $simplefrontend_db_uninstall [] = "DELETE FROM `" . DB_PREFIX . "config` WHERE plugin = 'SimpleFrontend'";
-
-/*
- * UPGRADE
- */
-// Example upgrade something.
-/*
-$simplefrontend_database_upgrade_002_to_003[] = "
-ALTER TABLE `" . DB_PREFIX . "simplefrontend` ADD `test` INT(1) NOT NULL AFTER `example_field`;    
-";
-*/

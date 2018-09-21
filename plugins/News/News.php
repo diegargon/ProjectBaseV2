@@ -7,7 +7,7 @@
 
 function News_init() {
     define("NEWS", true);
-    global $frontend, $blocks;
+    global $frontend, $blocks, $cfg, $plugins;
 
     require_once "includes/news_blocks.inc.php";
 
@@ -27,6 +27,12 @@ function News_init() {
     }
 
     $blocks->register_block("news_block", "", "news_block", "news_block_conf", null, 0);
+
+    if ($cfg['display_section_menu']) {
+        $plugins->express_start_provider("CATS");
+        register_action('section_nav_element', 'news_section_nav_elements');
+        register_action('section_nav_subelement', 'news_section_nav_subelements');
+    }
 }
 
 function News_install() {

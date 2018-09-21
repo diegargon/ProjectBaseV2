@@ -180,3 +180,47 @@ function news_friendly_title($title) {
 
     return $friendly;
 }
+
+function news_section_nav_elements() {
+    global $plugins, $ctgs, $cfg;
+
+
+    $menu_cats = $ctgs->root_cats("News");
+    $menu_data = '';
+
+    if ($menu_cats != false) {
+        foreach ($menu_cats as $menucat) {
+            $cat_display_name = preg_replace('/\_/', ' ', $menucat['name']);
+            $menu_data .= "<li><a href='/{$cfg['WEB_LANG']}/section/{$menucat['name']}'>$cat_display_name</a></li>";
+        }
+    }
+
+    return $menu_data;
+}
+
+function news_section_nav_subelements() {
+    global $cfg, $ctgs, $filter;
+
+    $cat_path = $filter->get_UTF8_txt("section");
+
+    $submenu_data = '';
+
+    $cats_explode = explode($cfg['categories_separator'], $cat_path);
+    if (count($cats_explode) > 1) {
+        array_pop($cats_explode);
+        $f_cats = implode($cfg['categories_separator'], $cats_explode);
+        $submenu_data .= "<li><a href='/{$cfg['WEB_LANG']}/section/$f_cats'><<</a></li>";
+    }
+
+    $cat_id = $ctgs->getCatIDbyName_path("News", $cat_path);
+    $childcats = $ctgs->childcats("News", $cat_path);
+    if (!empty($childcats)) {
+        foreach ($childcats as $childcat) {
+            if ($childcat['father'] == $cat_id) {
+                $cat_display_name = preg_replace('/\_0/', ' ', $childcat['name']);
+                $submenu_data .= "<li><a href='/{$cfg['WEB_LANG']}/section/$cat_path{$cfg['categories_separator']}{$childcat['name']}'>$cat_display_name</a></li>";
+            }
+        }
+    }
+    return $submenu_data;
+}

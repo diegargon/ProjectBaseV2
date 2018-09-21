@@ -39,31 +39,33 @@
                         </span>
                     </div>
 
-                    <?php 
+                    <?php
                 }
-                    if (!empty($tpldata['SECTIONS_NAV'])) { ?>
-                        <nav id="sections_nav">
-                            <ul>
-                                <?= $tpldata['SECTIONS_NAV'] ?>
-                            </ul>
-                        </nav>
-                        <?php
-                    }
-                    if (!empty($tpldata['SECTIONS_SUBMENU'])) {
-                        ?>
-                        <nav id="sections_submenu">
-                            <ul>
-                                <?= $tpldata['SECTIONS_SUBMENU'] ?>
-                            </ul>
-                        </nav>
-                    <?php } ?>
-                    <?= isset($tpldata['ADD_HEADER_END']) ? $tpldata['ADD_HEADER_END'] : null ?>
+                if (!empty($tpldata['SECTIONS_NAV'])) {
+                    ?>
+                    <nav id="sections_nav">
+                        <ul>
+    <?= $tpldata['SECTIONS_NAV'] ?>
+                        </ul>
+                    </nav>
+                    <?php
+                }
+                if (!empty($tpldata['SECTIONS_NAV_SUBMENU'])) {
+                    ?>
+                    <nav id="sections_submenu">
+                        <ul>
+    <?= $tpldata['SECTIONS_NAV_SUBMENU'] ?>
+                        </ul>
+                    </nav>
+                <?php } ?>
+<?= isset($tpldata['ADD_HEADER_END']) ? $tpldata['ADD_HEADER_END'] : null ?>
 
-                </header>
-            </div> 
-            <!-- FIN ROW1 -->
-            <?php
-            !empty($tpldata['PRE_ACTION_ADD_TO_BODY']) ? print $tpldata['PRE_ACTION_ADD_TO_BODY'] : null;
-            !empty($tpldata['ADD_TO_BODY']) ? print $tpldata['ADD_TO_BODY'] : print "<div class='row2'><p>Hello World</p></div>";
-            !empty($tpldata['POST_ACTION_ADD_TO_BODY']) ? print $tpldata['POST_ACTION_ADD_TO_BODY'] : null;
-            
+            </header>
+        </div> 
+        <!-- FIN ROW1 -->
+        <?php
+        !empty($tpldata['PRE_ACTION_ADD_TO_BODY']) ? print $tpldata['PRE_ACTION_ADD_TO_BODY'] : null;
+        !empty($tpldata['ADD_TO_BODY']) ? print $tpldata['ADD_TO_BODY'] : print "<div class='row2'><p>Hello World</p></div>";
+        !empty($tpldata['POST_ACTION_ADD_TO_BODY']) ? print $tpldata['POST_ACTION_ADD_TO_BODY'] : null;
+
+        

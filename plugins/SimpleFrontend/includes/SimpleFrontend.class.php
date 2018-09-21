@@ -107,6 +107,10 @@ class SimpleFrontend {
         if ($this->cfg['simplefrontend_nav_menu']) { //we use do_action for select order
             $tpl->addto_tplvar("HEADER_MENU_ELEMENT", do_action("header_menu_element"));
         }
+        if ($this->cfg['display_section_menu']) {
+            $tpl->addto_tplvar("SECTIONS_NAV", do_action("section_nav_element"));
+            $tpl->addto_tplvar("SECTIONS_NAV_SUBMENU", do_action("section_nav_subelement"));
+        }
 
         $tpl->addto_tplvar("ADD_TO_BODY", do_action("add_to_body"));
         $web_body = $tpl->getTPL_file("SimpleFrontend", "body");
