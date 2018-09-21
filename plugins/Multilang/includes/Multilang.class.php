@@ -8,6 +8,7 @@
 class Multilang {
 
     private $web_lang;
+    private $web_lang_id;    
     private $set_to_visit_lang;
     private $active_langs;
     private $site_langs;
@@ -17,7 +18,8 @@ class Multilang {
         $this->set_to_visit_lang = $cfg['ml_set_to_visit_lang'];
         register_action("header_menu_element", [$this, "get_nav"], 6);
         $this->setLang();
-        $this->web_lang = $cfg['WEB_LANG'];
+        $this->web_lang = $cfg['WEB_LANG'];        
+        $this->web_lang_id = $this->iso_to_id($cfg['WEB_LANG']);
     }
 
     function setLang() {
@@ -69,6 +71,9 @@ class Multilang {
 
     function get_web_lang() {
         return $this->web_lang;
+    }
+    function get_web_lang_id() {
+        return $this->web_lang_id;
     }
 
     function get_nav() {
