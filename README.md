@@ -49,6 +49,10 @@ Author
 
 Lastest add/canges? first latest
 ================================
+* Improved frontend menus
+* Added News Search, NewsComments
+* Added stdComments
+* News / Frontend - Improve
 * News - rewrite phase.3
 * CORE.inc && frontend, 
 use frontent for load pages, each plugin must register the pages allowed to get
