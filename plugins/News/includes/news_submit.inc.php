@@ -62,11 +62,7 @@ function news_create_new($news_data) {
 
     $news_data['nid'] = $db->get_next_num("news", "nid");
 
-    if (defined('MULTILANG')) {
-        $lang_id = $ml->iso_to_id($news_data['news_lang']);
-    } else {
-        $lang_id = 1;
-    }
+    defined('MULTILANG') ? $lang_id = $ml->get_web_lang_id() : $lang_id = 1;
 
     empty($news_data['featured']) ? $news_data['featured'] = 0 : null;
 

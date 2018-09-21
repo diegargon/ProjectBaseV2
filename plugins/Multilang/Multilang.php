@@ -6,11 +6,12 @@
 !defined('IN_WEB') ? exit : true;
 
 function Multilang_init() {
-    global $cfg, $ml;
+    global $ml;
 
-    define('MULTILANG', TRUE);
-
-    !isset($ml) ? $ml = new Multilang($cfg) : false;
+    if (!defined('MULTILANG')) {
+        define('MULTILANG', TRUE);
+        $ml = new Multilang();
+    }
 }
 
 function Multilang_install() {

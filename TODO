@@ -15,3 +15,5 @@ que necesitan la tabla permissions
    - Lo mejor seria pasar del nombre de usuario y permitir nombres reales 
 
 * Añadir opcion en la admin bar para desabilitar comentarios de determinada noticia, accesible a admins y si $cfg lo permitiera a usuarios.
+
+* Añadir por medio de News opcion en profile para cambiar el news lang

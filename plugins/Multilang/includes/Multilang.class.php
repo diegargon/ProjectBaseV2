@@ -13,7 +13,9 @@ class Multilang {
     private $active_langs;
     private $site_langs;
 
-    function __construct($cfg) {
+    function __construct() {
+        global $cfg;
+
         $this->retrieve_db_langs();
         $this->set_to_visit_lang = $cfg['ml_set_to_visit_lang'];
         register_action("header_menu_element", [$this, "get_nav"], 6);
@@ -24,8 +26,6 @@ class Multilang {
 
     function setLang() {
         global $filter, $cfg;
-
-
         /*
          * 1 choosed lang
          * 2 Cookie lang
@@ -33,8 +33,6 @@ class Multilang {
          * 4 URL lang 
          * 5 default web lang  
          */
-
-
         if (isset($_POST['choose_lang']) && (($choosed_lang = $filter->post_AZChar("choose_lang", 2, 2)) != false)) {
             if ($this->checkExists($choosed_lang)) {
                 $cfg['WEB_LANG'] = $choosed_lang;

@@ -5,14 +5,10 @@
  */
 
 function news_getCatsSelect($news_data = null, $select_name = "news_category") {
-    global $cfg, $ctgs;
+    global $cfg, $ctgs, $ml;
 
-    if (defined('MULTILANG')) {
-        global $ml;
-        $lang_id = $ml->getSessionLangId();
-    } else {
-        $lang_id = 1;
-    }
+    defined('MULTILANG') ? $lang_id = $ml->get_web_lang_id() : $lang_id = 1;
+
     $select = "<select name='{$select_name}' id='news_category'>";
     $fathers = [];
 
@@ -225,11 +221,7 @@ function news_form_news_update($news_data) {
     empty($news_data['featured']) ? $news_data['featured'] = 0 : false;
     //!isset($news_data['news_translator']) ? $news_data['news_translator'] = "" : false;
 
-    if (defined('MULTILANG')) {
-        $news_lang_id = $ml->iso_to_id($news_data['news_lang']);
-    } else {
-        $news_lang_id = 1;
-    }
+    defined('MULTILANG') ? $news_lang_id = $ml->get_web_lang_id() : $news_lang_id = 1;
 
     $set_ary = [
         "title" => $db->escape_strip($news_data['title']),

@@ -11,15 +11,7 @@ function get_news_query($where, $q_conf = null, $order = null) {
     empty($q_conf['limit']) ? $limit = " LIMIT " . $cfg['news_dflt_getnews_limit'] : $limit = " LIMIT " . $q_conf['limit'];
     empty($order) ? $order = "ORDER BY created DESC" : $order = "ORDER BY " . $order;
     empty($q_conf['page']) ? $where['page'] = 1 : $where['page'] = $q_conf['page'];
-
-    if (!isset($where['lang_id'])) {
-        if (defined('MULTILANG')) {
-            $where['lang_id'] = $ml->getSessionLangID();
-        } else {
-            $where['lang_id'] = 1;
-        }
-    }
-
+   
     if (!isset($where['moderation']) && $cfg['news_moderation'] == 1) {
         $where['moderation'] = 0;
     }

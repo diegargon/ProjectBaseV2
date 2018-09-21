@@ -58,6 +58,7 @@ class Categories {
     }
 
     function getCatIDbyName_path($plugin, $cat_path) {
+        //FIX THIS: NOT WORK RIGHT
         global $cfg;
 
         if (empty($plugin) || empty($cat_path)) {
@@ -109,13 +110,19 @@ class Categories {
     }
 
     function root_cats($plugin) { // get_fathers_cat_list
+        global $ml;
+
         if (empty($plugin)) {
             return false;
         }
         $cat_data = [];
 
+        defined('MULTILANG') ? $lang_id = $ml->get_web_lang_id() : $lang_id = 1;
+
         foreach ($this->categories as $category) {
-            if ($category['plugin'] == $plugin && $category['father'] == 0) {
+            if (($category['plugin'] == $plugin && $category['father'] == 0) &&
+                    ($category['lang_id'] == $lang_id)
+            ) {
                 $cat_data[$category['cid']] = $category;
             }
         }
@@ -124,14 +131,21 @@ class Categories {
     }
 
     function childcats($plugin, $cat_path) {
+        global $ml;
+
         $cats = [];
 
         if (empty($plugin) || empty($cat_path) || empty($this->categories)) {
             return false;
         }
+
+        defined('MULTILANG') ? $lang_id = $ml->get_web_lang_id() : $lang_id = 1;
+
         $cat_id = $this->getCatIDbyName_path($plugin, $cat_path);
         foreach ($this->categories as $category) {
-            if ($category['plugin'] == $plugin && $category['father'] == $cat_id) {
+            if ($category['plugin'] == $plugin && $category['father'] == $cat_id &&
+                    $category['lang_id'] == $lang_id
+            ) {
                 $cats[] = $category;
             }
         }
@@ -198,13 +212,18 @@ class Categories {
     }
 
     function getCategories($plugin_name = null) {
+        global $ml;
 
         if ($plugin_name == null) {
             return $this->categories;
         }
 
+        defined('MULTILANG') ? $lang_id = $ml->get_web_lang_id() : $lang_id = 1;
+
         foreach ($this->categories as $category) {
-            if ($category['plugin'] == $plugin_name) {
+            if (($category['plugin'] == $plugin_name) &&
+                    ($category['lang_id'] == $lang_id)
+            ) {
                 $plugin_categories[$category['cid']] = $category;
             }
         }
@@ -213,16 +232,11 @@ class Categories {
 
     private function loadCategories() {
         global $ml, $db;
-        //Carga todas las categorias de todos los modulos de un solo lenguage
 
-        (defined('MULTILANG') && !empty($ml)) ? $lang_id = $ml->getSessionLangID() : $lang_id = 1;
-        $where_ary = [];
-        !empty($lang_id) && is_numeric($lang_id) ? $where_ary['lang_id'] = $lang_id : null;
+        $query = $db->select_all("categories", null, "ORDER BY father,cid, weight");
 
-        $query = $db->select_all("categories", $where_ary, "ORDER BY father,cid, weight");
-        while ($c_row = $db->fetch($query)) {
-            $this->categories[$c_row['cid']] = $c_row;
-        }
+        $this->categories = $db->fetch_all($query);
+        $db->free($query);
     }
 
 }

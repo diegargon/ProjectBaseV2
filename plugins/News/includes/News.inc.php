@@ -33,8 +33,7 @@ function news_friendly_title($title) {
 }
 
 function news_section_nav_elements() {
-    global $plugins, $ctgs, $cfg;
-
+    global $ctgs, $cfg;
 
     $menu_cats = $ctgs->root_cats("News");
     $menu_data = '';

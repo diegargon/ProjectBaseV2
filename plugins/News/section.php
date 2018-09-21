@@ -20,13 +20,9 @@ if (!($plugins->express_start_provider("CATS"))) {
 if (empty($category_list = $filter->get_UTF8_txt("section")) || preg_match("/\s+/", $category_list)) {
     return $frontend->message_box(['msg' => 'L_NEWS_E_SEC_NOEXISTS']);
 }
+
 if (!$category = $ctgs->getCatIDbyName_path("News", $category_list)) {
     return $frontend->message_box(['msg' => 'L_NEWS_E_SEC_NOEXISTS']);
-}
-if (defined('MULTILANG')) {
-    $lang_id = $ml->getSessionLangId();
-} else {
-    $lang_id = 1;
 }
 
 //HEAD MOD
@@ -38,7 +34,21 @@ $cfg['PAGE_DESC'] = $cfg['WEB_NAME'] . ": " . $category_list;
  */
 $limit = $cfg['news_section_getnews_limit'];
 
-$news_db = get_news_query(['category' => $category], ['lead' => 1, 'childs' => 1, 'limit' => $limit]);
+$q_opt = ['lead' => 1, 'childs' => 1, 'limit' => $limit];
+$q_where = ['category' => $category];
+
+$user = $sm->getSessionUser();
+
+/*
+ * 0 or empty mean he select ALL, not set (NULL) mean he not configure, show web lang by default
+ */
+if (!empty($user['news_lang'])) {
+    $q_where['lang_id'] = $user['news_lang'];
+} else if (!isset($user['news_lang'])) {
+    defined('MULTILANG') ? $lang_id = $ml->get_web_lang_id() : $lang_id = 1;
+}
+
+$news_db = get_news_query($q_where, $q_opt);
 $num_items = count($news_db);
 
 if ($num_items < $cfg['news_section_getnews_limit']) {
@@ -55,7 +65,7 @@ if ($fraction > 0) { // Fraction mean +1 article in first section
 } else {
     $section_limit = $whole;
 }
-//echo $whole . "-" . "-" . $fraction . "-" . $section_limit;
+//echo $num_items . "-" . $whole . "-" . $fraction . "-" . $section_limit;
 
 $counter = 1;
 $num_items_section = 1;
@@ -69,6 +79,7 @@ $content = "";
 foreach ($news_db as $news) {
     $num_items == $counter ? $section_data['TPL_FOOT'] = 1 : $section_data['TPL_FOOT'] = 0;
     ($counter == $section_limit || $counter == $num_items || $num_items_section >= $section_limit ) ? $section_data['END_SECTION'] = 1 : null;
+    // echo "<br>" . $counter ."-". $section_limit . "-" . $num_items . "-" . $num_items_section ."<br>";
     //ARTICLE DATA
     if ($cfg['FRIENDLY_URL']) {
         $friendly_title = news_friendly_title($news['title']);
@@ -90,7 +101,11 @@ foreach ($news_db as $news) {
     } else {
         $num_items_section++;
     }
-    $counter == 1 ? $section_limit-- : null; //first the fraction    
+    /*
+     * first if fraction add +1 news on column then nex colums -1
+     * when detect new section by news_items_section set to 1 again reduce the section_limit
+     */
+    $num_items_section == 1 && $fraction > 0 ? $section_limit-- : null;
     $counter++;
     $section_data['TPL_CTRL'] = $counter;
 }

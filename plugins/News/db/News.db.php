@@ -29,10 +29,14 @@ CREATE TABLE `" . DB_PREFIX . "news` (
 ";
 
 $news_database_install[] = "
-ALTER TABLE `" . DB_PREFIX . "news`
-  ADD PRIMARY KEY (`nid`,`lang_id`,`page`),
-  ADD UNIQUE KEY `nid` (`nid`,`lang_id`,`page`);
+    ALTER TABLE `" . DB_PREFIX . "news`
+    ADD PRIMARY KEY (`nid`,`lang_id`,`page`),
+    ADD UNIQUE KEY `nid` (`nid`,`lang_id`,`page`);
         ";
+
+$news_database_install[] = "
+    ALTER TABLE `" . DB_PREFIX . "users` ADD `news_lang` UNSIGNED INT(10) DEFAULT NULL;
+";
 
 /* EXAMPLE NEWS */
 $news_database_install[] = "
@@ -87,12 +91,9 @@ $news_database_install = array_merge($news_database_install, $news_database_inse
 
 /* UNINSTALL */
 
-$news_database_uninstall[] = "
-DROP TABLE `" . DB_PREFIX . "news`
-";
-
 $news_database_uinstall = [
     "DROP TABLE `" . DB_PREFIX . "news`",
+    "ALTER TABLE `" . DB_PREFIX . "users`  DROP `news_lang`;",
     "DELETE FROM `" . DB_PREFIX . "config` WHERE plugin = 'News'",
     "DELETE FROM `" . DB_PREFIX . "plugins` WHERE plugin_name = 'News'"
 ];

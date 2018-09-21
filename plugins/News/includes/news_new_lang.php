@@ -85,11 +85,7 @@ function news_form_newlang_process() {
 function news_newlang_submit($news_data) {
     global $cfg, $db, $ml, $LNG;
 
-    if (defined('MULTILANG')) {
-        $news_lang_id = $ml->iso_to_id($news_data['news_lang']);
-    } else {
-        $news_lang_id = 1;
-    }
+    defined('MULTILANG') ? $news_lang_id = $ml->get_web_lang_id() : $news_lang_id = 1;
 
     $query = $db->select_all("news", ["nid" => "{$news_data['nid']}", "lang_id" => "$news_lang_id", "page" => "{$news_data['page']}"]);
     if ($db->num_rows($query) > 0) { //already exist
