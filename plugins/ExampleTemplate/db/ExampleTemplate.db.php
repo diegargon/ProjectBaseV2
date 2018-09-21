@@ -24,5 +24,5 @@ $exampleTemplate_database_uninstall = [
  */
 // Example upgrade something.
 $exampleTemplate_database_upgrade_002_to_003[] = "
-ALTER TABLE `" . DB_PREFIX . "exampleTemplate` ADD `test` INT(1) NOT NULL AFTER `example_field`;    
+ALTER TABLE `" . DB_PREFIX . "exampleTemplate` ADD `test` INT(1) NOT NULL;    
 ";
