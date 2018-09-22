@@ -17,3 +17,5 @@ que necesitan la tabla permissions
 * Añadir opcion en la admin bar para desabilitar comentarios de determinada noticia, accesible a admins y si $cfg lo permitiera a usuarios.
 
 * Añadir por medio de News opcion en profile para cambiar el news lang
+
+* El campo lang de la noticia envia 'en' en vez del ID, cambia y arreglar lo demas.
