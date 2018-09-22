@@ -7,7 +7,7 @@
 
 function NewsMediaUploader_init() {
 
-    global $cfg, $tpl, $sm;
+    global $cfg, $tpl, $sm, $frontend;
 
     $tpl->getCSS_filePath('NewsMediaUploader');
     //$tpl->getCSS_filePath("NewsMediaUploader", "NewsMediaUploader-mobile");    
@@ -29,6 +29,8 @@ function NewsMediaUploader_init() {
       }
 
      */
+    $frontend->register_page(['module' => 'NewsMediaUploader', 'page' => 'upload', 'type' => 'disk']);
+    $frontend->register_page(['module' => 'NewsMediaUploader', 'page' => 'remote_upload', 'type' => 'disk']);
     register_action('news_new_form_add', 'NMU_form_add');
     register_action('news_edit_form_add', 'NMU_form_add');
     register_action('news_newlang_form_add', 'NMU_form_add');

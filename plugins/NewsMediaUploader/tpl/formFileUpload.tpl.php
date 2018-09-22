@@ -4,7 +4,7 @@
  */
 !defined('IN_WEB') ? exit : true;
 ?>
-<label><?= $LNG['L_NMU_UPLOAD_FILES'] ?><span class='text_small'><?= $LNG['L_NMU_MAX'] . $cfg['NMU_MAX_FILESIZE'] ?></span></label>
+<label><?= $LNG['L_NMU_UPLOAD_FILES'] ?><span class="text_small"><?= $LNG['L_NMU_MAX'] . $cfg['upload_max_filesize'] ?></span></label>
 <div id="upload_container">
     <a id="pickfiles" href="javascript:;"><?= $LNG['L_NMU_SELECT_FILES'] ?></a>
     <a id="uploadfiles" href="javascript:;"><?= $LNG['L_NMU_UPLOAD_FILES'] ?></a>
@@ -21,13 +21,13 @@
         runtimes: 'html5, html4',
         browse_button: 'pickfiles', // you can pass an id...
         container: document.getElementById('upload_container'), // ... or DOM Element itself
-        url: '<?= $cfg['CON_FILE'] ?>?module=NewsMediaUploader&page=upload',
+        url: '/<?= $cfg['CON_FILE'] ?>?module=NewsMediaUploader&page=upload',
         unique_names: false,
 
         filters: {
-            max_file_size: '<?= $cfg['NMU_MAX_FILESIZE'] ?>',
+            max_file_size: '<?= $cfg['upload_max_filesize'] ?>',
             mime_types: [
-                {title: "Image files", extensions: "<?= $cfg['NMU_ACCEPTED_FILES'] ?>"}
+                {title: "Image files", extensions: "<?= $cfg['upload_accepted_files'] ?>"}
             ]
         },
 
@@ -63,7 +63,7 @@
                     document.getElementById('console').appendChild(document.createTextNode("\nError with " + file.name + ": " + myData.error.code + ": " + myData.error.message));
                 }
                 if (myData.result) {
-                    var textarea = document.getElementById('news_text');
+                    var textarea = document.getElementById('editor_text');
                     textarea.value += "[localimg w=600]" + myData.result + "[/localimg]";
                 }
                 //console.log(object);console.log(myData); console.log(file);
@@ -73,7 +73,7 @@
     uploader.init();
 
     function addtext(text) {
-        var textarea = document.getElementById('news_text');
+        var textarea = document.getElementById('editor_text');
         textarea.value += text;
     }
 
