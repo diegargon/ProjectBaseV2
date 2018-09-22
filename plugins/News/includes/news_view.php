@@ -11,32 +11,32 @@ function news_show_page() {
     $news_data = [];
     $editor = new Editor();
 
-    if ((empty($_GET['nid'])) || ($nid = $filter->get_int("nid")) == false) {
-        return $frontend->message_box(['msg' => "L_NEWS_NOT_EXIST"]);
+    if ((empty($_GET['nid'])) || ($nid = $filter->get_int('nid')) == false) {
+        return $frontend->message_box(['msg' => 'L_NEWS_NOT_EXIST']);
     }
 
     if (!empty($_GET['news_lang_id'])) {
-        $news_lang_id = $filter->get_int("news_lang_id");
+        $news_lang_id = $filter->get_int('news_lang_id');
     } else {
         (defined('MULTILANG')) ? $news_lang_id = $ml->get_web_lang_id() : $news_lang_id = 1;
     }
 
-    ($cfg['allow_multiple_pages'] && !empty($_GET['npage'])) ? $page = $filter->get_int("npage") : $page = 1;
+    ($cfg['allow_multiple_pages'] && !empty($_GET['npage'])) ? $page = $filter->get_int('npage') : $page = 1;
 
     if (!is_array($news_data = get_news_byId($nid, $news_lang_id, $page))) { //Not array, its a error
         $frontend->message_box(['msg' => $news_data]);
         return false;
     }
 
-    $news_perms = get_news_perms("view_news", $news_data);
+    $news_perms = get_news_perms('view_news', $news_data);
     if (!$news_perms['news_view']) {
-        return $frontend->message_box(["msg" => "L_E_NOVIEWACCESS"]);
+        return $frontend->message_box(['msg' => 'L_E_NOVIEWACCESS']);
     }
 
     news_process_admin_actions($news_data, $news_perms);
 
     if ($cfg['news_moderation'] && $news_data['moderation'] && !$news_perms['news_moderation']) {
-        return $frontend->message_box(["msg" => "L_NEWS_ERROR_WAITINGMOD"]);
+        return $frontend->message_box(['msg' => 'L_NEWS_ERROR_WAITINGMOD']);
     }
 
     $news_data['news_admin_nav'] = news_nav_options($news_data, $news_perms);
@@ -49,7 +49,7 @@ function news_show_page() {
     $author_data = $sm->getUserByID($news_data['author_id']);
     $news_data['author'] = $author_data['username'];
     $news_data['author_uid'] = $news_data['author_id'];
-    $news_data['text'] = $editor->parse($news_data['text']);
+    $news_data['text'] = $editor->parse(stripcslashes($news_data['text']));
 
     if (!empty($news_data['translator_id'])) {
         $translator = $sm->getUserByID($news_data['translator_id']);
@@ -84,18 +84,19 @@ function news_show_page() {
     ($cfg['ITS_BOT'] && $cfg['INCLUDE_MICRODATA']) ? $news_data['ITEM_OL'] = 1 : null;
 
     if ($cfg['ITS_BOT'] && $cfg['INCLUDE_DATA_STRUCTURE']) {
-        preg_match("/src=\"(.*?)\"/i", $news_data['text'], $matchs);
+        $matchs = [];
+        preg_match('/src=\"(.*?)\"/i', $news_data['text'], $matchs);
         $news_data['ITEM_MAINIMAGE'] = $matchs[1];
-        $news_data['ITEM_CREATED'] = preg_replace("/ /", "T", $news_data['created']) . "Z";
-        $news_data['ITEM_MODIFIED'] = preg_replace("/ /", "T", $news_data['last_edited']) . "Z";
-        $cats = explode(" ", trim(strip_tags($news_data['news_breadcrum'])));
+        $news_data['ITEM_CREATED'] = preg_replace('/ /', 'T', $news_data['created']) . 'Z';
+        $news_data['ITEM_MODIFIED'] = preg_replace('/ /', 'T', $news_data['last_edited']) . 'Z';
+        $cats = explode(' ', trim(strip_tags($news_data['news_breadcrum'])));
         if (!empty($cats)) {
-            $news_data['ITEM_SECTIONS'] = "";
+            $news_data['ITEM_SECTIONS'] = '';
             foreach ($cats as $cat) {
-                $news_data['ITEM_SECTIONS'] .= "\"articleSection\": \"" . trim($cat) . "\",\n";
+                $news_data['ITEM_SECTIONS'] .= '"articleSection": "' . trim($cat) . '",\n';
             }
         }
-        $tpl->addto_tplvar("POST_ACTION_ADD_TO_BODY", $tpl->getTPL_file("News", "news_body_struct", $news_data));
+        $tpl->addto_tplvar('POST_ACTION_ADD_TO_BODY', $tpl->getTPL_file('News', 'news_body_struct', $news_data));
     }
 
     /* OLD REPLACE
@@ -109,14 +110,14 @@ function news_show_page() {
       }
 
      */
-    $tpl->addto_tplvar("ADD_TO_BODY", $tpl->getTPL_file("News", "news_body", $news_data));
+    $tpl->addto_tplvar('ADD_TO_BODY', $tpl->getTPL_file('News', 'news_body', $news_data));
 }
 
 function news_process_admin_actions(&$news_data, $perms) {
     global $filter;
 
-    $news_lang_id = $filter->get_int("news_lang_id");
-    $news_nid = $filter->get_int("nid");
+    $news_lang_id = $filter->get_int('news_lang_id');
+    $news_nid = $filter->get_int('nid');
 
     if (empty($news_lang_id) || empty($news_nid)) {
         return false;
@@ -125,7 +126,7 @@ function news_process_admin_actions(&$news_data, $perms) {
     /* DELETE */
     if (!empty($_GET['news_delete']) && $perms['news_delete']) {
         news_delete($news_nid, $news_lang_id);
-        header("Location: /");
+        header('Location: /');
     }
     /* APPROVE */
     if (!empty($_GET['news_approved']) && $perms['news_moderation']) {
@@ -215,14 +216,14 @@ function news_nav_options($news, $perms) {
 function news_pager($news_page) {
     global $db, $cfg, $ml;
 
-    $query = $db->select_all("news", ["nid" => $news_page['nid'], "lang_id" => $news_page['lang_id']]);
+    $query = $db->select_all('news', ['nid' => $news_page['nid'], 'lang_id' => $news_page['lang_id']]);
     if (($num_pages = $db->num_rows($query)) <= 1) {
         return false;
     }
 
-    $content = "<div id='pager'><ul>";
+    $content = '<div id="pager"><ul>';
 
-    $news_page['page'] == 1 ? $a_class = "class='active'" : $a_class = '';
+    $news_page['page'] == 1 ? $a_class = 'class="active"' : $a_class = '';
     if ($cfg['FRIENDLY_URL']) {
         $friendly_title = news_friendly_title($news_page['title']);
         $content .= "<li><a $a_class href='/{$cfg['WEB_LANG']}}/news/{$news_page['nid']}/1/{$news_page['lang_id']}/$friendly_title'>1</a></li>";
@@ -233,7 +234,7 @@ function news_pager($news_page) {
     $pager = page_pager($cfg['news_pager_max'], $num_pages, $news_page['page']);
 
     for ($i = $pager['start_page']; $i < $pager['limit_page']; $i++) {
-        $news_page['page'] == $i ? $a_class = "class='active'" : $a_class = '';
+        $news_page['page'] == $i ? $a_class = 'class="active"' : $a_class = '';
         if ($cfg['FRIENDLY_URL']) {
             $friendly_title = news_friendly_title($news_page['title']);
             $content .= "<li><a $a_class href='/{$cfg['WEB_LANG']}/news/{$news_page['nid']}/$i/{$news_page['lang_id']}/$friendly_title'>$i</a></li>";
@@ -241,14 +242,14 @@ function news_pager($news_page) {
             $content .= "<li><a $a_class href='{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_page['nid']}&lang={$cfg['WEB_LANG']}&npage=$i&news_lang_id={$news_page['lang_id']}'>$i</a></li>";
         }
     }
-    $news_page['page'] == $num_pages ? $a_class = "class='active'" : $a_class = '';
+    $news_page['page'] == $num_pages ? $a_class = 'class="active"' : $a_class = '';
     if ($cfg['FRIENDLY_URL']) {
         $friendly_title = news_friendly_title($news_page['title']);
         $content .= "<li><a $a_class href='/{$cfg['WEB_LANG']}/news/{$news_page['nid']}/$num_pages/{$news_page['lang_id']}/$friendly_title'>$num_pages</a></li>";
     } else {
         $content .= "<li><a $a_class href='{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_page['nid']}&lang={$cfg['WEB_LANG']}&npage=$num_pages&news_lang_id={$news_page['lang_id']}'>$num_pages</a></li>";
     }
-    $content .= "</ul></div>";
+    $content .= '</ul></div>';
 
     return $content;
 }
@@ -286,12 +287,12 @@ function page_pager($max_pages, $num_pages, $actual_page) {
 function news_delete($nid, $lang_id) {
     global $db;
 
-    $db->delete("news", ["nid" => $nid, "lang_id" => $lang_id]);
-    $query = $db->select_all("news", ["nid" => $nid], "LIMIT 1"); //check if other lang
+    $db->delete('news', ['nid' => $nid, 'lang_id' => $lang_id]);
+    $query = $db->select_all('news', ['nid' => $nid], 'LIMIT 1'); //check if other lang
     if ($db->num_rows($query) <= 0) {
-        $db->delete("links", ["plugin" => "News", "source_id" => $nid]);
+        $db->delete('links', ['plugin' => 'News', 'source_id' => $nid]);
         //ATM by default this fuction delete all "links" if no exists the same news in other lang, mod like 
-        do_action("news_delete_mod", $nid);
+        do_action('news_delete_mod', $nid);
     }
     return true;
 }
@@ -302,7 +303,7 @@ function news_approved($nid, $lang_id) {
     if (empty($nid) || empty($lang_id)) {
         return false;
     }
-    $db->update("news", ["moderation" => 0], ["nid" => $nid, "lang_id" => $lang_id]);
+    $db->update('news', ['moderation' => 0], ['nid' => $nid, 'lang_id' => $lang_id]);
 
     return true;
 }
@@ -316,9 +317,9 @@ function news_featured($nid, $lang_id, $featured) {
     if (empty($nid) || empty($lang_id)) {
         return false;
     }
-    $update_ary = ["featured" => "$featured"];
+    $update_ary = ['featured' => $featured];
     $featured == 1 ? $update_ary['featured_date'] = $time : false;
-    $db->update("news", $update_ary, ["nid" => $nid, "lang_id" => $lang_id]);
+    $db->update('news', $update_ary, ['nid' => $nid, 'lang_id' => $lang_id]);
 
     return true;
 }
@@ -329,74 +330,72 @@ function news_frontpage($nid, $lang_id, $frontpage_state = 0) {
     if (empty($nid) || empty($lang_id) || $nid <= 0 && $lang_id <= 0) {
         return false;
     }
-    $db->update("news", ["frontpage" => $frontpage_state], ["nid" => $nid, "lang_id" => $lang_id]);
+    $db->update('news', ['frontpage' => $frontpage_state], ['nid' => $nid, 'lang_id' => $lang_id]);
 
     return true;
 }
 
 function news_stats($nid, $lang, $page, $visits) {
     global $db, $cfg;
-    $db->update("news", ["visits" => ++$visits], ["nid" => "$nid", "lang" => "$lang", "page" => "$page"], "LIMIT 1");
+    $db->update('news', ['visits' => ++$visits], ['nid' => $nid, 'lang' => $lang, 'page' => $page], 'LIMIT 1');
     $cfg['news_adv_stats'] ? news_adv_stats($nid, $lang) : false;
 }
 
 function news_adv_stats($nid, $lang) {
     global $db, $sm, $filter;
 
-    $plugin = "News";
-
     $user = $sm->getSessionUser();
     empty($user) ? $user['uid'] = 0 : false; //Anon        
     $ip = $filter->srv_remote_addr();
     $hostname = gethostbyaddr($ip);
     $where_ary = [
-        "type" => "user_visits_page",
-        "plugin" => "$plugin",
-        "lang" => "$lang",
-        "rid" => "$nid",
-        "uid" => $user['uid']
+        'type' => 'user_visits_page',
+        'plugin' => 'News',
+        'lang' => $lang,
+        'rid' => $nid,
+        'uid' => $user['uid']
     ];
     $user['uid'] == 0 ? $where_ary['ip'] = $ip : false;
 
-    $query = $db->select_all("adv_stats", $where_ary, "LIMIT 1");
+    $query = $db->select_all('adv_stats', $where_ary, 'LIMIT 1');
 
     $user_agent = S_SERVER_USER_AGENT();
-    $referer = S_SERVER_URL("HTTP_REFERER");
+    $referer = S_SERVER_URL('HTTP_REFERER');
 
     if ($db->num_rows($query) > 0) {
         $user_adv_stats = $db->fetch($query);
         $counter = ++$user_adv_stats['counter'];
-        $db->update("adv_stats", ["counter" => "$counter", "user_agent" => "$user_agent", "referer" => "$referer"], ["advstatid" => $user_adv_stats['advstatid']]);
+        $db->update('adv_stats', ['counter' => $counter, 'user_agent' => $user_agent, 'referer' => $referer], ['advstatid' => $user_adv_stats['advstatid']]);
     } else {
         $insert_ary = [
-            "plugin" => "$plugin",
-            "type" => "user_visits_page",
-            "rid" => "$nid",
-            "lang" => "$lang",
-            "uid" => $user['uid'],
-            "ip" => "$ip",
-            "hostname" => $hostname,
-            "user_agent" => "$user_agent",
-            "referer" => "$referer",
-            "counter" => 1
+            'plugin' => 'News',
+            'type' => 'user_visits_page',
+            'rid' => $nid,
+            'lang' => $lang,
+            'uid' => $user['uid'],
+            'ip' => $ip,
+            'hostname' => $hostname,
+            'user_agent' => $user_agent,
+            'referer' => $referer,
+            'counter' => 1
         ];
-        $db->insert("adv_stats", $insert_ary);
+        $db->insert('adv_stats', $insert_ary);
     }
 
-    if ((!empty($referer)) && ( (strpos($referer, "://" . $_SERVER['SERVER_NAME']) ) === false)) {
-        $query = $db->select_all("adv_stats", ["type" => "referers_only", "referer" => "$referer"], "LIMIT 1");
+    if ((!empty($referer)) && ( (strpos($referer, '://' . $_SERVER['SERVER_NAME']) ) === false)) {
+        $query = $db->select_all('adv_stats', ['type' => 'referers_only', 'referer' => $referer], 'LIMIT 1');
         if ($db->num_rows($query) > 0) {
             $allreferers = $db->fetch($query);
             $counter = ++$allreferers['counter'];
-            $db->update("adv_stats", ["counter" => "$counter"], ["advstatid" => $allreferers['advstatid']]);
+            $db->update('adv_stats', ['counter' => $counter], ['advstatid' => $allreferers['advstatid']]);
         } else {
             $insert_ary = [
-                "plugin" => "$plugin",
-                "type" => "referers_only",
-                "referer" => $referer,
-                "counter" => 1,
+                'plugin' => 'News',
+                'type' => 'referers_only',
+                'referer' => $referer,
+                'counter' => 1,
             ];
-            $db->insert("adv_stats", $insert_ary);
+            $db->insert('adv_stats', $insert_ary);
         }
     }
 }
@@ -406,55 +405,55 @@ function news_add_social_meta($news) { // TODO: Move to plugin NewsSocialExtra
     $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://';
     $news['url'] = $protocol . $_SERVER['HTTP_HOST'] . $filter->srv_request_uri();
     $news['PAGE_TITLE'] = $news['title'];
-    $match_regex = "/\[.*img.*\](.*)\[\/.*img\]/";
-    $match = "";
+    $match_regex = '/\[.*img.*\](.*)\[\/.*img\]/';
+    $match = '';
     preg_match($match_regex, $news['text'], $match);
     if (!empty($match[1])) {
-        $url = preg_replace('/\[S\]/si', $cfg['img_selector'] . "/", $match[1]);
-        $cfg['IMG_UPLOAD_DIR'] = "news_img"; //TODO
-        $news['mainimage'] = $cfg['STATIC_SRV_URL'] . $cfg['IMG_UPLOAD_DIR'] . "/" . $url;
+        $url = preg_replace('/\[S\]/si', $cfg['img_selector'] . '/', $match[1]);
+        $cfg['IMG_UPLOAD_DIR'] = 'news_img'; //TODO
+        $news['mainimage'] = $cfg['STATIC_SRV_URL'] . $cfg['IMG_UPLOAD_DIR'] . '/' . $url;
     }
-    $content = $tpl->getTPL_file("News", "NewsSocialmeta", $news);
-    $tpl->addto_tplvar("META", $content);
+    $content = $tpl->getTPL_file('News', 'NewsSocialmeta', $news);
+    $tpl->addto_tplvar('META', $content);
 }
 
 function getNewsCatBreadcrumb($news_data) {
     global $cfg, $ctgs;
-    $content = "";
+    $content = '';
 
-    $categories = $ctgs->getCategories("News");
+    $categories = $ctgs->getCategories('News');
     $news_cat_id = $news_data['category'];
 
     if ($categories[$news_cat_id]['father'] != 0) {
-        $cat_list = "";
+        $cat_list = '';
         $cat_check = $categories[$news_cat_id]['father'];
         do {
-            $cat_list = $categories[$cat_check]['name'] . "," . $cat_list;
+            $cat_list = $categories[$cat_check]['name'] . ',' . $cat_list;
             $cat_check = $categories[$cat_check]['father'];
         } while ($cat_check != 0);
 
         $cat_list = $cat_list . $categories[$news_cat_id]['name'];
-        $cat_ary = explode(",", $cat_list);
+        $cat_ary = explode(',', $cat_list);
 
-        $breadcrumb = "";
-        $cat_path = "";
+        $breadcrumb = '';
+        $cat_path = '';
         $list_counter = 1;
         foreach ($cat_ary as $cat) {
             if ($cfg['ITS_BOT'] && $cfg['INCLUDE_MICRODATA']) {
-                $ITEM_LI = "itemprop=\"itemListElement\" itemscope itemtype=\"http://schema.org/ListItem\"";
+                $ITEM_LI = 'itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"';
                 $ITEM_HREF = "itemscope itemtype=\"http://schema.org/Thing\" itemprop=\"item\"";
-                $ITEM_NAME = "itemprop=\"name\"";
-                $ITEM_POS = "<meta itemprop=\"position\" content=\"$list_counter\" />";
+                $ITEM_NAME = 'itemprop="name"';
+                $ITEM_POS = '<meta itemprop="position" content="$list_counter" />';
             } else {
-                $ITEM_LI = "";
-                $ITEM_HREF = "";
-                $ITEM_NAME = "";
-                $ITEM_POS = "";
+                $ITEM_LI = '';
+                $ITEM_HREF = '';
+                $ITEM_NAME = '';
+                $ITEM_POS = '';
             }
             $cat_path .= $cat;
             !empty($breadcrumb) ? $breadcrumb .= $cfg['news_breadcrum_separator'] : null;
             $cat = preg_replace('/\_/', ' ', $cat);
-            $breadcrumb .= "<li $ITEM_LI>";
+            $breadcrumb .= '<li ' . $ITEM_LI . '>';
             $breadcrumb .= "<a $ITEM_HREF href='/{$cfg['WEB_LANG']}/section/$cat_path'>";
             $breadcrumb .= "<span $ITEM_NAME>$cat</span></a>$ITEM_POS</li> ";
             $cat_path .= $cfg['categories_separator'];
@@ -471,7 +470,7 @@ function news_format_source($link) {
     if ($link['type'] == 'source') {
         $url = parse_url($link['link']);
         $domain = $url['host'];
-        $result = "<a rel='nofollow' target='_blank' href='{$link['link']}'>$domain</a>";
+        $result = '<a rel="nofollow" target="_blank" href="' . $link['link'] . '">' . $domain . '</a>';
     } else {
         return false;
     }
