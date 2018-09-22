@@ -93,7 +93,9 @@ $core_inserts = [
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('CORE', 'user_name_regex', '/^[a-zA-Z/'/-\040]+$/');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('CORE', 'accepted_media_regex', 'jpe?g|bmp|png|JPE?G|BMP|PNG|gif');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('CORE', 'remote_checks', '1');",
-    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('CORE', 'max_int', '4294967295');"
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('CORE', 'max_int', '4294967295');",
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('CORE', 'link_min_length', '1');",
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('CORE', 'link_max_length', '255');"
 ];
 
 

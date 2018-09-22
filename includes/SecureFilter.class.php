@@ -311,7 +311,7 @@ class SecureFilter {
         if (empty($url)) {
             return false;
         }
-        if ($this->remote_checks && (!remote_checks($url))) {
+        if ($this->remote_checks && (!remote_check($url))) {
             return false;
         }
         return $url;
@@ -465,7 +465,7 @@ class SecureFilter {
 
         $regex = '/\.(' . $this->media_regex . ')(?:[\?\#].*)?$/';
 
-        if (($url = var_URL($url, $max_size, $min_size, $force_no_remote_check)) == false) {
+        if (($url = $this->var_URL($url, $max_size, $min_size, $force_no_remote_check)) == false) {
             return -1;
         }
 
