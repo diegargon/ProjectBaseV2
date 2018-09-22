@@ -2,13 +2,6 @@
 
 /*
  *  Copyright @ 2016 - 2018 Diego Garcia
- * 
- *  Actually, on start load all cats all plug
- * 
- *  not fully tested and going to have problems if we have 
- *  something like...
- *  /News/Sports/Football and /Other/Sports/Football  ( That going to fail, first match return)
- *  /News/Sports/Football and /News/Videos/Football (its ok)
  *  
  */
 !defined('IN_WEB') ? exit : true;
@@ -48,67 +41,25 @@ class Categories {
         }
     }
 
-    function getCatIDbyName($plugin, $catname, $father = 0) {
-        if (empty($plugin) || empty($catname)) {
-            return false;
-        }
-        $category = $this->getCatbyName($plugin, $catname, $father);
-
-        return $category['cid'];
-    }
-
     function getCatIDbyName_path($plugin, $cat_path) {
-        global $cfg;
+        // thanks to mickmackusa @ StackOverflow
+        $cfg['categories_separator'] = "/";
+        $breadcrumbs = explode($cfg['categories_separator'], trim($cat_path, "/"));
 
-        if (empty($plugin) || empty($cat_path)) {
-            return false;
-        }
-
-        $cat_path_ary = explode($cfg['categories_separator'], $cat_path);
-        if (count($cat_path_ary) > 1) {
-            $located_cat_name = end($cat_path_ary);
-            $root_cat = array_shift($cat_path_ary);
-
-            foreach ($this->root_cats($plugin) as $category) {
-                if ($category['name'] == $root_cat) {
-                    $root_cat = $category;
+        $parent = 0;
+        foreach ($breadcrumbs as $crumb) {
+            $id = false;
+            foreach ($this->categories as $row) {
+                if ($row["name"] == $crumb && $parent == $row["father"] && $row['plugin'] == $plugin) {
+                    $id = $parent = $row["cid"];
                     break;
                 }
             }
-
-            $next_cat = array_shift($cat_path_ary);
-            $parent_id = $root_cat['cid'];
-            while (true) {
-                $cat_return = $this->searchCatnameParent($next_cat, $parent_id);
-                if ($cat_return == false) {
-                    return false;
-                } else if ($located_cat_name == $cat_return['name']) {
-                    return $cat_return['cid'];
-                } else {
-                    $next_cat = array_shift($cat_path_ary);
-                    $parent_id = $cat_return['cid'];
-                }
-            }
-        } else { //Its parent
-            $catname = $cat_path_ary[0];
-            foreach ($this->root_cats($plugin) as $category) {
-                if ($category['name'] == $catname) {
-                    return $category['cid'];
-                }
-            }
-            return false;
-        }
-
-        return false;
-    }
-
-    private function searchCatnameParent($name, $parent_id) {
-        foreach ($this->categories as $category) {
-            if (($category['name'] == $name) && $category['father'] == $parent_id) {
-                return $category;
+            if (!$id) {
+                return false;
             }
         }
-        return false;
+        return $id;
     }
 
     function getCatNameByID($catid) {
