@@ -35,10 +35,10 @@ function timeNowDiff($time) {
     $time_now->setTimezone(new DateTimeZone($this->timezone));
     $time_diff = $_time->diff($time_now);
 
-    $result_time['days'] = $time_diff->format("%d");
-    $result_time['hours'] = $time_diff->format("%H");
-    $result_time['minutes'] = $time_diff->format("%i");
-    $result_time['seconds'] = $time_diff->format("%s");
+    $result_time['days'] = $time_diff->format('%d');
+    $result_time['hours'] = $time_diff->format('%H');
+    $result_time['minutes'] = $time_diff->format('%i');
+    $result_time['seconds'] = $time_diff->format('%s');
 
     return $result_time;
 }

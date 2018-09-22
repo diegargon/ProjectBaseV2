@@ -13,7 +13,7 @@ function botDetect($match_type = 0) {
     } else if ($match_type == 2) {
         $botList = $cfg['WELCOME_BOTS'];
     } else {
-        $botList = $cfg['WELCOME_BOTS'] . "|" . $cfg['BAD_BOTS'];
+        $botList = $cfg['WELCOME_BOTS'] . '|' . $cfg['BAD_BOTS'];
     }
 
     preg_match("/$botList/i", $filter->srv_user_agent(), $matches);

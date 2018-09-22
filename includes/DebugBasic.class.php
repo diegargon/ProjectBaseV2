@@ -14,52 +14,37 @@ class Debug {
 
     private $debug_msg = [];
 
-    
-    function __construct() {}
-
-    function log($msg, $module, $level = "DEBUG") 
-    {
-        $this->debug_msg[] = ["msg" => "$msg", "module" => "$module", "level" => "$level"];
+    function __construct() {
+        
     }
 
-    function get_debug($module = "all", $level = "all") {        
+    function log($msg, $module, $level = 'DEBUG') {
+        $this->debug_msg[] = ['msg' => $msg, 'module' => $module, 'level' => $level];
+    }
+
+    function get_debug($module = 'all', $level = 'all') {
         $filter_debug = [];
         foreach ($this->debug_msg as $element) {
-            if($module == "all" || $module == $element['module']) {
-                if ($level == "all" || $level == $element['level']) {
-                    $filter_debug[] = ["msg" => $element['msg'], "module" => $element['module'], "level" => $element['level']];
+            if ($module == 'all' || $module == $element['module']) {
+                if ($level == 'all' || $level == $element['level']) {
+                    $filter_debug[] = ['msg' => $element['msg'], 'module' => $element['module'], 'level' => $element['level']];
                 }
             }
         }
         return $filter_debug;
     }
-    
-    function print_debug($module = "all", $level = "all") {
-        $module_track_br = "";
-        $result = "";
-        foreach ( $this->get_debug($module, $level) as $element) {
+
+    function print_debug($module = 'all', $level = 'all') {
+        $module_track_br = '';
+        $result = '';
+        foreach ($this->get_debug($module, $level) as $element) {
             if ($module_track_br != $element['module']) { // add space between modules
                 $module_track_br = $element['module'];
-                $result .= "<br/>";
+                $result .= '<br/>';
             }
-            $result .= "[" . $element['level'] . "] " . "[" . $element['module'] . "]" . $element['msg'] . "\n<br/>";
+            $result .= '[' . $element['level'] . '] ' . '[' . $element['module'] . ']' . $element['msg'] . '\n<br/>';
         }
         return $result;
     }
-    /*    
-    function $debug->log($msg, $filter = null) {
-        global $global;
-        if ((array_search($msg, array_column($debug, 'msg')) ) != null) { //avoid duplicates
-            return;
-        }
-        if (!empty($filter) && defined($filter) && defined('DEBUG')) {
-            $debug[] = ["msg" => "$msg", "filter" => "$filter"];
-        } else if (empty($filter) && defined('DEBUG')) {
-            $debug[] = ["msg" => "$msg", "filter" => "DEBUG"];
-        }
-    }
 
-
-*/
-    
 }

@@ -110,4 +110,4 @@ foreach ($news_db as $news) {
     $section_data['TPL_CTRL'] = $counter;
 }
 
-$tpl->addto_tplvar("ADD_TO_BODY", $content);
+$tpl->addto_tplvar('ADD_TO_BODY', $content);

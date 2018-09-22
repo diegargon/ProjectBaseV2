@@ -17,7 +17,7 @@ $actions = [];
 function register_action($event, $func, $priority = 5) {
     global $actions;
 
-    $actions[$event][] = ["function_name" => $func, "priority" => $priority];
+    $actions[$event][] = ['function_name' => $func, 'priority' => $priority];
 }
 
 function register_uniq_action($event, $func, $priority = 5) {
@@ -25,11 +25,11 @@ function register_uniq_action($event, $func, $priority = 5) {
 
     foreach ($actions as $key => $value) {
         if ($key == $event) {
-            $actions[$key][0] = ["function_name" => $func, "priority" => $priority];
+            $actions[$key][0] = ['function_name' => $func, 'priority' => $priority];
             return;
         }
     }
-    $actions[$event][] = ["function_name" => $func, "priority" => $priority];
+    $actions[$event][] = ['function_name' => $func, 'priority' => $priority];
 }
 
 function do_action($event, &$params = null) {

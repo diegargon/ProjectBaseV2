@@ -25,9 +25,9 @@ class Database {
     private $query_history = [];
 
     function __construct($dbhost, $db, $dbuser, $dbpassword) {
-        $this->db_prefix = "pb_";
-        $this->charset = "utf8";
-        $this->collate = "utf8_general_ci";
+        $this->db_prefix = 'pb_';
+        $this->charset = 'utf8';
+        $this->collate = 'utf8_general_ci';
         $this->min_search_char = 2;
         $this->dbhost = $dbhost;
         $this->db = $db;
@@ -48,7 +48,7 @@ class Database {
             printf("Failed to connect to database: %s\n ", $this->dblink->connect_error);
             exit();
         }
-        $this->query("SET NAMES " . $this->charset . "");
+        $this->query('SET NAMES ' . $this->charset);
         return true;
     }
 
@@ -115,7 +115,7 @@ class Database {
     }
 
     private function dbdie($query) {
-        printf("\n<b>Error: Unable to retrieve information.</b>");
+        printf('\n<b>Error: Unable to retrieve information.</b>');
         printf("\n<br>%s", $query);
         printf("\n<br>reported: %s", $this->dblink->error);
         $this->close();
@@ -166,15 +166,15 @@ class Database {
      * extra not array 
      */
 
-    function select_all($table, $where = null, $extra = null, $logic = "AND") {
+    function select_all($table, $where = null, $extra = null, $logic = 'AND') {
 
         if (empty($table)) {
             return false;
         }
-        $query = "SELECT * FROM " . $this->db_prefix . $table;
+        $query = 'SELECT * FROM ' . $this->db_prefix . $table;
 
         if (!empty($where)) {
-            $query .= " WHERE ";
+            $query .= ' WHERE ';
             $query .= $this->where_process($where, $logic);
         }
         !empty($extra) ? $query .= " $extra" : false;
@@ -182,14 +182,14 @@ class Database {
         return $this->query($query);
     }
 
-    function select($table, $what, $where = null, $extra = null, $logic = "AND") {
+    function select($table, $what, $where = null, $extra = null, $logic = 'AND') {
         if (empty($table) || empty($what)) {
             return false;
         }
-        $query = "SELECT " . $what . " FROM " . $this->db_prefix . $table;
+        $query = 'SELECT ' . $what . ' FROM ' . $this->db_prefix . $table;
 
         if (!empty($where)) {
-            $query .= " WHERE ";
+            $query .= ' WHERE ';
             $query .= $this->where_process($where, $logic);
         }
         !empty($extra) ? $query .= " $extra" : false;
@@ -201,24 +201,24 @@ class Database {
 
     function search($table, $s_fields, $searchText, $where = null, $extra = null) {
 
-        $s_words_ary = explode(" ", $searchText);
-        $fields_ary = explode(" ", $s_fields);
+        $s_words_ary = explode(' ', $searchText);
+        $fields_ary = explode(' ', $s_fields);
 
-        $where_s_fields = "";
-        $where_s_tmp = "";
-        $query = "SELECT * FROM " . $this->db_prefix . $table . " WHERE ";
+        $where_s_fields = '';
+        $where_s_tmp = '';
+        $query = 'SELECT * FROM ' . $this->db_prefix . $table . ' WHERE ';
 
         if (!empty($where)) {
-            $query .= $this->where_process($where, $logic = "AND");
-            $query .= " AND ";
+            $query .= $this->where_process($where, $logic = 'AND');
+            $query .= ' AND ';
         }
 
         foreach ($fields_ary as $field) {
-            !empty($where_s_fields) ? $where_s_fields .= " OR " : false;
+            !empty($where_s_fields) ? $where_s_fields .= ' OR ' : false;
 
             foreach ($s_words_ary as $s_word) {
                 if (mb_strlen($s_word, $this->charset) > $this->search_min_char) {
-                    !empty($where_s_tmp) ? $where_s_tmp .= " AND " : false;
+                    !empty($where_s_tmp) ? $where_s_tmp .= ' AND ' : false;
                     $where_s_tmp .= " $field LIKE '%$s_word%' ";
                 }
             }
@@ -227,7 +227,7 @@ class Database {
         }
 
         if (!empty($where_s_fields)) {
-            $query .= "(" . $where_s_fields . ")";
+            $query .= '(' . $where_s_fields . ')';
         } else {
             return false;
         }
@@ -238,9 +238,9 @@ class Database {
 
     /*  */
 
-    function update($table, $set, $where = null, $extra = null, $logic = "AND") {
+    function update($table, $set, $where = null, $extra = null, $logic = 'AND') {
 
-        $query = "UPDATE " . $this->db_prefix . $table . " SET ";
+        $query = 'UPDATE ' . $this->db_prefix . $table . ' SET ';
 
         if (empty($set) || empty($table)) {
             return false;
@@ -248,7 +248,7 @@ class Database {
         $query .= $this->set_process($set);
 
         if (!empty($where)) {
-            $query .= " WHERE " . $this->where_process($where, $logic);
+            $query .= ' WHERE ' . $this->where_process($where, $logic);
         }
         !empty($extra) ? $query .= " $extra" : false;
         return $this->query($query);
@@ -272,7 +272,7 @@ class Database {
         if (empty($table) || empty($where)) {
             return false;
         }
-        $query = "DELETE FROM " . $this->db_prefix . $table . " WHERE ";
+        $query = 'DELETE FROM ' . $this->db_prefix . $table . ' WHERE ';
         $query .= $this->where_process($where, $logic);
         !empty($extra) ? $query .= " $extra" : false;
 

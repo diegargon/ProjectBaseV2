@@ -10,21 +10,21 @@
 
 define('CORE_VERSION', 0.2);
 
-require_once "config.default.php";
-file_exists("config/config.inc.php") ? require_once "config/config.inc.php" : null; //rewrite config
+require_once ('config.default.php');
+file_exists('config/config.inc.php') ? require_once ('config/config.inc.php') : null; //rewrite config
 
 if (defined('DEBUG')) {
-    require_once "includes/" . DEBUG_CORE . ".class.php";
+    require_once 'includes/' . DEBUG_CORE . '.class.php';
     $debug = new Debug();
 }
 
-require_once "includes/core.func.php";
-require_once "includes/core.utils.php";
-require_once "includes/actions.inc.php";
+require_once ('includes/core.func.php');
+require_once ('includes/core.utils.php');
+require_once ('includes/actions.inc.php');
 
 /* SQL */
 if (!defined('SQL')) {
-    exit("ERROR: Database ins't configured, please read config.default.php");
+    exit('ERROR: Database ins\'t configured, please read config.default.php');
 } else {
     core_setup_database();
 }
@@ -33,41 +33,41 @@ if (!defined('SQL')) {
 core_set_config();
 
 /* FILTER */
-require_once "includes/" . FILTER . ".class.php";
+require_once ('includes/' . FILTER . '.class.php');
 $filter = new SecureFilter();
 
 /* PLUGINS */
-require_once "includes/plugins.class.php";
+require_once ('includes/plugins.class.php');
 $plugins = new Plugins();
 
 /* CHECK FOR INSTALL */
 core_check_install();
 
 //SET CORE VERSIONS
-$plugins->setDepend("CORE", CORE_VERSION);
-$plugins->setDepend("DEBUG", CORE_VERSION);
-$plugins->setDepend("SQL", CORE_VERSION);
+$plugins->setDepend('CORE', CORE_VERSION);
+$plugins->setDepend('DEBUG', CORE_VERSION);
+$plugins->setDepend('SQL', CORE_VERSION);
 
 /* TIME UTILS */
-require_once "includes/time-utils.inc.php";
+require_once ('includes/time-utils.inc.php');
 
 if (mobileDetect()) {
     $cfg['ITS_MOBIL'] = 1;
-    $cfg['img_selector'] = "mobil";
+    $cfg['img_selector'] = 'small';
 } else {
     $cfg['ITS_MOBIL'] = 0;
-    $cfg['img_selector'] = "desktop";
+    $cfg['img_selector'] = 'large';
 }
 $cfg['ITS_BOT'] = botDetect();
 
 $plugins->Init();
-do_action("init_core");
+do_action('init_core');
 
 /*
  * FIN LOAD
  */
-$module = $filter->get_strict_chars("module", 255, 1);
-$page = $filter->get_strict_chars("page", 255, 1);
+$module = $filter->get_strict_chars('module', 255, 1);
+$page = $filter->get_strict_chars('page', 255, 1);
 
 if (!empty($module) && !empty($page)) {
     if (!core_check_module($module)) {
@@ -92,4 +92,4 @@ if (!empty($module) && !empty($page)) {
 }
 $frontend->send_page();
 
-do_action("finalize");
+do_action('finalize');

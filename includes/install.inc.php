@@ -4,9 +4,9 @@
  */
 !defined('IN_WEB') ? exit : true;
 
-require_once "install.db.php";
+require_once ('install.db.php');
 
-$step = $filter->get_int("step", 1, 1);
+$step = $filter->get_int('step', 1, 1);
 
 if ($step == null || $step == false) {
     $step = 0;
@@ -32,8 +32,8 @@ if ($step == null || $step == false) {
 
         if ($step == 1) {
 
-            if ($db->table_exist("config") || $db->table_exist("plugin")) {
-                exit("ERROR: Core tables exist, install failed? drop tables");
+            if ($db->table_exist('config') || $db->table_exist('plugin')) {
+                exit('ERROR: Core tables exist, install failed? drop tables');
             }
             foreach ($core_database as $query) {
                 $db->query($query);
@@ -51,27 +51,27 @@ if ($step == null || $step == false) {
 
 
                 <?php
-                $provide_results = $plugins->getPluginProvide("SESSIONS");
+                $provide_results = $plugins->getPluginProvide('SESSIONS');
 
                 foreach ($provide_results as $provider) {
                     if ($plugins->check_depends($provider->depends)) {
                         if ($first) {
                             $first = false;
-                            echo "<input checked type='radio' name='session_mgr' value='$provider->plugin_name'>$provider->plugin_name<br\>";
+                            echo '<input checked type="radio" name="session_mgr" value="' . $provider->plugin_name . '">' . $provider->plugin_name . '<br\>';
                         } else {
-                            echo "<input type='radio' name='session_mgr' value='$provider->plugin_name'>$provider->plugin_name<br\>";
+                            echo '<input type="radio" name="session_mgr" value="' . $provider->plugin_name . '">' . $provider->plugin_name . '<br\>';
                         }
                     } else {
-                        echo "<input type='radio' name='sessions' value='none'>None</option>";
+                        echo '<input type="radio" name="sessions" value="none">None</option>';
                     }
                     require_once("plugins/$provider->plugin_name/$provider->main_file");
                     $plugins->includePluginFiles($provider->plugin_name);
                     $func_plugInstallInfo = $provider->function_pre_install_info;
 
                     if (function_exists($func_plugInstallInfo)) {
-                        echo "<p>" . $func_plugInstallInfo() . "</p>";
+                        echo '<p>' . $func_plugInstallInfo() . '</p>';
                     }
-                    echo "<hr/>";
+                    echo '<hr/>';
                 }
                 ?>
 
@@ -80,7 +80,7 @@ if ($step == null || $step == false) {
 
                 <?php
                 $first = true;
-                $provide_results = $plugins->getPluginProvide("TPL");
+                $provide_results = $plugins->getPluginProvide('TPL');
 
                 foreach ($provide_results as $provider) {
                     if ($first) {
@@ -137,37 +137,37 @@ if ($step == null || $step == false) {
         if ($step == 2) {
 
             $set_ary = [
-                "enabled" => 1,
-                "core" => 1,
-                "autostart" => 1,
-                "installed" => 1
+                'enabled' => 1,
+                'core' => 1,
+                'autostart' => 1,
+                'installed' => 1
             ];
 
-            $session_mgr = $filter->post_AZChar("session_mgr", 255, 1);
-            $tpl_mgr = $filter->post_AZChar("tpl_mgr", 255, 1);
-            $admin_mgr = $filter->post_AZChar("admin_mgr", 255, 1);
-            $frontend_mgr = $filter->post_AZChar("frontend_mgr", 255, 1);
+            $session_mgr = $filter->post_AZChar('session_mgr', 255, 1);
+            $tpl_mgr = $filter->post_AZChar('tpl_mgr', 255, 1);
+            $admin_mgr = $filter->post_AZChar('admin_mgr', 255, 1);
+            $frontend_mgr = $filter->post_AZChar('frontend_mgr', 255, 1);
 
             if (!isset($session_mgr) || !isset($tpl_mgr) || !isset($admin_mgr)) {
-                die("ERROR basic core plugins missing");
+                die('ERROR basic core plugins missing');
             }
 
             $plugin = $plugins->getPluginByName($session_mgr);
             require_once("plugins/$plugin->plugin_name/$plugin->main_file");
             $func_plugInstall = $plugin->function_install;
             if (!function_exists($func_plugInstall) || !$func_plugInstall()) {
-                die($plugin->plugin_name . "Install error");
+                die($plugin->plugin_name . 'Install error');
             } else {
-                $db->update("plugins", $set_ary, ["plugin_name" => $plugin->plugin_name]);
+                $db->update('plugins', $set_ary, ['plugin_name' => $plugin->plugin_name]);
             }
 
             $plugin = $plugins->getPluginByName($tpl_mgr);
             require_once("plugins/$plugin->plugin_name/$plugin->main_file");
             $func_plugInstall = $plugin->function_install;
             if (!function_exists($func_plugInstall) || !$func_plugInstall()) {
-                die($plugin->plugin_name . "Install error");
+                die($plugin->plugin_name . 'Install error');
             } else {
-                $db->update("plugins", $set_ary, ["plugin_name" => $plugin->plugin_name]);
+                $db->update('plugins', $set_ary, ['plugin_name' => $plugin->plugin_name]);
             }
 
 
@@ -175,9 +175,9 @@ if ($step == null || $step == false) {
             require_once("plugins/$plugin->plugin_name/$plugin->main_file");
             $func_plugInstall = $plugin->function_install;
             if (!function_exists($func_plugInstall) || !$func_plugInstall()) {
-                die($plugin->plugin_name . "Install error");
+                die($plugin->plugin_name . 'Install error');
             } else {
-                $db->update("plugins", $set_ary, ["plugin_name" => $plugin->plugin_name]);
+                $db->update('plugins', $set_ary, ['plugin_name' => $plugin->plugin_name]);
             }
 
 
@@ -185,24 +185,24 @@ if ($step == null || $step == false) {
             require_once("plugins/$plugin->plugin_name/$plugin->main_file");
             $func_plugInstall = $plugin->function_install;
             if (!function_exists($func_plugInstall) || !$func_plugInstall()) {
-                die($plugin->plugin_name . "Install error");
+                die($plugin->plugin_name . 'Install error');
             } else {
-                $db->update("plugins", $set_ary, ["plugin_name" => $plugin->plugin_name]);
+                $db->update('plugins', $set_ary, ['plugin_name' => $plugin->plugin_name]);
             }
 
             //TODO: Search for core dependeces and mark as core
-            if ($plugin->plugin_name == "SimpleFrontend") {
-                $plugin = $plugins->getPluginByName("Blocks");
+            if ($plugin->plugin_name == 'SimpleFrontend') {
+                $plugin = $plugins->getPluginByName('Blocks');
                 require_once("plugins/$plugin->plugin_name/$plugin->main_file");
                 $func_plugInstall = $plugin->function_install;
                 if (!function_exists($func_plugInstall) || !$func_plugInstall()) {
-                    die($plugin->plugin_name . "Install error");
+                    die($plugin->plugin_name . 'Install error');
                 } else {
-                    $db->update("plugins", $set_ary, ["plugin_name" => $plugin->plugin_name]);
+                    $db->update('plugins', $set_ary, ['plugin_name' => $plugin->plugin_name]);
                 }
             }
 
-            $db->update("config", ["cfg_value" => 1], ["cfg_key" => "CORE_INSTALLED", "plugin" => "CORE"]);
+            $db->update('config', ['cfg_value' => 1], ['cfg_key' => 'CORE_INSTALLED', 'plugin' => 'CORE']);
             ?>   
             <p>Installation finished</p>
             <?php
