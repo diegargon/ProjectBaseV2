@@ -27,14 +27,14 @@ class ImageLib_Thumbs_Thread extends Thread {
         }
 
         if ($original_type === 1) {
-            $imgt = "ImageGIF";
-            $imgcreatefrom = "ImageCreateFromGIF";
+            $imgt = 'ImageGIF';
+            $imgcreatefrom = 'ImageCreateFromGIF';
         } else if ($original_type === 2) {
-            $imgt = "ImageJPEG";
-            $imgcreatefrom = "ImageCreateFromJPEG";
+            $imgt = 'ImageJPEG';
+            $imgcreatefrom = 'ImageCreateFromJPEG';
         } else if ($original_type === 3) {
-            $imgt = "ImagePNG";
-            $imgcreatefrom = "ImageCreateFromPNG";
+            $imgt = 'ImagePNG';
+            $imgcreatefrom = 'ImageCreateFromPNG';
         } else {
             return false;
         }

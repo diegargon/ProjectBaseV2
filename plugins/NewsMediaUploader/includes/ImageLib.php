@@ -13,12 +13,12 @@ class ImageLib {
     }
 
     private function set_engine_info() {
-        if (( extension_loaded('gd')) && function_exists("gd_info")) {
+        if (( extension_loaded('gd')) && function_exists('gd_info')) {
             $info = gd_info();
             preg_match('/\d/', $info['GD Version'], $version);
             ($version[0] >= 2) ? $truecolor = 1 : $truecolor = 0;
             $this->engine_info['SUPPORT'] = 1;
-            $this->engine_info['TYPE'] = "GD";
+            $this->engine_info['TYPE'] = 'GD';
             $this->engine_info['VERSION'] = $version;
             $this->engine_info['TRUCOLOR'] = $truecolor;
         } else {
@@ -53,14 +53,14 @@ class ImageLib {
         $dest_y = intval(($thumbnail_height - $new_height) / 2);
 
         if ($original_type === 1) {
-            $imgt = "ImageGIF";
-            $imgcreatefrom = "ImageCreateFromGIF";
+            $imgt = 'ImageGIF';
+            $imgcreatefrom = 'ImageCreateFromGIF';
         } else if ($original_type === 2) {
-            $imgt = "ImageJPEG";
-            $imgcreatefrom = "ImageCreateFromJPEG";
+            $imgt = 'ImageJPEG';
+            $imgcreatefrom = 'ImageCreateFromJPEG';
         } else if ($original_type === 3) {
-            $imgt = "ImagePNG";
-            $imgcreatefrom = "ImageCreateFromPNG";
+            $imgt = 'ImagePNG';
+            $imgcreatefrom = 'ImageCreateFromPNG';
         } else {
             return false;
         }
@@ -97,14 +97,14 @@ class ImageLib {
         }
 
         if ($original_type === 1) {
-            $imgt = "ImageGIF";
-            $imgcreatefrom = "ImageCreateFromGIF";
+            $imgt = 'ImageGIF';
+            $imgcreatefrom = 'ImageCreateFromGIF';
         } else if ($original_type === 2) {
-            $imgt = "ImageJPEG";
-            $imgcreatefrom = "ImageCreateFromJPEG";
+            $imgt = 'ImageJPEG';
+            $imgcreatefrom = 'ImageCreateFromJPEG';
         } else if ($original_type === 3) {
-            $imgt = "ImagePNG";
-            $imgcreatefrom = "ImageCreateFromPNG";
+            $imgt = 'ImagePNG';
+            $imgcreatefrom = 'ImageCreateFromPNG';
         } else {
             return false;
         }
