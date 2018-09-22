@@ -8,16 +8,16 @@
 function SimpleCats_AdminInit() {
     global $plugins;
 
-    $plugins->express_start("SimpleCategories") ? register_action("add_admin_menu", "SimpleCats_AdminMenu", 5) : null;
+    $plugins->express_start('SimpleCategories') ? register_action('add_admin_menu', 'SimpleCats_AdminMenu', 5) : null;
 }
 
 function SimpleCats_AdminMenu($params) {
     global $plugins;
 
-    $tab_num = $plugins->getPluginID("SimpleCategories");
+    $tab_num = $plugins->getPluginID('SimpleCategories');
     if ($params['admtab'] == $tab_num) {
-        register_uniq_action("admin_get_aside_menu", "SimpleCats_AdminAside", $params);
-        register_uniq_action("admin_get_section_content", "SimpleCats_AdminContent", $params);
+        register_uniq_action('admin_get_aside_menu', 'SimpleCats_AdminAside', $params);
+        register_uniq_action('admin_get_section_content', 'SimpleCats_AdminContent', $params);
         return "<li class='tab_active'><a href='{$params['url']}&admtab=$tab_num'>SimpleCats</a></li>";
     } else {
         return "<li><a href='{$params['url']}&admtab=$tab_num'>SimpleCats</a></li>";
@@ -40,12 +40,12 @@ function SimpleCats_AdminContent($params) {
     $page_data = "";
 
     if ($params['opt'] == 1 || $params['opt'] == false) {
-        $page_data = "<h1>" . $LNG['L_GENERAL'] . ": " . $LNG['L_PL_STATE'] . "</h1>";
-        $page_data .= Admin_GetPluginState("SimpleCategories");
+        $page_data = '<h1>' . $LNG['L_GENERAL'] . ': ' . $LNG['L_PL_STATE'] . '</h1>';
+        $page_data .= Admin_GetPluginState('SimpleCategories');
     } else if ($params['opt'] == 2) {
         $page_data .= SimpleCats_AdminCats();
     } else if ($params['opt'] == 4) {
-        $page_data .= AdminPluginConfig("SimpleCategories");
+        $page_data .= AdminPluginConfig('SimpleCategories');
     }
 
     return $page_data;
@@ -54,7 +54,7 @@ function SimpleCats_AdminContent($params) {
 function SimpleCats_AdminCats($plugin = null) {
     global $cfg, $ml, $ctgs, $tpl;
 
-    $tpl->getCSS_filePath("SimpleCategories");
+    $tpl->getCSS_filePath('SimpleCategories');
 
     if (defined('MULTILANG')) {
         $langs = $ml->get_site_langs();
@@ -68,13 +68,13 @@ function SimpleCats_AdminCats($plugin = null) {
     isset($_POST['DelCatSubmit']) ? SimpleCats_DelCategory() : null;
 
     /* NEW CAT */
-    $catdata['catrow_new'] = "";
-    $catdata['catlist'] = "";
+    $catdata['catrow_new'] = '';
+    $catdata['catlist'] = '';
 
     foreach ($langs as $lang) {
         $catdata['catrow_new'] .= "<label>{$lang['lang_name']}</label> <input type='text' name='{$lang['lang_id']}' value='' />";
     }
-    $content = $tpl->getTPL_file("SimpleCategories", "adm_create_cat", $catdata);
+    $content = $tpl->getTPL_file('SimpleCategories', 'adm_create_cat', $catdata);
 
     /* MODIFY */
     $cats = $ctgs->getCategories_all_lang($plugin);
@@ -113,8 +113,8 @@ function SimpleCats_AdminCats($plugin = null) {
                 $foundit = 0;
             }
 
-            $content .= $tpl->getTPL_file("SimpleCategories", "adm_modify_cat", $catdata);
-            $catdata['catlist'] = "";
+            $content .= $tpl->getTPL_file('SimpleCategories', 'adm_modify_cat', $catdata);
+            $catdata['catlist'] = '';
             $counter++;
         }
     }
@@ -133,18 +133,18 @@ function SimpleCats_ModCategories() {
 
     foreach ($langs as $lang) {
         $lang_id = $lang['lang_id'];
-        $posted_name = $filter->post_alphanum_middle_underscore_unicode("$lang_id"); // field name value its 1 or 2 depend of lang_id, we get GET['1']
+        $posted_name = $filter->post_alphanum_middle_underscore_unicode($lang_id); // field name value its 1 or 2 depend of lang_id, we get GET['1']
 
         if (!empty($posted_name)) {
-            $posted_cid = $filter->post_int("cid");
-            $posted_father = $filter->post_int("father", 32767, 1);
-            $posted_weight = $filter->post_int("weight", 128, 1);
+            $posted_cid = $filter->post_int('cid');
+            $posted_father = $filter->post_int('father', 32767, 1);
+            $posted_weight = $filter->post_int('weight', 128, 1);
             if ($posted_cid != false) {
                 empty($posted_father) ? $posted_father = 0 : null;
                 empty($posted_weight) ? $posted_weight = 0 : null;
-                $query = $db->select_all("categories", ["cid" => "$posted_cid", "lang_id" => "$lang_id"]);
+                $query = $db->select_all('categories', ['cid' => $posted_cid, 'lang_id' => $lang_id]);
                 if ($db->num_rows($query) > 0) {
-                    $db->update("categories", ["name" => "$posted_name", "father" => "$posted_father", "weight" => "$posted_weight"], ["cid" => "$posted_cid", "lang_id" => "$lang_id"]);
+                    $db->update("categories", ['name' => $posted_name, 'father' => $posted_father, 'weight' => $posted_weight], ['cid' => $posted_cid, 'lang_id' => $lang_id]);
                 }
             }
         }
@@ -154,30 +154,28 @@ function SimpleCats_ModCategories() {
 function SimpleCats_NewCategory($plugin) {
     global $filter, $ml, $db;
 
-    $new_cid = $db->get_next_num("categories", "cid");
+    $new_cid = $db->get_next_num('categories', 'cid');
 
-    if (defined('MULTILANG')) {
-        $langs = $ml->get_site_langs();
-    } else {
-        $langs['lang_id'] = 1;
-    }
+    (defined('MULTILANG')) ? $langs = $ml->get_site_langs() : $langs['lang_id'] = 1;
+
     !$plugin ? $plugin = "General" : null;
 
     foreach ($langs as $lang) {
         $lang_id = $lang['lang_id'];
-        $posted_name = $filter->post_alphanum_middle_underscore_unicode("$lang_id"); //POST['1'] 2... id return text value
-        $posted_father = $filter->post_int("father", 32767, 1);
-        $posted_weight = $filter->post_int("weight", 127, 1);
+        $posted_name = $filter->post_alphanum_middle_underscore_unicode($lang_id); //POST['1'] 2... id return text value
+        $posted_father = $filter->post_int('father', 32767, 1);
+        $posted_weight = $filter->post_int('weight', 127, 1);
         if (!empty($posted_name)) {
             $new_cat_ary = [
-                "cid" => "$new_cid",
-                "lang_id" => "{$lang['lang_id']}",
+                "cid" => $new_cid,
+                "lang_id" => $lang['lang_id'],
                 "plugin" => $plugin,
-                "name" => "$posted_name",
-                "father" => "$posted_father",
-                "weight" => "$posted_weight"
+                "name" => $posted_name,
+                "father" => $posted_father,
             ];
-            $db->insert("categories", $new_cat_ary);
+            empty($posted_weight) ? $new_cat_ary['weight'] = 0 : $new_cat_ary['posted_weight'];
+
+            $db->insert('categories', $new_cat_ary);
         }
     }
 }
@@ -185,7 +183,7 @@ function SimpleCats_NewCategory($plugin) {
 function SimpleCats_DelCategory() {
     global $filter, $db;
 
-    if (( $posted_cid = $filter->post_int("cid"))) {
-        $db->delete("categories", ['cid' => $posted_cid]);
+    if (( $posted_cid = $filter->post_int('cid'))) {
+        $db->delete('categories', ['cid' => $posted_cid]);
     }
 }

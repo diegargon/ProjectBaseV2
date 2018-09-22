@@ -4,7 +4,6 @@
  *  Copyright @ 2016 - 2018 Diego Garcia
  */
 
-
 /* INSTALL */
 
 /* CONFIG */
@@ -23,7 +22,7 @@ CREATE TABLE `" . DB_PREFIX . "categories` (
   `lang_id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
   `father` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
-  `weight` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `weight` tinyint(3) UNSIGNED NOT NULL DEFAULT '3',
   `views` int(10) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . ";
 ";
@@ -48,9 +47,7 @@ $simplecats_db_install [] = "INSERT INTO `pb_categories` (`cid`, `plugin`, `lang
 (7, 'News', 2, 'Politics', 5, 0, 0);
 ";
 
-
 /* UNINSTALL */
-
 
 $simplecats_db_uninstall [] = "DELETE FROM `" . DB_PREFIX . "config` WHERE plugin = 'SimpleCategories'";
 $simplecats_db_uninstall [] = "DELETE FROM `" . DB_PREFIX . "plugins` WHERE plugin_name = 'SimpleCategories'";

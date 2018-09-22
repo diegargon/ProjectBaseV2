@@ -5,29 +5,29 @@
  */
 !defined('IN_WEB') ? exit : true;
 
-require_once("includes/news_common.php");
+require_once('includes/news_common.php');
 
-do_action("section_page_begin");
+do_action('section_page_begin');
 
-$tpl->getCSS_filePath("News");
-$tpl->getCSS_filePath("News", "News-mobile");
+$tpl->getCSS_filePath('News');
+$tpl->getCSS_filePath('News', 'News-mobile');
 
-if (!($plugins->express_start_provider("CATS"))) {
+if (!($plugins->express_start_provider('CATS'))) {
     $frontend->message_box(['msg' => 'L_E_PL_CANTEXPRESS']);
     return false;
 }
 
-if (empty($category_list = $filter->get_UTF8_txt("section")) || preg_match("/\s+/", $category_list)) {
+if (empty($category_list = $filter->get_UTF8_txt('section')) || preg_match("/\s+/", $category_list)) {
     return $frontend->message_box(['msg' => 'L_NEWS_E_SEC_NOEXISTS']);
 }
 
-if (!$category = $ctgs->getCatIDbyName_path("News", $category_list)) {
+if (!$category_id = $ctgs->getCatIDbyName_path('News', $category_list)) {
     return $frontend->message_box(['msg' => 'L_NEWS_E_SEC_NOEXISTS']);
 }
 
 //HEAD MOD
-$cfg['PAGE_TITLE'] = $cfg['WEB_NAME'] . ": " . $category_list;
-$cfg['PAGE_DESC'] = $cfg['WEB_NAME'] . ": " . $category_list;
+$cfg['PAGE_TITLE'] = $cfg['WEB_NAME'] . ': ' . $category_list;
+$cfg['PAGE_DESC'] = $cfg['WEB_NAME'] . ': ' . $category_list;
 //END HEAD MOD
 /*
  * TODO:  VERY MESSY TEMPLATE LOGIC FIX
@@ -35,7 +35,7 @@ $cfg['PAGE_DESC'] = $cfg['WEB_NAME'] . ": " . $category_list;
 $limit = $cfg['news_section_getnews_limit'];
 
 $q_opt = ['lead' => 1, 'childs' => 1, 'limit' => $limit];
-$q_where = ['category' => $category];
+$q_where = ['category' => $category_id];
 
 $user = $sm->getSessionUser();
 
@@ -74,7 +74,7 @@ $section_data['TPL_CTRL'] = 1;
 $section_data['START_SECTION'] = 1;
 $section_data['END_SECTION'] = 0;
 $section_data['SECTIONS'] = $cfg['news_section_sections'];
-$content = "";
+$content = '';
 
 foreach ($news_db as $news) {
     $num_items == $counter ? $section_data['TPL_FOOT'] = 1 : $section_data['TPL_FOOT'] = 0;
@@ -83,7 +83,7 @@ foreach ($news_db as $news) {
     //ARTICLE DATA
     if ($cfg['FRIENDLY_URL']) {
         $friendly_title = news_friendly_title($news['title']);
-        $section_data['url'] = "/" . $cfg['WEB_LANG'] . "/news/{$news['nid']}/{$news['page']}/{$news['lang_id']}/$friendly_title";
+        $section_data['url'] = '/' . $cfg['WEB_LANG'] . "/news/{$news['nid']}/{$news['page']}/{$news['lang_id']}/$friendly_title";
     } else {
         $section_data['url'] = "/{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news['nid']}&lang=" . $cfg['WEB_LANG'] . "&npage={$news['page']}&news_lang_id={$news['lang_id']}";
     }
@@ -91,7 +91,7 @@ foreach ($news_db as $news) {
     $section_data['lead'] = $news['lead'];
     $section_data['featured'] = $news['featured'];
     $section_data['date'] = format_date($news['created']);
-    $content .= $tpl->getTPL_file("News", "news_section", $section_data);
+    $content .= $tpl->getTPL_file('News', 'news_section', $section_data);
     //
     $section_data['START_SECTION'] = 0;
     if ($section_data['END_SECTION'] == 1) {
