@@ -42,16 +42,17 @@ class Categories {
     }
 
     function getCatIDbyName_path($plugin, $cat_path) {
+        global $cfg;
         // thanks to mickmackusa @ StackOverflow
-        $cfg['categories_separator'] = "/";
-        $breadcrumbs = explode($cfg['categories_separator'], trim($cat_path, "/"));
+
+        $breadcrumbs = explode($cfg['categories_separator'], trim($cat_path, $cfg['categories_separator']));
 
         $parent = 0;
         foreach ($breadcrumbs as $crumb) {
             $id = false;
             foreach ($this->categories as $row) {
-                if ($row["name"] == $crumb && $parent == $row["father"] && $row['plugin'] == $plugin) {
-                    $id = $parent = $row["cid"];
+                if ($row['name'] == $crumb && $parent == $row['father'] && $row['plugin'] == $plugin) {
+                    $id = $parent = $row['cid'];
                     break;
                 }
             }
