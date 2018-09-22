@@ -53,25 +53,27 @@ class Editor {
     function getEditor($conf = null) {
         global $tpl;
 
-        $conf['editor_bar'] = $tpl->getTPL_file("MiniEditor", "MiniEditorBar");
+        $conf['editor_bar'] = $tpl->getTPL_file('MiniEditor', 'MiniEditorBar');
+        isset($conf['text']) ? $conf['text'] = stripcslashes($conf['text']) : null;
         return $tpl->getTPL_file("MiniEditor", "editor", $conf);
     }
 
     function preview() {
         global $db, $filter;
-        $text = $db->escape_strip($filter->post_UTF8_txt("editor_text"));
+        $text = $db->escape_strip($filter->post_UTF8_txt('editor_text'));
         $text = stripcslashes($text);
 
         echo $this->parse($text);
     }
 
-    function parse($text) {       
+    function parse($text) {
         return $this->_parse($text);
     }
+
     private function _parse($text) {
         $text = preg_replace(array_keys($this->mark_codes), array_values($this->mark_codes), $text);
         $text = nl2br($text);
-        $text = preg_replace("/><br \/>(\s*)(<br \/>)?/si", ">", $text);
+        $text = preg_replace('/><br \/>(\s*)(<br \/>)?/si', '>', $text);
         $text = preg_replace('/{STATIC_SRV_URL}/si', $this->srv_url, $text);
         $text = preg_replace('/\[S\]/si', DIRECTORY_SEPARATOR . $this->img_platform . DIRECTORY_SEPARATOR, $text);
         return $text;
