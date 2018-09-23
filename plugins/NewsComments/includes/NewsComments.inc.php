@@ -12,9 +12,9 @@ function News_Comments($news) {
         return false;
     }
 
-    $plugins->express_start_provider("COMMENTS");
+    $plugins->express_start_provider('COMMENTS');
 
-    $comm_conf['plugin'] = "NewsComments";
+    $comm_conf['plugin'] = 'NewsComments';
     $comm_conf['resource_id'] = $news['nid'];
     $comm_conf['lang_id'] = $news['lang_id'];
 
@@ -28,7 +28,7 @@ function News_Comments($news) {
 
     if (!empty($_POST['btnSendNewComment']) && $cfg['nc_allow_new_comments'] && !$news['comments_disabled']) {
         if (!empty($user) || $cfg['nc_allow_anon_comments']) {
-            $comm_conf['comment'] = $filter->post_UTF8_txt("news_comment");
+            $comm_conf['comment'] = $filter->post_UTF8_txt('news_comment');
             $comm_conf['comment'] ? scAddComment($comm_conf) : false;
         }
     }
@@ -46,7 +46,7 @@ function News_Comments($news) {
         }
     }
 
-    $tpl->addto_tplvar("ADD_TO_NEWSSHOW_BOTTOM", $content);
+    $tpl->addto_tplvar('ADD_TO_NEWSSHOW_BOTTOM', $content);
 
     return true;
 }
