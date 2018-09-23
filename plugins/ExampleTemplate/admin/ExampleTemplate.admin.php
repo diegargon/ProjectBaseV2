@@ -17,17 +17,17 @@ function ExampleTemplate_AdminMenu($params) {
     if ($params['admtab'] == $tab_num) {
         register_uniq_action('admin_get_aside_menu', 'ExampleTemplate_AdminAside', $params);
         register_uniq_action('admin_get_section_content', 'ExampleTemplate_admin_content', $params);
-        return '<li class="tab_active"><a href="' . $params['url'] . '&admtab=$tab_num">ExampleTemplate</a></li>';
+        return '<li class="tab_active"><a href="' . $params['url'] . '&admtab=' . $tab_num . '">ExampleTemplate</a></li>';
     } else {
-        return '<li><a href="' . $params['url'] . '&admtab=$tab_num">ExampleTemplate</a></li>';
+        return '<li><a href="' . $params['url'] . '&admtab=' . $tab_num . '">ExampleTemplate</a></li>';
     }
 }
 
 function ExampleTemplate_AdminAside($params) {
     global $LNG;
 
-    return '<li><a href="admin&admtab=' . $params['admtab'] . '&opt=1">' . $LNG['L_PL_STATE'] . '</a></li>\n' .
-            '<li><a href="admin&admtab=' . $params['admtab'] . '&opt=4">' . $LNG['L_PL_CONFIG'] . '</a></li>\n';
+    return '<li><a href="admin&admtab=' . $params['admtab'] . '&opt=1">' . $LNG['L_PL_STATE'] . '</a></li>' .
+            '<li><a href="admin&admtab=' . $params['admtab'] . '&opt=4">' . $LNG['L_PL_CONFIG'] . '</a></li>';
 }
 
 function ExampleTemplate_admin_content($params) {
