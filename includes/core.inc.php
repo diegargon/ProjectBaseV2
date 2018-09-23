@@ -60,7 +60,9 @@ if (mobileDetect()) {
 }
 $cfg['ITS_BOT'] = botDetect();
 
+/* INIT PLUGINS */
 $plugins->Init();
+
 do_action('init_core');
 
 /*
