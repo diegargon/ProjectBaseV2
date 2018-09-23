@@ -21,19 +21,28 @@ function stdGetComments($comm_conf) {
         unset($comm_conf['limit']);
     }
 
-    $query = $db->select_all('comments', $comm_conf, "$LIMIT");
-    $num_comments = $db->num_rows($query);
-    $counter = 0;
+    $query = $db->select_all('comments', $comm_conf, $LIMIT);
+    if ($db->num_rows($query) < 1) {
+        return false;
+    } else {
+        return $db->fetch_all($query);
+    }
+}
 
+function stdFormatComments($comments, $comm_conf) {
+    global $sm, $tpl, $cfg;
+    $counter = 0;
     $content = '';
-    while ($comment_row = $db->fetch($query)) {
+    $num_comments = count($comments);
+
+    foreach ($comments as $comment_row) {
         $counter == 0 ? $comment_row['TPL_FIRST'] = 1 : false;
         $counter == ($num_comments - 1 ) ? $comment_row['TPL_LAST'] = 1 : false;
         $counter++;
 
         $author_data = $sm->getUserByID($comment_row['author_id']);
         $comment_row = array_merge($author_data, $comment_row);
-        do_action($comm_conf['plugin'] . '_get_comments', $comment_row);
+        do_action($comm_conf['plugin'] . '_format_comments', $comment_row);
 
         if ($cfg['FRIENDLY_URL']) {
             $comment_row['p_url'] = '/' . $cfg['WEB_LANG'] . '/profile&viewprofile=' . $author_data['uid'];
@@ -43,6 +52,7 @@ function stdGetComments($comm_conf) {
 
         $content .= $tpl->getTPL_file('StdComments', 'comments', $comment_row);
     }
+
     return $content;
 }
 
