@@ -6,8 +6,12 @@
 !defined('IN_WEB') ? exit : true;
 
 function StdComments_init() {
-    global $tpl;
-
+    global $tpl, $cfg;
+    
+    if ($cfg['stdcomments_disable_by_stress'] && is_server_stressed()) {
+        return false;
+    }
+    
     $tpl->getCSS_filePath('StdComments');
 }
 

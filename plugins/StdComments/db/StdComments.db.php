@@ -16,6 +16,9 @@ CREATE TABLE `" . DB_PREFIX . "comments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . ";
 ";
 
+/* CONFIG */
+$stdComments_database_install[] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('stdComments', 'stdcomments_disable_by_stress', '0');";
+
 $stdComments_database_install[] = "
 ALTER TABLE `" . DB_PREFIX . "comments`
   ADD PRIMARY KEY (`cid`),

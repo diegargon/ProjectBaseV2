@@ -110,7 +110,7 @@ function getServerLoad() {
     return $current_load;
 }
 
-function its_server_stressed() {
+function is_server_stressed() {
     global $cfg;
 
     if (($current_load = getServerLoad())) {

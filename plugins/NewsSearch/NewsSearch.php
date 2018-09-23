@@ -8,6 +8,9 @@
 function NewsSearch_init() {
     global $cfg, $sm, $tpl, $frontend;
 
+    if ($cfg['ns_disable_by_stress'] && is_server_stressed()) {
+        return false;
+    }
     define('NEWS_SEARCH', true);
 
     $user = $sm->getSessionUser();
@@ -27,7 +30,6 @@ function NewsSearch_init() {
         register_action("news_show_page", "NS_news_tag_show_page");
         register_action("news_edit_page_add", "NS_tags_edit_form_add");
         register_action("news_form_update_set", "NS_news_edit_set_tag");
-
     }
 }
 

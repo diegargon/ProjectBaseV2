@@ -6,6 +6,11 @@
 !defined('IN_WEB') ? exit : true;
 
 function NewsComments_init() {
+    global $cfg;
+
+    if ($cfg['nc_disable_by_stress'] && is_server_stressed()) {
+        return false;
+    }
     register_action('news_show_page', 'News_Comments');
 }
 
