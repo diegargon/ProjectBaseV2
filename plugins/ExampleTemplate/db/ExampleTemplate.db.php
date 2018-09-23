@@ -6,7 +6,7 @@
 !defined('IN_WEB') ? exit : true;
 
 $exampleTemplate_database_install[] = "
-CREATE TABLE `" . DB_PREFIX . "ExampleTemplate` (
+CREATE TABLE `" . DB_PREFIX . "example_template` (
   `example_id` int(32) NOT NULL,
   `example_field` varchar(32) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . ";
@@ -15,7 +15,7 @@ CREATE TABLE `" . DB_PREFIX . "ExampleTemplate` (
 /* UNINSTALL */
 
 $exampleTemplate_database_uninstall = [
-    "DROP TABLE `" . DB_PREFIX . "exampletemplate`",
+    "DROP TABLE `" . DB_PREFIX . "example_template`",
     "DELETE FROM `" . DB_PREFIX . "plugins` WHERE plugin_name = 'ExampleTemplate'",
     "DELETE FROM `" . DB_PREFIX . "config` WHERE plugin = 'ExampleTemplate'"
 ];
@@ -24,5 +24,5 @@ $exampleTemplate_database_uninstall = [
  */
 // Example upgrade something.
 $exampleTemplate_database_upgrade_002_to_003[] = "
-ALTER TABLE `" . DB_PREFIX . "exampleTemplate` ADD `test` INT(1) NOT NULL;    
+ALTER TABLE `" . DB_PREFIX . "example_template` ADD `test` INT(1) NOT NULL;    
 ";
