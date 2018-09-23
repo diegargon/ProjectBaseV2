@@ -220,7 +220,7 @@ class Plugins {
             if (file_exists($full_json_filename)) {
                 $jsondata = file_get_contents($full_json_filename);
                 $plugin_data = json_decode($jsondata);
-                $this->debug ? $debug->log('Plugin' . $plugin_data->plugin_name . 'added to the registered', 'PLUGINS', 'INFO') : null;
+                $this->debug ? $debug->log('Plugin ' . $plugin_data->plugin_name . ' added to the registered', 'PLUGINS', 'INFO') : null;
                 array_push($this->registered_plugins, $plugin_data);
             }
         }
@@ -303,7 +303,7 @@ class Plugins {
     function express_start($pluginname) {
         global $debug;
 
-        $this->debug ? $debug->log('Express order to start plugin->' . $pluginname, 'PLUGINS', 'INFO') : null;
+        $this->debug ? $debug->log('Express order to start plugin -> ' . $pluginname, 'PLUGINS', 'INFO') : null;
 
         foreach ($this->enabled_plugins as $plugin) {
             if ($plugin['plugin_name'] == $pluginname) {
@@ -320,7 +320,7 @@ class Plugins {
                 }
             }
         }
-        $this->debug ? $debug->log('Plugin' . $pluginname . 'not exist', 'PLUGINS', 'ERROR') : null;
+        $this->debug ? $debug->log('Plugin ' . $pluginname . ' not exist ', 'PLUGINS', 'ERROR') : null;
 
         return false;
     }
@@ -328,12 +328,12 @@ class Plugins {
     function express_start_provider($provider) {
         global $debug;
 
-        $this->debug ? $debug->log('.Express order to start provider' . $provider, 'PLUGINS', 'INFO') : null;
+        $this->debug ? $debug->log('Express order to start provider ' . $provider, 'PLUGINS', 'INFO') : null;
 
         foreach ($this->enabled_plugins as $plugin) {
             if ($plugin['provide'] == $provider) {
                 if ($this->check_started($plugin['plugin_name'])) {
-                    $this->debug ? $debug->log('Plugin ' . $plugin['plugin_name'] . 'providing ' . $provider . ' already started', 'PLUGINS', 'INFO') : null;
+                    $this->debug ? $debug->log('Plugin ' . $plugin['plugin_name'] . ' providing ' . $provider . ' already started', 'PLUGINS', 'INFO') : null;
                     return true;
                 }
                 if ($this->plugin_check($plugin)) {
@@ -345,7 +345,7 @@ class Plugins {
                 }
             }
         }
-        $this->debug ? $debug->log('Plugin provided ' . $provider . 'not exist', 'PLUGINS', 'ERROR') : null;
+        $this->debug ? $debug->log('Plugin provided ' . $provider . ' not exist', 'PLUGINS', 'ERROR') : null;
 
         return false;
     }
@@ -383,7 +383,7 @@ class Plugins {
 
         $lang_file = "plugins/$plugin/lang/{$cfg['WEB_LANG']}/$plugin.lang.php";
         if (file_exists($lang_file)) {
-            $this->debug ? $debug->log('Loading lang file' . $lang_file, 'PLUGINS', 'INFO') : null;
+            $this->debug ? $debug->log('Loading lang file ' . $lang_file, 'PLUGINS', 'INFO') : null;
             include_once($lang_file);
         }
 
@@ -399,11 +399,11 @@ class Plugins {
         if ($this->debug) {
             if (!empty($inc_file) && file_exists($inc_file)) {
                 include_once($inc_file);
-                $debug->log('Loading file' . $inc_file, 'PLUGINS', 'INFO');
+                $debug->log('Loading file ' . $inc_file, 'PLUGINS', 'INFO');
             }
             if (!empty($inc_file) && file_exists($class_file)) {
                 include_once($class_file);
-                $debug->log('Loading file' . $class_file, 'PLUGINS', 'INFO');
+                $debug->log('Loading file ' . $class_file, 'PLUGINS', 'INFO');
             }
         }
     }
@@ -480,9 +480,9 @@ class Plugins {
             if (!$result) {
                 $this->debug ? $debug->log('Searching for the necessary dependencies... ', 'PLUGINS', 'INFO') : null;
                 if ($this->find_dependencies_and_start($depend->name, $depend->min_version, $depend->max_version)) {
-                    $this->debug ? $debug->log('We found dependencie' . $depend->name . ' for ' . $plugin['plugin_name'], 'PLUGINS', 'INFO') : null;
+                    $this->debug ? $debug->log('We found dependence ' . $depend->name . ' for ' . $plugin['plugin_name'], 'PLUGINS', 'INFO') : null;
                 } else {
-                    $this->debug ? $debug->log('No depedences' . $depend->name . ' for ' . $plugin['plugin_name'] . 'in the registered plugins', 'PLUGINS', 'ERROR') : null;
+                    $this->debug ? $debug->log('No depedence ' . $depend->name . ' for ' . $plugin['plugin_name'] . ' in the registered plugins', 'PLUGINS', 'ERROR') : null;
                     return false;
                 }
             } else {
@@ -502,13 +502,22 @@ class Plugins {
         return false;
     }
 
+    function check_enabled_provide($provide) {
+        foreach ($this->enabled_plugins as $enabled) {
+            if ($enabled['provide'] == $provide) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private function check_if_dependencies_started($depend_name, $min_version, $max_version) {
         global $debug;
 
         if (isset($this->depends_provide[$depend_name])) {
             $version = $this->depends_provide[$depend_name];
             if (($version >= $min_version) && ($version <= $max_version)) {
-                $this->debug ? $debug->log('Dependence '. $depend_name .' already provide', 'PLUGINS', 'INFO') : null;
+                $this->debug ? $debug->log('Dependence ' . $depend_name . ' already provide', 'PLUGINS', 'INFO') : null;
                 return true;
             }
         }
@@ -527,17 +536,17 @@ class Plugins {
                 ) {
                     if ($this->plugin_resolve_depends($plugin)) {//resolv de dependes of the depends
                         if ($plugin['autostart']) {
-                            $this->debug ? $debug->log('Starting '. $depend_name .' as depend', 'PLUGINS', 'INFO') : null;
+                            $this->debug ? $debug->log('Starting ' . $depend_name . ' as depend', 'PLUGINS', 'INFO') : null;
                             $this->start_plugin($plugin);
                         } else {
-                            $this->debug ? $debug->log('NOT Starting  as depend '. $depend_name .' because autostart its off, express start need', 'PLUGINS', 'INFO') : null;
+                            $this->debug ? $debug->log('NOT Starting  as depend ' . $depend_name . ' because autostart its off, express start need', 'PLUGINS', 'INFO') : null;
                         }
                         return true;
                     }
                 }
             }
         }
-        $this->debug ? $debug->log('Failed finding dependence' . $depend_name, 'PLUGINS', 'ERROR') : null;
+        $this->debug ? $debug->log('Failed finding dependence ' . $depend_name, 'PLUGINS', 'ERROR') : null;
         return false;
     }
 
