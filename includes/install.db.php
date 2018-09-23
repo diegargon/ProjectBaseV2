@@ -24,7 +24,7 @@ CREATE TABLE `" . DB_PREFIX . "config` (
   `cfg_key` char(255) NOT NULL,
   `plugin` char (255) NOT NULL,
   `cfg_value` char(255) NOT NULL,
-  `group` char(255) NOT NULL DEFAULT 'L_DEFAULT'
+  `group` char(255) NOT NULL DEFAULT 'L_GENERAL'
 ) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . ";
 
 ";
