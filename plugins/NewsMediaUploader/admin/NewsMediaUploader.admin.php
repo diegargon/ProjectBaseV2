@@ -17,17 +17,17 @@ function NewsMediaUploader_AdminMenu($params) {
     if ($params['admtab'] == $tab_num) {
         register_uniq_action('admin_get_aside_menu', 'NewsMediaUploader_AdminAside', $params);
         register_uniq_action('admin_get_section_content', 'NewsMediaUploader_admin_content', $params);
-        return '<li class="tab_active"><a href="' . $params['url'] . '&admtab=$tab_num">NewsMediaUploader</a></li>';
+        return '<li class="tab_active"><a href="' . $params['url'] . '&admtab=' . $tab_num . '">NewsMediaUploader</a></li>';
     } else {
-        return '<li><a href="' . $params['url'] . '&admtab=$tab_num">NewsMediaUploader</a></li>';
+        return '<li><a href="' . $params['url'] . '&admtab=' . $tab_num . '">NewsMediaUploader</a></li>';
     }
 }
 
 function NewsMediaUploader_AdminAside($params) {
     global $LNG;
 
-    return '<li><a href="admin&admtab=' . $params['admtab'] . '&opt=1">' . $LNG['L_PL_STATE'] . '</a></li>\n' .
-            '<li><a href="admin&admtab=' . $params['admtab'] . '&opt=4">' . $LNG['L_PL_CONFIG'] . '</a></li>\n';
+    return '<li><a href="admin&admtab=' . $params['admtab'] . '&opt=1">' . $LNG['L_PL_STATE'] . '</a></li>' .
+            '<li><a href="admin&admtab=' . $params['admtab'] . '&opt=4">' . $LNG['L_PL_CONFIG'] . '</a></li>';
 }
 
 function NewsMediaUploader_admin_content($params) {

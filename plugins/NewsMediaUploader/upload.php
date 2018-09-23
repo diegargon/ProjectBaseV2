@@ -26,7 +26,7 @@ header("Pragma: no-cache");
 @set_time_limit(5 * 60);
 // Settings
 $targetDir = ini_get('upload_tmp_dir') . DIRECTORY_SEPARATOR . 'plupload';
-$targetDir = $cfg['upload_media_files_dir'];
+$targetDir = $cfg['CORE_PATH'] . $cfg['upload_media_files_dir'];
 $cleanupTargetDir = true; // Remove old files
 $maxFileAge = 5 * 3600; // Temp file age in seconds
 $thumbsDir = $targetDir . DIRECTORY_SEPARATOR . 'thumbs';

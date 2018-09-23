@@ -25,7 +25,7 @@ function NMU_form_add($news) {
 function NMU_upload_list($user) {
     global $db, $cfg;
 
-    $content = '<div id=\"photobanner\">';
+    $content = '<div id="photobanner">';
     $select_ary = [
         'plugin' => 'NewsMediaUploader',
         'source_id' => $user['uid'],
@@ -50,15 +50,15 @@ function NMU_disable_warn() {
 function NMU_convertToBytes($from) { // SO 11807115
     $number = substr($from, 0, -2);
     switch (strtoupper(substr($from, -2))) {
-        case "KB":
+        case 'KB':
             return $number * 1024;
-        case "MB":
+        case 'MB':
             return $number * pow(1024, 2);
-        case "GB":
+        case 'GB':
             return $number * pow(1024, 3);
-        case "TB":
+        case 'TB':
             return $number * pow(1024, 4);
-        case "PB":
+        case 'PB':
             return $number * pow(1024, 5);
         default:
             return $from;

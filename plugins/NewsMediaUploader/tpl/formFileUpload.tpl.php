@@ -57,7 +57,7 @@
             },
             FileUploaded: function (up, file, object) {
                 var myData;
-
+                //console.log(object);console.log(myData); console.log(file);   
                 myData = $.parseJSON(object.response);
                 if (myData.error) {
                     document.getElementById('console').appendChild(document.createTextNode("\nError with " + file.name + ": " + myData.error.code + ": " + myData.error.message));
@@ -66,7 +66,6 @@
                     var textarea = document.getElementById('editor_text');
                     textarea.value += "[localimg w=600]" + myData.result + "[/localimg]";
                 }
-                //console.log(object);console.log(myData); console.log(file);
             }
         }
     });

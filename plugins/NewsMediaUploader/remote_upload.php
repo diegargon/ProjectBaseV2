@@ -58,7 +58,7 @@ $ssl_off = [
 $image = file_get_contents($url, false, stream_context_create($ssl_off));
 
 $fileName = uniqid('file_') . '.' . $image_type;
-$filePath = $cfg['upload_media_files_dir'] . DIRECTORY_SEPARATOR . $fileName;
+$filePath = $cfg['CORE_PATH'] . $cfg['upload_media_files_dir'] . DIRECTORY_SEPARATOR . $fileName;
 if (file_exists($filePath)) {
     die('{"status": "6", "msg": "' . $LNG['L_NMU_E_ALREADY_EXISTS'] . '"}');
     exit();
@@ -76,11 +76,19 @@ $insert_ary = [
 ];
 $db->insert('links', $insert_ary);
 
-$thumbsDir = $cfg['upload_media_files_dir'] . DIRECTORY_SEPARATOR . 'thumbs';
-$mobileDir = $cfg['upload_media_files_dir'] . DIRECTORY_SEPARATOR . 'mobile';
-$desktopDir = $cfg['upload_media_files_dir'] . DIRECTORY_SEPARATOR . 'desktop';
+$thumbsDir = $cfg['CORE_PATH'] . $cfg['upload_media_files_dir'] . DIRECTORY_SEPARATOR . 'thumbs';
+$mobileDir = $cfg['CORE_PATH'] . $cfg['upload_media_files_dir'] . DIRECTORY_SEPARATOR . 'mobile';
+$desktopDir = $cfg['CORE_PATH'] . $cfg['upload_media_files_dir'] . DIRECTORY_SEPARATOR . 'desktop';
 
-
+if (!file_exists($mobileDir)) {
+    @mkdir($mobileDir);
+}
+if (!file_exists($thumbsDir)) {
+    @mkdir($thumbsDir);
+}
+if (!file_exists($desktopDir)) {
+    @mkdir($desktopDir);
+}
 require_once('includes/ImageLib.php');
 $imglib = new ImageLib;
 
