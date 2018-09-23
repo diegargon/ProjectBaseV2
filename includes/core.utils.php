@@ -70,7 +70,7 @@ function remote_check($url) {
     }
 
     $host = parse_url($url, PHP_URL_HOST);
-    $host = $host . "."; // Fully qualified domain ending in dot.
+    $host = $host . "."; // Fully qualified domain ending in dot. (check if the "." fix the next 'FIX:'
 
     putenv('RES_OPTIONS=retrans:1 retry:1 timeout:1 attempts:1');
     //FIX: gethostbyname sometimes not reliable, sometimes or in some servers resolv things like this http://jeihfw and return a IP :/ :?
@@ -85,13 +85,22 @@ function remote_check($url) {
     return true;
 }
 
-/*
+function getServerLoad() {
+    /*
+     *  Return server load respect cpu's number 1.0 = 100% all cores
+     */
 
+    $pattern = '/[^\n]*processor[^\n]*/';
 
-function getserverload() { // Return server load respect cpu's number 1.0 = 100% all cores
     $load = sys_getloadavg();
-    $cmd = "cat /proc/cpuinfo | grep processor | wc -l";
-    $num_cpus = trim(shell_exec($cmd));
+
+    if (!is_readable('/proc/cpuinfo')) {
+        return false;
+    }
+    // lines processor = num processors
+    $matches = [];
+    preg_match_all($pattern, file_get_contents('/proc/cpuinfo'), $matches);
+    $num_cpus = count($matches[0]);
 
     if (empty($load[0]) || empty($num_cpus)) {
         return false;
@@ -104,8 +113,8 @@ function getserverload() { // Return server load respect cpu's number 1.0 = 100%
 function its_server_stressed() {
     global $cfg;
 
-    if (($current_load = getserverload()) != false) {
-        if ($current_load >= $cfg['SERVER_STRESS']) {
+    if (($current_load = getServerLoad())) {
+        if ($current_load >= float($cfg['SERVER_STRESS'])) {
             return true;
         } else {
             return false;
@@ -113,40 +122,3 @@ function its_server_stressed() {
     }
     return false;
 }
-
-
-
-
-function getLib($libname, $version) {
-    //1.0 to 1.9 minor version must be 100% compatible
-    //FIX  if ask for 0.9 and only exist < .9  actually load a minor version
-    $LIBPATH = "libs/";
-
-    if (empty($libname) || !isset($version)) { //can be 0 to 0.*
-        return false;
-    }
-
-    if (preg_match("/./", $version)) {
-        $v_mayor_minor = explode(".", $version);
-    } else {
-        $v_mayor_minor[0] = $version;
-    }
-
-    $libs = glob($LIBPATH . $libname . "-" . $v_mayor_minor[0] . "*", GLOB_ONLYDIR);
-    if (empty($libs)) {
-        return false;
-    }
-    $lib = end($libs); // GLOB SORT END element its the greater minor
-
-    if (file_exists($lib . "/" . $libname . ".php")) {
-        require_once ($lib . '/' . $libname . '.php');
-    } else {
-        return false;
-    }
-    return true;
-}
-
-
-
-
-*/
