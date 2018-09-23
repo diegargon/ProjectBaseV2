@@ -7,11 +7,20 @@
 
 function NMU_form_add($news) {
     global $tpl, $sm, $cfg;
+
+    $user = $sm->getSessionUser();
+
+    if ($cfg['upload_allow_anon'] == 0 && empty($user['uid'])) {
+        $tpl->addto_tplvar('NEWS_FORM_TOP_OPTION', NMU_disable_warn());
+        return false;
+    }
     /*
       if (!empty($news['news_auth']) && $news['news_auth'] == "translator") { //translator can upload new files
       return false;
       }
      */
+    $tpl->getCSS_filePath('NewsMediaUploader');
+
     ($user = $sm->getSessionUser()) ? $extra_content['UPLOAD_EXTRA'] = NMU_upload_list($user) : false;
 
     $tpl->AddScriptFile('standard', 'jquery', 'TOP', null);

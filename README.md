@@ -49,6 +49,7 @@ Author
 
 Lastest add/canges? first latest
 ================================
+* NewsMediaUpload rewrite and works.
 * seperating UI lang from news lang (news_lang)
 * Improved frontend menus
 * Added News Search, NewsComments

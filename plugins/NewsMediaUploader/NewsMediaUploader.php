@@ -6,18 +6,7 @@
 !defined('IN_WEB') ? exit : true;
 
 function NewsMediaUploader_init() {
-
-    global $cfg, $tpl, $sm, $frontend;
-
-    $tpl->getCSS_filePath('NewsMediaUploader');
-    //$tpl->getCSS_filePath("NewsMediaUploader", "NewsMediaUploader-mobile");    
-
-    $user = $sm->getSessionUser();
-
-    if ($cfg['upload_allow_anon'] == 0 && empty($user['uid'])) {
-        $tpl->addto_tplvar('NEWS_FORM_TOP_OPTION', NMU_disable_warn());
-        return false;
-    }
+    global $frontend;
 
     /*
       if ($user && defined('ACL') && $cfg['NMU_ACL_CHECK']) {
@@ -27,8 +16,8 @@ function NewsMediaUploader_init() {
       return false;
       }
       }
-
      */
+
     $frontend->register_page(['module' => 'NewsMediaUploader', 'page' => 'upload', 'type' => 'disk']);
     $frontend->register_page(['module' => 'NewsMediaUploader', 'page' => 'remote_upload', 'type' => 'disk']);
     register_action('news_new_form_add', 'NMU_form_add');
@@ -40,6 +29,7 @@ function NewsMediaUploader_init() {
 function NewsMediaUploader_install() {
     global $db;
     require_once ('db/NewsMediaUploader.db.php');
+    
     foreach ($newsMediaUploader_database_install as $query) {
         if (!$db->query($query)) {
             return false;
