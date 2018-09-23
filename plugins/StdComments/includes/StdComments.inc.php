@@ -4,7 +4,7 @@
  *  Copyright @ 2016 - 2018 Diego Garcia
  */
 
-function scGetComments($comm_conf) {
+function stdGetComments($comm_conf) {
 
     global $tpl, $db, $filter, $sm, $cfg;
 
@@ -46,19 +46,19 @@ function scGetComments($comm_conf) {
     return $content;
 }
 
-function scNewComment() {
+function stdNewComment() {
     global $tpl;
 
     return $tpl->getTPL_file('StdComments', 'new_comment');
 }
 
-function scAddComment($comment) {
+function stdAddComment($comment) {
     global $db;
     $comment['comment'] = $db->escape_strip($comment['comment']);
     $db->insert('comments', $comment);
 }
 
-function scGetNumComm($conf) {
+function stdGetNumComm($conf) {
     global $db;
 
     if (empty($conf['plugin']) || empty($conf['resource_id'])) {
