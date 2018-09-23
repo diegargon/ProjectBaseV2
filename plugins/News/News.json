@@ -36,10 +36,10 @@
             "name": "FRONTEND",
             "min_version": 0.2,
             "max_version": 0.9
-        }         
+        }     
     ],
     "priority": 6,
-    "optional": [
+    "optional": [   
         {
             "name": "MULTILANG",
             "min_version": 0.2,
@@ -47,6 +47,11 @@
         },
         {
             "name": "ACL",
+            "min_version": 0.2,
+            "max_version": 0.9
+        },
+        {
+            "name": "RATINGS",
             "min_version": 0.2,
             "max_version": 0.9
         }        
