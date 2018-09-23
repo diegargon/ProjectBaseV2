@@ -6,7 +6,7 @@
 !defined('IN_WEB') ? exit : true;
 
 $exampleTemplate_database_install[] = "
-CREATE TABLE `" . DB_PREFIX . "exampleTemplate` (
+CREATE TABLE `" . DB_PREFIX . "ExampleTemplate` (
   `example_id` int(32) NOT NULL,
   `example_field` varchar(32) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . ";
