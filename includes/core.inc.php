@@ -53,10 +53,10 @@ require_once ('includes/time-utils.inc.php');
 
 if (mobileDetect()) {
     $cfg['ITS_MOBIL'] = 1;
-    $cfg['img_selector'] = 'small';
+    $cfg['img_selector'] = 'mobil';
 } else {
     $cfg['ITS_MOBIL'] = 0;
-    $cfg['img_selector'] = 'large';
+    $cfg['img_selector'] = 'desktop';
 }
 $cfg['ITS_BOT'] = botDetect();
 
