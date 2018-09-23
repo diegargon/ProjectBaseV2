@@ -6,10 +6,12 @@
 !defined('IN_WEB') ? exit : true;
 
 function SimpleACL_init() {
+    die("ACL Broken");
     define('ACL', TRUE);
     global $acl_auth;
 
     empty($acl_auth) ? $acl_auth = new ACL : false;
+    
 }
 
 function SimpleACL_install() {
