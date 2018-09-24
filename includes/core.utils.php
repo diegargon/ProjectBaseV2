@@ -114,7 +114,7 @@ function is_server_stressed() {
     global $cfg;
 
     if (($current_load = getServerLoad())) {
-        if ($current_load >= float($cfg['SERVER_STRESS'])) {
+        if ($current_load >= (float) $cfg['server_stress']) {
             return true;
         } else {
             return false;
