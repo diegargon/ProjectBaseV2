@@ -15,6 +15,10 @@ if (!($plugins->express_start_provider("EDITOR")) || !($plugins->express_start_p
     return false;
 }
 
+if ($plugins->check_enabled('NewsComments')) {
+    $plugins->express_start('NewsComments');
+}
+
 $tpl->getCSS_filePath("News");
 $tpl->getCSS_filePath("News", "News-mobile");
 
