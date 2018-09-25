@@ -8,10 +8,10 @@
 function get_news_query($where, $q_conf = null, $order = null) {
     global $cfg, $db, $ml, $ctgs;
 
-    empty($q_conf['limit']) ? $limit = " LIMIT " . $cfg['news_dflt_getnews_limit'] : $limit = " LIMIT " . $q_conf['limit'];
-    empty($order) ? $order = "ORDER BY created DESC" : $order = "ORDER BY " . $order;
+    empty($q_conf['limit']) ? $limit = ' LIMIT ' . $cfg['news_dflt_getnews_limit'] : $limit = ' LIMIT ' . $q_conf['limit'];
+    empty($order) ? $order = 'ORDER BY created DESC' : $order = 'ORDER BY ' . $order;
     empty($q_conf['page']) ? $where['page'] = 1 : $where['page'] = $q_conf['page'];
-   
+
     if (!isset($where['moderation']) && $cfg['news_moderation'] == 1) {
         $where['moderation'] = 0;
     }
@@ -20,56 +20,42 @@ function get_news_query($where, $q_conf = null, $order = null) {
         $where['disabled'] = 0;
     }
     if (!isset($q_conf['childs']) || $q_conf['childs'] == 1) {
-        $childs_cats_ids = $ctgs->getCatChildsId("News", $where['category']);
-        $where['category'] = ["value" => "({$where['category']}$childs_cats_ids)", "operator" => "IN"];
+        $childs_cats_ids = $ctgs->getCatChildsId('News', $where['category']);
+        $where['category'] = ['value' => "({$where['category']}$childs_cats_ids)", 'operator' => 'IN'];
     }
 
     if (isset($q_conf['headlines'])) {
-        $what = "nid, lang_id, title, created, page, featured, visits";
+        $what = 'nid, lang_id, title, created, page, featured, visits';
     } else if (isset($q_conf['lead'])) {
-        $what = "nid, lang_id, title, lead, page, created, featured, visits";
+        $what = 'nid, lang_id, title, lead, page, created, featured, visits';
     } else {
-        $what = "nid, lang_id, title, lead, text, page, author_id, created, last_edited, featured, visits, translator_id, tags";
+        $what = 'nid, lang_id, title, lead, text, page, author_id, created, last_edited, featured, visits, translator_id, tags';
     }
     $extra = $order . $limit;
-    $result = $db->select("news", $what, $where, $extra);
+    $result = $db->select('news', $what, $where, $extra);
     return $db->fetch_all($result);
 }
 
 function news_determine_main_image($news) {
     $news_body = $news['text'];
-    $match_regex = "/\[(img|localimg).*\](.*)\[\/(img|localimg)\]/";
+    $match_regex = '/\[(img|localimg).*\](.*)\[\/(img|localimg)\]/';
     $match = false;
     preg_match($match_regex, $news_body, $match);
 
     return !empty($match[0]) ? $match[0] : false;
 }
 
-function news_get_related($nid) {
-    global $db;
-
-    $query = $db->select_all("links", array("source_id" => $nid, "plugin" => "News", "type" => "related"));
-    if ($db->num_rows($query) <= 0) {
-        return false;
-    } else {
-        while ($relate_row = $db->fetch($query)) {
-            $related[] = $relate_row;
-        }
-    }
-
-    return $related;
-}
-
 function get_news_byId($nid, $lang_id, $page = null) {
     global $db;
     empty($page) ? $page = 1 : false;
 
-    $where_ary = ["nid" => "$nid", "lang_id" => "$lang_id", "page" => "$page"];
-    $query = $db->select_all("news", $where_ary, "LIMIT 1");
+    $where_ary = ['nid' => $nid, 'lang_id' => $lang_id, 'page' => $page];
+    $query = $db->select_all('news', $where_ary, 'LIMIT 1');
 
-    if ($db->num_rows($query) <= 0) {
-        $query = $db->select_all("news", ["nid" => $nid, "page" => $page], "LIMIT 1");
-        return $db->num_rows($query) > 0 ? "L_NEWS_NOLANG" : "L_NEWS_DELETE_NOEXISTS";
+    //TODO ONE SELECT ALL LANG AND THEN CHOOSE IF EXISTS OR NOT EXIST
+    if ($db->num_rows($query) < 1) { //IF NOT FOUND CHECK IN OTHER LANG        
+        $query = $db->select_all('news', ['nid' => $nid, 'page' => $page], 'LIMIT 1');
+        return $db->num_rows($query) > 0 ? 'L_NEWS_NOLANG' : 'L_NEWS_DELETE_NOEXISTS';
     }
     $news_row = $db->fetch($query);
 
@@ -83,10 +69,29 @@ function get_news_byId($nid, $lang_id, $page = null) {
     return $news_row;
 }
 
-function get_news_source_byID($nid) {
+function get_news_links(& $news_data) {
+    global $db;
+    $query = $db->select_all('links', ['source_id' => $news_data['nid']], 'LIMIT 1');
+
+    if (($news_links = $db->num_rows($query)) <= 0) {
+        return false;
+    } else {
+        $news_data['related'] = '';
+        foreach ($news_links as $news_link) {
+            if ($news_links['type'] == 'related') {
+                $link = urldecode($news_link['link']);
+                $news_data['news_related'] .= '<li><a rel="nofollow" target="_blank" href="' . $link . '">' . $link . '</a></li>';
+            } else if ($news_links['type'] == 'source') {
+                $news_data['news_sources'] = news_format_source($news_link);
+            }
+        }
+    }
+}
+
+function news_get_source($nid) {
     global $db;
 
-    $query = $db->select_all("links", ["source_id" => "$nid", "type" => "source"], "LIMIT 1");
+    $query = $db->select_all('links', ['source_id' => $nid, 'type' => 'source'], 'LIMIT 1');
     if ($db->num_rows($query) <= 0) {
         return false;
     } else {
@@ -95,4 +100,19 @@ function get_news_source_byID($nid) {
     $db->free($query);
 
     return $source_link;
+}
+
+function news_get_related($nid) {
+    global $db;
+
+    $query = $db->select_all('links', ['source_id' => $nid, 'plugin' => 'News', 'type' => 'related']);
+    if ($db->num_rows($query) <= 0) {
+        return false;
+    } else {
+        while ($relate_row = $db->fetch($query)) {
+            $related[] = $relate_row;
+        }
+    }
+
+    return $related;
 }

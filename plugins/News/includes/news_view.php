@@ -6,7 +6,7 @@
 !defined('IN_WEB') ? exit : true;
 
 function news_show_page() {
-    global $cfg, $LNG, $tpl, $sm, $ml, $acl_auth, $filter, $frontend;
+    global $cfg, $tpl, $sm, $ml, $filter, $frontend;
 
     $news_data = [];
     $editor = new Editor();
@@ -33,7 +33,7 @@ function news_show_page() {
         return $frontend->message_box(['msg' => 'L_E_NOVIEWACCESS']);
     }
 
-    news_process_admin_actions($news_data, $news_perms);
+    news_catch_admin_actions($news_data, $news_perms);
 
     if ($cfg['news_moderation'] && $news_data['moderation'] && !$news_perms['news_moderation']) {
         return $frontend->message_box(['msg' => 'L_NEWS_ERROR_WAITINGMOD']);
@@ -66,20 +66,11 @@ function news_show_page() {
     //END HEAD MOD
     !empty($author['avatar']) ? $news_data['author_avatar'] = $author['avatar'] : null;
 
-    if ($cfg['display_news_source'] && ($news_source = get_news_source_byID($news_data['nid'])) != false) {
-        $news_data['news_sources'] = news_format_source($news_source);
-    }
-    if ($cfg['display_news_related'] && ($news_related = news_get_related($news_data['nid'])) != false) {
-        $related_content = "";
-        foreach ($news_related as $related) {
-            $related['link'] = urldecode($related['link']);
-            $related_content .= "<li><a rel='nofollow' target='_blank' href='{$related['link']}'>{$related['link']}</a></li>";
-        }
-        $news_data['news_related'] = $related_content;
-    }
+    get_news_links($news_data);
+
     $cfg['news_breadcrum'] ? $news_data['news_breadcrum'] = getNewsCatBreadcrumb($news_data) : false;
 
-    do_action("news_show_page", $news_data);
+    do_action('news_show_page', $news_data);
 
     ($cfg['ITS_BOT'] && $cfg['INCLUDE_MICRODATA']) ? $news_data['ITEM_OL'] = 1 : null;
 
@@ -113,7 +104,7 @@ function news_show_page() {
     $tpl->addto_tplvar('ADD_TO_BODY', $tpl->getTPL_file('News', 'news_body', $news_data));
 }
 
-function news_process_admin_actions(&$news_data, $perms) {
+function news_catch_admin_actions(&$news_data, $perms) {
     global $filter;
 
     $news_lang_id = $filter->get_int('news_lang_id');
@@ -216,6 +207,7 @@ function news_nav_options($news, $perms) {
 function news_pager($news_page) {
     global $db, $cfg, $ml;
 
+    //TODO another query for the pager? field in news and add/del when add a page?
     $query = $db->select_all('news', ['nid' => $news_page['nid'], 'lang_id' => $news_page['lang_id']]);
     if (($num_pages = $db->num_rows($query)) <= 1) {
         return false;
@@ -226,7 +218,7 @@ function news_pager($news_page) {
     $news_page['page'] == 1 ? $a_class = 'class="active"' : $a_class = '';
     if ($cfg['FRIENDLY_URL']) {
         $friendly_title = news_friendly_title($news_page['title']);
-        $content .= "<li><a $a_class href='/{$cfg['WEB_LANG']}}/news/{$news_page['nid']}/1/{$news_page['lang_id']}/$friendly_title'>1</a></li>";
+        $content .= "<li><a $a_class href='/{$cfg['WEB_LANG']}/news/{$news_page['nid']}/1/{$news_page['lang_id']}/$friendly_title'>1</a></li>";
     } else {
         $content .= "<li><a $a_class href='{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_page['nid']}&lang={$cfg['WEB_LANG']}&news_lang_id={$news_page['lang_id']}&npage=1&news_lang_id={$news_page['lang_id']}'>1</a></li>";
     }
