@@ -1,0 +1,23 @@
+{
+    "plugin_name": "StdRatings",
+    "main_file": "StdRatings.php",
+    "function_init": "StdRatings_init",
+    "function_admin_init": "StdRatings_AdminInit",
+    "function_install": "StdRatings_install",
+    "function_pre_install": "StdRatings_preInstall",
+    "function_pre_install_info": "StdRatings_preInstall_info",
+    "function_upgrade": "StdRatings_upgrade",
+    "function_uninstall": "StdRatings_uninstall",
+    "provide": "RATINGS",
+    "version": 0.2,
+    "depends": [
+        {
+            "name": "SQL",
+            "min_version": 0.2,
+            "max_version": 0.9
+        }
+    ],
+    "priority": 5,
+    "optional": [],
+    "conflicts": []
+}
