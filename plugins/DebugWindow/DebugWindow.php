@@ -6,15 +6,15 @@
 !defined('IN_WEB') ? exit : true;
 
 function DebugWindow_init() {
-    register_action("add_to_footer", "stats_window");
-    register_action("add_to_footer", "debug_window");
+    register_action('add_to_footer', 'stats_window');
+    register_action('add_to_footer', 'debug_window');
 }
 
 function stats_window() {
-    $content = "<p>Memory usage: " . formatBytes(memory_get_usage()) . " / Mememory peak: ";
-    $content .= formatBytes(memory_get_peak_usage()) . "</p>";
-    $content .= "<p>Memory  real usage: " . formatBytes(memory_get_usage(true)) . " / Mememory real peak: ";
-    $content .= formatBytes(memory_get_peak_usage(true)) . "</p>";
+    $content = '<p>Memory usage: ' . formatBytes(memory_get_usage()) . ' / Memory peak: ';
+    $content .= formatBytes(memory_get_peak_usage()) . '</p>';
+    $content .= '<p>Memory  real usage: ' . formatBytes(memory_get_usage(true)) . ' / Memory real peak: ';
+    $content .= formatBytes(memory_get_peak_usage(true)) . '</p>';
     return $content;
 }
 
@@ -26,12 +26,12 @@ function debug_window() {
         ($cfg['smbasic_debug']) ? setSessionDebugDetails() : null;
 
         $q_history = $db->get_query_history();
-        foreach ($q_history as $key => $value) {
-            $debug->log($value, "MYSQL");
+        foreach ($q_history as $value) {
+            $debug->log($value, 'MYSQL');
         }
-        $debug_data = "<div style=\"height:250px;width:100%;border:1px solid #ccc;;overflow:auto;\">";
+        $debug_data = '<div style=\"height:250px;width:100%;border:1px solid #ccc;;overflow:auto;\">';
         $debug_data .= $debug->print_debug();
-        $debug_data .= "</div>";
+        $debug_data .= '</div>';
         return $debug_data;
     }
     return false;

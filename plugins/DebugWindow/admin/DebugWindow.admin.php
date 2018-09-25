@@ -7,16 +7,16 @@
 
 function DebugWindow_AdminInit() {
     global $plugins;
-    $plugins->express_start("DebugWindow") ? register_action("add_admin_menu", "DebugWindow_AdminMenu", "5") : null;
+    $plugins->express_start('DebugWindow') ? register_action('add_admin_menu', 'DebugWindow_AdminMenu', '5') : null;
 }
 
 function DebugWindow_AdminMenu($params) {
     global $plugins;
 
-    $tab_num = $plugins->getPluginID("DebugWindow");
+    $tab_num = $plugins->getPluginID('DebugWindow');
     if ($params['admtab'] == $tab_num) {
-        register_uniq_action("admin_get_aside_menu", "DebugWindow_AdminAside", $params);
-        register_uniq_action("admin_get_section_content", "DebugWindow_admin_content", $params);
+        register_uniq_action('admin_get_aside_menu', 'DebugWindow_AdminAside', $params);
+        register_uniq_action('admin_get_section_content', 'DebugWindow_admin_content', $params);
 
         return "<li class='tab_active'><a href='{$params['url']}&admtab=$tab_num'>DebugWindow</a></li>";
     } else {
@@ -37,9 +37,9 @@ function DebugWindow_admin_content($params) {
 
     if ($params['opt'] == 1 || $params['opt'] == false) {
         $page_data = "<h1>" . $LNG['L_GENERAL'] . ": " . $LNG['L_PL_STATE'] . "</h1>";
-        $page_data .= Admin_GetPluginState("DebugWindow");
+        $page_data .= Admin_GetPluginState('DebugWindow');
     } else if ($params['opt'] == 4) {
-        $page_data .= AdminPluginConfig("DebugWindow");
+        $page_data .= AdminPluginConfig('DebugWindow');
     }
     return $page_data;
 }
