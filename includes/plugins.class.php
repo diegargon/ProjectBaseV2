@@ -502,7 +502,7 @@ class Plugins {
         return false;
     }
 
-    function check_enabled_provide($provide) {
+    function check_enabled_provider($provide) {
         foreach ($this->enabled_plugins as $enabled) {
             if ($enabled['provide'] == $provide) {
                 return true;
