@@ -17,7 +17,7 @@
         if (!empty($data['news_breadcrum'])) {
             ?>
             <div id='news_breadcrum'>
-                <ol <?= isset($data['ITEM_OL']) ? "itemscope itemtype=\"http://schema.org/BreadcrumbList\"" : null; ?> class='breadcrumb'>
+                <ol <?= isset($data['ITEM_OL']) ? 'itemscope itemtype="http://schema.org/BreadcrumbList"' : null; ?> class='breadcrumb'>
                     <?= $data['news_breadcrum'] ?>
                 </ol>
             </div>

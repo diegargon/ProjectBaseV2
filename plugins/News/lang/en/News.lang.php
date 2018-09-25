@@ -11,9 +11,9 @@
 $LNG['L_NEWS_WARN_NOLANG'] = 'Warning: No version of this page in your language';
 $LNG['L_NEWS_NOT_EXIST'] = 'News not exists';
 $LNG['L_CREATE_NEWS'] = 'Create news';
-$LNG['L_NEWS_TITLE'] = 'Title <span class=\"text_small"> (Max/Min ' . $cfg['news_title_max_length'] . '/' . $cfg['news_title_min_length'] . ' characters)</span>';
-$LNG['L_NEWS_LEAD'] = 'Lead <span class=\"text_small\"> (Max/Min ' . $cfg['news_lead_max_length'] . '/' . $cfg['news_lead_min_length'] . ' characters)</span>';
-$LNG['L_NEWS_TEXT'] = 'News text <span class=\"text_small\"> (Max/Min ' . $cfg['news_text_max_length'] . '/' . $cfg['news_text_min_length'] . ' characters)</span>';
+$LNG['L_NEWS_TITLE'] = 'Title <span class="text_small"> (Max/Min ' . $cfg['news_title_max_length'] . '/' . $cfg['news_title_min_length'] . ' characters)</span>';
+$LNG['L_NEWS_LEAD'] = 'Lead <span class="text_small"> (Max/Min ' . $cfg['news_lead_max_length'] . '/' . $cfg['news_lead_min_length'] . ' characters)</span>';
+$LNG['L_NEWS_TEXT'] = 'News text <span class="text_small"> (Max/Min ' . $cfg['news_text_max_length'] . '/' . $cfg['news_text_min_length'] . ' characters)</span>';
 $LNG['L_NEWS_AUTHOR'] = 'Author';
 $LNG['L_NEWS_ANONYMOUS'] = 'Anonymous';
 $LNG['L_NEWS_LANG'] = 'Language';
