@@ -71,17 +71,17 @@ function get_news_byId($nid, $lang_id, $page = null) {
 
 function get_news_links(& $news_data) {
     global $db;
-    $query = $db->select_all('links', ['source_id' => $news_data['nid']], 'LIMIT 1');
 
-    if (($news_links = $db->num_rows($query)) <= 0) {
+    $query = $db->select_all('links', ['source_id' => $news_data['nid']]);
+    if ($db->num_rows($query) < 1) {
         return false;
     } else {
-        $news_data['related'] = '';
-        foreach ($news_links as $news_link) {
-            if ($news_links['type'] == 'related') {
+        $news_data['news_related'] = '';
+        while ($news_link = $db->fetch($query)) {
+            if ($news_link['type'] == 'related') {
                 $link = urldecode($news_link['link']);
                 $news_data['news_related'] .= '<li><a rel="nofollow" target="_blank" href="' . $link . '">' . $link . '</a></li>';
-            } else if ($news_links['type'] == 'source') {
+            } else if ($news_link['type'] == 'source') {
                 $news_data['news_sources'] = news_format_source($news_link);
             }
         }
