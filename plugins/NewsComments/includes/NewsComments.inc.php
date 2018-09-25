@@ -91,15 +91,15 @@ function NewsComments_Addrate(& $comments) {
 
     //TODO MANAGE ANONYMOUS
     foreach ($comments as $key => $comment) {
-        $rate_data['btnExtra'] = " style=\"background: url({$cfg['dflt_vote_visuals_url']}) no-repeat;\" ";
+        $rate_data['BTN_EXTRA'] = " style=\"background: url({$cfg['dflt_vote_visuals_url']}) no-repeat;\" ";
         if ($comment['author_id'] == $user['uid']) {
             $rate_data['show_pointer'] = 0;
-            $rate_data['btnExtra'] .= "disabled";
+            $rate_data['BTN_EXTRA'] .= "disabled";
         } else {
             $rate_data['show_pointer'] = 1;
             foreach ($ratings as $rating) { //buscamos si ya hay algun rating, por usuario al comentario  si es asi deshabilitamos
                 if (($rating['uid'] == $user['uid']) && ($comment['cid'] == $rating['resource_id'] )) {
-                    $rate_data['btnExtra'] .= "disabled";
+                    $rate_data['BTN_EXTRA'] .= "disabled";
                     $rate_data['show_pointer'] = 0;
                     break;
                 }
