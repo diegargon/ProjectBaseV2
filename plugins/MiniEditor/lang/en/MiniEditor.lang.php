@@ -6,10 +6,10 @@
  */
 !defined('IN_WEB') ? exit : true;
 
-$LNG['L_EDITOR_BOLD'] = '<span class=\"bold\">B</span>';
-$LNG['L_EDITOR_ITALIC'] = '<span class=\"italic\">I</span>';
+$LNG['L_EDITOR_BOLD'] = '<span class="bold">B</span>';
+$LNG['L_EDITOR_ITALIC'] = '<span class="italic">I</span>';
 $LNG['L_EDITOR_PARAGRAPH'] = 'P';
-$LNG['L_EDITOR_UNDERLINE'] = '<span class=\"underline\">U</span>';
+$LNG['L_EDITOR_UNDERLINE'] = '<span class="underline">U</span>';
 $LNG['L_EDITOR_H2'] = 'H2';
 $LNG['L_EDITOR_H3'] = 'H3';
 $LNG['L_EDITOR_H4'] = 'H4';
