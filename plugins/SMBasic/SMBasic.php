@@ -15,7 +15,7 @@ function SMBasic_Init() {
     !isset($sm) ? $sm = new SessionManager : null;
     $sm->start();
 
-    register_action("header_menu_element", "SMBasic_navLogReg");
+    register_action('header_menu_element', 'SMBasic_navLogReg');
 
     $frontend->register_page(['module' => 'SMBasic', 'page' => 'login', 'type' => 'disk']);
     $frontend->register_page(['module' => 'SMBasic', 'page' => 'logout', 'type' => 'virtual', 'func' => [$sm, 'logout']]);
@@ -26,7 +26,7 @@ function SMBasic_Init() {
 function SMBasic_Install() {
 
     global $db;
-    require_once "db/SMBasic.db.php";
+    require_once ('db/SMBasic.db.php');
     foreach ($smbasic_database as $query) {
         if ($db->query($query) == false) {
             return false;
@@ -40,8 +40,7 @@ function SMBasic_preInstall() {
 }
 
 function SMBasic_preInstall_info() {
-    //return msg
-    return "This plugin provided a basic session manager";
+    return 'This plugin provided a basic session manager';
 }
 
 function SMBasic_uninstall() {
