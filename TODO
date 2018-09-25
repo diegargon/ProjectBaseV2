@@ -8,9 +8,10 @@ que necesitan la tabla permissions
     en vez registarlos añadirlos a la DB
  - Solucion 3, en la instalacion presentar opcion para activar el ACL y activarlo antes (problema:probablemente necesitara tambien la S1 si se quiere poder activar despues),
    (problema: ACL tambien necesita groups)
-* Añadir config por grupos para luego presentarlos por grupos, ej: L_NEWS_SUBMIT, L_NEWS_VIEW
+* Añadir config por grupos (añadido sin usar)
+para luego presentarlos por grupos, ej: L_NEWS_SUBMIT, L_NEWS_VIEW
 
-* Añadir realname
+* Añadir realname (semi completo, sin probar)
    - Usar nombre real o usuario para noticias? seria caos
    - Lo mejor seria pasar del nombre de usuario y permitir nombres reales 
 
@@ -23,4 +24,4 @@ que necesitan la tabla permissions
 * CRON Plugin y añadir posibilidad de hacer media de los ratings posiblemente registrados y configurados para hacer la media.
 
 * Actualmente News hace dos querys, una para coger la noticia de determinado id/lang y otra para obtener el numero de paginas, para reducidirla a una
-abria que crear el campo en la noticia numero_paginas y llevar cuenta allí cada vez que se añade o se borra una.
+abria que crear el campo en la noticia numero_paginas y llevar cuenta allí cada vez que se añade o se borra una. (añadida ya la columna)
