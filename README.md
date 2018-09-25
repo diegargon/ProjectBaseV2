@@ -49,6 +49,7 @@ Author
 
 Lastest add/canges? first latest
 ================================
+* add preliminar support for ratings on newscomments plugin (optional)
 * add stdRatings for rating things
 * NewsMediaUpload rewrite and works.
 * seperating UI lang from news lang (news_lang)

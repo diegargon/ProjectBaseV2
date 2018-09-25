@@ -9,12 +9,21 @@
 $newsComments_database_install[] = "
     ALTER TABLE `" . DB_PREFIX . "news` ADD `comments_disabled` TINYINT(1) NOT NULL DEFAULT '0';
 ";
+
+$newsComments_database_install[] = "
+    ALTER TABLE `" . DB_PREFIX . "comments` ADD `rating` float(2,1) NOT NULL DEFAULT '0';
+";
+$newsComments_database_install[] = "
+    ALTER TABLE `" . DB_PREFIX . "comments` ADD `rating_close` tinyint(1) NOT NULL DEFAULT '0';
+";
 /* Config */
 $newsComments_database_install[] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('NewsComments', 'newscomments_debug', '0');";
 $newsComments_database_install[] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('NewsComments', 'nc_disable_by_stress', '0');";
 $newsComments_database_install[] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('NewsComments', 'nc_max_comments_perpage', '10');";
 $newsComments_database_install[] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('NewsComments', 'nc_allow_anon_comments', '1');";
-$newsComments_database_install[] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('NewsComments', 'nc_allow_new_comments', '1');";
+$newsComments_database_install[] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('NewsComments', 'nc_vote_comments', '1');";
+$newsComments_database_install[] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('NewsComments', 'nc_allow_vote_comments', '1');";
+$newsComments_database_install[] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('NewsComments', 'dflt_vote_visuals_url', '/plugins/NewsComments/tpl/img/stars.png');";
 /* UNINSTALL */
 $newsComments_database_uninstall = [
     "ALTER TABLE `" . DB_PREFIX . "news` DROP `comments_disabled`;",
