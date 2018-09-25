@@ -30,19 +30,24 @@ function stdGetComments($comm_conf) {
 }
 
 function stdFormatComments($comments, $comm_conf) {
-    global $sm, $tpl, $cfg;
+    global $sm, $tpl, $cfg, $LNG;
     $counter = 0;
     $content = '';
     $num_comments = count($comments);
+
+    do_action($comm_conf['plugin'] . '_format_comments', $comments);
 
     foreach ($comments as $comment_row) {
         $counter == 0 ? $comment_row['TPL_FIRST'] = 1 : false;
         $counter == ($num_comments - 1 ) ? $comment_row['TPL_LAST'] = 1 : false;
         $counter++;
 
-        $author_data = $sm->getUserByID($comment_row['author_id']);
+        if (!$author_data = $sm->getUserByID($comment_row['author_id'])) {
+            $author_data['uid'] = 0;
+            $author_data['username'] = $LNG['L_ANONYMOUS'];
+        }
+
         $comment_row = array_merge($author_data, $comment_row);
-        do_action($comm_conf['plugin'] . '_format_comments', $comment_row);
 
         if ($cfg['FRIENDLY_URL']) {
             $comment_row['p_url'] = '/' . $cfg['WEB_LANG'] . '/profile&viewprofile=' . $author_data['uid'];
