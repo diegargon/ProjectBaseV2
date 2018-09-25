@@ -19,3 +19,8 @@ que necesitan la tabla permissions
 * Añadir por medio de News opcion en profile para cambiar el news lang
 
 * El campo lang de la noticia envia 'en' en vez del ID, cambia y arreglar lo demas.
+
+* CRON Plugin y añadir posibilidad de hacer media de los ratings posiblemente registrados y configurados para hacer la media.
+
+* Actualmente News hace dos querys, una para coger la noticia de determinado id/lang y otra para obtener el numero de paginas, para reducidirla a una
+abria que crear el campo en la noticia numero_paginas y llevar cuenta allí cada vez que se añade o se borra una.
