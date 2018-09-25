@@ -29,7 +29,7 @@ function debug_window() {
         foreach ($q_history as $value) {
             $debug->log($value, 'MYSQL');
         }
-        $debug_data = '<div style=\"height:250px;width:100%;border:1px solid #ccc;;overflow:auto;\">';
+        $debug_data = '<div style="height:250px;width:100%;border:1px solid #ccc;;overflow:auto;">';
         $debug_data .= $debug->print_debug();
         $debug_data .= '</div>';
         return $debug_data;
