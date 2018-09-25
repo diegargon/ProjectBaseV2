@@ -6,7 +6,7 @@
 
 function stdGetComments($comm_conf) {
 
-    global $tpl, $db, $filter, $sm, $cfg;
+    global $db, $filter;
 
     if (empty($comm_conf['plugin']) || empty($comm_conf['resource_id'])) {
         return false;
@@ -31,11 +31,23 @@ function stdGetComments($comm_conf) {
 
 function stdFormatComments($comments, $comm_conf) {
     global $sm, $tpl, $cfg, $LNG;
+
     $counter = 0;
-    $content = '';
+    $uid_list = $content = '';
     $num_comments = count($comments);
 
     do_action($comm_conf['plugin'] . '_format_comments', $comments);
+
+    /* First, retrieve all authors in one query) */
+    foreach ($comments as $comment_row) {
+        if (!empty($comment_row['author_id'])) {
+            !empty($uid_list) ? $uid_list = $comment_row['author_id'] : $uid_list .= $comment_row['author_id'];
+        }
+        if (!empty($comment_row['translator_id'])) {
+            !empty($uid_list) ? $uid_list = $comment_row['translator_id'] : $uid_list .= $comment_row['translator_id'];
+        }
+    }
+    !empty($uid_list) ? $sm->setUsersInCacheByIDs($uid_list) : null;
 
     foreach ($comments as $comment_row) {
         $counter == 0 ? $comment_row['TPL_FIRST'] = 1 : false;
