@@ -5,7 +5,6 @@
  */
 
 function stdGetComments($comm_conf) {
-
     global $db, $filter;
 
     if (empty($comm_conf['plugin']) || empty($comm_conf['resource_id'])) {
@@ -22,11 +21,8 @@ function stdGetComments($comm_conf) {
     }
 
     $query = $db->select_all('comments', $comm_conf, $LIMIT);
-    if ($db->num_rows($query) < 1) {
-        return false;
-    } else {
-        return $db->fetch_all($query);
-    }
+
+    return ($db->num_rows($query) < 1) ? false : $db->fetch_all($query);
 }
 
 function stdFormatComments($comments, $comm_conf) {
@@ -81,8 +77,11 @@ function stdNewComment() {
 
 function stdAddComment($comment) {
     global $db;
+
     $comment['comment'] = $db->escape_strip($comment['comment']);
-    $db->insert('comments', $comment);
+    $r = $db->insert('comments', $comment);
+
+    return $r ? true : false;
 }
 
 function stdGetNumComm($conf) {
