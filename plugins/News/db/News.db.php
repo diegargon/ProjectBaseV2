@@ -12,6 +12,7 @@ CREATE TABLE `" . DB_PREFIX . "news` (
   `title` varchar(255) NOT NULL,
   `lead` text,
   `text` longtext NOT NULL,
+  `num_pages` smallint(8) NOT NULL DEFAULT '1',
   `acl` char(255) DEFAULT NULL,
   `author_id` int(10) UNSIGNED NOT NULL,
   `category` int(10) UNSIGNED NOT NULL,
