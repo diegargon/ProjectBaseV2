@@ -15,19 +15,21 @@ function News_Comments($news) {
 
     $user = $sm->getSessionUser();
 
-    if ($cfg['nc_vote_comments'] && $plugins->check_enabled_provider('RATINGS')) {
-        if ($plugins->express_start_provider('RATINGS')) {
-            $tpl->getCSS_filePath('NewsComments');
-            register_action('NewsComments_format_comments', 'NewsComments_Addrate');
-            if (($_SERVER['REQUEST_METHOD'] === 'POST') &&
-                    ($user_rate = $filter->post_int("comment_rate", 5, 1)) &&
-                    ($cid = $filter->post_int('rate_rid'))
-            ) {
-                if (rating_rate($user['uid'], $cid, 'news_comments_rate', $user_rate)) {
-                    die('[{"status": "6", "msg": "' . $LNG['L_VOTE_SUCCESS'] . '"}]');
-                } else {
-                    die('[{"status": "4", "msg": "' . $LNG['L_VOTE_INTERNAL_ERROR'] . '"}]');
-                }
+    if (!$cfg['ITS_BOT'] && $cfg['nc_vote_comments'] &&
+            $plugins->check_enabled_provider('RATINGS') &&
+            $plugins->express_start_provider('RATINGS')
+    ) {
+        $tpl->AddScriptFile('StdRatings', 'rate', 'BOTTOM');
+        $tpl->getCSS_filePath('NewsComments');
+        register_action('NewsComments_format_comments', 'NewsComments_Addrate');
+
+        if (($_SERVER['REQUEST_METHOD'] === 'POST') &&
+                ( ($filter->post_strict_chars('rate_section')) == 'news_comments_rate')
+        ) {
+            if (rating_rate_getPost('news_comments_rate')) {
+                die('[{"status": "6", "msg": "' . $LNG['L_VOTE_SUCCESS'] . '"}]');
+            } else {
+                die('[{"status": "4", "msg": "' . $LNG['L_VOTE_INTERNAL_ERROR'] . '"}]');
             }
         }
     }
@@ -37,7 +39,6 @@ function News_Comments($news) {
     }
 
     $tpl->AddScriptFile('standard', 'jquery', 'BOTTOM');
-    !$cfg['ITS_BOT'] ? $tpl->AddScriptFile('NewsComments', 'comment_rate', 'BOTTOM') : null;
 
     $comm_conf['plugin'] = 'NewsComments';
     $comm_conf['resource_id'] = $news['nid'];
@@ -69,47 +70,20 @@ function News_Comments($news) {
 }
 
 function NewsComments_Addrate(& $comments) {
-    global $db, $cfg, $tpl, $sm;
 
     if (count($comments) < 1) {
         return false;
     }
 
-    $rating_cids = '';
+    $rating_r_ids = '';
 
     foreach ($comments as $comment) {
-        empty($rating_cids) ? $rating_cids = $comment['cid'] : $rating_cids .= ',' . $comment['cid'];
+        empty($rating_cids) ? $rating_r_ids = $comment['cid'] : $rating_cids .= ',' . $comment['cid'];
     }
 
-    $where_ary['section'] = 'news_comments_rate';
-    $where_ary['resource_id'] = ['value' => '(' . $rating_cids . ')', 'operator' => 'IN'];
-
-    $query = $db->select_all('rating', $where_ary);
-    $ratings = $db->fetch_all($query);
-
-    $user = $sm->getSessionUser();
-
-    //TODO MANAGE ANONYMOUS
+    $ratings_data = ratings_get_ratings($rating_r_ids, 'news_comments_rate');
     foreach ($comments as $key => $comment) {
-        $rate_data['BTN_EXTRA'] = " style=\"background: url({$cfg['dflt_vote_visuals_url']}) no-repeat;\" ";
-        if ($comment['author_id'] == $user['uid']) {
-            $rate_data['show_pointer'] = 0;
-            $rate_data['BTN_EXTRA'] .= "disabled";
-        } else {
-            $rate_data['show_pointer'] = 1;
-            foreach ($ratings as $rating) { //buscamos si ya hay algun rating, por usuario al comentario  si es asi deshabilitamos
-                if (($rating['uid'] == $user['uid']) && ($comment['cid'] == $rating['resource_id'] )) {
-                    $rate_data['BTN_EXTRA'] .= "disabled";
-                    $rate_data['show_pointer'] = 0;
-                    break;
-                }
-            }
-        }
-
-        $rate_stars = rating_css_display($comment['rating']);
-        $rate_data = array_merge($rate_data, $comment, $rate_stars);
-        $rate_content = $tpl->getTpl_file('NewsComments', 'comment_rate', $rate_data);
-        $comments[$key]['COMMENT_EXTRA'] = $rate_content;
+        $comments[$key]['COMMENT_EXTRA'] = ratings_get_content('news_comments_rate', $comment['cid'], $comment['rating'], $comment['author_id'], $comment['lang_id'], $ratings_data);
     }
 }
 
