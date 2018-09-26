@@ -8,10 +8,14 @@
 class SimpleFrontend {
 
     private $db;
-    private $cfg;
     private $nav_menu;
     private $theme;
     private $pages;
+    private $show_load_time;
+    private $load_start_time;
+    private $index_sections;
+    private $display_section_menu;
+    private $show_stats_query;
 
     public function __construct() {
         $this->setConfig();
@@ -104,10 +108,10 @@ class SimpleFrontend {
         echo $web_head;
         //END HEAD
         //BEGIN BODY
-        if ($this->cfg['simplefrontend_nav_menu']) { //we use do_action for select order
+        if ($this->nav_menu) { //we use do_action for select order
             $tpl->addto_tplvar("HEADER_MENU_ELEMENT", do_action("header_menu_element"));
         }
-        if ($this->cfg['display_section_menu']) {
+        if ($this->display_section_menu) {
             $tpl->addto_tplvar("SECTIONS_NAV", do_action("section_nav_element"));
             $tpl->addto_tplvar("SECTIONS_NAV_SUBMENU", do_action("section_nav_subelement"));
         }
@@ -118,8 +122,11 @@ class SimpleFrontend {
         echo $web_body;
         //END BODY
         //BEGIN FOOTER
-        if (defined('SQL') && $this->db != null && $this->cfg['simplefrontend_stats_query']) {
+        if (defined('SQL') && $this->db != null && $this->show_stats_query) {
             $tpl->addto_tplvar("ADD_TO_FOOTER", "<p class='center zero'>Querys(" . $this->db->num_querys() . ")</p>");
+        }
+        if ($this->show_load_time) {
+            $tpl->addto_tplvar("ADD_TO_FOOTER", "<p class='center zero'>Page render in (" . $this->load_start_time . ")</p>");
         }
         $tpl->addto_tplvar("ADD_TO_FOOTER", do_action("add_to_footer"));
 
@@ -142,14 +149,21 @@ class SimpleFrontend {
         $tpl->addto_tplvar("ADD_TO_BODY", $tpl->getTPL_file("SimpleFrontend", "msgbox", $data));
     }
 
+    function setStartTime($start) {
+        $this->load_start_time = $start;
+    }
+
     private function setConfig() {
         global $cfg, $debug, $db, $tpl, $blocks;
 
-        $this->cfg = & $cfg;
         $this->db = & $db;
+        $this->index_sections = $cfg['index_sections'];
+        $this->display_section_menu = $cfg['display_section_menu'];
+        $this->show_stats_query = $cfg['simplefrontend_stats_query'];
+        $this->show_load_time = $cfg['show_load_time'];
 
-        $blocks->register_page("index", $this->cfg['index_sections']);
-        $blocks->register_page("index2", 2);
+        $blocks->register_page("index", $this->index_sections);
+        $blocks->register_page("index2", 2); //test remove later
 
         (defined('DEBUG') && $cfg['simplefrontend_debug']) ? $this->debug = & $debug : $this->debug = false;
         global $debug;

@@ -10,6 +10,10 @@
 
 define('CORE_VERSION', 0.2);
 
+require_once ('includes/core.utils.php');
+$start_time = set_load_time();
+require_once ('includes/core.func.php');
+require_once ('includes/actions.inc.php');
 require_once ('config.default.php');
 file_exists('config/config.inc.php') ? require_once ('config/config.inc.php') : null; //rewrite config
 
@@ -17,10 +21,6 @@ if (defined('DEBUG')) {
     require_once 'includes/' . DEBUG_CORE . '.class.php';
     $debug = new Debug();
 }
-
-require_once ('includes/core.func.php');
-require_once ('includes/core.utils.php');
-require_once ('includes/actions.inc.php');
 
 /* SQL */
 if (!defined('SQL')) {

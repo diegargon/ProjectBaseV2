@@ -122,3 +122,18 @@ function is_server_stressed() {
     }
     return false;
 }
+
+function set_load_time() {
+    $time = microtime();
+    $time = explode(' ', $time);
+    $time = $time[1] + $time[0];
+    return $time;
+}
+
+function get_load_time($start) {
+    $time = microtime();
+    $time = explode(' ', $time);
+    $time = $time[1] + $time[0];
+    $finish = $time;
+    return round(($finish - $start), 4);
+}
