@@ -126,7 +126,7 @@ class SimpleFrontend {
             $tpl->addto_tplvar("ADD_TO_FOOTER", "<p class='center zero'>Querys(" . $this->db->num_querys() . ")</p>");
         }
         if ($this->show_load_time) {
-            $tpl->addto_tplvar("ADD_TO_FOOTER", "<p class='center zero'>Page render in (" . $this->load_start_time . ")</p>");
+            $tpl->addto_tplvar("ADD_TO_FOOTER", "<p class='center zero'>Page render in (" . get_load_time($this->load_start_time) . ")</p>");
         }
         $tpl->addto_tplvar("ADD_TO_FOOTER", do_action("add_to_footer"));
 

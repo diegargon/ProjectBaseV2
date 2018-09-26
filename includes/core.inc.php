@@ -65,6 +65,8 @@ $plugins->Init();
 
 do_action('init_core');
 
+$frontend->setStartTime($start_time);
+
 /*
  * FIN LOAD
  */
