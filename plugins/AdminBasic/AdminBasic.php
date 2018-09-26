@@ -27,7 +27,7 @@ function AdminBasic_init() {
         }
     }
 
-    $frontend->register_page(['module' => 'AdminBasic', 'page' => 'adm', 'type' => 'disk']);
+    $frontend->registerPage(['module' => 'AdminBasic', 'page' => 'adm', 'type' => 'disk']);
 }
 
 function AdminBasic_menu_opt() {

@@ -9,7 +9,7 @@ function news_edit($news_nid, $news_lang_id, $news_page) {
     global $LNG, $tpl, $frontend, $sm;
 
     if (!is_array($news_data = get_news_byId($news_nid, $news_lang_id, $news_page))) {
-        $frontend->message_box(['msg' => $news_data]);
+        $frontend->messageBox(['msg' => $news_data]);
         return false; // error already setting in get_news
     }
 
@@ -27,7 +27,7 @@ function news_edit($news_nid, $news_lang_id, $news_page) {
 
 
     if (!$news_perms['news_edit']) {
-        return $frontend->message_box(['msg' => 'L_E_NOEDITACCESS']);
+        return $frontend->messageBox(['msg' => 'L_E_NOEDITACCESS']);
     }
 
     $news_data['news_form_title'] = $LNG['L_NEWS_EDIT_NEWS'];

@@ -12,7 +12,7 @@ function news_show_page() {
     $editor = new Editor();
 
     if ((empty($_GET['nid'])) || ($nid = $filter->get_int('nid')) == false) {
-        return $frontend->message_box(['msg' => 'L_NEWS_NOT_EXIST']);
+        return $frontend->messageBox(['msg' => 'L_NEWS_NOT_EXIST']);
     }
 
     if (!empty($_GET['news_lang_id'])) {
@@ -24,19 +24,19 @@ function news_show_page() {
     ($cfg['allow_multiple_pages'] && !empty($_GET['npage'])) ? $page = $filter->get_int('npage') : $page = 1;
 
     if (!is_array($news_data = get_news_byId($nid, $news_lang_id, $page))) { //Not array, its a error
-        $frontend->message_box(['msg' => $news_data]);
+        $frontend->messageBox(['msg' => $news_data]);
         return false;
     }
 
     $news_perms = get_news_perms('view_news', $news_data);
     if (!$news_perms['news_view']) {
-        return $frontend->message_box(['msg' => 'L_E_NOVIEWACCESS']);
+        return $frontend->messageBox(['msg' => 'L_E_NOVIEWACCESS']);
     }
 
     news_catch_admin_actions($news_data, $news_perms);
 
     if ($cfg['news_moderation'] && $news_data['moderation'] && !$news_perms['news_moderation']) {
-        return $frontend->message_box(['msg' => 'L_NEWS_ERROR_WAITINGMOD']);
+        return $frontend->messageBox(['msg' => 'L_NEWS_ERROR_WAITINGMOD']);
     }
 
     $news_data['news_admin_nav'] = news_nav_options($news_data, $news_perms);

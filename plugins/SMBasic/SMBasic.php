@@ -17,10 +17,10 @@ function SMBasic_Init() {
 
     register_action('header_menu_element', 'SMBasic_navLogReg');
 
-    $frontend->register_page(['module' => 'SMBasic', 'page' => 'login', 'type' => 'disk']);
-    $frontend->register_page(['module' => 'SMBasic', 'page' => 'logout', 'type' => 'virtual', 'func' => [$sm, 'logout']]);
-    $frontend->register_page(['module' => 'SMBasic', 'page' => 'profile', 'type' => 'disk']);
-    $frontend->register_page(['module' => 'SMBasic', 'page' => 'register', 'type' => 'disk']);
+    $frontend->registerPage(['module' => 'SMBasic', 'page' => 'login', 'type' => 'disk']);
+    $frontend->registerPage(['module' => 'SMBasic', 'page' => 'logout', 'type' => 'virtual', 'func' => [$sm, 'logout']]);
+    $frontend->registerPage(['module' => 'SMBasic', 'page' => 'profile', 'type' => 'disk']);
+    $frontend->registerPage(['module' => 'SMBasic', 'page' => 'register', 'type' => 'disk']);
 }
 
 function SMBasic_Install() {

@@ -22,7 +22,7 @@ function admin_auth($tokens) {
     $msgbox['backlink'] = $sm->getPage("login");
     $msgbox['backlink_title'] = "L_LOGIN";
 
-    $frontend->message_box($msgbox);
+    $frontend->messageBox($msgbox);
 
     return false;
 }

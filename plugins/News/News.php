@@ -22,7 +22,7 @@ function News_init() {
         ['module' => 'News', 'page' => 'submit_news', 'type' => 'disk'],
         ['module' => 'News', 'page' => 'edit_news', 'type' => 'disk']
     ];
-    if (!$frontend->register_page_array($pages_array)) {
+    if (!$frontend->registerPageArray($pages_array)) {
         die("Register pages fail on News module");
     }
 

@@ -13,7 +13,7 @@ function SimpleFrontend_init() {
     //Probably make blocks optionals and check if active before express start.
 
     if (!$plugins->express_start("Blocks")) {
-        $frontend->message_box(['msg' => 'L_E_PL_CANTEXPRESS']);
+        $frontend->messageBox(['msg' => 'L_E_PL_CANTEXPRESS']);
     }
     !isset($frontend) ? $frontend = new SimpleFrontend() : null;
 }

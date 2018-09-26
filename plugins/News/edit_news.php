@@ -6,7 +6,7 @@
 !defined('IN_WEB') ? exit : true;
 
 if (!$plugins->express_start_provider("EDITOR")) {
-    $frontend->message_box(['msg' => 'L_E_PL_CANTEXPRESS']);
+    $frontend->messageBox(['msg' => 'L_E_PL_CANTEXPRESS']);
     return false;
 }
 $editor = new Editor();
@@ -23,7 +23,7 @@ $news_lang_id = $filter->get_int("news_lang_id");
 $news_page = $filter->get_int("npage");
 
 if (empty($news_nid) || empty($news_lang_id) || empty($news_page)) {
-    $frontend->message_box(['msg' => "L_NEWS_NOT_EXIST"]);
+    $frontend->messageBox(['msg' => "L_NEWS_NOT_EXIST"]);
     return false;
 }
 
@@ -32,7 +32,7 @@ require_once ("includes/news_form_common.php");
 if (!isset($_POST['submitForm'])) {
 
     if (!$plugins->express_start_provider("CATS")) {
-        $frontend->message_box(['msg' => 'L_E_PL_CANTEXPRESS']);
+        $frontend->messageBox(['msg' => 'L_E_PL_CANTEXPRESS']);
         return false;
     }
 

@@ -18,8 +18,8 @@ function NewsMediaUploader_init() {
       }
      */
 
-    $frontend->register_page(['module' => 'NewsMediaUploader', 'page' => 'upload', 'type' => 'disk']);
-    $frontend->register_page(['module' => 'NewsMediaUploader', 'page' => 'remote_upload', 'type' => 'disk']);
+    $frontend->registerPage(['module' => 'NewsMediaUploader', 'page' => 'upload', 'type' => 'disk']);
+    $frontend->registerPage(['module' => 'NewsMediaUploader', 'page' => 'remote_upload', 'type' => 'disk']);
     register_action('news_new_form_add', 'NMU_form_add');
     register_action('news_edit_form_add', 'NMU_form_add');
     register_action('news_newlang_form_add', 'NMU_form_add');

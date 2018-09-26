@@ -13,7 +13,7 @@ if (!empty($_GET['q'])) {
     $q = $filter->get_UTF8_txt("q", $cfg['ns_max_s_text'], $cfg['ns_min_s_text']);
 
     if (empty($q)) {
-        $frontend->message_box(['title' => 'L_NS_SEARCH', 'msg' => 'L_NS_SEARCH_ERROR']);
+        $frontend->messageBox(['title' => 'L_NS_SEARCH', 'msg' => 'L_NS_SEARCH_ERROR']);
     }
     $q = $db->escape_strip($q);
 
@@ -30,7 +30,7 @@ if (!empty($_GET["searchTag"])) {
     $searchTag = $filter->get_UTF8_txt("searchTag", $cfg['ns_tag_size_limit'], $cfg['ns_min_s_text']);
 
     if (empty($searchTag)) {
-        $frontend->message_box(['title' => 'L_NS_SEARCH', 'msg' => 'L_NS_SEARCH_ERROR']);
+        $frontend->messageBox(['title' => 'L_NS_SEARCH', 'msg' => 'L_NS_SEARCH_ERROR']);
     }
     $searchTag = $db->escape_strip($searchTag);
 
@@ -45,5 +45,5 @@ if (!empty($_GET["searchTag"])) {
     }
 }
 if (empty($_GET['q']) && empty($_GET["searchTag"])) {
-    $frontend->message_box(['title' => 'L_NS_SEARCH', 'msg' => 'L_NS_SEARCH_ERROR']);
+    $frontend->messageBox(['title' => 'L_NS_SEARCH', 'msg' => 'L_NS_SEARCH_ERROR']);
 }

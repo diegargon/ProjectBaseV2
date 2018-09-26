@@ -28,7 +28,7 @@ function SMBasic_ProfileView() {
 
     $uid = $filter->get_int("viewprofile");
     if (empty($uid)) {
-        $frontend->message_box(['msg' => 'L_SM_E_USER_NOT_EXISTS']);
+        $frontend->messageBox(['msg' => 'L_SM_E_USER_NOT_EXISTS']);
     }
     $v_user = $sm->getUserByID($uid);
     if ($v_user) {
@@ -36,7 +36,7 @@ function SMBasic_ProfileView() {
         $tpl->getCSS_filePath("SMBasic", "SMBasic-mobile");
         $tpl->addto_tplvar("ADD_TO_BODY", $tpl->getTPL_file("SMBasic", "viewprofile", $v_user));
     } else {
-        $frontend->message_box(['msg' => 'L_SM_E_USER_NOT_EXISTS']);
+        $frontend->messageBox(['msg' => 'L_SM_E_USER_NOT_EXISTS']);
     }
 }
 

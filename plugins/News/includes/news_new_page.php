@@ -12,19 +12,19 @@ function news_new_page($news_nid, $news_lang_id, $news_page) {
     $user = $sm->getSessionUser();
 
     if (!($user = $sm->getSessionUser())) {
-        return $frontend->message_box(["msg" => "L_E_NOACCESS"]);
+        return $frontend->messageBox(["msg" => "L_E_NOACCESS"]);
     }
     $user['uid'] > 0 ? $form_data['tos_checked'] = 1 : false;
 
     if (!is_array($news_data = get_news_byId($news_nid, $news_lang_id, 1))) { //get first page
-        $frontend->message_box(['msg' => $news_data]);
+        $frontend->messageBox(['msg' => $news_data]);
         return false;
     }
 
     $news_perms = get_news_perms("new_page");
 
     if (!$news_perms['news_create_new_page']) {
-        return $frontend->message_box(["msg" => "L_E_NOEDITACCESS"]);
+        return $frontend->messageBox(["msg" => "L_E_NOEDITACCESS"]);
     }
 
     $form_data['author_readonly'] = !$news_perms['news_can_change_author'];

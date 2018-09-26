@@ -25,6 +25,6 @@ function NS_build_result_page(& $query) {
         }
         $tpl->addto_tplvar("ADD_TO_BODY", $content);
     } else {
-        $frontend->message_box(['title' => 'L_NS_SEARCH', 'msg' => 'L_NS_NORESULT']);
+        $frontend->messageBox(['title' => 'L_NS_SEARCH', 'msg' => 'L_NS_NORESULT']);
     }
 }

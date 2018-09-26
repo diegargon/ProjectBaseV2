@@ -22,7 +22,7 @@ function NewsSearch_init() {
     $tpl->getCSS_filePath("NewsSearch");
     register_action("header_menu_element", "NS_basicSearchbox", 5);
 
-    $frontend->register_page(['module' => 'NewsSearch', 'page' => 'search', 'type' => 'disk']);
+    $frontend->registerPage(['module' => 'NewsSearch', 'page' => 'search', 'type' => 'disk']);
     /* TAGS */
     if ($cfg['ns_tag_support']) {
         register_action("news_new_form_add", "NS_tag_add_form");

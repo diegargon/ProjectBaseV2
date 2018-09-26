@@ -103,7 +103,7 @@ function SMBasic_user_reset_password() {
         $URL = "{$cfg['WEB_URL']}" . "login";
         $msg = $LNG['L_RESET_SEND_NEWMAIL_MSG'] . "\n" . "$password\n" . "$URL";
         mail($email, $LNG['L_RESET_SEND_NEWMAIL_SUBJECT'], $msg, "From: {$cfg['smbasic_register_reply_email']} \r\n");
-        $frontend->message_box(['msg' => 'L_RESET_PASSWORD_SUCCESS']);
+        $frontend->messageBox(['msg' => 'L_RESET_PASSWORD_SUCCESS']);
         return true;
     } else {
         return false;

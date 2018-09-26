@@ -11,7 +11,7 @@ require_once 'includes/news_submit.inc.php';
 $news_perms = get_news_perms("new_submit", null);
 
 if (!$news_perms['news_submit_new']) {
-    $frontend->message_box(["msg" => "L_E_NOACCESS"]);
+    $frontend->messageBox(["msg" => "L_E_NOACCESS"]);
     return false;
 }
 

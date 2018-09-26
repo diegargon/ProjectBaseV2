@@ -75,16 +75,16 @@ $page = $filter->get_strict_chars('page', 255, 1);
 
 if (!empty($module) && !empty($page)) {
     if (!core_check_module($module)) {
-        $frontend->message_box(['msg' => 'L_E_PL_CANTEXPRESS']);
+        $frontend->messageBox(['msg' => 'L_E_PL_CANTEXPRESS']);
     } else {
         if (!($request_page = $frontend->getPage($module, $page))) {
-            $frontend->message_box(['msg' => 'L_E_PLUGPAGE_NOEXISTS']);
+            $frontend->messageBox(['msg' => 'L_E_PLUGPAGE_NOEXISTS']);
         } else if ($request_page['type'] == 'virtual') {
-            $frontend->vpage($request_page);
+            $frontend->vPage($request_page);
         } else if ($request_page['type'] == 'disk') {
             $path = "plugins/{$request_page['module']}/{$request_page['page']}.php";
             if (!file_exists($path)) {
-                $frontend->message_box(['msg' => 'L_E_PLUGPAGE_NOEXISTS']);
+                $frontend->messageBox(['msg' => 'L_E_PLUGPAGE_NOEXISTS']);
             } else {
                 do_action("preload_{$request_page['module']}_{$request_page['page']}");
                 require_once($path);
@@ -92,8 +92,8 @@ if (!empty($module) && !empty($page)) {
         }
     }
 } else {
-    $frontend->index_page();
+    $frontend->indexPage();
 }
-$frontend->send_page();
+$frontend->sendPage();
 
 do_action('finalize');

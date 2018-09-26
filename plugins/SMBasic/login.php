@@ -6,7 +6,7 @@
 !defined('IN_WEB') ? exit : true;
 
 if (!($sm->getPerm("login_enable"))) {
-    $frontend->message_box(['msg' => "L_E_LOGGIN_DISABLE"]);
+    $frontend->messageBox(['msg' => "L_E_LOGGIN_DISABLE"]);
     return;
 }
 
@@ -18,7 +18,7 @@ $cfg['PAGE_DESC'] = $cfg['WEB_NAME'] . ": " . $LNG['L_LOGIN'];
 //END HEAD MOD
 
 if ($user && $user['uid'] > 0) {
-    $frontend->message_box(['msg' => 'L_E_ALREADY_LOGGED']);
+    $frontend->messageBox(['msg' => 'L_E_ALREADY_LOGGED']);
     return;
 }
 
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $msgbox['msg'] = "L_SM_ACTIVATION_OK";
         }
         $msgbox['backlink'] = $cfg['WEB_URL'];
-        $frontend->message_box($msgbox);
+        $frontend->messageBox($msgbox);
         return;
     }
 
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $msgbox['msg'] = "L_SM_RESET_OK";
         }
         $msgbox['backlink'] = $cfg['WEB_URL'];
-        $frontend->message_box($msgbox);
+        $frontend->messageBox($msgbox);
         return;
     }
 }

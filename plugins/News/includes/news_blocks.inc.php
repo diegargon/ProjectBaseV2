@@ -11,7 +11,7 @@ function news_block($block_conf) {
     require_once __DIR__ . '/news_common.php';
 
     if (!($plugins->express_start_provider("EDITOR")) || !($plugins->express_start_provider("CATS"))) {
-        $frontend->message_box(['msg' => 'L_E_PL_CANTEXPRESS']);
+        $frontend->messageBox(['msg' => 'L_E_PL_CANTEXPRESS']);
         return false;
     }
     $tpl->getCSS_filePath("News");

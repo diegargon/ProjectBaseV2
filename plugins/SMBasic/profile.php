@@ -17,7 +17,7 @@ $user = $sm->getSessionUser();
 if (empty($user) || $user === false || $user['uid'] <= 0) {
     $sm->destroy();
     $msgbox['msg'] = "L_E_NOT_LOGGED";
-    $frontend->message_box($msgbox);
+    $frontend->messageBox($msgbox);
     return false;
 }
 

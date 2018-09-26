@@ -10,7 +10,7 @@ function news_new_form($news_perms) {
     global $LNG, $cfg, $acl_auth, $tpl, $sm, $frontend, $ml, $plugins;
 
     if (!($plugins->express_start_provider('EDITOR')) || !($plugins->express_start_provider('CATS'))) {
-        $frontend->message_box(['msg' => 'L_E_PL_CANTEXPRESS']);
+        $frontend->messageBox(['msg' => 'L_E_PL_CANTEXPRESS']);
         return false;
     }
     $editor = new Editor();
@@ -44,7 +44,7 @@ function news_new_form($news_perms) {
 
     $form_data['select_categories'] = news_getCatsSelect();
     if (empty($form_data['select_categories'])) {
-        $frontend->message_box(['msg' => 'L_NEWS_NOCATS']);
+        $frontend->messageBox(['msg' => 'L_NEWS_NOCATS']);
         return false;
     }
     $form_data['terms_url'] = ''; // $cfg['TERMS_URL'];    

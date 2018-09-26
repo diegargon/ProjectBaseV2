@@ -38,7 +38,7 @@ class Blocks {
         ];
     }
 
-    function register_page($page_name, $page_sections) {
+    function registerPage($page_name, $page_sections) {
         $this->pages [] = [
             'page_name' => $page_name,
             'page_sections' => $page_sections

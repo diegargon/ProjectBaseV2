@@ -21,9 +21,9 @@ class SimpleFrontend {
         $this->setConfig();
     }
 
-    function vpage($page) {
+    function vPage($page) {
         if (empty($this->pages)) {
-            $this->message_box(['msg' => 'L_E_PLUGPAGE_NOEXISTS']);
+            $this->messageBox(['msg' => 'L_E_PLUGPAGE_NOEXISTS']);
             return;
         }
 
@@ -33,11 +33,11 @@ class SimpleFrontend {
                 call_user_func($page['func']);
                 return true;
             } else {
-                $this->message_box(['msg' => 'L_E_PLUGPAGE_NOEXISTS']);
+                $this->messageBox(['msg' => 'L_E_PLUGPAGE_NOEXISTS']);
                 return false;
             }
         } else {
-            $this->message_box(['msg' => 'L_E_PLUGPAGE_NOEXISTS']);
+            $this->messageBox(['msg' => 'L_E_PLUGPAGE_NOEXISTS']);
             return false;
         }
     }
@@ -46,7 +46,7 @@ class SimpleFrontend {
         //var_dump($this->pages);
         if (empty($this->pages)) {
 
-            $this->message_box(['msg' => 'L_E_PLUGPAGE_NOEXISTS']);
+            $this->messageBox(['msg' => 'L_E_PLUGPAGE_NOEXISTS']);
             return;
         }
 
@@ -59,7 +59,7 @@ class SimpleFrontend {
         return false;
     }
 
-    function register_page($page) {
+    function registerPage($page) {
         // TODO avoid duplicates
         if (!empty($page['module']) && !empty($page['page']) &&
                 ( ($page['type'] == "virtual" && !empty($page['func'])) || ( $page['type'] == "disk" && empty($page['func'])) )
@@ -70,7 +70,7 @@ class SimpleFrontend {
         return false;
     }
 
-    function register_page_array($pages_array) {
+    function registerPageArray($pages_array) {
         // TODO avoid duplicates
         foreach ($pages_array as $page) {
             if (!empty($page['module']) && !empty($page['page']) &&
@@ -85,7 +85,7 @@ class SimpleFrontend {
         return true;
     }
 
-    function index_page() {
+    function indexPage() {
         global $tpl, $cfg, $blocks;
         $page_data = [];
 
@@ -97,7 +97,7 @@ class SimpleFrontend {
         $tpl->addto_tplvar("ADD_TO_BODY", $tpl->getTPL_file("SimpleFrontend", $cfg['index_layout'] . "_layout", $page_data));
     }
 
-    function send_page() {
+    function sendPage() {
         global $tpl;
 
         // BEGIN HEAD        
@@ -137,7 +137,7 @@ class SimpleFrontend {
         //print $web_head . $web_body . $web_footer;
     }
 
-    function message_box($box_data) {
+    function messageBox($box_data) {
         global $tpl, $LNG;
 
         !empty($box_data['title']) ? $data['box_title'] = $LNG[$box_data['title']] : $data['box_title'] = $LNG['L_E_ERROR'];
@@ -162,8 +162,8 @@ class SimpleFrontend {
         $this->show_stats_query = $cfg['simplefrontend_stats_query'];
         $this->show_load_time = $cfg['show_load_time'];
 
-        $blocks->register_page("index", $this->index_sections);
-        $blocks->register_page("index2", 2); //test remove later
+        $blocks->registerPage("index", $this->index_sections);
+        $blocks->registerPage("index2", 2); //test remove later
 
         (defined('DEBUG') && $cfg['simplefrontend_debug']) ? $this->debug = & $debug : $this->debug = false;
         global $debug;

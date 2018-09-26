@@ -11,7 +11,7 @@ require_once("includes/news_view.php");
 do_action("news_page_begin");
 
 if (!($plugins->express_start_provider("EDITOR")) || !($plugins->express_start_provider("CATS"))) {
-    $frontend->message_box(['msg' => 'L_E_PL_CANTEXPRESS']);
+    $frontend->messageBox(['msg' => 'L_E_PL_CANTEXPRESS']);
     return false;
 }
 
