@@ -60,7 +60,7 @@ function Blocks_blk_config() {
     $page_data['sections'] = "";
     $page_data['reg_blocks'] = "";
 
-    !empty($selected_blockname) ? $block_config_data = $blocks->block_config($selected_blockname) : null;
+    !empty($selected_blockname) ? $block_config_data = $blocks->blockConfig($selected_blockname) : null;
 
     if (isset($_POST['btnNewBlock']) && !empty($block_config_data['config'])) {
         $block_added = Blocks_addBlock($block_config_data['config']);

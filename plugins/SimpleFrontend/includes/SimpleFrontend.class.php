@@ -91,7 +91,7 @@ class SimpleFrontend {
 
         for ($i = 1; $i <= $cfg['index_sections']; $i++) {
             $page_data["section_" . $i] = "";
-            $page_data["section_" . $i] .= $blocks->get_blocks_content("index", $i);
+            $page_data["section_" . $i] .= $blocks->getBlocksContent("index", $i);
         }
 
         $tpl->addto_tplvar("ADD_TO_BODY", $tpl->getTPL_file("SimpleFrontend", $cfg['index_layout'] . "_layout", $page_data));

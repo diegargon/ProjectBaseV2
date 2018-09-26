@@ -26,7 +26,7 @@ function News_init() {
         die("Register pages fail on News module");
     }
 
-    $blocks->register_block("news_block", "", "news_block", "news_block_conf", null, 0);
+    $blocks->registerBlock("news_block", "", "news_block", "news_block_conf", null, 0);
 
     if ($cfg['display_section_menu']) {
         $plugins->express_start_provider("CATS");

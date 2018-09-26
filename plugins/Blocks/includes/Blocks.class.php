@@ -21,13 +21,13 @@ class Blocks {
         defined('DEBUG') && $cfg['blocks_debug'] ? $this->debug = & $debug : $this->debug = false;
 
         //Default blocks
-        $this->register_block('block_html_restricted', $LNG['L_BLK_HTMLRESTRIC_DESC'], [$this, 'block_html'], [$this, 'block_html_conf_restricted'], null, 0);
-        $this->register_block('block_html', $LNG['L_BLK_HTML_DESC'], [$this, 'block_html'], [$this, 'block_html_conf'], null, 1);
-        $this->register_block('block_html_file', $LNG['L_BLK_HTMLFILE_DESC'], [$this, 'block_html_file'], [$this, 'block_html_file_conf'], null, 1);
-        $this->register_block('block_php_file', $LNG['L_BLK_PHPFILE_DESC'], [$this, 'block_php_file'], [$this, 'block_php_file_conf'], null, 1);
+        $this->registerBlock('block_html_restricted', $LNG['L_BLK_HTMLRESTRIC_DESC'], [$this, 'block_html'], [$this, 'block_html_conf_restricted'], null, 0);
+        $this->registerBlock('block_html', $LNG['L_BLK_HTML_DESC'], [$this, 'block_html'], [$this, 'block_html_conf'], null, 1);
+        $this->registerBlock('block_html_file', $LNG['L_BLK_HTMLFILE_DESC'], [$this, 'block_html_file'], [$this, 'block_html_file_conf'], null, 1);
+        $this->registerBlock('block_php_file', $LNG['L_BLK_PHPFILE_DESC'], [$this, 'block_php_file'], [$this, 'block_php_file_conf'], null, 1);
     }
 
-    function register_block($block_name, $block_desc, $func_show, $func_conf, $def_conf, $admin_block) {
+    function registerBlock($block_name, $block_desc, $func_show, $func_conf, $def_conf, $admin_block) {
         $this->registered_blocks[] = [
             'blockname' => $block_name,
             'block_desc' => $block_desc,
@@ -62,7 +62,7 @@ class Blocks {
         return (count($admin_blocks) > 0) ? $admin_blocks : false;
     }
 
-    function set_user_blocks($page) {
+    function setUserBlocks($page) {
         /* TODO: Blocks need session but if we as ask and start as depend  we got a cycle problem
          *  Sessions need frontend
          *  Frontend need blocks
@@ -88,9 +88,9 @@ class Blocks {
         }
     }
 
-    function get_blocks_content($page, $section) {
+    function getBlocksContent($page, $section) {
 
-        !isset($this->user_blocks) ? $this->set_user_blocks($page) : null;
+        !isset($this->user_blocks) ? $this->setUserBlocks($page) : null;
         if (empty($this->user_blocks)) {
             return false;
         }
@@ -111,7 +111,7 @@ class Blocks {
         return $content;
     }
 
-    function block_config($blockname) {
+    function blockConfig($blockname) {
         foreach ($this->registered_blocks as $reg_block) {
             if ($reg_block['blockname'] == $blockname) {
                 return call_user_func($reg_block['func_conf']);
@@ -126,12 +126,12 @@ class Blocks {
         $db->delete('blocks', ['blocks_id' => $block_id], 'LIMIT 1');
     }
 
-    public function block_html($conf) {
+    public function blockHtml($conf) {
 
         return $conf['html_code'];
     }
 
-    public function block_html_conf_restricted() {
+    public function blockHtmlConfRestricted() {
         global $filter;
 
         $block_conf = $filter->post_array('block_conf', 255, 1);
@@ -149,7 +149,7 @@ class Blocks {
         return $content;
     }
 
-    public function block_html_conf() {
+    public function blockHtmlConf() {
         global $filter;
 
         $block_conf = $filter->post_array('block_conf', 255, 1);
@@ -167,7 +167,7 @@ class Blocks {
         return $content;
     }
 
-    public function block_html_file($conf) {
+    public function blockHtmlFile($conf) {
         global $cfg;
 
         $file = $cfg['CORE_PATH'] . $conf['file'];
@@ -179,7 +179,7 @@ class Blocks {
         return false;
     }
 
-    public function block_html_file_conf() {
+    public function blockHtmlFileConf() {
         global $filter;
         $block_conf = $filter->post_array('block_conf', 255, 1);
         $block_conf['admin_block'] = 1;
@@ -191,13 +191,13 @@ class Blocks {
         return $content;
     }
 
-    public function block_php_file($conf) {
+    public function blockPhpFile($conf) {
         global $tpl;
 
         return $tpl->getTPL_file('Blocks', $conf['php_file']);
     }
 
-    public function block_php_file_conf() {
+    public function blockPhpFileConf() {
         global $filter;
         $block_conf = $filter->post_array('block_conf', 255, 1);
         $block_conf['admin_block'] = 1;
