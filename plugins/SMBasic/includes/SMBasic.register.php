@@ -65,7 +65,7 @@ function SMBasic_RegisterSubmit() {
 
     $db->free($query);
 
-    $password = $sm->encrypt_password($password);
+    $password = $sm->encryptPassword($password);
     if ($cfg['smbasic_email_confirmation']) {
         $active = mt_rand(11111111, 2147483647); //Largest mysql init
         $register_message = $LNG['L_REGISTER_OKMSG_CONFIRMATION'];

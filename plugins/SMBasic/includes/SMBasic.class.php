@@ -313,7 +313,7 @@ class SessionManager {
         }
     }
 
-    function encrypt_password($password) {
+    function encryptPassword($password) {
         global $cfg;
         //echo hash('sha512', md5($password . $cfg['smbasic_pw_salt']));
         if (!action_isset('encrypt_password')) {

@@ -8,7 +8,7 @@
 function SMBasic_Login($email, $password, $rememberme) {
     global $cfg, $LNG, $db, $sm;
 
-    $password_encrypt = $sm->encrypt_password($password);
+    $password_encrypt = $sm->encryptPassword($password);
 
     if (empty($password_encrypt) || $password_encrypt == $password) {
         die('[{"status": "error", "msg": "' . $LNG['L_E_INTERNAL'] . '"}]');
@@ -98,7 +98,7 @@ function SMBasic_user_reset_password() {
     if ($db->num_rows($query) > 0) {
         $user = $db->fetch($query);
         $password = SMBasic_randomPassword();
-        $password_encrypted = $sm->encrypt_password($password);
+        $password_encrypted = $sm->encryptPassword($password);
         $db->update("users", ["password" => "$password_encrypted", "reset" => "0"], ["uid" => "{$user['uid']}"]);
         $URL = "{$cfg['WEB_URL']}" . "login";
         $msg = $LNG['L_RESET_SEND_NEWMAIL_MSG'] . "\n" . "$password\n" . "$URL";

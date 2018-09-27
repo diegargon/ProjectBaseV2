@@ -50,7 +50,7 @@ function SMBasic_ProfileChange() {
         die('[{"status": "2", "msg": "' . $LNG['L_E_PASSWORD'] . '"}]');
     }
 
-    $password_encrypted = $sm->encrypt_password($password);
+    $password_encrypted = $sm->encryptPassword($password);
 
     $user = $sm->getSessionUser();
     if (empty($user)) {
@@ -92,7 +92,7 @@ function SMBasic_ProfileChange() {
             die('[{"status": "3", "msg": "' . $LNG['L_E_NEWPASS_TOOSHORT'] . '"}]');
         }
         if (($new_password = $filter->post_password("new_password", $cfg['smbasic_max_password'], $cfg['smbasic_min_password'])) != false) {
-            $new_password_encrypt = $sm->encrypt_password($new_password);
+            $new_password_encrypt = $sm->encryptPassword($new_password);
             $q_set_ary['password'] = $new_password_encrypt;
         }
     }
