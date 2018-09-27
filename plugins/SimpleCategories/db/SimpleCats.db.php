@@ -10,7 +10,7 @@
 
 $simplecats_db_install = [
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SimpleCategories', 'simplecats_debug', '1');",
-    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SimpleCategories', 'categories_separator, '/');"
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SimpleCategories', 'categories_separator', '/');"
 ];
 
 /* MAIN */
