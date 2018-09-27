@@ -9,7 +9,7 @@ function core_set_config() {
     global $db, $cfg;
 
     $db->silent(true);
-    $result = $db->select_all('config');
+    $result = $db->select('config', 'cfg_key, cfg_value');
     $db->silent(false);
 
     if ($result) {
@@ -17,10 +17,7 @@ function core_set_config() {
         foreach ($config as $conf) {
             $cfg[$conf['cfg_key']] = $conf['cfg_value'];
         }
-    } else {
-        die('Setup core config error');
     }
-    $db->free($result);
 }
 
 function core_setup_database() {
@@ -49,7 +46,7 @@ function core_check_module($module) {
 }
 
 function core_check_install() {
-    global $cfg, $debug, $plugins;
+    global $cfg, $debug, $plugins, $db;
 
     if (!isset($cfg['CORE_INSTALLED']) || $cfg['CORE_INSTALLED'] != 1) {
         $debug->log('Software ins\'t intalled', 'CORE', 'WARNING');

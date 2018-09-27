@@ -26,22 +26,24 @@ if (defined('DEBUG')) {
 if (!defined('SQL')) {
     exit('ERROR: Database ins\'t configured, please read config.default.php');
 } else {
+    global $db;
     core_setup_database();
 }
-
-/* GET CONFIG */
-core_set_config();
-
-/* FILTER */
-require_once ('includes/' . FILTER . '.class.php');
-$filter = new SecureFilter();
 
 /* PLUGINS */
 require_once ('includes/plugins.class.php');
 $plugins = new Plugins();
 
+/* GET CONFIG */
+global $cfg;
+core_set_config();
+
 /* CHECK FOR INSTALL */
 core_check_install();
+
+/* FILTER */
+require_once ('includes/' . FILTER . '.class.php');
+$filter = new SecureFilter();
 
 //SET CORE VERSIONS
 $plugins->setDepend('CORE', CORE_VERSION);

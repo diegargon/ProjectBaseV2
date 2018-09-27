@@ -6,7 +6,7 @@
 
 require_once ('install.db.php');
 
-$step = $filter->get_int('step', 1, 1);
+$step = filter_input(INPUT_GET, 'step', FILTER_VALIDATE_INT);
 
 if ($step == null || $step == false) {
     $step = 0;
@@ -48,33 +48,20 @@ if ($step == null || $step == false) {
             <hr/>
             <p>Please selected the session manager</p>
             <form action="?step=2" method="post">
-
-
                 <?php
+                $first = true;
                 $provide_results = $plugins->getPluginProvide('SESSIONS');
 
                 foreach ($provide_results as $provider) {
-                    if ($plugins->check_depends($provider->depends)) {
-                        if ($first) {
-                            $first = false;
-                            echo '<input checked type="radio" name="session_mgr" value="' . $provider->plugin_name . '">' . $provider->plugin_name . '<br\>';
-                        } else {
-                            echo '<input type="radio" name="session_mgr" value="' . $provider->plugin_name . '">' . $provider->plugin_name . '<br\>';
-                        }
+                    if ($first) {
+                        $first = false;
+                        echo "<input checked type='radio' name='session_mgr' value='$provider->plugin_name'>$provider->plugin_name<br\>";
                     } else {
-                        echo '<input type="radio" name="sessions" value="none">None</option>';
+                        echo "<input type='radio' name='session_mgr' value='$provider->plugin_name'>$provider->plugin_name<br\>";
                     }
-                    require_once("plugins/$provider->plugin_name/$provider->main_file");
-                    $plugins->includePluginFiles($provider->plugin_name);
-                    $func_plugInstallInfo = $provider->function_pre_install_info;
-
-                    if (function_exists($func_plugInstallInfo)) {
-                        echo '<p>' . $func_plugInstallInfo() . '</p>';
-                    }
-                    echo '<hr/>';
+                    echo "<hr/>";
                 }
                 ?>
-
 
                 <p>Please selected the template manager</p>
 
@@ -127,7 +114,6 @@ if ($step == null || $step == false) {
                 }
                 ?>
 
-
                 <br/><br/>
                 <input type="submit" value="Submit">
                 <br/>
@@ -143,10 +129,10 @@ if ($step == null || $step == false) {
                 'installed' => 1
             ];
 
-            $session_mgr = $filter->post_AZChar('session_mgr', 255, 1);
-            $tpl_mgr = $filter->post_AZChar('tpl_mgr', 255, 1);
-            $admin_mgr = $filter->post_AZChar('admin_mgr', 255, 1);
-            $frontend_mgr = $filter->post_AZChar('frontend_mgr', 255, 1);
+            $session_mgr = filter_input(INPUT_POST, 'session_mgr', FILTER_SANITIZE_STRING);
+            $tpl_mgr = filter_input(INPUT_POST, 'tpl_mgr', FILTER_SANITIZE_STRING);
+            $admin_mgr = filter_input(INPUT_POST, 'admin_mgr', FILTER_SANITIZE_STRING);
+            $frontend_mgr = filter_input(INPUT_POST, 'frontend_mgr', FILTER_SANITIZE_STRING);
 
             if (!isset($session_mgr) || !isset($tpl_mgr) || !isset($admin_mgr)) {
                 die('ERROR basic core plugins missing');
