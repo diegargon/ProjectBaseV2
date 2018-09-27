@@ -14,8 +14,8 @@ function news_block($block_conf) {
         $frontend->messageBox(['msg' => 'L_E_PL_CANTEXPRESS']);
         return false;
     }
-    $tpl->getCSS_filePath("News");
-    $tpl->getCSS_filePath("News", "News-mobile");
+    $tpl->getCssFile("News");
+    $tpl->getCssFile("News", "News-mobile");
 
     isset($block_conf['feautured']) ? $news_where['featured'] = 1 : null;
     isset($block_conf['frontend']) ? $news_where['frontend'] = 1 : null;
@@ -43,7 +43,7 @@ function news_block($block_conf) {
         }
 
         $news_data['date'] = format_date($news_data['created']);
-        $content .= $tpl->getTPL_file("News", "news_block", $news_data);
+        $content .= $tpl->getTplFile("News", "news_block", $news_data);
     }
 
     return $content;
@@ -54,8 +54,8 @@ function news_block_conf() {
     require_once __DIR__ . '/news_common.php';
     require_once __DIR__ . '/news_form_common.php';
 
-    $tpl->getCSS_filePath("News");
-    $tpl->getCSS_filePath("News", "News-mobile");
+    $tpl->getCssFile("News");
+    $tpl->getCssFile("News", "News-mobile");
 
     $block_conf = $filter->post_array("block_conf", 255, 1);
     $block_conf['admin_block'] = 0;
@@ -79,7 +79,7 @@ function news_block_conf() {
         $form_data['limits'] .= "<option value='$i'>$i</option>";
     }
 
-    $content['content'] = $tpl->getTPL_file("News", "news_block_conf", $form_data);
+    $content['content'] = $tpl->getTplFile("News", "news_block_conf", $form_data);
 
     $content['config'] = $block_conf;
 

@@ -19,7 +19,7 @@ function NewsSearch_init() {
         return false;
     }
 
-    $tpl->getCSS_filePath("NewsSearch");
+    $tpl->getCssFile("NewsSearch");
     register_action("header_menu_element", "NS_basicSearchbox", 5);
 
     $frontend->registerPage(['module' => 'NewsSearch', 'page' => 'search', 'type' => 'disk']);

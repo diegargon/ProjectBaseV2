@@ -18,13 +18,13 @@ function SMBasic_Register() {
       }
      * 
      */
-    $tpl->getCSS_filePath("SMBasic");
-    $tpl->getCSS_filePath("SMBasic", "SMBasic-mobile");
-    $tpl->AddScriptFile("standard", "jquery", "TOP");
-    $tpl->AddScriptFile("SMBasic", "register", "BOTTOM");
+    $tpl->getCssFile("SMBasic");
+    $tpl->getCssFile("SMBasic", "SMBasic-mobile");
+    $tpl->addScriptFile("standard", "jquery", "TOP");
+    $tpl->addScriptFile("SMBasic", "register", "BOTTOM");
 
     $register_data['terms_url'] = $sm->getPage("terms");
-    $tpl->addto_tplvar("ADD_TO_BODY", $tpl->getTPL_file("SMBasic", "register", $register_data));
+    $tpl->addtoTplVar("ADD_TO_BODY", $tpl->getTplFile("SMBasic", "register", $register_data));
 }
 
 function SMBasic_RegisterSubmit() {

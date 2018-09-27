@@ -9,8 +9,8 @@ require_once('includes/news_common.php');
 
 do_action('section_page_begin');
 
-$tpl->getCSS_filePath('News');
-$tpl->getCSS_filePath('News', 'News-mobile');
+$tpl->getCssFile('News');
+$tpl->getCssFile('News', 'News-mobile');
 
 if (!($plugins->express_start_provider('CATS'))) {
     $frontend->messageBox(['msg' => 'L_E_PL_CANTEXPRESS']);
@@ -64,9 +64,9 @@ foreach ($news_db as $news) {
     $article_data['featured'] = $news['featured'];
     $article_data['date'] = format_date($news['created']);
     if (!empty($column[$i])) {
-        $column[$i] .= $tpl->getTPL_file('News', 'news_section_article', $article_data);
+        $column[$i] .= $tpl->getTplFile('News', 'news_section_article', $article_data);
     } else {
-        $column[$i] = $tpl->getTPL_file('News', 'news_section_article', $article_data);
+        $column[$i] = $tpl->getTplFile('News', 'news_section_article', $article_data);
     }
     //
     $i++;
@@ -83,9 +83,9 @@ for ($i = 1; $i <= $cfg['news_section_sections']; $i++) {
     if (!empty($column[$i])) {
         $section_data[$i] = $column[$i];
         $i == $cfg['news_section_sections'] ? $section_data['TPL_FOOT'] = 1 : null;
-        $content .= $tpl->getTPL_file('News', 'news_section', $section_data);
+        $content .= $tpl->getTplFile('News', 'news_section', $section_data);
         $section_data['TPL_CTRL'] ++;
     }
 }
 
-$tpl->addto_tplvar('ADD_TO_BODY', $content);
+$tpl->addtoTplVar('ADD_TO_BODY', $content);

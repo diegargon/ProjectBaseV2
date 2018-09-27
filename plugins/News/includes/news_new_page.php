@@ -37,7 +37,7 @@ function news_new_page($news_nid, $news_lang_id, $news_page) {
 
     do_action("news_newpage_form_add");
 
-    $tpl->addto_tplvar("ADD_TO_BODY", $tpl->getTPL_file("News", "news_form", $form_data));
+    $tpl->addtoTplVar("ADD_TO_BODY", $tpl->getTplFile("News", "news_form", $form_data));
 }
 
 function news_newpage_form_process() {

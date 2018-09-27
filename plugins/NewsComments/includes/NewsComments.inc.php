@@ -19,8 +19,8 @@ function News_Comments($news) {
             $plugins->check_enabled_provider('RATINGS') &&
             $plugins->express_start_provider('RATINGS')
     ) {
-        $tpl->AddScriptFile('StdRatings', 'rate', 'BOTTOM');
-        $tpl->getCSS_filePath('NewsComments');
+        $tpl->addScriptFile('StdRatings', 'rate', 'BOTTOM');
+        $tpl->getCssFile('NewsComments');
         register_action('NewsComments_format_comments', 'NewsComments_Addrate');
 
         if (($_SERVER['REQUEST_METHOD'] === 'POST') &&
@@ -38,7 +38,7 @@ function News_Comments($news) {
         return false;
     }
 
-    $tpl->AddScriptFile('standard', 'jquery', 'BOTTOM');
+    $tpl->addScriptFile('standard', 'jquery', 'BOTTOM');
 
     $comm_conf['plugin'] = 'NewsComments';
     $comm_conf['resource_id'] = $news['nid'];
@@ -64,7 +64,7 @@ function News_Comments($news) {
         (($user['uid'] > 1) || $cfg['nc_allow_anon_comments']) ? $content .= stdNewComment() : null;
     }
 
-    $tpl->addto_tplvar('ADD_TO_NEWSSHOW_BOTTOM', $content);
+    $tpl->addtoTplVar('ADD_TO_NEWSSHOW_BOTTOM', $content);
 
     return true;
 }

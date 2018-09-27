@@ -54,7 +54,7 @@ function news_new_form($news_perms) {
 
     $form_data['editor'] = $editor->getEditor();
 
-    $tpl->addto_tplvar('ADD_TO_BODY', $tpl->getTPL_file('News', 'news_form', $form_data));
+    $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('News', 'news_form', $form_data));
 }
 
 function news_create_new($news_data) {

@@ -21,9 +21,9 @@ function NS_build_result_page(& $query) {
             } else {
                 $result['url'] = "/{$cfg['CON_FILE']}?module=News&page=news&nid={$result['nid']}&lang={$cfg['WEB_LANG']}&npage={$result['page']}&news_lang_id={$result['news_lang']}";
             }
-            $content .= $tpl->getTPL_file("NewsSearch", "NewsSearch-results", $result);
+            $content .= $tpl->getTplFile("NewsSearch", "NewsSearch-results", $result);
         }
-        $tpl->addto_tplvar("ADD_TO_BODY", $content);
+        $tpl->addtoTplVar("ADD_TO_BODY", $content);
     } else {
         $frontend->messageBox(['title' => 'L_NS_SEARCH', 'msg' => 'L_NS_NORESULT']);
     }

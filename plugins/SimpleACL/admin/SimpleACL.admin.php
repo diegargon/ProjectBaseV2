@@ -35,7 +35,7 @@ function SimpleACL_AdminAside($params) {
 function SimpleACL_AdminContent($params) {
     global $LNG, $tpl;
 
-    $tpl->getCSS_filePath("SimpleACL");
+    $tpl->getCssFile("SimpleACL");
     $msg = "";
     $page_data = "";
 
@@ -101,7 +101,7 @@ function SimpleACL_ShowPermGroups($msg) {
     $page_data['select_groups'] = $select_groups;
     $page_data['select_perms'] = $select_perms;
     $page_data['select_group_perms'] = $select_group_perms;
-    $content .= $tpl->getTPL_file("SimpleACL", "acl_perm_groups", $page_data);
+    $content .= $tpl->getTplFile("SimpleACL", "acl_perm_groups", $page_data);
 
     return $content;
 }

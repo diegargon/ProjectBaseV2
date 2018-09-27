@@ -194,7 +194,7 @@ class Blocks {
     public function blockPhpFile($conf) {
         global $tpl;
 
-        return $tpl->getTPL_file('Blocks', $conf['php_file']);
+        return $tpl->getTplFile('Blocks', $conf['php_file']);
     }
 
     public function blockPhpFileConf() {

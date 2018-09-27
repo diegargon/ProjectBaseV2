@@ -87,7 +87,7 @@ function news_show_page() {
                 $news_data['ITEM_SECTIONS'] .= '"articleSection": "' . trim($cat) . '",\n';
             }
         }
-        $tpl->addto_tplvar('POST_ACTION_ADD_TO_BODY', $tpl->getTPL_file('News', 'news_body_struct', $news_data));
+        $tpl->addtoTplVar('POST_ACTION_ADD_TO_BODY', $tpl->getTplFile('News', 'news_body_struct', $news_data));
     }
 
     /* OLD REPLACE
@@ -101,7 +101,7 @@ function news_show_page() {
       }
 
      */
-    $tpl->addto_tplvar('ADD_TO_BODY', $tpl->getTPL_file('News', 'news_body', $news_data));
+    $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('News', 'news_body', $news_data));
 }
 
 function news_catch_admin_actions(&$news_data, $perms) {
@@ -405,8 +405,8 @@ function news_add_social_meta($news) { // TODO: Move to plugin NewsSocialExtra
         $cfg['IMG_UPLOAD_DIR'] = 'news_img'; //TODO
         $news['mainimage'] = $cfg['STATIC_SRV_URL'] . $cfg['IMG_UPLOAD_DIR'] . '/' . $url;
     }
-    $content = $tpl->getTPL_file('News', 'NewsSocialmeta', $news);
-    $tpl->addto_tplvar('META', $content);
+    $content = $tpl->getTplFile('News', 'NewsSocialmeta', $news);
+    $tpl->addtoTplVar('META', $content);
 }
 
 function getNewsCatBreadcrumb($news_data) {

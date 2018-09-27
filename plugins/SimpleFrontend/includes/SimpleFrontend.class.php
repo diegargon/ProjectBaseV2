@@ -94,43 +94,43 @@ class SimpleFrontend {
             $page_data["section_" . $i] .= $blocks->getBlocksContent("index", $i);
         }
 
-        $tpl->addto_tplvar("ADD_TO_BODY", $tpl->getTPL_file("SimpleFrontend", $cfg['index_layout'] . "_layout", $page_data));
+        $tpl->addtoTplVar("ADD_TO_BODY", $tpl->getTplFile("SimpleFrontend", $cfg['index_layout'] . "_layout", $page_data));
     }
 
     function sendPage() {
         global $tpl;
 
         // BEGIN HEAD        
-        $tpl->css_cache();
+        $tpl->cssCache();
 
-        $web_head = $tpl->getTPL_file("SimpleFrontend", "head");
+        $web_head = $tpl->getTplFile("SimpleFrontend", "head");
 
         echo $web_head;
         //END HEAD
         //BEGIN BODY
         if ($this->nav_menu) { //we use do_action for select order
-            $tpl->addto_tplvar("HEADER_MENU_ELEMENT", do_action("header_menu_element"));
+            $tpl->addtoTplVar("HEADER_MENU_ELEMENT", do_action("header_menu_element"));
         }
         if ($this->display_section_menu) {
-            $tpl->addto_tplvar("SECTIONS_NAV", do_action("section_nav_element"));
-            $tpl->addto_tplvar("SECTIONS_NAV_SUBMENU", do_action("section_nav_subelement"));
+            $tpl->addtoTplVar("SECTIONS_NAV", do_action("section_nav_element"));
+            $tpl->addtoTplVar("SECTIONS_NAV_SUBMENU", do_action("section_nav_subelement"));
         }
 
-        $tpl->addto_tplvar("ADD_TO_BODY", do_action("add_to_body"));
-        $web_body = $tpl->getTPL_file("SimpleFrontend", "body");
+        $tpl->addtoTplVar("ADD_TO_BODY", do_action("add_to_body"));
+        $web_body = $tpl->getTplFile("SimpleFrontend", "body");
 
         echo $web_body;
         //END BODY
         //BEGIN FOOTER
         if (defined('SQL') && $this->db != null && $this->show_stats_query) {
-            $tpl->addto_tplvar("ADD_TO_FOOTER", "<p class='center zero'>Querys(" . $this->db->num_querys() . ")</p>");
+            $tpl->addtoTplVar("ADD_TO_FOOTER", "<p class='center zero'>Querys(" . $this->db->num_querys() . ")</p>");
         }
         if ($this->show_load_time) {
-            $tpl->addto_tplvar("ADD_TO_FOOTER", "<p class='center zero'>Page render in (" . get_load_time($this->load_start_time) . ")</p>");
+            $tpl->addtoTplVar("ADD_TO_FOOTER", "<p class='center zero'>Page render in (" . get_load_time($this->load_start_time) . ")</p>");
         }
-        $tpl->addto_tplvar("ADD_TO_FOOTER", do_action("add_to_footer"));
+        $tpl->addtoTplVar("ADD_TO_FOOTER", do_action("add_to_footer"));
 
-        $web_footer = $tpl->getTPL_file("SimpleFrontend", "footer");
+        $web_footer = $tpl->getTplFile("SimpleFrontend", "footer");
         //END FOOTER
         echo $web_footer;
 
@@ -146,7 +146,7 @@ class SimpleFrontend {
         $data['box_msg'] = $LNG[$box_data['msg']];
         !empty($box_data['xtra_box_msg']) ? $data['box_msg'] .= $box_data['xtra_box_msg'] : false;
 
-        $tpl->addto_tplvar("ADD_TO_BODY", $tpl->getTPL_file("SimpleFrontend", "msgbox", $data));
+        $tpl->addtoTplVar("ADD_TO_BODY", $tpl->getTplFile("SimpleFrontend", "msgbox", $data));
     }
 
     function setStartTime($start) {
@@ -174,8 +174,8 @@ class SimpleFrontend {
         $custom_lang = "tpl/lang/" . $cfg['WEB_LANG'] . "/custom.lang.php";
         file_exists($custom_lang) ? require_once($custom_lang) : false;
 
-        $tpl->getCSS_filePath("SimpleFrontend", "basic");
-        $tpl->getCSS_filePath("SimpleFrontend", "basic-mobile");
+        $tpl->getCssFile("SimpleFrontend", "basic");
+        $tpl->getCssFile("SimpleFrontend", "basic-mobile");
     }
 
 }

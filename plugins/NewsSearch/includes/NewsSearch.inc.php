@@ -15,12 +15,12 @@ function NS_basicSearchbox() {
         $sbox_data['searchUrl'] = "/{$cfg['CON_FILE']}?module=NewsSearch&page=search&lang={$cfg['WEB_LANG']}";
     }
 
-    return $search_box = $tpl->getTPL_file("NewsSearch", "NewsSearchBarbox", $sbox_data);
+    return $search_box = $tpl->getTplFile("NewsSearch", "NewsSearchBarbox", $sbox_data);
 }
 
 function NS_tag_add_form() {
     global $cfg, $tpl;
-    $cfg['ns_tag_support'] ? $tpl->addto_tplvar("NEWS_FORM_BOTTOM_OPTION", NS_tags_option()) : false;
+    $cfg['ns_tag_support'] ? $tpl->addtoTplVar("NEWS_FORM_BOTTOM_OPTION", NS_tags_option()) : false;
 }
 
 function NS_news_mod_insert(& $insert_ary) {
@@ -48,7 +48,7 @@ function NS_news_tag_show_page(& $news_row) {
             }
         }
         $tag_data .= "</p></div>";
-        $tpl->addto_tplvar("ADD_TO_NEWSSHOW_BOTTOM", $tag_data);
+        $tpl->addtoTplVar("ADD_TO_NEWSSHOW_BOTTOM", $tag_data);
     } else {
         $cfg['PAGE_KEYWORDS'] = $news_row['title'];
     }
@@ -56,7 +56,7 @@ function NS_news_tag_show_page(& $news_row) {
 
 function NS_tags_edit_form_add($news_data) {
     global $tpl;
-    $news_data['page'] == 1 ? $tpl->addto_tplvar("NEWS_FORM_BOTTOM_OPTION", NS_tags_option($news_data['tags'])) : null;
+    $news_data['page'] == 1 ? $tpl->addtoTplVar("NEWS_FORM_BOTTOM_OPTION", NS_tags_option($news_data['tags'])) : null;
 }
 
 function NS_news_edit_set_tag(& $set_ary) {

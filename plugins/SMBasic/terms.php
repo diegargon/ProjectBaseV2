@@ -8,10 +8,10 @@
 $cfg['PAGE_TITLE'] = $cfg['WEB_NAME'] . ": " . $LNG['L_SM_TERMS'];
 $cfg['PAGE_DESC'] = $cfg['WEB_NAME'] . ": " . $LNG['L_SM_TERMS'];
 
-$tpl->getCSS_filePath("SMBasic");
-$tpl->getCSS_filePath("SMBasic", "SMBasic-mobile");
+$tpl->getCssFile("SMBasic");
+$tpl->getCssFile("SMBasic", "SMBasic-mobile");
 $terms_data = [
     "WEB_NAME" => $cfg['WEB_NAME']
 ];
 
-$tpl->addto_tplvar("ADD_TO_BODY", $tpl->getTPL_file("SMBasic", "terms", $terms_data));
+$tpl->addtoTplVar("ADD_TO_BODY", $tpl->getTplFile("SMBasic", "terms", $terms_data));

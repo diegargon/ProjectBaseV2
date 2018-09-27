@@ -120,7 +120,7 @@ function Blocks_blk_config() {
         $page_data['TPL_CTRL'] = $counter;
         $page_data['TPL_FOOT'] = 1;
         $page_data['blocks_notempty'] = 0;
-        $content .= $tpl->getTPL_file("Blocks", "admin_blocks", $page_data);
+        $content .= $tpl->getTplFile("Blocks", "admin_blocks", $page_data);
         return $content;
     } else {
         $page_data['blocks_notempty'] = 1;
@@ -136,7 +136,7 @@ function Blocks_blk_config() {
         $page_data['canUserDisable'] = $admin_block['canUserDisable'];
         $page_data['block_id'] = $admin_block['blocks_id'];
 
-        $content .= $tpl->getTPL_file("Blocks", "admin_blocks", $page_data);
+        $content .= $tpl->getTplFile("Blocks", "admin_blocks", $page_data);
         $counter++;
     }
     return $content;

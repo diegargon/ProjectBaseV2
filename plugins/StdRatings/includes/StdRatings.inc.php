@@ -87,7 +87,7 @@ function ratings_get_content($section, $resource_id, $rating, $author_id, $lang_
     $rate_stars = rating_css_display($rating);
     $rate_data = array_merge($rate_data, $rate_stars);
 
-    return $tpl->getTpl_file('StdRatings', 'display_rate', $rate_data);
+    return $tpl->getTplFile('StdRatings', 'display_rate', $rate_data);
 }
 
 function rating_css_display($rating) {

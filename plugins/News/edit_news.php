@@ -36,12 +36,12 @@ if (!isset($_POST['submitForm'])) {
         return false;
     }
 
-    $tpl->getCSS_filePath("News");
-    $tpl->getCSS_filePath("MiniEditor");
-    $tpl->getCSS_filePath("News", "News-mobile");
-    $tpl->AddScriptFile("standard", "jquery", "TOP", null);
-    $tpl->AddScriptFile("MiniEditor", "editor");
-    $tpl->AddScriptFile("News", "newsform");
+    $tpl->getCssFile("News");
+    $tpl->getCssFile("MiniEditor");
+    $tpl->getCssFile("News", "News-mobile");
+    $tpl->addScriptFile("standard", "jquery", "TOP", null);
+    $tpl->addScriptFile("MiniEditor", "editor");
+    $tpl->addScriptFile("News", "newsform");
 }
 
 if (!empty($_GET['newsedit'])) {

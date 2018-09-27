@@ -91,5 +91,5 @@ function SimpleFrontEnd_index_cfg() {
         }
     }
 
-    return $tpl->getTPL_file("SimpleFrontend", "admin_index", $page_data);
+    return $tpl->getTplFile("SimpleFrontend", "admin_index", $page_data);
 }

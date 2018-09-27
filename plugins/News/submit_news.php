@@ -18,11 +18,11 @@ if (!$news_perms['news_submit_new']) {
 if (!empty($_POST['submitForm'])) {
     news_submit_new_process();
 } else {
-    $tpl->getCSS_filePath("News");
-    $tpl->getCSS_filePath("News", "News-mobile");
-    $tpl->getCSS_filePath("MiniEditor");
-    $tpl->AddScriptFile("standard", "jquery", "TOP", null);
-    $tpl->AddScriptFile("MiniEditor", "editor");
-    $tpl->AddScriptFile("News", "newsform");
+    $tpl->getCssFile("News");
+    $tpl->getCssFile("News", "News-mobile");
+    $tpl->getCssFile("MiniEditor");
+    $tpl->addScriptFile("standard", "jquery", "TOP", null);
+    $tpl->addScriptFile("MiniEditor", "editor");
+    $tpl->addScriptFile("News", "newsform");
     news_new_form($news_perms);
 }

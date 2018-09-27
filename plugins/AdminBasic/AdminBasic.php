@@ -32,7 +32,7 @@ function AdminBasic_init() {
 
 function AdminBasic_menu_opt() {
     global $tpl;
-    return $tpl->getTPL_file("AdminBasic", "admin_menu_opt");
+    return $tpl->getTplFile("AdminBasic", "admin_menu_opt");
 }
 
 function AdminBasic_Install() {

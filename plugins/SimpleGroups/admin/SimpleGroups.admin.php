@@ -36,7 +36,7 @@ function SimpleGroups_AdminAside($params) {
 function SimpleGroups_AdminContent($params) {
     global $LNG, $tpl;
 
-    $tpl->getCSS_filePath("SimpleGroups");
+    $tpl->getCssFile("SimpleGroups");
     $msg = "";
     $page_data = "";
 
@@ -75,7 +75,7 @@ function SimpleGroups_ShowGroups($msg) {
         (preg_match("/L_/", $group['group_name'])) ? $group['group_name'] = $LNG[$group['group_name']] : false;
         (preg_match("/L_/", $group['group_desc'])) ? $group['group_desc'] = $LNG[$group['group_desc']] : false;
 
-        $content .= $tpl->getTPL_file("SimpleGroups", "admin_groups", $group);
+        $content .= $tpl->getTplFile("SimpleGroups", "admin_groups", $group);
         $counter++;
     }
 
@@ -146,7 +146,7 @@ function SimpleGroups_UserGroups($msg) {
         }
     }
     !empty($msg) ? $page_data['MSG'] = $msg : false;
-    return $tpl->getTPL_file("SimpleGroups", "user_groups", $page_data);
+    return $tpl->getTplFile("SimpleGroups", "user_groups", $page_data);
 }
 
 function SimpleGroups_AddUserGroup($user) {

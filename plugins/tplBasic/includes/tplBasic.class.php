@@ -57,36 +57,36 @@ class TPL {
         $this->lang = $cfg['WEB_LANG'];
     }
 
-    function addto_tplvar($tplvar, $data, $priority = 5) { // change name to appendTo_tplvar? TODO priority support?
+    function addtoTplVar($tplvar, $data, $priority = 5) { // change name to appendTo_tplvar? TODO priority support?
         !isset($this->tpldata[$tplvar]) ? $this->tpldata[$tplvar] = $data : $this->tpldata[$tplvar] .= $data;
     }
 
-    function addto_tplvar_uniq($tplvar, $data) {
+    function addtoTplVarUniq($tplvar, $data) {
         $this->tpldata[$tplvar] = $data;
     }
 
-    function add_if_empty($tplvar, $data) {
+    function addIfEmpty($tplvar, $data) {
         empty($this->tpldata[$tplvar]) ? $this->tpldata[$tplvar] = $data : null;
     }
 
-    function addtpl_array($tpl_ary) {
+    function addtoTplIfEmpty($tpl_ary) {
         if (empty($tpl_ary)) {
             return false;
         }
         foreach ($tpl_ary as $key => $value) {
-            $this->addto_tplvar($key, $value);
+            $this->addtoTplVar($key, $value);
         }
     }
 
-    function gettpl_value($value) {
+    function getTplValue($value) {
         return $this->tpldata[$value];
     }
 
-    function get_tpldata() {
+    function getTplData() {
         return $this->tpldata;
     }
 
-    function getTPL_file($plugin, $filename = null, $data = null) {
+    function getTplFile($plugin, $filename = null, $data = null) {
 
         empty($filename) ? $filename = $plugin : null;
 
@@ -94,11 +94,11 @@ class TPL {
         $USER_PATH = "tpl/{$this->theme}/$filename.tpl.php";
         $DEFAULT_PATH = "plugins/$plugin/tpl/$filename.tpl.php";
         if (file_exists($USER_PATH_LANG)) {
-            $tpl_file_content = $this->parse_file($USER_PATH_LANG, $data);
+            $tpl_file_content = $this->parseFile($USER_PATH_LANG, $data);
         } else if (file_exists($USER_PATH)) {
-            $tpl_file_content = $this->parse_file($USER_PATH, $data);
+            $tpl_file_content = $this->parseFile($USER_PATH, $data);
         } else if (file_exists($DEFAULT_PATH)) {
-            $tpl_file_content = $this->parse_file($DEFAULT_PATH, $data);
+            $tpl_file_content = $this->parseFile($DEFAULT_PATH, $data);
         } else {
             $this->debug ? $this->debug->log("getTPL_file called but not find $filename", "tplBasic", "DEBUG") : null;
             return false;
@@ -114,7 +114,7 @@ class TPL {
         $this->std_remote_scripts[$key] = $url;
     }
 
-    private function check_script($script) {
+    private function checkScript($script) {
         foreach ($this->scripts as $value) {
             if ($value == $script) {
                 return true;
@@ -123,16 +123,16 @@ class TPL {
         return false;
     }
 
-    function AddScriptFile($plugin, $filename = null, $place = "TOP", $async = "async") {
+    function addScriptFile($plugin, $filename = null, $place = "TOP", $async = "async") {
 
         $this->debug ? $this->debug->log("AddScriptFile request -> $plugin for get a $filename", "tplBasic", "DEBUG") : null;
 
         if (!empty($plugin) && ($plugin == "standard")) {
-            if (!$this->check_script($filename)) {
+            if (!$this->checkScript($filename)) {
                 if (array_key_exists($filename, $this->std_remote_scripts)) {
                     $script_url = $this->std_remote_scripts[$filename];
                     $script = "<script type='text/javascript' src='$script_url' charset='UTF-8' $async></script>\n";
-                    $this->addto_tplvar("SCRIPTS_" . $place . "", $script);
+                    $this->addtoTplVar("SCRIPTS_" . $place . "", $script);
                     $this->scripts[] = $filename;
                     $backtrace = debug_backtrace();
                     $this->debug ? $this->debug->log("AddcriptFile:CheckScript setting first time * $filename * by " . $backtrace[1]['function'] . "", "tplBasic", "DEBUG") : null;
@@ -169,10 +169,10 @@ class TPL {
             $this->debug ? $this->debug->log("AddScriptFile called by-> $plugin for get a $filename but NOT FOUND IT", "tplBasic", "ERROR") : null;
             return false;
         }
-        $this->addto_tplvar("SCRIPTS_" . $place . "", $script);
+        $this->addtoTplVar("SCRIPTS_" . $place . "", $script);
     }
 
-    function getCSS_filePath($plugin, $filename = null) {
+    function getCssFile($plugin, $filename = null) {
 
         empty($filename) ? $filename = $plugin : null;
         if (in_array($filename, $this->css_added)) {
@@ -183,7 +183,7 @@ class TPL {
 
         $USER_PATH = "tpl/{$this->theme}/css/$filename.css";
         $DEFAULT_PATH = "plugins/$plugin/tpl/css/$filename.css";
-        if ($this->css_cache_check() == true) {
+        if ($this->cssCacheCheck() == true) {
             if (file_exists($USER_PATH)) {
                 $this->css_cache_filepaths[] = $USER_PATH;
             } else {
@@ -203,21 +203,21 @@ class TPL {
                 }
             } else {
                 if (file_exists($USER_PATH)) {
-                    $css_code = $this->parse_file("$USER_PATH");
+                    $css_code = $this->parseFile("$USER_PATH");
                 } else if (file_exists($DEFAULT_PATH)) {
-                    $css_code = $this->parse_file("$DEFAULT_PATH");
+                    $css_code = $this->parseFile("$DEFAULT_PATH");
                 }
-                isset($css_code) ? $css = "<style>" . $this->css_strip($css_code) . "</style>" : null;
+                isset($css_code) ? $css = "<style>" . $this->cssStrip($css_code) . "</style>" : null;
             }
             if (isset($css)) {
-                $this->addto_tplvar("LINK", $css);
+                $this->addtoTplVar("LINK", $css);
             } else {
                 $this->debug ? $this->debug->log("Get CSS called by-> $plugin for get a $filename NOT FOUND IT", "tplBasic", "DEBUG") : null;
             }
         }
     }
 
-    function css_cache_check() {
+    function cssCacheCheck() {
         if ($this->css_optimize == 0 || !is_writable("cache")) {
             return false;
         }
@@ -230,9 +230,9 @@ class TPL {
         return true;
     }
 
-    function css_cache() {
+    function cssCache() {
 
-        if (!$this->css_cache_check() || empty($this->css_cache_onefile)) {
+        if (!$this->cssCacheCheck() || empty($this->css_cache_onefile)) {
             return false;
         }
 
@@ -243,22 +243,22 @@ class TPL {
         if (!file_exists("cache/css/$cssfile")) {
             foreach ($this->css_cache_filepaths as $cssfile_path) {
                 $this->debug ? $this->debug->log("CSS Unify  $cssfile_path", "tplBasic", "DEBUG") : null;
-                $css_code .= $this->parse_file($cssfile_path);
+                $css_code .= $this->parseFile($cssfile_path);
             }
-            $css_code = $this->css_strip($css_code);
+            $css_code = $this->cssStrip($css_code);
             file_put_contents("cache/css/$cssfile", $css_code);
         }
         if ($this->css_inline == 0) {
-            $this->addto_tplvar("LINK", "<link rel='stylesheet' href='/cache/css/$cssfile'>\n");
+            $this->addtoTplVar("LINK", "<link rel='stylesheet' href='/cache/css/$cssfile'>\n");
         } else {
-            $css_code = $this->parse_file("cache/css/$cssfile");
-            $this->addto_tplvar("LINK", "<style>$css_code</style>\n");
+            $css_code = $this->parseFile("cache/css/$cssfile");
+            $this->addtoTplVar("LINK", "<style>$css_code</style>\n");
         }
 
         return true;
     }
 
-    private function css_strip($css) { #by nyctimus
+    private function cssStrip($css) { #by nyctimus
         $preg_replace = [
             "#/\*.*?\*/#s" => "", // Strip C style comments.
             //"#\s\s+#" => "", // Strip excess whitespace.
@@ -281,12 +281,12 @@ class TPL {
         return trim($css);
     }
 
-    function parse_file($path, $data = null) {
+    private function parseFile($path, $data = null) {
         global $LNG, $cfg;
 
         $this->debug ? $this->debug->log("TPL parse $path, gzip its {$cfg['tplbasic_gzip']}", "tplBasic", "DEBUG") : null;
 
-        $tpldata = $this->get_tpldata();
+        $tpldata = $this->getTplData();
 
         isset($this->gzip) && $this->gzip == 1 ? ob_start("ob_gzhandler") : ob_start();
 

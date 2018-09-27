@@ -35,7 +35,7 @@ function SimpleCats_AdminAside($params) {
 function SimpleCats_AdminContent($params) {
     global $LNG;
 
-    //$tpl->getCSS_filePath("SimpleCats");
+    //$tpl->getCssFile("SimpleCats");
 
     $page_data = "";
 
@@ -54,7 +54,7 @@ function SimpleCats_AdminContent($params) {
 function SimpleCats_AdminCats($plugin = null) {
     global $cfg, $ml, $ctgs, $tpl;
 
-    $tpl->getCSS_filePath('SimpleCategories');
+    $tpl->getCssFile('SimpleCategories');
 
     if (defined('MULTILANG')) {
         $langs = $ml->get_site_langs();
@@ -74,7 +74,7 @@ function SimpleCats_AdminCats($plugin = null) {
     foreach ($langs as $lang) {
         $catdata['catrow_new'] .= "<label>{$lang['lang_name']}</label> <input type='text' name='{$lang['lang_id']}' value='' />";
     }
-    $content = $tpl->getTPL_file('SimpleCategories', 'adm_create_cat', $catdata);
+    $content = $tpl->getTplFile('SimpleCategories', 'adm_create_cat', $catdata);
 
     /* MODIFY */
     $cats = $ctgs->getCategories_all_lang($plugin);
@@ -113,7 +113,7 @@ function SimpleCats_AdminCats($plugin = null) {
                 $foundit = 0;
             }
 
-            $content .= $tpl->getTPL_file('SimpleCategories', 'adm_modify_cat', $catdata);
+            $content .= $tpl->getTplFile('SimpleCategories', 'adm_modify_cat', $catdata);
             $catdata['catlist'] = '';
             $counter++;
         }

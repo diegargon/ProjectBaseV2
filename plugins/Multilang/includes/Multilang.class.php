@@ -102,7 +102,7 @@ class Multilang {
 
             $data['iso_code'] = $lang['iso_code'];
             $data['lang_name'] = $lang['lang_name'];
-            $content .= $tpl->getTPL_file("Multilang", "ml_menu_opt", $data);
+            $content .= $tpl->getTplFile("Multilang", "ml_menu_opt", $data);
         }
 
         return $content;

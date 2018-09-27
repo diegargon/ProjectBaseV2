@@ -64,7 +64,7 @@ function Admin_GetPluginState($plugin) {
             $enabled_plugin['optional'] = AdminBasic_unserialize_forPrint($enabled_plugin['optional']);
             $enabled_plugin['conflicts'] = AdminBasic_unserialize_forPrint($enabled_plugin['conflicts']);
 
-            $content = $tpl->getTPL_file("AdminBasic", "plugin_state_info", (array) $enabled_plugin);
+            $content = $tpl->getTplFile("AdminBasic", "plugin_state_info", (array) $enabled_plugin);
         }
     }
     return $content;
@@ -257,7 +257,7 @@ function plugins_ctrl_display($plugins) {
             }
         }
 
-        $content .= $tpl->getTPL_file("AdminBasic", "plugins_list", $plugin);
+        $content .= $tpl->getTplFile("AdminBasic", "plugins_list", $plugin);
         $counter++;
     }
     return $content;
@@ -287,7 +287,7 @@ function AdminPluginConfig($plugin) {
     while ($cfg_row = $db->fetch($cfg_result)) {
         $cfg_row['TPL_CTRL'] = $counter;
         $counter == $num_items ? $cfg_row['TPL_FOOT'] = 1 : $cfg_row['TPL_FOOT'] = 0;
-        $content .= $tpl->getTPL_file("AdminBasic", "plugin_config", $cfg_row);
+        $content .= $tpl->getTplFile("AdminBasic", "plugin_config", $cfg_row);
         $counter++;
     }
 

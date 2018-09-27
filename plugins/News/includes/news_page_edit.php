@@ -56,7 +56,7 @@ function news_edit($news_nid, $news_lang_id, $news_page) {
     //$news_data['terms_url'] = $cfg['TERMS_URL'];
     do_action('news_edit_page_add', $news_data);
 
-    $tpl->addto_tplvar('ADD_TO_BODY', $tpl->getTPL_file('News', 'news_form', $news_data));
+    $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('News', 'news_form', $news_data));
 }
 
 function news_form_edit_process() {

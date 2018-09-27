@@ -77,13 +77,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       }
       }
      */
-    $tpl->getCSS_filePath("SMBasic");
-    $tpl->getCSS_filePath("SMBasic", "SMBasic-mobile");
+    $tpl->getCssFile("SMBasic");
+    $tpl->getCssFile("SMBasic", "SMBasic-mobile");
     SMBasic_LoginScripts();
     if ($cfg['FRIENDLY_URL']) {
         $login_data['register_url'] = "/{$cfg['WEB_LANG']}/register";
     } else {
         $login_data['register_url'] = "/{$cfg['CON_FILE']}?module=SMBasic&page=register&lang={$cfg['WEB_LANG']}";
     }
-    $tpl->addto_tplvar("ADD_TO_BODY", $tpl->getTPL_file("SMBasic", "login", $login_data));
+    $tpl->addtoTplVar("ADD_TO_BODY", $tpl->getTplFile("SMBasic", "login", $login_data));
 }

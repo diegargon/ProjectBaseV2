@@ -12,7 +12,7 @@ function StdComments_init() {
         return false;
     }
     
-    $tpl->getCSS_filePath('StdComments');
+    $tpl->getCssFile('StdComments');
 }
 
 function StdComments_install() {

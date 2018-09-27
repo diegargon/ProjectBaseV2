@@ -54,8 +54,8 @@ function SMBasic_admin_content($params) {
 function SMBasic_UserSearch() {
     global $cfg, $LNG, $tpl, $sm, $filter;
 
-    $tpl->getCSS_filePath("SMBasic");
-    $tpl->getCSS_filePath("SMBasic", "SMBasic-mobile");
+    $tpl->getCssFile("SMBasic");
+    $tpl->getCssFile("SMBasic", "SMBasic-mobile");
 
     if (isset($_POST['btnDeleteSubmit']) && ( ($member_id = $filter->post_int("member_uid") )) > 0) {
         SMBasic_DeleteUser($member_id);
@@ -68,7 +68,7 @@ function SMBasic_UserSearch() {
         SMBasic_DisableUser($member_id, $disable_state);
     }
 
-    $content = $tpl->getTPL_file("SMBasic", "sm_adm_usersearch_form");
+    $content = $tpl->getTplFile("SMBasic", "sm_adm_usersearch_form");
 
     isset($_POST['posted_glob']) ? $glob = 1 : $glob = 0;
     isset($_POST['posted_email']) ? $email = 1 : $email = 0;
@@ -84,9 +84,9 @@ function SMBasic_UserSearch() {
                 } else {
                     $user_match['profile_url'] = "/{$cfg['CON_FILE']}?module=SMBasic&page=profile?lang={$cfg['WEB_LANG']}&viewprofile={$user_match['uid']}";
                 }
-                $table['ADM_TABLE_ROW'] .= $tpl->getTPL_file("SMBasic", "sm_adm_userlist", $user_match);
+                $table['ADM_TABLE_ROW'] .= $tpl->getTplFile("SMBasic", "sm_adm_userlist", $user_match);
             }
-            $content .= $tpl->getTPL_file("SMBasic", "memberlist", $table);
+            $content .= $tpl->getTplFile("SMBasic", "memberlist", $table);
         }
     }
     return $content;
@@ -95,8 +95,8 @@ function SMBasic_UserSearch() {
 function SMBasic_UserList() {
     global $cfg, $LNG, $tpl, $sm;
 
-    $tpl->getCSS_filePath("SMBasic");
-    $tpl->getCSS_filePath("SMBasic", "SMBasic-mobile");
+    $tpl->getCssFile("SMBasic");
+    $tpl->getCssFile("SMBasic", "SMBasic-mobile");
 
     if (isset($_POST['btnDeleteSubmit']) && ( ($member_id = $filter->post_int("member_uid") )) > 0) {
         SMBasic_DeleteUser($member_id);
@@ -121,11 +121,11 @@ function SMBasic_UserList() {
         }
         if ($user['active'] == 0 && !$user['disable']) {
 
-            $active['ADM_TABLE_ROW'] .= $tpl->getTPL_file("SMBasic", "sm_adm_userlist", $user);
+            $active['ADM_TABLE_ROW'] .= $tpl->getTplFile("SMBasic", "sm_adm_userlist", $user);
         } else if ($user['active'] > 0 && !$user['disable']) {
-            $inactive['ADM_TABLE_ROW'] .= $tpl->getTPL_file("SMBasic", "sm_adm_userlist", $user);
+            $inactive['ADM_TABLE_ROW'] .= $tpl->getTplFile("SMBasic", "sm_adm_userlist", $user);
         } else if ($user['disable']) {
-            $disable['ADM_TABLE_ROW'] .= $tpl->getTPL_file("SMBasic", "sm_adm_userlist", $user);
+            $disable['ADM_TABLE_ROW'] .= $tpl->getTplFile("SMBasic", "sm_adm_userlist", $user);
         }
     }
 
@@ -133,9 +133,9 @@ function SMBasic_UserList() {
     $inactive['ADM_TABLE_TITLE'] = $LNG['L_SM_USERS_INACTIVE'];
     $disable['ADM_TABLE_TITLE'] = $LNG['L_SM_USERS_DISABLE'];
 
-    $content = $tpl->getTPL_file("SMBasic", "memberlist", $active);
-    $content .= $tpl->getTPL_file("SMBasic", "memberlist", $inactive);
-    $content .= $tpl->getTPL_file("SMBasic", "memberlist", $disable);
+    $content = $tpl->getTplFile("SMBasic", "memberlist", $active);
+    $content .= $tpl->getTplFile("SMBasic", "memberlist", $inactive);
+    $content .= $tpl->getTplFile("SMBasic", "memberlist", $disable);
 
     return $content;
 }

@@ -11,7 +11,7 @@ function NMU_form_add($news) {
     $user = $sm->getSessionUser();
 
     if ($cfg['upload_allow_anon'] == 0 && empty($user['uid'])) {
-        $tpl->addto_tplvar('NEWS_FORM_TOP_OPTION', NMU_disable_warn());
+        $tpl->addtoTplVar('NEWS_FORM_TOP_OPTION', NMU_disable_warn());
         return false;
     }
     /*
@@ -19,17 +19,17 @@ function NMU_form_add($news) {
       return false;
       }
      */
-    $tpl->getCSS_filePath('NewsMediaUploader');
+    $tpl->getCssFile('NewsMediaUploader');
 
     $extra_content['UPLOAD_EXTRA'] = '';
     ($user = $sm->getSessionUser()) ? $extra_content['UPLOAD_EXTRA'] = NMU_upload_list($user) : false;
 
-    $tpl->AddScriptFile('standard', 'jquery', 'TOP', null);
-    $tpl->AddScriptFile('NewsMediaUploader', 'plupload.full.min', 'TOP', null);
+    $tpl->addScriptFile('standard', 'jquery', 'TOP', null);
+    $tpl->addScriptFile('NewsMediaUploader', 'plupload.full.min', 'TOP', null);
     if ($cfg['allow_remote_file_upload']) {
-        $tpl->addto_tplvar('NEWS_FORM_MIDDLE_OPTION', $tpl->getTPL_file('NewsMediaUploader', 'remoteFileUpload', $extra_content));
+        $tpl->addtoTplVar('NEWS_FORM_MIDDLE_OPTION', $tpl->getTplFile('NewsMediaUploader', 'remoteFileUpload', $extra_content));
     }
-    $tpl->addto_tplvar('NEWS_FORM_MIDDLE_OPTION', $tpl->getTPL_file('NewsMediaUploader', 'formFileUpload', $extra_content));
+    $tpl->addtoTplVar('NEWS_FORM_MIDDLE_OPTION', $tpl->getTplFile('NewsMediaUploader', 'formFileUpload', $extra_content));
 }
 
 function NMU_upload_list($user) {

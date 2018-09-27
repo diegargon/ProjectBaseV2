@@ -53,9 +53,9 @@ class Editor {
     function getEditor($conf = null) {
         global $tpl;
 
-        $conf['editor_bar'] = $tpl->getTPL_file('MiniEditor', 'MiniEditorBar');
+        $conf['editor_bar'] = $tpl->getTplFile('MiniEditor', 'MiniEditorBar');
         isset($conf['text']) ? $conf['text'] = stripcslashes($conf['text']) : null;
-        return $tpl->getTPL_file("MiniEditor", "editor", $conf);
+        return $tpl->getTplFile("MiniEditor", "editor", $conf);
     }
 
     function preview() {

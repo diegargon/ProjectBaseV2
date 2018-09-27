@@ -9,10 +9,10 @@ function SMBasic_ProfileEdit($user) {
     global $cfg, $tpl;
 
 
-    $tpl->getCSS_filePath("SMBasic");
-    $tpl->getCSS_filePath("SMBasic", "SMBasic-mobile");
-    $tpl->AddScriptFile("standard", "jquery", "BOTTOM");
-    $tpl->AddScriptFile("SMBasic", "profile", "BOTTOM");
+    $tpl->getCssFile("SMBasic");
+    $tpl->getCssFile("SMBasic", "SMBasic-mobile");
+    $tpl->addScriptFile("standard", "jquery", "BOTTOM");
+    $tpl->addScriptFile("SMBasic", "profile", "BOTTOM");
 
     $form_data = [
         "username" => $user['username'],
@@ -20,7 +20,7 @@ function SMBasic_ProfileEdit($user) {
     ];
     (empty($user['avatar'])) ? $form_data['avatar'] = $cfg['STATIC_SRV_URL'] . $cfg['smbasic_default_img_avatar'] : $user['avatar'];
 
-    $tpl->addto_tplvar("ADD_TO_BODY", $tpl->getTPL_file("SMBasic", "profile", $form_data));
+    $tpl->addtoTplVar("ADD_TO_BODY", $tpl->getTplFile("SMBasic", "profile", $form_data));
 }
 
 function SMBasic_ProfileView() {
@@ -32,9 +32,9 @@ function SMBasic_ProfileView() {
     }
     $v_user = $sm->getUserByID($uid);
     if ($v_user) {
-        $tpl->getCSS_filePath("SMBasic");
-        $tpl->getCSS_filePath("SMBasic", "SMBasic-mobile");
-        $tpl->addto_tplvar("ADD_TO_BODY", $tpl->getTPL_file("SMBasic", "viewprofile", $v_user));
+        $tpl->getCssFile("SMBasic");
+        $tpl->getCssFile("SMBasic", "SMBasic-mobile");
+        $tpl->addtoTplVar("ADD_TO_BODY", $tpl->getTplFile("SMBasic", "viewprofile", $v_user));
     } else {
         $frontend->messageBox(['msg' => 'L_SM_E_USER_NOT_EXISTS']);
     }

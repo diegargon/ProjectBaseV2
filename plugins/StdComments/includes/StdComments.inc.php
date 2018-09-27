@@ -63,7 +63,7 @@ function stdFormatComments($comments, $comm_conf) {
             $comment_row['p_url'] = '/' . $cfg['CON_FILE'] . '?module=SMBasic&page=profile&viewprofile=' . $author_data['uid'] . '&lang=' . $cfg['WEB_LANG'];
         }
 
-        $content .= $tpl->getTPL_file('StdComments', 'comments', $comment_row);
+        $content .= $tpl->getTplFile('StdComments', 'comments', $comment_row);
     }
 
     return $content;
@@ -72,7 +72,7 @@ function stdFormatComments($comments, $comm_conf) {
 function stdNewComment() {
     global $tpl;
 
-    return $tpl->getTPL_file('StdComments', 'new_comment');
+    return $tpl->getTplFile('StdComments', 'new_comment');
 }
 
 function stdAddComment($comment) {

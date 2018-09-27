@@ -19,8 +19,8 @@ if ($plugins->check_enabled('NewsComments')) {
     $plugins->express_start('NewsComments');
 }
 
-$tpl->getCSS_filePath("News");
-$tpl->getCSS_filePath("News", "News-mobile");
+$tpl->getCssFile("News");
+$tpl->getCssFile("News", "News-mobile");
 
 do_action("begin_newsshow");
 

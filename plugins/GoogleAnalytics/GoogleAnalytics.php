@@ -8,7 +8,7 @@
 function GoogleAnalytics_init() {
     global $tpl;
 
-    $tpl->addto_tplvar("SCRIPTS_BOTTOM", $tpl->getTPL_file("GoogleAnalytics"));
+    $tpl->addtoTplVar("SCRIPTS_BOTTOM", $tpl->getTplFile("GoogleAnalytics"));
 }
 
 function GoogleAnalytics_install() {

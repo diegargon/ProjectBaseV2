@@ -12,7 +12,7 @@ function NewsMediaUploader_init() {
       if ($user && defined('ACL') && $cfg['NMU_ACL_CHECK']) {
       global $acl_auth;
       if (!$acl_auth->acl_ask($cfg['NMU_ACL_LIST'])) {
-      $tpl->addto_tplvar("NEWS_FORM_TOP_OPTION", NMU_disable_warn());
+      $tpl->addtoTplVar("NEWS_FORM_TOP_OPTION", NMU_disable_warn());
       return false;
       }
       }
