@@ -83,32 +83,11 @@ function NewsComments_AddrateDisplay(& $comments) {
 
     $ratings_data = ratings_get_ratings($rating_r_ids, 'news_comments_rate');
     foreach ($comments as $key => $comment) {
-        $comments[$key]['COMMENT_EXTRA'] = ratings_get_content('news_comments_rate', $comment['cid'], $comment['rating'], $comment['author_id'], $comment['lang_id'], $ratings_data);
+        $comments[$key]['COMMENT_EXTRA'] = ratings_get_content('news_comments_rate', $comment['cid'], $comment['author_id'], $comment['lang_id'], $ratings_data);
     }
 }
 
 /* OLD to CRON 
- 
- function NewsVote_Calc_Rating($rid, $section) {
-    global $db;
-    $where_ary = [
-        'section' => $section,
-        'resource_id' => $rid,
-    ];
-    $query = $db->select_all('rating', $where_ary);
-    $vote_sum = 0;
-    if (($num_votes = $db->num_rows($query)) > 0) {
-        while ($vote_row = $db->fetch($query)) {
-            $vote_sum = $vote_sum + $vote_row['vote_value'];
-        }
-        $new_rate = $vote_sum / $num_votes;
-        if ($section == 'news_comments_rate') {
-            $db->update('comments', ['rating' => $new_rate], ['cid' => $rid]);
-        } else if ($section == 'news_rate') {
-            $db->update('news', ['rating' => $new_rate], ['nid' => $rid]);
-        }
-    }
-}
 
  *  
 function newsvote_news_user_rating($nid, $lang_id, $user_rating) {

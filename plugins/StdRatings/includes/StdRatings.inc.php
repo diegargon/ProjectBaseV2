@@ -57,7 +57,7 @@ function ratings_get_ratings($ids, $section) {
     return $db->fetch_all($query);
 }
 
-function ratings_get_content($section, $resource_id, $rating, $author_id, $lang_id, $ratings_data, $image_vote = null) {
+function ratings_get_content($section, $resource_id, $author_id, $lang_id, $ratings_data, $image_vote = null) {
     global $tpl, $cfg, $sm;
 
     //TODO: Manage anonymous rating
@@ -72,11 +72,16 @@ function ratings_get_content($section, $resource_id, $rating, $author_id, $lang_
         $rate_data['BTN_EXTRA'] .= "disabled";
     } else {
         $rate_data['show_pointer'] = 1;
+        $vote_counter = 0;
+        $sum_votes = 0;
         foreach ($ratings_data as $rating_row) { //buscamos si ya hay algun rating, por usuario al comentario  si es asi deshabilitamos
-            if (($rating_row['uid'] == $user['uid']) && ($resource_id == $rating_row['resource_id'] )) {
-                $rate_data['BTN_EXTRA'] .= "disabled";
-                $rate_data['show_pointer'] = 0;
-                break;
+            if (($resource_id == $rating_row['resource_id'])) {
+                $vote_counter++;
+                $sum_votes = $sum_votes + $rating_row['vote_value'];
+                if (($rating_row['uid'] == $user['uid'])) {
+                    $rate_data['BTN_EXTRA'] .= "disabled";
+                    $rate_data['show_pointer'] = 0;
+                }
             }
         }
     }
@@ -84,6 +89,7 @@ function ratings_get_content($section, $resource_id, $rating, $author_id, $lang_
     $rate_data['lang_id'] = $lang_id;
     $rate_data['section'] = $section;
 
+    ($vote_counter > 0) ? $rating = $sum_votes / $vote_counter : $rating = 0;
     $rate_stars = rating_css_display($rating);
     $rate_data = array_merge($rate_data, $rate_stars);
 

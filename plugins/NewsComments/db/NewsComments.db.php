@@ -11,9 +11,6 @@ $newsComments_database_install[] = "
 ";
 
 $newsComments_database_install[] = "
-    ALTER TABLE `" . DB_PREFIX . "comments` ADD `rating` float(2,1) NOT NULL DEFAULT '0';
-";
-$newsComments_database_install[] = "
     ALTER TABLE `" . DB_PREFIX . "comments` ADD `rating_close` tinyint(1) NOT NULL DEFAULT '0';
 ";
 /* Config */
