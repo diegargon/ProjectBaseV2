@@ -12,7 +12,7 @@ function news_new_page($news_nid, $news_lang_id, $news_page) {
     $user = $sm->getSessionUser();
 
     if (!($user = $sm->getSessionUser())) {
-        return $frontend->messageBox(["msg" => "L_E_NOACCESS"]);
+        return $frontend->messageBox(['msg' => 'L_E_NOACCESS']);
     }
     $user['uid'] > 0 ? $form_data['tos_checked'] = 1 : false;
 
@@ -21,10 +21,10 @@ function news_new_page($news_nid, $news_lang_id, $news_page) {
         return false;
     }
 
-    $news_perms = get_news_perms("new_page");
+    $news_perms = get_news_perms('new_page');
 
     if (!$news_perms['news_create_new_page']) {
-        return $frontend->messageBox(["msg" => "L_E_NOEDITACCESS"]);
+        return $frontend->messageBox(['msg' => 'L_E_NOEDITACCESS']);
     }
 
     $form_data['author_readonly'] = !$news_perms['news_can_change_author'];
@@ -35,9 +35,9 @@ function news_new_page($news_nid, $news_lang_id, $news_page) {
     $form_data['editor'] = $editor->getEditor();
     //$form_data['terms_url'] = $cfg['TERMS_URL'];
 
-    do_action("news_newpage_form_add");
+    do_action('news_newpage_form_add');
 
-    $tpl->addtoTplVar("ADD_TO_BODY", $tpl->getTplFile("News", "news_form", $form_data));
+    $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('News', 'news_form', $form_data));
 }
 
 function news_newpage_form_process() {
@@ -48,7 +48,7 @@ function news_newpage_form_process() {
     }
     $news_data = news_form_getPost();
 
-    $news_perms = get_news_perms("new_page");
+    $news_perms = get_news_perms('new_page');
 
     if (!$news_perms['news_edit']) {
         die('[{"status": "4", "msg": "' . $LNG['L_E_NOEDITACCESS'] . '"}]');
@@ -91,7 +91,7 @@ function news_newpage_form_process() {
 function news_newpage_submit_new($news_data) {
     global $db, $cfg;
 
-    $query = $db->select_all("news", ["nid" => "{$news_data['nid']}", "lang_id" => "{$news_data['news_lang_id']}", "page" => "1"], "LIMIT 1");
+    $query = $db->select_all('news', ['nid' => $news_data['nid'], 'lang_id' => $news_data['news_lang_id'], 'page' => '1'], 'LIMIT 1');
 
     if (($num_pages = $db->num_rows($query)) <= 0) {
         return false;
@@ -100,18 +100,22 @@ function news_newpage_submit_new($news_data) {
     $news_father = $db->fetch($query);
 
     $insert_ary = [
-        "nid" => $news_father['nid'],
-        "lang_id" => $news_father['lang_id'],
-        "title" => $db->escape_strip($news_data['title']),
-        "text" => $db->escape_strip($news_data['editor_text']),
-        "featured" => $news_father['featured'],
-        "author_id" => $news_father['author_id'],
-        "category" => $news_father['category'],
-        "moderation" => $cfg['news_moderation'],
-        "page" => ++$num_pages
+        'nid' => $news_father['nid'],
+        'lang_id' => $news_father['lang_id'],
+        'title' => $db->escape_strip($news_data['title']),
+        'text' => $db->escape_strip($news_data['editor_text']),
+        'featured' => $news_father['featured'],
+        'author_id' => $news_father['author_id'],
+        'category' => $news_father['category'],
+        'moderation' => $cfg['news_moderation'],
+        'page' => ++$num_pages
     ];
     !empty($news_data['lead']) ? $insert_ary['lead'] = $db->escape_strip($news_data['lead']) : false;
     $db->insert("news", $insert_ary);
+
+    $num_pages = $news_father['num_pages'];
+    $num_pages++;
+    $db->update('news', ['num_pages' => $num_pages], ['nid' => $news_father['nid'], 'lang_id' => $news_father['lang_id']], 'LIMIT ' . $num_pages);
 
     return true;
 }
