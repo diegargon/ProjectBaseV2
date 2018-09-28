@@ -78,7 +78,7 @@ function NewsComments_AddrateDisplay(& $comments) {
     $rating_r_ids = '';
 
     foreach ($comments as $comment) {
-        empty($rating_r_cids) ? $rating_r_ids = $comment['cid'] : $rating_r_cids .= ',' . $comment['cid'];
+        empty($rating_r_ids) ? $rating_r_ids = $comment['cid'] : $rating_r_ids .= ',' . $comment['cid'];
     }
 
     $ratings_data = ratings_get_ratings($rating_r_ids, 'news_comments_rate');
