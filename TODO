@@ -23,9 +23,8 @@ para luego presentarlos por grupos, ej: L_NEWS_SUBMIT, L_NEWS_VIEW
 
 * CRON Plugin y añadir posibilidad de hacer media de los ratings posiblemente registrados y configurados para hacer la media.
 
-* Actualmente News hace dos querys, una para coger la noticia de determinado id/lang y otra para obtener el numero de paginas, para reducidirla a una
-abria que crear el campo en la noticia numero_paginas y llevar cuenta allí cada vez que se añade o se borra una. (añadida ya la columna)
-
 * Cuando se instalan plugins comprobar que sus dependencias estan cumplidas, si no al instalar por ejemplo NewsComments y no estar instalado News, no puede modificar la tabla.
 
 * SimpleFrontend, configurar inicio poner en none si no hay todavía ninguna selecciona.
+
+* Añadir la posibilidad de borrar paginas de news, actualmente borras la noticia y todas sus paginas.
