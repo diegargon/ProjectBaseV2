@@ -205,11 +205,9 @@ function news_nav_options($news, $perms) {
 }
 
 function news_pager($news_page) {
-    global $db, $cfg, $ml;
+    global $cfg;
 
-    //TODO another query for the pager? field in news and add/del when add a page?
-    $query = $db->select_all('news', ['nid' => $news_page['nid'], 'lang_id' => $news_page['lang_id']]);
-    if (($num_pages = $db->num_rows($query)) <= 1) {
+    if ($news_page['num_pages'] < 2) {
         return false;
     }
 
@@ -223,7 +221,7 @@ function news_pager($news_page) {
         $content .= "<li><a $a_class href='{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_page['nid']}&lang={$cfg['WEB_LANG']}&news_lang_id={$news_page['lang_id']}&npage=1&news_lang_id={$news_page['lang_id']}'>1</a></li>";
     }
 
-    $pager = page_pager($cfg['news_pager_max'], $num_pages, $news_page['page']);
+    $pager = page_pager($cfg['news_pager_max'], $news_page['num_pages'], $news_page['page']);
 
     for ($i = $pager['start_page']; $i < $pager['limit_page']; $i++) {
         $news_page['page'] == $i ? $a_class = 'class="active"' : $a_class = '';
@@ -234,12 +232,12 @@ function news_pager($news_page) {
             $content .= "<li><a $a_class href='{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_page['nid']}&lang={$cfg['WEB_LANG']}&npage=$i&news_lang_id={$news_page['lang_id']}'>$i</a></li>";
         }
     }
-    $news_page['page'] == $num_pages ? $a_class = 'class="active"' : $a_class = '';
+    $news_page['page'] == $news_page['num_pages'] ? $a_class = 'class="active"' : $a_class = '';
     if ($cfg['FRIENDLY_URL']) {
         $friendly_title = news_friendly_title($news_page['title']);
-        $content .= "<li><a $a_class href='/{$cfg['WEB_LANG']}/news/{$news_page['nid']}/$num_pages/{$news_page['lang_id']}/$friendly_title'>$num_pages</a></li>";
+        $content .= "<li><a $a_class href='/{$cfg['WEB_LANG']}/news/{$news_page['nid']}/{$news_page['num_pages']}/{$news_page['lang_id']}/$friendly_title'>{$news_page['num_pages']}</a></li>";
     } else {
-        $content .= "<li><a $a_class href='{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_page['nid']}&lang={$cfg['WEB_LANG']}&npage=$num_pages&news_lang_id={$news_page['lang_id']}'>$num_pages</a></li>";
+        $content .= "<li><a $a_class href='{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_page['nid']}&lang={$cfg['WEB_LANG']}&npage={$news_page['num_pages']}&news_lang_id={$news_page['lang_id']}'>{$news_page['num_pages']}</a></li>";
     }
     $content .= '</ul></div>';
 
