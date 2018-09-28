@@ -21,7 +21,7 @@ function News_Comments($news) {
     ) {
         $tpl->addScriptFile('StdRatings', 'rate', 'BOTTOM');
         $tpl->getCssFile('NewsComments');
-        register_action('std_format_comments', 'NewsComments_Addrate');
+        register_action('std_format_comments', 'NewsComments_AddrateDisplay');
 
         if (($_SERVER['REQUEST_METHOD'] === 'POST') &&
                 ( ($filter->post_strict_chars('rate_section')) == 'news_comments_rate')
@@ -69,7 +69,7 @@ function News_Comments($news) {
     return true;
 }
 
-function NewsComments_Addrate(& $comments) {
+function NewsComments_AddrateDisplay(& $comments) {
 
     if (count($comments) < 1) {
         return false;
