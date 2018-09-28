@@ -315,10 +315,9 @@ function news_approved($nid, $lang_id) {
 }
 
 function news_featured($nid, $lang_id, $featured) {
-    global $db;
+    global $db, $cfg;
 
-    //$time = format_date(time(), true);
-    $time = date('Y-m-d H:i:s', time());
+    $time = date($cfg['dateformat'], time());
 
     if (empty($nid) || empty($lang_id)) {
         return false;

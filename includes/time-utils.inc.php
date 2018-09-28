@@ -7,8 +7,8 @@
 
 //TODO: Check user preferences
 
-date_default_timezone_set($cfg['DEFAULT_TIMEZONE']);
-$cfg['dateformat'] = $cfg['DEFAULT_DATEFORMAT'];
+date_default_timezone_set($cfg['default_timezone']);
+$cfg['dateformat'] = $cfg['default_dateformat'];
 $cfg['timezone'] = date_default_timezone_get();
 
 function getTimeNow() {
