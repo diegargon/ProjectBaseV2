@@ -32,7 +32,7 @@ function stdFormatComments($comments, $comm_conf) {
     $uid_list = $content = '';
     $num_comments = count($comments);
 
-    do_action($comm_conf['plugin'] . '_format_comments', $comments);
+    do_action('std_format_comments', $comments);
 
     /* First, retrieve all authors in one query) */
     foreach ($comments as $comment_row) {

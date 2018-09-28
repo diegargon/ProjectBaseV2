@@ -21,7 +21,7 @@ function News_Comments($news) {
     ) {
         $tpl->addScriptFile('StdRatings', 'rate', 'BOTTOM');
         $tpl->getCssFile('NewsComments');
-        register_action('NewsComments_format_comments', 'NewsComments_Addrate');
+        register_action('std_format_comments', 'NewsComments_Addrate');
 
         if (($_SERVER['REQUEST_METHOD'] === 'POST') &&
                 ( ($filter->post_strict_chars('rate_section')) == 'news_comments_rate')
@@ -78,7 +78,7 @@ function NewsComments_Addrate(& $comments) {
     $rating_r_ids = '';
 
     foreach ($comments as $comment) {
-        empty($rating_cids) ? $rating_r_ids = $comment['cid'] : $rating_cids .= ',' . $comment['cid'];
+        empty($rating_r_cids) ? $rating_r_ids = $comment['cid'] : $rating_r_cids .= ',' . $comment['cid'];
     }
 
     $ratings_data = ratings_get_ratings($rating_r_ids, 'news_comments_rate');
