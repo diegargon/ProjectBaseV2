@@ -90,3 +90,4 @@ $LNG['L_NEWS_E_SEC_NOEXISTS'] = 'Section not exist';
 $LNG['L_SUBMIT_NEWS'] = 'Send';
 $LNG['L_NEWS_SEC_EMPTY'] = 'Seccion vacia';
 $LNG['L_NEWS_SEC_EMPTY_TITLE'] = 'Oops';
+$LNG['L_NEWS_DELETE_PAGE'] = "Delete page";

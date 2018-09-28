@@ -14,7 +14,6 @@ function news_show_page() {
     if ((empty($_GET['nid'])) || ($nid = $filter->get_int('nid')) == false) {
         return $frontend->messageBox(['msg' => 'L_NEWS_NOT_EXIST']);
     }
-
     if (!empty($_GET['news_lang_id'])) {
         $news_lang_id = $filter->get_int('news_lang_id');
     } else {
@@ -34,7 +33,6 @@ function news_show_page() {
     }
 
     news_catch_admin_actions($news_data, $news_perms);
-
     if ($cfg['news_moderation'] && $news_data['moderation'] && !$news_perms['news_moderation']) {
         return $frontend->messageBox(['msg' => 'L_NEWS_ERROR_WAITINGMOD']);
     }
@@ -109,14 +107,19 @@ function news_catch_admin_actions(&$news_data, $perms) {
 
     $news_lang_id = $filter->get_int('news_lang_id');
     $news_nid = $filter->get_int('nid');
+    $news_page = $filter->get_int('news_delete_page');
 
     if (empty($news_lang_id) || empty($news_nid)) {
         return false;
     }
-
     /* DELETE */
     if (!empty($_GET['news_delete']) && $perms['news_delete']) {
         news_delete($news_nid, $news_lang_id);
+        header('Location: /');
+    }
+    if (!empty($_GET['news_delete_page']) && $perms['news_delete']) {
+        news_delete($news_nid, $news_lang_id, $news_page);
+        echo $_GET['news_delete_page'];
         header('Location: /');
     }
     /* APPROVE */
@@ -142,14 +145,13 @@ function news_catch_admin_actions(&$news_data, $perms) {
 
 function news_nav_options($news, $perms) {
     global $LNG, $cfg;
-    $content = "";
+    $content = '';
     $news_url_args = "&nid={$news['nid']}&news_lang_id={$news['lang_id']}&npage={$news['page']}";
 
     $view_news_url = "/{$cfg['CON_FILE']}?module=News&page=view_news" . $news_url_args;
     $edit_news_url = "/{$cfg['CON_FILE']}?module=News&page=edit_news" . $news_url_args;
 
     //Only admin can change but show link disabled to all in frontpage, and feature
-
     /* FEATURE */
     if ($perms['news_feature'] && $news['page'] == 1) {
         if ($news['featured'] == 1) {
@@ -160,7 +162,6 @@ function news_nav_options($news, $perms) {
     } else if ($news['featured'] == 1 && $news['page'] == 1) {
         $content .= "<li><a class='link_active' rel='nofollow' href=''>{$LNG['L_NEWS_FEATURED']}</a></li>";
     }
-
     /* FRONTPAGE */
     if ($perms['news_frontpage'] && $news['page'] == 1) {
         if ($news['frontpage'] == 1) {
@@ -171,31 +172,27 @@ function news_nav_options($news, $perms) {
     } else if ($news['frontpage'] && $news['page'] == 1) {
         $content .= "<li><a class='link_active' rel='nofollow' href=''>{$LNG['L_NEWS_FRONTPAGE']}</a></li>";
     }
-
     /* EDIT */
     if ($perms['news_edit']) {
         $content .= "<li><a rel='nofollow' href='$edit_news_url&newsedit=1'>{$LNG['L_NEWS_EDIT']}</a></li>";
     }
-
     /* CREATE NEW PAGE */
     if ($perms['news_create_new_page']) {
         $content .= "<li><a rel='nofollow' href='$edit_news_url&newpage=1'>{$LNG['L_NEWS_NEW_PAGE']}</a></li>";
     }
-
-    /* TRANSLATE */
-
     // TRANSLATE ADMIN, ANON IF, REGISTERED IF
     //if ($cfg['news_anon_translate'] || $admin || ($user && defined('ACL') && $cfg['NEWS_TRANSLATE_REGISTERED'] 
-
     if ($perms['news_translate']) {
         $content .= "<li><a rel='nofollow' href='$edit_news_url&news_new_lang=1'>{$LNG['L_NEWS_NEWLANG']}</a></li>";
     }
-
-    /* DELLETE */
+    /* DELETE NEWS (ALL) */
     if ($news['page'] == 1 && $perms['news_delete']) {
         $content .= "<li><a rel='nofollow' href='$view_news_url&news_delete=1' onclick=\"return confirm('{$LNG['L_NEWS_CONFIRM_DEL']}')\">{$LNG['L_NEWS_DELETE']}</a></li>";
     }
-
+    /* DELETE NEWS PAGE */
+    if ($news['page'] > 1) {
+        $content .= "<li><a rel='nofollow' href='$view_news_url&news_delete_page={$news['page']}' onclick=\"return confirm('{$LNG['L_NEWS_CONFIRM_DEL']}')\">{$LNG['L_NEWS_DELETE_PAGE']}</a></li>";
+    }
     /* APPROVE */
     if ($news['page'] == 1 && $news['moderation'] && $cfg['news_moderation'] && $perms['news_moderation']) {
         $content .= "<li><a rel='nofollow' href='$view_news_url&news_approved=1'>{$LNG['L_NEWS_APPROVED']}</a></li>";
@@ -222,7 +219,6 @@ function news_pager($news_page) {
     }
 
     $pager = page_pager($cfg['news_pager_max'], $news_page['num_pages'], $news_page['page']);
-
     for ($i = $pager['start_page']; $i < $pager['limit_page']; $i++) {
         $news_page['page'] == $i ? $a_class = 'class="active"' : $a_class = '';
         if ($cfg['FRIENDLY_URL']) {
@@ -274,14 +270,34 @@ function page_pager($max_pages, $num_pages, $actual_page) {
     return $pager;
 }
 
-function news_delete($nid, $lang_id) {
+function news_delete($nid, $lang_id, $page = null) {
     global $db;
 
-    $db->delete('news', ['nid' => $nid, 'lang_id' => $lang_id]);
+    $delete_ary = [
+        'nid' => $nid,
+        'lang_id' => $lang_id
+    ];
+
+    if (!empty($page) && $page > 1) {
+        $delete_ary['page'] = $page;
+        $LIMIT = 'LIMIT 1';
+    } else {
+        $LIMIT = null;
+    }
+
+    $db->delete('news', $delete_ary);
+
+    if (!empty($page) && $page > 1) {
+        $query = $db->select('news', 'num_pages', ['nid' => $nid, 'lang_id' => $lang_id], 'LIMIT 1');
+        $news_data = $db->fetch($query);
+        $num_pages = --$news_data['num_pages'];
+        $db->update('news', ['num_pages' => $num_pages], ['nid' => $nid, 'lang_id' => $lang_id]);
+    }
+
+    //check if other lang exist if not delete all links and call for delete other possible mod data.
     $query = $db->select_all('news', ['nid' => $nid], 'LIMIT 1'); //check if other lang
     if ($db->num_rows($query) <= 0) {
         $db->delete('links', ['plugin' => 'News', 'source_id' => $nid]);
-        //ATM by default this fuction delete all "links" if no exists the same news in other lang, mod like 
         do_action('news_delete_mod', $nid);
     }
     return true;

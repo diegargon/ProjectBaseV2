@@ -26,5 +26,3 @@ para luego presentarlos por grupos, ej: L_NEWS_SUBMIT, L_NEWS_VIEW
 * Cuando se instalan plugins comprobar que sus dependencias estan cumplidas, si no al instalar por ejemplo NewsComments y no estar instalado News, no puede modificar la tabla.
 
 * SimpleFrontend, configurar inicio poner en none si no hay todavía ninguna selecciona.
-
-* Añadir la posibilidad de borrar paginas de news, actualmente borras la noticia y todas sus paginas.

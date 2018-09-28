@@ -73,3 +73,4 @@ $LNG['L_NEWS_BLOCK_TITLE'] = 'Titulo del bloque';
 $LNG['L_NEWS_E_SEC_NOEXISTS'] = 'Seccion no existe';
 $LNG['L_NEWS_SEC_EMPTY'] = 'Seccion vacia';
 $LNG['L_NEWS_SEC_EMPTY_TITLE'] = 'Oops';
+$LNG['L_NEWS_DELETE_PAGE'] = "Borrar pagina";
