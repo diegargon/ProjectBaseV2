@@ -23,7 +23,7 @@
             "name": "RATINGS",
             "min_version": 0.2,
             "max_version": 0.9
-        }    
+        }
     ],
     "conflicts": []
 }

@@ -6,28 +6,29 @@
 !defined('IN_WEB') ? exit : true;
 
 function News_init() {
-    define("NEWS", true);
+    define('NEWS', true);
     global $frontend, $blocks, $cfg, $plugins;
 
-    require_once "includes/news_blocks.inc.php";
+    if (defined('BLOCKS')) {
+        require_once ('includes/news_blocks.inc.php');
 
-    $news_perms = get_news_perms("init");
-    if ($news_perms['news_submit_new']) {
-        register_action("header_menu_element", "submit_news_menu");
+        $news_perms = get_news_perms('init');
+        if ($news_perms['news_submit_new']) {
+            register_action('header_menu_element', 'submit_news_menu');
+        }
+
+        $pages_array = [
+            ['module' => 'News', 'page' => 'section', 'type' => 'disk'],
+            ['module' => 'News', 'page' => 'view_news', 'type' => 'disk'],
+            ['module' => 'News', 'page' => 'submit_news', 'type' => 'disk'],
+            ['module' => 'News', 'page' => 'edit_news', 'type' => 'disk']
+        ];
+        if (!$frontend->registerPageArray($pages_array)) {
+            die('Register pages fail on News module');
+        }
+
+        $blocks->registerBlock('news_block', '', 'news_block', 'news_block_conf', null, 0);
     }
-
-    $pages_array = [
-        ['module' => 'News', 'page' => 'section', 'type' => 'disk'],
-        ['module' => 'News', 'page' => 'view_news', 'type' => 'disk'],
-        ['module' => 'News', 'page' => 'submit_news', 'type' => 'disk'],
-        ['module' => 'News', 'page' => 'edit_news', 'type' => 'disk']
-    ];
-    if (!$frontend->registerPageArray($pages_array)) {
-        die("Register pages fail on News module");
-    }
-
-    $blocks->registerBlock("news_block", "", "news_block", "news_block_conf", null, 0);
-
     if ($cfg['display_section_menu']) {
         $plugins->express_start_provider("CATS");
         register_action('section_nav_element', 'news_section_nav_elements');
@@ -37,7 +38,7 @@ function News_init() {
 
 function News_install() {
     global $db;
-    require_once "db/News.db.php";
+    require_once ('db/News.db.php');
     foreach ($news_database_install as $query) {
         if (!$db->query($query)) {
             return false;
@@ -71,7 +72,7 @@ function News_upgrade($version, $from_version) {
 
 function News_uninstall() {
     global $db;
-    require_once "db/News.db.php";
+    require_once ('db/News.db.php');
     foreach ($news_database_uninstall as $query) {
         if (!$db->query($query)) {
             return false;
