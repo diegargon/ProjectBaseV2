@@ -1,5 +1,6 @@
 * Cuando habilitas un plugin o autostart debiria comprobar y activar si se cumplen las dependencias o avisar 
 de la dependencia no habilitada.
+* Cuando se instalan plugins comprobar que sus dependencias estan cumplidas, si no al instalar por ejemplo NewsComments y no estar instalado News, no puede modificar la tabla.
 
 * Admin actualmente instala ACL si ACL esta activo, al instalar no esta activo y no hay opcion para instalar las opciones admin ACL
 que necesitan la tabla permissions
@@ -11,20 +12,12 @@ que necesitan la tabla permissions
 * Añadir config por grupos (añadido sin usar)
 para luego presentarlos por grupos, ej: L_NEWS_SUBMIT, L_NEWS_VIEW
 
-* Añadir realname (semi completo, sin probar)
-   - Usar nombre real o usuario para noticias? seria caos
-   - Lo mejor seria pasar del nombre de usuario y permitir nombres reales 
+* Añadir posibilidad (opcional) de usar el nombre real en el usuario (semi completo, sin probar)
 
 * Añadir opcion en la admin bar para desabilitar comentarios de determinada noticia, accesible a admins y si $cfg lo permitiera a usuarios.
 
 * Añadir por medio de News opcion en profile para cambiar el news lang
 
-* El campo lang de la noticia envia 'en' en vez del ID, cambia y arreglar lo demas.
-
-* CRON Plugin y añadir posibilidad de hacer media de los ratings posiblemente registrados y configurados para hacer la media.
-
-* Cuando se instalan plugins comprobar que sus dependencias estan cumplidas, si no al instalar por ejemplo NewsComments y no estar instalado News, no puede modificar la tabla.
-
-* SimpleFrontend, configurar inicio poner en none si no hay todavía ninguna selecciona.
+* CRON Plugin y calcular opcionalmente ratio de user global "todas las section"
 
 * Añadir opcion para que el usuario decida el formato de fecha

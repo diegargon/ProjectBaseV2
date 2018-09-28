@@ -8,7 +8,7 @@
     "function_pre_install_info": "Blocks_preInstall_info",
     "function_upgrade": "Blocks_upgrade",
     "function_uninstall": "Blocks_uninstall",
-    "provide": "Blocks",
+    "provide": "BLOCKS",
     "version": 0.2,
     "depends": [
         {

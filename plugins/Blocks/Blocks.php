@@ -8,7 +8,9 @@
 function Blocks_init() {
     global $blocks;
 
-    empty($blocks) ? $blocks = new Blocks : false;
+    !defined('BLOCKS') ? $blocks = new Blocks : false;
+
+    define('BLOCKS', true);
 }
 
 function Blocks_install() {

@@ -8,20 +8,16 @@
 function SimpleFrontend_init() {
     global $frontend, $plugins;
 
-    //require('includes/blocks.class.php');
-    //FIX: On first install $frontend its mandatory but blocks not, that going to cause problems if blocks its disable
-    //Probably make blocks optionals and check if active before express start.
+    !defined('FRONTEND') ? $frontend = new SimpleFrontend() : null;
+    define('FRONTEND', true);
 
-    if (!$plugins->express_start("Blocks")) {
-        $frontend->messageBox(['msg' => 'L_E_PL_CANTEXPRESS']);
-    }
-    !isset($frontend) ? $frontend = new SimpleFrontend() : null;
+    $plugins->express_start('Blocks');
 }
 
 function SimpleFrontend_install() {
     global $db, $cfg;
 
-    require_once "db/SimpleFrontend.db.php";
+    require_once ('db/SimpleFrontend.db.php');
     foreach ($simplefrontend_db_install as $query) {
         if (!$db->query($query)) {
             return false;
@@ -56,7 +52,7 @@ function SimpleFrontend_upgrade($version, $from_version) {
 
 function SimpleFrontend_uninstall() {
     global $db, $cfg;
-    require_once "db/SimpleFrontend.db.php";
+    require_once ('db/SimpleFrontend.db.php');
     foreach ($simplefrontend_db_uninstall as $query) {
         if (!$db->query($query)) {
             return false;

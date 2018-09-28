@@ -62,7 +62,7 @@ class SimpleFrontend {
     function registerPage($page) {
         // TODO avoid duplicates
         if (!empty($page['module']) && !empty($page['page']) &&
-                ( ($page['type'] == "virtual" && !empty($page['func'])) || ( $page['type'] == "disk" && empty($page['func'])) )
+                ( ($page['type'] == 'virtual' && !empty($page['func'])) || ( $page['type'] == 'disk' && empty($page['func'])) )
         ) {
             $this->pages[] = $page;
             return true;
@@ -74,7 +74,7 @@ class SimpleFrontend {
         // TODO avoid duplicates
         foreach ($pages_array as $page) {
             if (!empty($page['module']) && !empty($page['page']) &&
-                    ( ($page['type'] == "virtual" && !empty($page['func'])) || ( $page['type'] == "disk" && empty($page['func'])) )
+                    ( ($page['type'] == 'virtual' && !empty($page['func'])) || ( $page['type'] == 'disk' && empty($page['func'])) )
             ) {
                 $this->pages[] = $page;
             } else {
@@ -86,15 +86,18 @@ class SimpleFrontend {
     }
 
     function indexPage() {
-        global $tpl, $cfg, $blocks;
+        global $tpl, $cfg;
+
         $page_data = [];
 
-        for ($i = 1; $i <= $cfg['index_sections']; $i++) {
-            $page_data["section_" . $i] = "";
-            $page_data["section_" . $i] .= $blocks->getBlocksContent("index", $i);
+        if (defined('BLOCKS')) {
+            global $blocks;
+            for ($i = 1; $i <= $cfg['index_sections']; $i++) {
+                $page_data['section_' . $i] = '';
+                $page_data['section_' . $i] .= $blocks->getBlocksContent('index', $i);
+            }
         }
-
-        $tpl->addtoTplVar("ADD_TO_BODY", $tpl->getTplFile("SimpleFrontend", $cfg['index_layout'] . "_layout", $page_data));
+        $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('SimpleFrontend', $cfg['index_layout'] . '_layout', $page_data));
     }
 
     function sendPage() {
@@ -103,34 +106,34 @@ class SimpleFrontend {
         // BEGIN HEAD        
         $tpl->cssCache();
 
-        $web_head = $tpl->getTplFile("SimpleFrontend", "head");
+        $web_head = $tpl->getTplFile('SimpleFrontend', 'head');
 
         echo $web_head;
         //END HEAD
         //BEGIN BODY
         if ($this->nav_menu) { //we use do_action for select order
-            $tpl->addtoTplVar("HEADER_MENU_ELEMENT", do_action("header_menu_element"));
+            $tpl->addtoTplVar('HEADER_MENU_ELEMENT', do_action('header_menu_element'));
         }
         if ($this->display_section_menu) {
-            $tpl->addtoTplVar("SECTIONS_NAV", do_action("section_nav_element"));
-            $tpl->addtoTplVar("SECTIONS_NAV_SUBMENU", do_action("section_nav_subelement"));
+            $tpl->addtoTplVar('SECTIONS_NAV', do_action('section_nav_element'));
+            $tpl->addtoTplVar('SECTIONS_NAV_SUBMENU', do_action('section_nav_subelement'));
         }
 
-        $tpl->addtoTplVar("ADD_TO_BODY", do_action("add_to_body"));
-        $web_body = $tpl->getTplFile("SimpleFrontend", "body");
+        $tpl->addtoTplVar('ADD_TO_BODY', do_action('add_to_body'));
+        $web_body = $tpl->getTplFile('SimpleFrontend', 'body');
 
         echo $web_body;
         //END BODY
         //BEGIN FOOTER
         if (defined('SQL') && $this->db != null && $this->show_stats_query) {
-            $tpl->addtoTplVar("ADD_TO_FOOTER", "<p class='center zero'>Querys(" . $this->db->num_querys() . ")</p>");
+            $tpl->addtoTplVar('ADD_TO_FOOTER', '<p class="center zero">Querys(' . $this->db->num_querys() . ')</p>');
         }
         if ($this->show_load_time) {
-            $tpl->addtoTplVar("ADD_TO_FOOTER", "<p class='center zero'>Page render in (" . get_load_time($this->load_start_time) . ")</p>");
+            $tpl->addtoTplVar('ADD_TO_FOOTER', '<p class="center zero">Page render in (' . get_load_time($this->load_start_time) . ')</p>');
         }
-        $tpl->addtoTplVar("ADD_TO_FOOTER", do_action("add_to_footer"));
+        $tpl->addtoTplVar('ADD_TO_FOOTER', do_action('add_to_footer'));
 
-        $web_footer = $tpl->getTplFile("SimpleFrontend", "footer");
+        $web_footer = $tpl->getTplFile('SimpleFrontend', 'footer');
         //END FOOTER
         echo $web_footer;
 
@@ -146,7 +149,7 @@ class SimpleFrontend {
         $data['box_msg'] = $LNG[$box_data['msg']];
         !empty($box_data['xtra_box_msg']) ? $data['box_msg'] .= $box_data['xtra_box_msg'] : false;
 
-        $tpl->addtoTplVar("ADD_TO_BODY", $tpl->getTplFile("SimpleFrontend", "msgbox", $data));
+        $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('SimpleFrontend', 'msgbox', $data));
     }
 
     function setStartTime($start) {
@@ -154,7 +157,7 @@ class SimpleFrontend {
     }
 
     private function setConfig() {
-        global $cfg, $debug, $db, $tpl, $blocks;
+        global $cfg, $debug, $db, $tpl;
 
         $this->db = & $db;
         $this->index_sections = $cfg['index_sections'];
@@ -162,8 +165,12 @@ class SimpleFrontend {
         $this->show_stats_query = $cfg['simplefrontend_stats_query'];
         $this->show_load_time = $cfg['show_load_time'];
 
-        $blocks->registerPage("index", $this->index_sections);
-        $blocks->registerPage("index2", 2); //test remove later
+        if (defined('BLOCKS')) {
+            global $blocks;
+
+            $blocks->registerPage('index', $this->index_sections);
+            $blocks->registerPage('index2', 2); //test remove later
+        }
 
         (defined('DEBUG') && $cfg['simplefrontend_debug']) ? $this->debug = & $debug : $this->debug = false;
         global $debug;
@@ -171,11 +178,11 @@ class SimpleFrontend {
         $this->nav_menu = $cfg['simplefrontend_nav_menu'];
         $this->theme = $cfg['simplefrontend_theme'];
 
-        $custom_lang = "tpl/lang/" . $cfg['WEB_LANG'] . "/custom.lang.php";
+        $custom_lang = 'tpl/lang/' . $cfg['WEB_LANG'] . '/custom.lang.php';
         file_exists($custom_lang) ? require_once($custom_lang) : false;
 
-        $tpl->getCssFile("SimpleFrontend", "basic");
-        $tpl->getCssFile("SimpleFrontend", "basic-mobile");
+        $tpl->getCssFile('SimpleFrontend', 'basic');
+        $tpl->getCssFile('SimpleFrontend', 'basic-mobile');
     }
 
 }

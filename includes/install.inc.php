@@ -176,17 +176,20 @@ if ($step == null || $step == false) {
                 $db->update('plugins', $set_ary, ['plugin_name' => $plugin->plugin_name]);
             }
 
+            //Blocks are optionally, check if works next reinstall and delete it if
             //TODO: Search for core dependeces and mark as core
-            if ($plugin->plugin_name == 'SimpleFrontend') {
-                $plugin = $plugins->getPluginByName('Blocks');
-                require_once("plugins/$plugin->plugin_name/$plugin->main_file");
-                $func_plugInstall = $plugin->function_install;
-                if (!function_exists($func_plugInstall) || !$func_plugInstall()) {
-                    die($plugin->plugin_name . 'Install error');
-                } else {
-                    $db->update('plugins', $set_ary, ['plugin_name' => $plugin->plugin_name]);
-                }
-            }
+            /*
+              if ($plugin->plugin_name == 'SimpleFrontend') {
+              $plugin = $plugins->getPluginByName('Blocks');
+              require_once("plugins/$plugin->plugin_name/$plugin->main_file");
+              $func_plugInstall = $plugin->function_install;
+              if (!function_exists($func_plugInstall) || !$func_plugInstall()) {
+              die($plugin->plugin_name . 'Install error');
+              } else {
+              $db->update('plugins', $set_ary, ['plugin_name' => $plugin->plugin_name]);
+              }
+              }
+             */
 
             $db->update('config', ['cfg_value' => 1], ['cfg_key' => 'CORE_INSTALLED', 'plugin' => 'CORE']);
             ?>   
