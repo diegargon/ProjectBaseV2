@@ -8,16 +8,16 @@
 function Blocks_AdminInit() {
     global $blocks, $plugins;
 
-    $plugins->express_start("Blocks") ? register_action("add_admin_menu", "Blocks_AdminMenu", "5") : null;
+    $plugins->express_start('Blocks') ? register_action('add_admin_menu', 'Blocks_AdminMenu', '5') : null;
 }
 
 function Blocks_AdminMenu($params) {
     global $plugins, $LNG;
 
-    $tab_num = $plugins->getPluginID("Blocks");
+    $tab_num = $plugins->getPluginID('Blocks');
     if ($params['admtab'] == $tab_num) {
-        register_uniq_action("admin_get_aside_menu", "Blocks_AdminAside", $params);
-        register_uniq_action("admin_get_section_content", "Blocks_admin_content", $params);
+        register_uniq_action('admin_get_aside_menu', 'Blocks_AdminAside', $params);
+        register_uniq_action('admin_get_section_content', 'Blocks_admin_content', $params);
 
         return "<li class='tab_active'><a href='{$params['url']}&admtab=$tab_num'>{$LNG['L_BLK']}</a></li>";
     } else {
@@ -35,16 +35,16 @@ function Blocks_AdminAside($params) {
 
 function Blocks_admin_content($params) {
     global $LNG;
-    $page_data = "";
+    $page_data = '';
 
     if ($params['opt'] == 1 || $params['opt'] == false) {
-        $page_data = "<h1>" . $LNG['L_PL_STATE'] . "</h1>";
+        $page_data = '<h1>' . $LNG['L_PL_STATE'] . '</h1>';
         $page_data .= Admin_GetPluginState("Blocks");
     } else if ($params['opt'] == 2) {
-        $page_data = "<h1>" . $LNG['L_BLK_MANAGE'] . "</h1>";
+        $page_data = '<h1>' . $LNG['L_BLK_MANAGE'] . '</h1>';
         $page_data .= Blocks_blk_config();
     } else if ($params['opt'] == 4) {
-        $page_data .= AdminPluginConfig("Blocks");
+        $page_data .= AdminPluginConfig('Blocks');
     }
     return $page_data;
 }
@@ -52,13 +52,13 @@ function Blocks_admin_content($params) {
 function Blocks_blk_config() {
     global $blocks, $tpl, $filter;
 
-    $content = "";
-    $selected_page = $filter->post_AlphaNum("block_page", 255, 1);
-    $selected_blockname = $filter->post_strict_chars("blockname", 255, 1);
-    $selected_section = $filter->post_int("block_section", 255, 1);
-    $page_data['page_options'] = "";
-    $page_data['sections'] = "";
-    $page_data['reg_blocks'] = "";
+    $content = '';
+    $selected_page = $filter->post_AlphaNum('block_page', 255, 1);
+    $selected_blockname = $filter->post_strict_chars('blockname', 255, 1);
+    $selected_section = $filter->post_int('block_section', 255, 1);
+    $page_data['page_options'] = '';
+    $page_data['sections'] = '';
+    $page_data['reg_blocks'] = '';
 
     !empty($selected_blockname) ? $block_config_data = $blocks->blockConfig($selected_blockname) : null;
 
@@ -96,8 +96,8 @@ function Blocks_blk_config() {
 
     $reg_blocks = $blocks->getRegisteredBlocks();
 
-    $page_data['reg_blocks'] .= "<option value='None'>None</option>";
-    $page_data['block_desc'] = "";
+    $page_data['reg_blocks'] .= '<option value="None">None</option>';
+    $page_data['block_desc'] = '';
 
     foreach ($reg_blocks as $reg_block) {
         if (!empty($selected_blockname) && $selected_blockname == $reg_block['blockname'] && $block_added == false) {
@@ -120,7 +120,7 @@ function Blocks_blk_config() {
         $page_data['TPL_CTRL'] = $counter;
         $page_data['TPL_FOOT'] = 1;
         $page_data['blocks_notempty'] = 0;
-        $content .= $tpl->getTplFile("Blocks", "admin_blocks", $page_data);
+        $content .= $tpl->getTplFile('Blocks', 'admin_blocks', $page_data);
         return $content;
     } else {
         $page_data['blocks_notempty'] = 1;
@@ -136,7 +136,7 @@ function Blocks_blk_config() {
         $page_data['canUserDisable'] = $admin_block['canUserDisable'];
         $page_data['block_id'] = $admin_block['blocks_id'];
 
-        $content .= $tpl->getTplFile("Blocks", "admin_blocks", $page_data);
+        $content .= $tpl->getTplFile('Blocks', 'admin_blocks', $page_data);
         $counter++;
     }
     return $content;
@@ -145,7 +145,7 @@ function Blocks_blk_config() {
 function Blocks_delBlock() {
     global $filter, $blocks;
 
-    $block_id = $filter->post_int("block_id");
+    $block_id = $filter->post_int('block_id');
     if ($block_id != false) {
         $blocks->deleteBlock($block_id);
     }
@@ -156,16 +156,16 @@ function Blocks_addBlock($config_array) {
 
     /* WARNING: BLOCK PROVIDED MUST FILTER HIS CONFIG ARRAY */
 
-    $block_page = $filter->post_AlphaNum("block_page", 255, 1);
-    $block_section = $filter->post_AlphaNum("block_section", 255, 1);
-    $blockname = $filter->post_strict_chars("blockname", 255, 1);
-    $block_weight = $filter->post_int("block_weight", 127, 1);
-    $canUserDisable = $filter->post_AlphaNum("disable_by_user", 1, 1);
+    $block_page = $filter->post_AlphaNum('block_page', 255, 1);
+    $block_section = $filter->post_AlphaNum('block_section', 255, 1);
+    $blockname = $filter->post_strict_chars('blockname', 255, 1);
+    $block_weight = $filter->post_int('block_weight', 127, 1);
+    $canUserDisable = $filter->post_AlphaNum('disable_by_user', 1, 1);
 
     !empty($canUserDisable) ? $canUserDisable = 0 : $canUserDisable = 1;
 
     if (!$block_page || !$block_section || !$blockname || !$block_weight || ( count($config_array) <= 0)) {
-        !empty($blocks->debug) ? $blocks->debug->log("Add block failed", "Blocks", "WARNING") : null;
+        !empty($blocks->debug) ? $blocks->debug->log('Add block failed', 'Blocks', 'WARNING') : null;
         return false;
     }
 
@@ -173,18 +173,18 @@ function Blocks_addBlock($config_array) {
     unset($config_array['admin_block']);
 
     $insert_ary = [
-        "uid" => "0",
-        "page" => $block_page,
-        "section" => $block_section,
-        "admin_block" => $admin_block,
-        "blockname" => $blockname,
-        "plugin" => "Blocks",
-        "blockconf" => serialize($config_array),
-        "weight" => $block_weight,
-        "canUserDisable" => $canUserDisable
+        'uid' => 0,
+        'page' => $block_page,
+        'section' => $block_section,
+        'admin_block' => $admin_block,
+        'blockname' => $blockname,
+        'plugin' => 'Blocks',
+        'blockconf' => serialize($config_array),
+        'weight' => $block_weight,
+        'canUserDisable' => $canUserDisable
     ];
 
-    $ret = $db->insert("blocks", $insert_ary);
+    $ret = $db->insert('blocks', $insert_ary);
 
     return $ret ? true : false;
 }

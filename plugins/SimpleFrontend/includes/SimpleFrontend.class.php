@@ -176,8 +176,8 @@ class SimpleFrontend {
         if (defined('BLOCKS')) {
             global $blocks;
 
-            $blocks->registerPage('index', $this->index_sections);
-            $blocks->registerPage('index2', 2); //test remove later
+            $blocks->registerBlocksPage('index', $this->index_sections);
+            $blocks->registerBlocksPage('index2', 2); //test remove later
         }
 
         (defined('DEBUG') && $cfg['simplefrontend_debug']) ? $this->debug = & $debug : $this->debug = false;

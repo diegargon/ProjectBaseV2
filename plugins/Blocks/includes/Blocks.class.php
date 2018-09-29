@@ -38,7 +38,8 @@ class Blocks {
         ];
     }
 
-    function registerPage($page_name, $page_sections) {
+    function registerBlocksPage($page_name, $page_sections) {
+        isset($this->debug) ? $this->debug->log('Registered blocks page, ' . $page_name . ' sections ' . $page_sections, 'Blocks', 'INFO') : null;
         $this->pages [] = [
             'page_name' => $page_name,
             'page_sections' => $page_sections
