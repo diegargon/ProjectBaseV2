@@ -19,23 +19,23 @@ function NewsSearch_init() {
         return false;
     }
 
-    $tpl->getCssFile("NewsSearch");
-    register_action("header_menu_element", "NS_basicSearchbox", 5);
+    $tpl->getCssFile('NewsSearch');
+    register_action('header_menu_element', 'NS_basicSearchbox', 5);
 
     $frontend->registerPage(['module' => 'NewsSearch', 'page' => 'search', 'type' => 'disk']);
     /* TAGS */
     if ($cfg['ns_tag_support']) {
-        register_action("news_new_form_add", "NS_tag_add_form");
-        register_action("news_submit_insert", "NS_news_mod_insert");
-        register_action("news_show_page", "NS_news_tag_show_page");
-        register_action("news_edit_page_add", "NS_tags_edit_form_add");
-        register_action("news_form_update_set", "NS_news_edit_set_tag");
+        register_action('news_new_form_add', 'NS_tag_add_form');
+        register_action('news_submit_insert', 'NS_news_mod_insert');
+        register_action('news_show_page', 'NS_news_tag_show_page');
+        register_action('news_edit_form_add', 'NS_tags_edit_form_add');
+        register_action('news_form_update_set', 'NS_news_edit_set_tag');
     }
 }
 
 function NewsSearch_install() {
     global $db;
-    require_once "db/NewsSearch.db.php";
+    require_once ('db/NewsSearch.db.php');
     foreach ($newsSearch_database_install as $query) {
         if (!$db->query($query)) {
             return false;
@@ -54,7 +54,7 @@ function NewsSearch_preInstall_info() {
 
 function NewsSearch_upgrade($version, $from_version) {
     global $db;
-    require_once "db/NewsSearch.db.php";
+    require_once ('db/NewsSearch.db.php');
     if ($version == 0.3 && $from_version == 0.2) {
         foreach ($newsSearch_database_upgrade_002_to_003 as $query) {
             if (!$db->query($query)) {
@@ -68,7 +68,7 @@ function NewsSearch_upgrade($version, $from_version) {
 
 function NewsSearch_uninstall() {
     global $db;
-    require_once "db/NewsSearch.db.php";
+    require_once ('db/NewsSearch.db.php');
     foreach ($newsSearch_database_uninstall as $query) {
         if (!$db->query($query)) {
             return false;

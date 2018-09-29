@@ -6,8 +6,10 @@
 !defined('IN_WEB') ? exit : true;
 
 function news_edit($news_nid, $news_lang_id, $news_page) {
-    global $LNG, $tpl, $frontend, $sm;
+    global $LNG, $tpl, $frontend, $sm, $plugins;
 
+    $plugins->express_start_provider('NEWSMEDIAUPLOAD');
+    
     if (!is_array($news_data = get_news_byId($news_nid, $news_lang_id, $news_page))) {
         $frontend->messageBox(['msg' => $news_data]);
         return false; // error already setting in get_news
@@ -54,7 +56,7 @@ function news_edit($news_nid, $news_lang_id, $news_page) {
     $editor = new Editor();
     $news_data['editor'] = $editor->getEditor(['text' => $news_data['text']]);
     //$news_data['terms_url'] = $cfg['TERMS_URL'];
-    do_action('news_edit_page_add', $news_data);
+    do_action('news_edit_form_add', $news_data);
 
     $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('News', 'news_form', $news_data));
 }

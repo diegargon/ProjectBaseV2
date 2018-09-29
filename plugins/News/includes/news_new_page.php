@@ -6,7 +6,9 @@
 !defined('IN_WEB') ? exit : true;
 
 function news_new_page($news_nid, $news_lang_id, $news_page) {
-    global $cfg, $acl_auth, $sm, $tpl, $LNG, $frontend, $filter, $plugins, $sm;
+    global $sm, $tpl, $LNG, $frontend, $plugins, $sm;
+
+    $plugins->express_start_provider('NEWSMEDIAUPLOAD');
 
     $editor = new Editor();
     $user = $sm->getSessionUser();

@@ -8,7 +8,7 @@
     "function_pre_install_info": "NewsMediaUploader_preInstall_info",
     "function_upgrade": "NewsMediaUploader_upgrade",
     "function_uninstall": "NewsMediaUploader_uninstall",
-    "provide": "NewsMediaUploader",
+    "provide": "NEWSMEDIAUPLOAD",
     "version": 0.2,
     "depends": [
         {

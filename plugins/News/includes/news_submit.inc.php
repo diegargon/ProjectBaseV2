@@ -7,12 +7,14 @@
  */
 
 function news_new_form($news_perms) {
-    global $LNG, $cfg, $acl_auth, $tpl, $sm, $frontend, $ml, $plugins;
+    global $LNG, $tpl, $sm, $frontend, $ml, $plugins;
 
     if (!($plugins->express_start_provider('EDITOR')) || !($plugins->express_start_provider('CATS'))) {
         $frontend->messageBox(['msg' => 'L_E_PL_CANTEXPRESS']);
         return false;
     }
+    $plugins->express_start_provider('NEWSMEDIAUPLOAD');
+
     $editor = new Editor();
 
     if (!empty($_POST['editor_preview'])) {
@@ -117,7 +119,7 @@ function news_create_new($news_data) {
 }
 
 function news_submit_new_process() {
-    global $LNG, $cfg, $sm;
+    global $LNG, $cfg;
 
     $news_data = news_form_getPost();
 

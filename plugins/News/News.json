@@ -59,7 +59,12 @@
             "name": "BLOCKS",
             "min_version": 0.2,
             "max_version": 0.9
-        }         
+        },
+        {
+            "name": "NEWSMEDIAUPLOAD",
+            "min_version": 0.2,
+            "max_version": 0.9
+        }  
     ],
     "conflicts": []
 }
