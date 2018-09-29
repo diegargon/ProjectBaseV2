@@ -13,7 +13,7 @@ $editor = new Editor();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!empty($_POST['editor_preview'])) {
-        $editor->preview();
+        $editor->showPreview();
         die();
     }
 }

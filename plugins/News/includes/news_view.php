@@ -47,7 +47,7 @@ function news_show_page() {
     $author_data = $sm->getUserByID($news_data['author_id']);
     $news_data['author'] = $author_data['username'];
     $news_data['author_uid'] = $news_data['author_id'];
-    $news_data['text'] = $editor->parse(stripcslashes($news_data['text']));
+    $news_data['text'] = $editor->parseText(stripcslashes($news_data['text']));
 
     if (!empty($news_data['translator_id'])) {
         $translator = $sm->getUserByID($news_data['translator_id']);

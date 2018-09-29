@@ -18,7 +18,7 @@ function news_new_form($news_perms) {
     $editor = new Editor();
 
     if (!empty($_POST['editor_preview'])) {
-        $editor->preview();
+        $editor->showPreview();
         die();
     }
 

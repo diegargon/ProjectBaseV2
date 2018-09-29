@@ -55,22 +55,18 @@ class Editor {
 
         $conf['editor_bar'] = $tpl->getTplFile('MiniEditor', 'MiniEditorBar');
         isset($conf['text']) ? $conf['text'] = stripcslashes($conf['text']) : null;
-        return $tpl->getTplFile("MiniEditor", "editor", $conf);
+        return $tpl->getTplFile('MiniEditor', 'editor', $conf);
     }
 
-    function preview() {
+    function showPreview() {
         global $db, $filter;
         $text = $db->escape_strip($filter->post_UTF8_txt('editor_text'));
         $text = stripcslashes($text);
 
-        echo $this->parse($text);
+        echo $this->parseText($text);
     }
 
-    function parse($text) {
-        return $this->_parse($text);
-    }
-
-    private function _parse($text) {
+    function parseText($text) {
         $text = preg_replace(array_keys($this->mark_codes), array_values($this->mark_codes), $text);
         $text = nl2br($text);
         $text = preg_replace('/><br \/>(\s*)(<br \/>)?/si', '>', $text);
