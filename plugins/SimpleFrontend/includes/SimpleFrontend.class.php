@@ -126,10 +126,17 @@ class SimpleFrontend {
         //END BODY
         //BEGIN FOOTER
         if (defined('SQL') && $this->db != null && $this->show_stats_query) {
-            $tpl->addtoTplVar('ADD_TO_FOOTER', '<p class="center zero">Querys(' . $this->db->num_querys() . ')</p>');
+            $tpl->addtoTplVar('ADD_TO_FOOTER', '<p class="db_querys">Querys(' . $this->db->num_querys() . ')</p>');
         }
         if ($this->show_load_time) {
-            $tpl->addtoTplVar('ADD_TO_FOOTER', '<p class="center zero">Page render in (' . get_load_time($this->load_start_time) . ')</p>');
+            $tpl->addtoTplVar('ADD_TO_FOOTER', '<p class="page_render">Page render in (' . get_load_time($this->load_start_time) . ')</p>');
+        }
+        if ($this->show_memory_usage) {
+            $memory_usage = '<p class="memory_usage">Memory usage: ' . formatBytes(memory_get_usage()) . ' / Memory peak: ';
+            $memory_usage .= formatBytes(memory_get_peak_usage()) . '</p>';
+            $memory_usage .= '<p class="memory_usage">Memory  real usage: ' . formatBytes(memory_get_usage(true)) . ' / Memory real peak: ';
+            $memory_usage .= formatBytes(memory_get_peak_usage(true)) . '</p>';
+            $tpl->addtoTplVar('ADD_TO_FOOTER', $memory_usage);
         }
         $tpl->addtoTplVar('ADD_TO_FOOTER', do_action('add_to_footer'));
 
@@ -164,6 +171,7 @@ class SimpleFrontend {
         $this->display_section_menu = $cfg['display_section_menu'];
         $this->show_stats_query = $cfg['simplefrontend_stats_query'];
         $this->show_load_time = $cfg['show_load_time'];
+        $this->show_memory_usage = $cfg['show_memory_usage'];
 
         if (defined('BLOCKS')) {
             global $blocks;
