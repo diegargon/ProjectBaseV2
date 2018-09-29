@@ -15,7 +15,7 @@ function Blocks_init() {
 
 function Blocks_install() {
     global $db;
-    require_once "db/Blocks.db.php";
+    require_once ('db/Blocks.db.php');
     foreach ($blocks_database_install as $query) {
         if (!$db->query($query)) {
             return false;
@@ -38,7 +38,7 @@ function Blocks_upgrade($version, $from_version) {
 
 function Blocks_uninstall() {
     global $db;
-    require_once "db/Blocks.db.php";
+    require_once ('db/Blocks.db.php');
     foreach ($blocks_database_uninstall as $query) {
         if (!$db->query($query)) {
             return false;
