@@ -16,7 +16,7 @@ function SimpleCats_init() {
 function SimpleCats_install() {
     global $db;
 
-    require_once "db/SimpleCats.db.php";
+    require_once ('db/SimpleCats.db.php');
     foreach ($simplecats_db_install as $query) {
         if (!$db->query($query)) {
             return false;
@@ -41,7 +41,7 @@ function SimpleCats_uninstall() {
     global $db;
 
     $db->silent(true);
-    require_once "db/SimpleCats.db.php";
+    require_once ('db/SimpleCats.db.php');
     foreach ($simplecats_db_uninstall as $query) {
         if (!$db->query($query)) {
             return false;

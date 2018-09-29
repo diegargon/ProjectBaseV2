@@ -12,11 +12,12 @@ class Groups {
     private $user_groups;
 
     public function __construct() {
-        $this->SetUserGroups();
+        $this->setUserGroups();
     }
 
     function getUserGroups() {
-        return $this->$user_groups;
+        !isset($this->user_groups) ? $this->setUserGroups() : null;
+        return $this->user_groups;
     }
 
     function getGroups() {
@@ -26,10 +27,10 @@ class Groups {
     }
 
     function deleteGroup($group_id) {
-        global $db, $LNG, $filter;
+        global $db, $LNG;
 
         if (!empty($group_id)) {
-            $db->delete("groups", ["group_id" => "$group_id"], "LIMIT 1");
+            $db->delete('groups', ['group_id' => $group_id], 'LIMIT 1');
             return $LNG['L_GROUP_DELETE_SUCCESFUL'];
         } else {
             return $LNG['L_E_GROUP_ID'];
@@ -43,17 +44,17 @@ class Groups {
             return $msg = $LNG['L_E_EMPTY_GROUP_NAME'];
         }
 
-        $query = $db->select("groups", "group_id", ["group_name" => $group['group_name']]);
+        $query = $db->select('groups', 'group_id', ['group_name' => $group['group_name']]);
         if ($db->num_rows($query) > 0) {
             return $LNG['L_GROUP_DUPLICATE'];
         } else {
             $insert_ary = [
-                "group_name" => $group['group_name'],
-                "group_desc" => $db->escape_strip($group['group_desc']),
-                "plugin" => $group['plugin'],
+                'group_name' => $group['group_name'],
+                'group_desc' => $db->escape_strip($group['group_desc']),
+                'plugin' => $group['plugin'],
             ];
 
-            $db->insert("groups", $insert_ary);
+            $db->insert('groups', $insert_ary);
         }
         return $LNG['L_GROUP_SUBMIT_SUCCESFUL'];
     }
@@ -61,14 +62,14 @@ class Groups {
     function getUserGroupsByUID($uid) {
         global $db;
 
-        $q = $db->select("users", "groups", ["uid" => "$uid"], "LIMIT 1");
+        $q = $db->select('users', 'groups', ['uid' => $uid], 'LIMIT 1');
 
         if ($db->num_rows($q) > 0) {
             $row = $db->fetch($q);
             if (empty($row['groups'])) {
                 return false;
             } else {
-                $user_groups = explode(",", $row['groups']);
+                $user_groups = explode(',', $row['groups']);
             }
         }
 
@@ -90,10 +91,8 @@ class Groups {
     function addUserGroup($uid, $group_id) {
         global $db, $LNG;
 
-
-
         $actual_user_groups = $this->getUserGroupsByUID($uid);
-        $new_groups = "";
+        $new_groups = '';
         $first = 1;
 
         if (count($actual_user_groups) > 0) {
@@ -103,7 +102,7 @@ class Groups {
                         $first = 0;
                         $new_groups .= $actual_group_id;
                     } else {
-                        $new_groups .= "," . $actual_group_id;
+                        $new_groups .= ',' . $actual_group_id;
                     }
                 } else {
                     return $LNG['L_USER_ALREADY_GROUP'];
@@ -111,7 +110,7 @@ class Groups {
             }
         }
         ($first) ? $new_groups .= $group_id : $new_groups .= "," . $group_id;
-        $db->update("users", ["groups" => $new_groups], ["uid" => $uid]);
+        $db->update('users', ['groups' => $new_groups], ['uid' => $uid]);
         return $LNG['L_GROUPS_ADD_SUCCESSFUL'];
     }
 
@@ -119,7 +118,7 @@ class Groups {
         global $db, $LNG;
 
         $actual_user_groups = $this->getUserGroupsByUID($uid);
-        $new_groups = "";
+        $new_groups = '';
         $first = 1;
 
         if (count($actual_user_groups) > 0) {
@@ -129,11 +128,11 @@ class Groups {
                         $first = 0;
                         $new_groups .= $actual_group_id;
                     } else {
-                        $new_groups .= "," . $actual_group_id;
+                        $new_groups .= ',' . $actual_group_id;
                     }
                 }
             }
-            $db->update("users", ["groups" => $new_groups], ["uid" => $uid]);
+            $db->update('users', ['groups' => $new_groups], ['uid' => $uid]);
             return $LNG['L_DEL_SUCCESSFUL'];
         }
 
@@ -154,7 +153,7 @@ class Groups {
         $db->free($query);
     }
 
-    private function SetUserGroups() {
+    private function setUserGroups() {
         global $sm;
 
         if (!($user = $sm->getSessionUser())) {

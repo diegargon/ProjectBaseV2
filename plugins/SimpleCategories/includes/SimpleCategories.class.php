@@ -41,7 +41,7 @@ class Categories {
         }
     }
 
-    function getCatIDbyName_path($plugin, $cat_path) {
+    function getCatIdByNamePath($plugin, $cat_path) {
         global $cfg;
         // thanks to mickmackusa @ StackOverflow
 
@@ -95,7 +95,7 @@ class Categories {
         return $cat_ids;
     }
 
-    function root_cats($plugin) { // get_fathers_cat_list
+    function getRootCats($plugin) {
         global $ml;
 
         if (empty($plugin)) {
@@ -179,7 +179,7 @@ class Categories {
         return isset($father_id) ? $father_id : false;
     }
 
-    function getCategories_all_lang($plugin = null) {
+    function getCatsAllLangs($plugin = null) {
         global $db;
 
         ($plugin) ? $plugin_name['plugin'] = $plugin : $plugin_name = null;

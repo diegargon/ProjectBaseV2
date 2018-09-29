@@ -16,7 +16,7 @@ function SimpleGroups_init() {
 
 function SimpleGroups_install() {
     global $db;
-    require_once "db/SimpleGroups.db.php";
+    require_once ('db/SimpleGroups.db.php');
     foreach ($simplegroups_database_install as $query) {
         $r = $db->query($query);
     }
@@ -42,11 +42,11 @@ function SimpleGroups_install() {
     $anon_grp_id = $db->insert_id();
 
     if (
-            !$db->update("groups", ['group_father' => $admin_grp_id], ['group_id' => $admin_limited_id]) ||
-            !$db->update("groups", ['group_father' => $admin_limited_id], ['group_id' => $registered_grp_id]) ||
-            !$db->update("groups", ['group_father' => $registered_grp_id], ['group_id' => $anon_grp_id]) ||
-            !$db->update("users", ['groups' => $admin_grp_id . "," . $registered_grp_id], ['isFounder' => 1]) ||
-            !$db->update("users", ['groups' => $registered_grp_id], ['isFounder' != 1])
+            !$db->update('groups', ['group_father' => $admin_grp_id], ['group_id' => $admin_limited_id]) ||
+            !$db->update('groups', ['group_father' => $admin_limited_id], ['group_id' => $registered_grp_id]) ||
+            !$db->update('groups', ['group_father' => $registered_grp_id], ['group_id' => $anon_grp_id]) ||
+            !$db->update('users', ['groups' => $admin_grp_id . "," . $registered_grp_id], ['isFounder' => 1]) ||
+            !$db->update('users', ['groups' => $registered_grp_id], ['isFounder' != 1])
     ) {
         return false;
     }
@@ -67,7 +67,7 @@ function SimpleGroups_upgrade($version, $from_version) {
 
 function SimpleGroups_uninstall() {
     global $db;
-    require_once "db/SimpleGroups.db.php";
+    require_once ('db/SimpleGroups.db.php');
     foreach ($simplegroups_database_uninstall as $query) {
         if ($db->query($query) == false) {
             return false;

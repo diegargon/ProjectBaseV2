@@ -77,7 +77,7 @@ function SimpleCats_AdminCats($plugin = null) {
     $content = $tpl->getTplFile('SimpleCategories', 'adm_create_cat', $catdata);
 
     /* MODIFY */
-    $cats = $ctgs->getCategories_all_lang($plugin);
+    $cats = $ctgs->getCatsAllLangs($plugin);
 
     if ($cats !== false) {
         $catsids = [];

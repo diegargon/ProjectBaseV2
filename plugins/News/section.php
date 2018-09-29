@@ -21,7 +21,7 @@ if (empty($category_list = $filter->get_UTF8_txt('section')) || preg_match("/\s+
     return $frontend->messageBox(['msg' => 'L_NEWS_E_SEC_NOEXISTS']);
 }
 
-if (!$category_id = $ctgs->getCatIDbyName_path('News', $category_list)) {
+if (!$category_id = $ctgs->getCatIdByNamePath('News', $category_list)) {
     return $frontend->messageBox(['msg' => 'L_NEWS_E_SEC_NOEXISTS']);
 }
 

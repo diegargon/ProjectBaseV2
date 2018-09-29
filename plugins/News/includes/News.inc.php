@@ -35,7 +35,7 @@ function news_friendly_title($title) {
 function news_section_nav_elements() {
     global $ctgs, $cfg;
 
-    $menu_cats = $ctgs->root_cats('News');
+    $menu_cats = $ctgs->getRootCats('News');
     $menu_data = '';
 
     if ($menu_cats != false) {
@@ -65,7 +65,7 @@ function news_section_nav_subelements() {
         //TODO NO FRIENDLY URL
     }
 
-    $cat_id = $ctgs->getCatIDbyName_path("News", $cat_path);
+    $cat_id = $ctgs->getCatIdByNamePath("News", $cat_path);
     $childcats = $ctgs->getChilds('News', $cat_id);
     if (!empty($childcats)) {
         foreach ($childcats as $childcat) {
