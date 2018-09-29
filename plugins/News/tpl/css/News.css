@@ -283,6 +283,7 @@
     transition-delay:1s;
 }
 .newsbox {
+    font-family: Georgia;
     display:block;
     float:left;
     margin:0 0px 4px 0px;
@@ -291,7 +292,6 @@
     background-color: #FFFFFF;
     border: 1px solid #dcdcdc;
     padding: 5px;
-
     width:97%;
 }
 .newsbox:hover {
@@ -304,11 +304,11 @@
     color: blue;
 }
 .newsbox h2 {
-    font-size: 1.2em;
+    font-size: 1.3em;
     margin-bottom: 10px;
 }
 .newsbox h3 {
-    font-size: 1.0em;
+    font-size: 1.1em;
     margin-bottom: 10px;
     color:#000;
 }
@@ -317,7 +317,7 @@
     color:#000;
 }
 .newsbox p{
-    font-size: 0.8em;
+    font-size: 0.9em;
     margin-top:0px;
 }
 
@@ -339,7 +339,7 @@
     text-decoration: none;
 }
 .featured_category { 
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Georgia';
     font-weight: bold;
     font-size: 1.0rem;
     box-shadow: 0 0 10px #ccc;
