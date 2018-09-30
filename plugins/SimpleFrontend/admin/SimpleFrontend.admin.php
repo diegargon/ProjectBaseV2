@@ -31,9 +31,9 @@ function SimpleFrontend_AdminMenu($params) {
 function SimpleFrontend_AdminAside($params) {
     global $LNG;
 
-    return "<li><a href='admin&admtab=" . $params['admtab'] . "&opt=1'>" . $LNG['L_PL_STATE'] . "</a></li>\n" .
-            "<li><a href='admin&admtab=" . $params['admtab'] . "&opt=2'>" . $LNG['L_FRONT_INDEX_CFG'] . "</a></li>\n" .
-            "<li><a href='admin&admtab=" . $params['admtab'] . "&opt=4'>" . $LNG['L_PL_CONFIG'] . "</a></li>\n";
+    return '<li><a href="admin&admtab=' . $params['admtab'] . '&opt=1">' . $LNG['L_PL_STATE'] . '</a></li>' .
+            '<li><a href="admin&admtab=' . $params['admtab'] . '&opt=2">' . $LNG['L_FRONT_INDEX_CFG'] . '</a></li>' .
+            '<li><a href="admin&admtab=' . $params['admtab'] . '&opt=4">' . $LNG['L_PL_CONFIG'] . '</a></li>';
 }
 
 function SimpleFrontend_admin_content($params) {
@@ -53,16 +53,11 @@ function SimpleFrontend_admin_content($params) {
 }
 
 function SimpleFrontEnd_index_cfg() {
-    global $tpl, $cfg, $filter, $LNG;
-    $page_data = [];
+    global $tpl, $cfg, $filter, $LNG, $frontend;
 
-    require_once('plugins/SimpleFrontend/includes/layouts.php');
-    
-    //Plugin external layout, templates in tpl;
-    foreach (glob('frontpage/index_layouts/*layout.php') as $layouts) {
-        include($layouts);
-    }
-    
+    $page_data = [];
+    $index_layouts = $frontend->getLayouts();
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         global $db;
 
@@ -73,7 +68,7 @@ function SimpleFrontEnd_index_cfg() {
                 $db->update('config', ['cfg_value' => ''], ['cfg_key' => 'index_layout']);
                 $db->update('config', ['cfg_value' => ''], ['cfg_key' => 'index_sections']);
             } else {
-                foreach ($index_layouts as $layout) { //index_layout[] on include($layouts)
+                foreach ($index_layouts as $layout) {
                     if ($layout['file'] == $index_layout_opt) {
                         $db->update('config', ['cfg_value' => $layout['file']], ['cfg_key' => 'index_layout']);
                         $db->update('config', ['cfg_value' => $layout['sections']], ['cfg_key' => 'index_sections']);
@@ -105,5 +100,4 @@ function Admin_getLayouts() {
     foreach (glob('frontpage/*.layouts.php') as $layouts) {
         include($layouts);
     }
-
 }
