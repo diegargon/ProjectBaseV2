@@ -13,6 +13,11 @@ function SimpleFrontend_AdminInit() {
         return false;
     }
     register_action('add_admin_menu', 'SimpleFrontend_AdminMenu', '5');
+
+    /* Default SimpleFrontend layouts */
+    $frontend->registerLayout(['name' => 'Index 3 Colums', 'file' => 'index_3', 'sections' => 3]);
+    $frontend->registerLayout(['name' => 'Index 2 Colums', 'file' => 'index_2', 'sections' => 2]);
+    $frontend->registerLayout(['name' => 'Index 1 Colums', 'file' => 'index_1', 'sections' => 2]);
 }
 
 function SimpleFrontend_AdminMenu($params) {

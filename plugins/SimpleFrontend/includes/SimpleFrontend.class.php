@@ -178,18 +178,12 @@ class SimpleFrontend {
         $this->show_load_time = $cfg['show_load_time'];
         $this->show_memory_usage = $cfg['show_memory_usage'];
 
-
         if (defined('BLOCKS')) {
             global $blocks;
 
             $blocks->registerBlocksPage('index', $cfg['index_sections']);
             $blocks->registerBlocksPage('index2', 2); //test remove later
         }
-
-        /* Default SimpleFrontend layouts */
-        $this->registerLayout(['name' => 'Index 3 Colums', 'file' => 'index_3', 'sections' => 3]);
-        $this->registerLayout(['name' => 'Index 2 Colums', 'file' => 'index_2', 'sections' => 2]);
-        $this->registerLayout(['name' => 'Index 1 Colums', 'file' => 'index_1', 'sections' => 2]);
 
         if (defined('DEBUG') && $cfg['simplefrontend_debug']) {
             global $debug;
