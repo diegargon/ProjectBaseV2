@@ -56,14 +56,13 @@ function SimpleFrontEnd_index_cfg() {
     global $tpl, $cfg, $filter, $LNG;
     $page_data = [];
 
-    foreach (glob('plugins/SimpleFrontend/index_layouts/*layout.php') as $layouts) {
-        include($layouts);
-    }
+    require_once('plugins/SimpleFrontend/includes/layouts.php');
+    
     //Plugin external layout, templates in tpl;
     foreach (glob('frontpage/index_layouts/*layout.php') as $layouts) {
         include($layouts);
     }
-
+    
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         global $db;
 
@@ -96,4 +95,15 @@ function SimpleFrontEnd_index_cfg() {
     }
 
     return $tpl->getTplFile('SimpleFrontend', 'admin_index', $page_data);
+}
+
+function Admin_getLayouts() {
+
+    require_once('plugins/SimpleFrontend/includes/layouts.php');
+
+    //Custom layouts, tpl going on custom tpl;
+    foreach (glob('frontpage/*.layouts.php') as $layouts) {
+        include($layouts);
+    }
+
 }

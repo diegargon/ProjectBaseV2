@@ -15,6 +15,7 @@ class SimpleFrontend {
     private $load_start_time;
     private $display_section_menu;
     private $show_stats_query;
+    private $layouts;
 
     public function __construct() {
         global $plugins;
@@ -89,14 +90,10 @@ class SimpleFrontend {
     function indexPage() {
         global $tpl, $cfg;
 
-        $page_data = [];
-
         if (defined('BLOCKS')) {
             global $blocks;
-            for ($i = 1; $i <= $cfg['index_sections']; $i++) {
-                $page_data['section_' . $i] = '';
-                $page_data['section_' . $i] .= $blocks->getBlocksContent('index', $i);
-            }
+
+            $page_data = $blocks->getBlocksContent('index', $cfg['index_sections']);
         }
         $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('SimpleFrontend', $cfg['index_layout'] . '_layout', $page_data));
     }

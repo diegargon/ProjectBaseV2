@@ -100,27 +100,33 @@ class Blocks {
         }
     }
 
-    function getBlocksContent($page, $section) {
+    /* Gets content by column */
+
+    function getBlocksContent($page, $sections) {
 
         !isset($this->user_blocks) ? $this->setBlocks($page) : null;
         if (empty($this->user_blocks)) {
             return false;
         }
+        $page_data = [];
 
-        $content = '';
-        foreach ($this->user_blocks as $user_block) {
-            foreach ($this->registered_blocks as $reg_block) {
-                if (($user_block['blockname'] == $reg_block['blockname']) && ($user_block['section'] == $section) && $user_block['page'] == $page) {
-                    if (is_array($reg_block['func_show']) && method_exists($reg_block['func_show'][0], $reg_block['func_show'][1]) ||
-                            (!is_array($reg_block['func_show']) && function_exists($reg_block['func_show']))) {
-                        $block_conf = unserialize($user_block['blockconf']);
-                        $content .= call_user_func($reg_block['func_show'], $block_conf);
+        for ($i = 1; $i <= $sections; $i++) {
+            $content = '';
+            $page_data['section_' . $i] = '';
+            foreach ($this->user_blocks as $user_block) {
+                foreach ($this->registered_blocks as $reg_block) {
+                    if (($user_block['blockname'] == $reg_block['blockname']) && ($user_block['section'] == $i) && $user_block['page'] == $page) {
+                        if (is_array($reg_block['func_show']) && method_exists($reg_block['func_show'][0], $reg_block['func_show'][1]) ||
+                                (!is_array($reg_block['func_show']) && function_exists($reg_block['func_show']))) {
+                            $block_conf = unserialize($user_block['blockconf']);
+                            $content .= call_user_func($reg_block['func_show'], $block_conf);
+                        }
                     }
                 }
             }
+            $page_data['section_' . $i] = $content;
         }
-
-        return $content;
+        return $page_data;
     }
 
     function blockConfig($blockname) {

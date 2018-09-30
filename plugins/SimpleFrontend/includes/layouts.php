@@ -6,8 +6,13 @@
 !defined('IN_WEB') ? exit : true;
 
 $index_layouts[] = [
-    "name" => "3 Colums",
+    "name" => "Index 3 Colums",
     "file" => "index_1",
     "sections" => 3
+];
+$index_layouts[] = [
+    "name" => "Index 2 Colums",
+    "file" => "index_2",
+    "sections" => 2
 ];
 
