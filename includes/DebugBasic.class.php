@@ -42,7 +42,14 @@ class Debug {
                 $module_track_br = $element['module'];
                 $result .= '<br/>';
             }
-            $result .= '[' . $element['level'] . '] ' . '[' . $element['module'] . ']' . $element['msg'] .'<br/>';
+            if ($element['level'] == 'ERROR') {
+                $result .= '<span style="color:red">[' . $element['level'] . ']</span> ';
+            } else if ($element['level'] == 'WARNING') {
+                $result .= '<span style="color:yellow">[' . $element['level'] . ']</span> ';
+            } else {
+                $result .= '[' . $element['level'] . '] ';
+            }
+            $result .= '[' . $element['module'] . ']' . $element['msg'] . '<br/>';
         }
         return $result;
     }
