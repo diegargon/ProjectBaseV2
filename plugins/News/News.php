@@ -7,25 +7,26 @@
 
 function News_init() {
     define('NEWS', true);
-    global $frontend, $blocks, $cfg, $plugins;
+    global $frontend, $cfg, $plugins;
+
+    $news_perms = get_news_perms('init');
+    if ($news_perms['news_submit_new']) {
+        register_action('header_menu_element', 'submit_news_menu');
+    }
+
+    $pages_array = [
+        ['module' => 'News', 'page' => 'section', 'type' => 'disk'],
+        ['module' => 'News', 'page' => 'view_news', 'type' => 'disk'],
+        ['module' => 'News', 'page' => 'submit_news', 'type' => 'disk'],
+        ['module' => 'News', 'page' => 'edit_news', 'type' => 'disk']
+    ];
+    if (!$frontend->registerPageArray($pages_array)) {
+        die('Register pages fail on News module');
+    }
 
     if (defined('BLOCKS')) {
+        global $blocks;
         require_once ('includes/news_blocks.inc.php');
-
-        $news_perms = get_news_perms('init');
-        if ($news_perms['news_submit_new']) {
-            register_action('header_menu_element', 'submit_news_menu');
-        }
-
-        $pages_array = [
-            ['module' => 'News', 'page' => 'section', 'type' => 'disk'],
-            ['module' => 'News', 'page' => 'view_news', 'type' => 'disk'],
-            ['module' => 'News', 'page' => 'submit_news', 'type' => 'disk'],
-            ['module' => 'News', 'page' => 'edit_news', 'type' => 'disk']
-        ];
-        if (!$frontend->registerPageArray($pages_array)) {
-            die('Register pages fail on News module');
-        }
 
         $blocks->registerBlock('news_block', '', 'news_block', 'news_block_conf', null, 0);
     }
