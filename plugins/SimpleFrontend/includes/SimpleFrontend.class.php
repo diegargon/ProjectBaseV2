@@ -18,6 +18,8 @@ class SimpleFrontend {
     private $show_stats_query;
 
     public function __construct() {
+        global $plugins;
+        $plugins->express_start('Blocks');
         $this->setConfig();
     }
 
@@ -172,6 +174,7 @@ class SimpleFrontend {
         $this->show_stats_query = $cfg['simplefrontend_stats_query'];
         $this->show_load_time = $cfg['show_load_time'];
         $this->show_memory_usage = $cfg['show_memory_usage'];
+
 
         if (defined('BLOCKS')) {
             global $blocks;

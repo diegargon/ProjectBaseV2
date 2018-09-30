@@ -63,26 +63,37 @@ class Blocks {
         return (count($admin_blocks) > 0) ? $admin_blocks : false;
     }
 
-    function setUserBlocks($page) {
-        /* TODO: Blocks need session but if we as ask and start as depend  we got a cycle problem
-         *  Sessions need frontend
-         *  Frontend need blocks
-         *  blocks need session
-         */
-        global $db, $sm;
-        $user = $sm->getSessionUser();
+    function setBlocks($page) {
+        global $db;
 
-        empty($user) ? $user['uid'] = -1 : null; //anon
+        if (defined('SESSIONS')) {
+            global $sm;
+            $user = $sm->getSessionUSer();
+            if (empty($user)) {
+                $where_ary = [
+                    'uid' => 0,
+                ];
+            } else {
+                $where_ary = [
+                    'uid' => $user['uid'],
+                    'uid' => 0
+                ];
+            }
+        } else {
+            $where_ary = [
+                'uid' => 0,
+            ];
+        }
 
-        $cfg['user_can_disable_dflt_blocks'] = 0; //TO CFG
-        $user_cfg['user_disable_dflt_blocks'] = 1; //TO USER CFG
+        $q = $db->select_all('blocks', $where_ary, 'ORDER BY section,weight', 'OR');
 
-        /*  uid = 0 mean default  */
-        $q = $db->select_all('blocks', ['uid' => $user['uid'], 'uid' => 0], 'ORDER BY section,weight', 'OR');
+        $cfg['user_can_disable_dflt_blocks'] = 1; //TO CFG
+        $user_cfg['user_disable_dflt_blocks'] = 0; //TO USER CFG
+
         while ($result = $db->fetch($q)) {
-            if ($cfg['user_can_disable_dflt_blocks'] == 1 && $user_cfg['user_disable_dflt_blocks'] &&
+            if ($cfg['user_can_disable_dflt_blocks'] && $user_cfg['user_disable_dflt_blocks'] &&
                     $result['canUserDisable'] && $result['uid'] == 0) {
-                
+                //NOTHING
             } else {
                 $this->user_blocks[] = $result;
             }
@@ -91,7 +102,7 @@ class Blocks {
 
     function getBlocksContent($page, $section) {
 
-        !isset($this->user_blocks) ? $this->setUserBlocks($page) : null;
+        !isset($this->user_blocks) ? $this->setBlocks($page) : null;
         if (empty($this->user_blocks)) {
             return false;
         }
