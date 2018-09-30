@@ -30,7 +30,7 @@ function News_init() {
         $blocks->registerBlock('news_block', '', 'news_block', 'news_block_conf', null, 0);
     }
     if ($cfg['display_section_menu']) {
-        $plugins->express_start_provider("CATS");
+        $plugins->express_start_provider('CATS');
         register_action('section_nav_element', 'news_section_nav_elements');
         register_action('section_nav_subelement', 'news_section_nav_subelements');
     }
