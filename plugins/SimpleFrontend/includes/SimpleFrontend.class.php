@@ -13,7 +13,6 @@ class SimpleFrontend {
     private $pages;
     private $show_load_time;
     private $load_start_time;
-    private $index_sections;
     private $display_section_menu;
     private $show_stats_query;
 
@@ -169,7 +168,6 @@ class SimpleFrontend {
         global $cfg, $debug, $db, $tpl;
 
         $this->db = & $db;
-        $this->index_sections = $cfg['index_sections'];
         $this->display_section_menu = $cfg['display_section_menu'];
         $this->show_stats_query = $cfg['simplefrontend_stats_query'];
         $this->show_load_time = $cfg['show_load_time'];
@@ -179,7 +177,7 @@ class SimpleFrontend {
         if (defined('BLOCKS')) {
             global $blocks;
 
-            $blocks->registerBlocksPage('index', $this->index_sections);
+            $blocks->registerBlocksPage('index', $cfg['index_sections']);
             $blocks->registerBlocksPage('index2', 2); //test remove later
         }
 
