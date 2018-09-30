@@ -1,25 +1,30 @@
-* Cuando habilitas un plugin o autostart debiria comprobar y activar si se cumplen las dependencias o avisar 
+* CORE/plugins: Cuando habilitas un plugin o autostart debiria comprobar y activar si se cumplen las dependencias o avisar 
 de la dependencia no habilitada.
-* Cuando se instalan plugins comprobar que sus dependencias estan cumplidas, si no al instalar por ejemplo NewsComments y no estar instalado News, no puede modificar la tabla.
+* CORE/INSTALL/PLUGINS: Cuando se instalan plugins comprobar que sus dependencias estan cumplidas, si no al instalar por ejemplo NewsComments y no estar instalado News, no puede modificar la tabla.
 
-* Admin actualmente instala ACL si ACL esta activo, al instalar no esta activo y no hay opcion para instalar las opciones admin ACL
+* ADMIN: Admin actualmente instala ACL si ACL esta activo, al instalar no esta activo y no hay opcion para instalar las opciones admin ACL
 que necesitan la tabla permissions
  - Solucion 1 despues de iniciado dar opcion para habilitar ACL en el plugin si el ACL esta activo despues y luego dar opcion para insertar lo necesario
  - Solucion 2, utilizar un register para permisos y no utilizar database. O mezcla de ambos, dar opcion a algunos plugins a registar los permisos y si ACL esta activado
     en vez registarlos añadirlos a la DB
  - Solucion 3, en la instalacion presentar opcion para activar el ACL y activarlo antes (problema:probablemente necesitara tambien la S1 si se quiere poder activar despues),
    (problema: ACL tambien necesita groups)
-* Añadir config por grupos (añadido sin usar)
+
+* CORE: Config por grupos (añadidada la tambla pero sin usar) ver como agrupar y mostrar agrupados en admin
 para luego presentarlos por grupos, ej: L_NEWS_SUBMIT, L_NEWS_VIEW
 
-* Añadir posibilidad (opcional) de usar el nombre real en el usuario (semi completo, sin probar)
+* SMBASIC: Comprobar que funciene el crear una cuenta con un nombre real con espacios
 
-* Añadir opcion en la admin bar para desabilitar comentarios de determinada noticia, accesible a admins y si $cfg lo permitiera a usuarios.
+* NewsComments: Añadir opcion en la admin bar para desabilitar comentarios de determinada noticia, accesible a admins y si $cfg lo permitiera a usuarios.
 
-* Añadir por medio de News opcion en profile para cambiar el news lang
+* News/SMasic : Añadir por medio de News opcion en profile para cambiar el news lang
 
-* CRON Plugin y calcular opcionalmente ratio de user global "todas las section"
+* CRON?: CRON Plugin y calcular opcionalmente ratio de user global "todas las section"
 
-* Añadir opcion para que el usuario decida el formato de fecha
+* SMBasic?: Añadir opcion para que el usuario decida el formato de fecha
 
-* Añadir imagenes categoria
+* SimpleCats: Añadir imagenes categoria
+
+* News: Si una noticia esta traducida mostrar opcion para que el usuario pueda cambiar de lenguaje
+
+* FRONTEND? : Mostrar fecha y hora actual
