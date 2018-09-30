@@ -28,3 +28,7 @@ para luego presentarlos por grupos, ej: L_NEWS_SUBMIT, L_NEWS_VIEW
 * News: Si una noticia esta traducida mostrar opcion para que el usuario pueda cambiar de lenguaje
 
 * FRONTEND? : Mostrar fecha y hora actual
+
+* GoogleAnalycts: Que añada dns-prefetch de google a head.tpl
+
+* X: Investigar rel="preload" y donde lo podemos añadir.
