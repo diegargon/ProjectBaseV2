@@ -42,7 +42,7 @@ class Debug {
                 $module_track_br = $element['module'];
                 $result .= '<br/>';
             }
-            $result .= '[' . $element['level'] . '] ' . '[' . $element['module'] . ']' . $element['msg'] . '\n<br/>';
+            $result .= '[' . $element['level'] . '] ' . '[' . $element['module'] . ']' . $element['msg'] .'<br/>';
         }
         return $result;
     }
