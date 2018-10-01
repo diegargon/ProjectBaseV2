@@ -21,10 +21,10 @@ class Blocks {
         defined('DEBUG') && $cfg['blocks_debug'] ? $this->debug = & $debug : $this->debug = false;
 
         //Default blocks
-        $this->registerBlock('block_html_restricted', $LNG['L_BLK_HTMLRESTRIC_DESC'], [$this, 'block_html'], [$this, 'block_html_conf_restricted'], null, 0);
-        $this->registerBlock('block_html', $LNG['L_BLK_HTML_DESC'], [$this, 'block_html'], [$this, 'block_html_conf'], null, 1);
-        $this->registerBlock('block_html_file', $LNG['L_BLK_HTMLFILE_DESC'], [$this, 'block_html_file'], [$this, 'block_html_file_conf'], null, 1);
-        $this->registerBlock('block_php_file', $LNG['L_BLK_PHPFILE_DESC'], [$this, 'block_php_file'], [$this, 'block_php_file_conf'], null, 1);
+        $this->registerBlock('block_html_restricted', $LNG['L_BLK_HTMLRESTRIC_DESC'], [$this, 'blockHtml'], [$this, 'blockHtmlConfRestricted'], null, 0);
+        $this->registerBlock('block_html', $LNG['L_BLK_HTML_DESC'], [$this, 'blockHtml'], [$this, 'blockHtmlConf'], null, 1);
+        $this->registerBlock('block_html_file', $LNG['L_BLK_HTMLFILE_DESC'], [$this, 'blockHtmlFile'], [$this, 'blockHtmlFileConf'], null, 1);
+        $this->registerBlock('block_php_file', $LNG['L_BLK_PHPFILE_DESC'], [$this, 'blockPhpFile'], [$this, 'blockPhpFileConf'], null, 1);
     }
 
     function registerBlock($block_name, $block_desc, $func_show, $func_conf, $def_conf, $admin_block) {
