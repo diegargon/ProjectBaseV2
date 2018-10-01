@@ -23,20 +23,20 @@ class TPL {
     public $css_cache_onefile;
     private $scripts = [];
     private $std_remote_scripts = [//TODO LOAD LIST
-        "jquery" => "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js",
-        "font-awesome" => "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css",
-        "bootstrap" => "https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css",
-        "angularjs" => "https://code.angularjs.org/1.7.3/angular.min.js",
-        "dojo" => "https://ajax.googleapis.com/ajax/libs/dojo/1.13.0/dojo/dojo.js",
-        "ext-core" => "https://ajax.googleapis.com/ajax/libs/ext-core/3.1.0/ext-core.js",
-        "hammer" => "https://ajax.googleapis.com/ajax/libs/hammerjs/2.0.8/hammer.min.js",
-        "mootools" => "https://ajax.googleapis.com/ajax/libs/mootools/1.6.0/mootools.min.js",
-        "prototype" => "https://ajax.googleapis.com/ajax/libs/prototype/1.7.3.0/prototype.js",
-        "scriptaculous" => "https://ajax.googleapis.com/ajax/libs/scriptaculous/1.9.0/scriptaculous.js",
-        "spf" => "https://ajax.googleapis.com/ajax/libs/spf/2.4.0/spf.js",
-        "swfobject" => "https://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js",
-        "three" => "https://ajax.googleapis.com/ajax/libs/threejs/r84/three.min.js",
-        "webfont" => "https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js",
+        'jquery' => 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js',
+        'font-awesome' => 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
+        'bootstrap' => 'https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css',
+        'angularjs' => 'https://code.angularjs.org/1.7.3/angular.min.js',
+        'dojo' => 'https://ajax.googleapis.com/ajax/libs/dojo/1.13.0/dojo/dojo.js',
+        'ext-core' => 'https://ajax.googleapis.com/ajax/libs/ext-core/3.1.0/ext-core.js',
+        'hammer' => 'https://ajax.googleapis.com/ajax/libs/hammerjs/2.0.8/hammer.min.js',
+        'mootools' => 'https://ajax.googleapis.com/ajax/libs/mootools/1.6.0/mootools.min.js',
+        'prototype' => 'https://ajax.googleapis.com/ajax/libs/prototype/1.7.3.0/prototype.js',
+        'scriptaculous' => 'https://ajax.googleapis.com/ajax/libs/scriptaculous/1.9.0/scriptaculous.js',
+        'spf' => 'https://ajax.googleapis.com/ajax/libs/spf/2.4.0/spf.js',
+        'swfobject' => 'https://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js',
+        'three' => 'https://ajax.googleapis.com/ajax/libs/threejs/r84/three.min.js',
+        'webfont' => 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js',
     ];
 
     function __construct($db = null) {
@@ -100,7 +100,7 @@ class TPL {
         } else if (file_exists($DEFAULT_PATH)) {
             $tpl_file_content = $this->parseFile($DEFAULT_PATH, $data);
         } else {
-            $this->debug ? $this->debug->log("getTPL_file called but not find $filename", "tplBasic", "DEBUG") : null;
+            $this->debug ? $this->debug->log('getTPL_file called but i can\'t find ' . $filename, 'tplBasic', 'WARNING') : null;
             return false;
         }
 
@@ -123,26 +123,26 @@ class TPL {
         return false;
     }
 
-    function addScriptFile($plugin, $filename = null, $place = "TOP", $async = "async") {
+    function addScriptFile($plugin, $filename = null, $place = 'TOP', $async = 'async') {
 
-        $this->debug ? $this->debug->log("AddScriptFile request -> $plugin for get a $filename", "tplBasic", "DEBUG") : null;
+        $this->debug ? $this->debug->log('AddScriptFile request ->' . $plugin . 'for get a ' . $filename, 'tplBasic', 'DEBUG') : null;
 
-        if (!empty($plugin) && ($plugin == "standard")) {
+        if (!empty($plugin) && ($plugin == 'standard')) {
             if (!$this->checkScript($filename)) {
                 if (array_key_exists($filename, $this->std_remote_scripts)) {
                     $script_url = $this->std_remote_scripts[$filename];
-                    $script = "<script type='text/javascript' src='$script_url' charset='UTF-8' $async></script>\n";
+                    $script = '<script type="text/javascript" src="' . $script_url . '" charset="UTF-8" ' . $async . '></script>\n';
                     $this->addtoTplVar("SCRIPTS_" . $place . "", $script);
                     $this->scripts[] = $filename;
                     $backtrace = debug_backtrace();
-                    $this->debug ? $this->debug->log("AddcriptFile:CheckScript setting first time * $filename * by " . $backtrace[1]['function'] . "", "tplBasic", "DEBUG") : null;
+                    $this->debug ? $this->debug->log("AddcriptFile:CheckScript setting first time * $filename * by " . $backtrace[1]['function'], 'tplBasic', 'DEBUG') : null;
                 } else {
                     $backtrace = debug_backtrace();
-                    $this->debug ? $this->debug->log("AddcriptFile:CheckScript standard script * $filename * not found called by " . $backtrace[1]['function'] . "", "tplBasic", "DEBUG") : null;
+                    $this->debug ? $this->debug->log("AddcriptFile:CheckScript standard script * $filename * not found called by " . $backtrace[1]['function'], 'tplBasic', 'WARNING') : null;
                 }
             } else {
                 $backtrace = debug_backtrace();
-                $this->debug ? $this->debug->log("AddcriptFile:CheckScript found coincidence * $filename * called by " . $backtrace[1]['function'] . "", "tplBasic", "DEBUG") : null;
+                $this->debug ? $this->debug->log("AddcriptFile:CheckScript found coincidence * $filename * called by " . $backtrace[1]['function'], 'tplBasic', 'DEBUG') : null;
             }
             return true;
         }
@@ -164,12 +164,12 @@ class TPL {
             $SCRIPT_PATH = $DEFAULT_PATH;
         }
         if (!empty($SCRIPT_PATH)) {
-            $script = "<script type='text/javascript' src='{$this->static_url}$SCRIPT_PATH' charset='UTF-8' $async></script>\n";
+            $script = '<script type="text/javascript" src="' . $this->static_url . $SCRIPT_PATH . '" charset="UTF-8" ' . $async . '></script>\n';
         } else {
-            $this->debug ? $this->debug->log("AddScriptFile called by-> $plugin for get a $filename but NOT FOUND IT", "tplBasic", "ERROR") : null;
+            $this->debug ? $this->debug->log("AddScriptFile called by-> $plugin for get a $filename but NOT FOUND IT", 'tplBasic', 'ERROR') : null;
             return false;
         }
-        $this->addtoTplVar("SCRIPTS_" . $place . "", $script);
+        $this->addtoTplVar('SCRIPTS_' . $place, $script);
     }
 
     function getCssFile($plugin, $filename = null) {
@@ -179,7 +179,7 @@ class TPL {
             return;
         }
         $this->css_added[] = $filename;
-        $this->debug ? $this->debug->log("Get CSS called by-> $plugin for get a $filename", "tplBasic", "DEBUG") : null;
+        $this->debug ? $this->debug->log("Get CSS called by-> $plugin for get a $filename", 'tplBasic', 'DEBUG') : null;
 
         $USER_PATH = "tpl/{$this->theme}/css/$filename.css";
         $DEFAULT_PATH = "plugins/$plugin/tpl/css/$filename.css";
@@ -192,7 +192,7 @@ class TPL {
             if (empty($this->css_cache_onefile)) {
                 $this->css_cache_onefile = $filename;
             } else {
-                $this->css_cache_onefile .= "-" . $filename;
+                $this->css_cache_onefile .= '-' . $filename;
             }
         } else {
             if ($this->css_inline == 0) {
@@ -203,22 +203,22 @@ class TPL {
                 }
             } else {
                 if (file_exists($USER_PATH)) {
-                    $css_code = $this->parseFile("$USER_PATH");
+                    $css_code = $this->parseFile($USER_PATH);
                 } else if (file_exists($DEFAULT_PATH)) {
-                    $css_code = $this->parseFile("$DEFAULT_PATH");
+                    $css_code = $this->parseFile($DEFAULT_PATH);
                 }
-                isset($css_code) ? $css = "<style>" . $this->cssStrip($css_code) . "</style>" : null;
+                isset($css_code) ? $css = '<style>' . $this->cssStrip($css_code) . '</style>' : null;
             }
             if (isset($css)) {
-                $this->addtoTplVar("LINK", $css);
+                $this->addtoTplVar('LINK', $css);
             } else {
-                $this->debug ? $this->debug->log("Get CSS called by-> $plugin for get a $filename NOT FOUND IT", "tplBasic", "DEBUG") : null;
+                $this->debug ? $this->debug->log("Get CSS called by-> $plugin for get a $filename NOT FOUND IT", 'tplBasic', 'DEBUG') : null;
             }
         }
     }
 
     function cssCacheCheck() {
-        if ($this->css_optimize == 0 || !is_writable("cache")) {
+        if ($this->css_optimize == 0 || !is_writable('cache')) {
             return false;
         }
 
@@ -238,21 +238,21 @@ class TPL {
 
         $css_code = "";
 
-        $cssfile = $this->css_cache_onefile . ".css";
-        $this->debug ? $this->debug->log("CSS One file Unify $cssfile", "tplBasic", "DEBUG") : null;
-        if (!file_exists("cache/css/$cssfile")) {
+        $cssfile = $this->css_cache_onefile . '.css';
+        $this->debug ? $this->debug->log('CSS One file Unify ' . $cssfile, 'tplBasic', 'DEBUG') : null;
+        if (!file_exists('cache/css/' . $cssfile)) {
             foreach ($this->css_cache_filepaths as $cssfile_path) {
-                $this->debug ? $this->debug->log("CSS Unify  $cssfile_path", "tplBasic", "DEBUG") : null;
+                $this->debug ? $this->debug->log('CSS Unify ' . $cssfile_path, 'tplBasic', 'DEBUG') : null;
                 $css_code .= $this->parseFile($cssfile_path);
             }
             $css_code = $this->cssStrip($css_code);
-            file_put_contents("cache/css/$cssfile", $css_code);
+            file_put_contents('cache/css/' . $cssfile, $css_code);
         }
         if ($this->css_inline == 0) {
-            $this->addtoTplVar("LINK", "<link rel='stylesheet' href='/cache/css/$cssfile'>\n");
+            $this->addtoTplVar('LINK', '<link rel="stylesheet" href="/cache/css/' . $cssfile . '">');
         } else {
-            $css_code = $this->parseFile("cache/css/$cssfile");
-            $this->addtoTplVar("LINK", "<style>$css_code</style>\n");
+            $css_code = $this->parseFile('cache/css/' . $cssfile);
+            $this->addtoTplVar("LINK", '<style>' . $css_code . '</style>');
         }
 
         return true;
@@ -260,21 +260,21 @@ class TPL {
 
     private function cssStrip($css) { #by nyctimus
         $preg_replace = [
-            "#/\*.*?\*/#s" => "", // Strip C style comments.
-            //"#\s\s+#" => "", // Strip excess whitespace.
-            "/\s+/" => " " // Strip excess whitespace.
+            "#/\*.*?\*/#s" => '', // Strip C style comments.
+            //"#\s\s+#" => '', // Strip excess whitespace.
+            "/\s+/" => ' ' // Strip excess whitespace.
         ];
         $css = preg_replace(array_keys($preg_replace), $preg_replace, $css);
         $str_replace = [
-            ": " => ":",
-            "; " => ";",
-            " {" => "{",
-            " }" => "}",
-            ", " => ",",
-            "{ " => "{",
-            ";}" => "}", // Strip optional semicolons.
-            ",\n" => ",", // Don't wrap multiple selectors.
-            "\n}" => "}", // Don't wrap closing braces.
+            ': ' => ':',
+            '; ' => ';',
+            ' {' => '{',
+            ' }' => '}',
+            ', ' => ',',
+            '{ ' => '{',
+            ';}' => '}', // Strip optional semicolons.
+            ',\n' => ',', // Don't wrap multiple selectors.
+            '\n}' => '}', // Don't wrap closing braces.
         ];
         $css = str_replace(array_keys($str_replace), $str_replace, $css);
 
@@ -284,11 +284,11 @@ class TPL {
     private function parseFile($path, $data = null) {
         global $LNG, $cfg;
 
-        $this->debug ? $this->debug->log("TPL parse $path, gzip its {$cfg['tplbasic_gzip']}", "tplBasic", "DEBUG") : null;
+        $this->debug ? $this->debug->log("TPL parse $path, gzip its {$cfg['tplbasic_gzip']}", 'tplBasic', 'DEBUG') : null;
 
         $tpldata = $this->getTplData();
 
-        isset($this->gzip) && $this->gzip == 1 ? ob_start("ob_gzhandler") : ob_start();
+        isset($this->gzip) && $this->gzip == 1 ? ob_start('ob_gzhandler') : ob_start();
 
         include ($path);
         $content = ob_get_contents();
