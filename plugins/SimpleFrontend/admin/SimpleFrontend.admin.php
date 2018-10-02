@@ -15,9 +15,9 @@ function SimpleFrontend_AdminInit() {
     register_action('add_admin_menu', 'SimpleFrontend_AdminMenu', '5');
 
     /* Default SimpleFrontend layouts */
-    $frontend->registerLayout(['name' => 'Index 3 Colums', 'file' => 'index_3', 'sections' => 3]);
-    $frontend->registerLayout(['name' => 'Index 2 Colums', 'file' => 'index_2', 'sections' => 2]);
-    $frontend->registerLayout(['name' => 'Index 1 Colums', 'file' => 'index_1', 'sections' => 2]);
+    $frontend->registerLayout(['name' => 'Index 3 Colums', 'plugin' => 'SimpleFrontend', 'file' => 'index_3', 'sections' => 3]);
+    $frontend->registerLayout(['name' => 'Index 2 Colums', 'plugin' => 'SimpleFrontend', 'file' => 'index_2', 'sections' => 2]);
+    $frontend->registerLayout(['name' => 'Index 1 Colums', 'plugin' => 'SimpleFrontend', 'file' => 'index_1', 'sections' => 2]);
 }
 
 function SimpleFrontend_AdminMenu($params) {
@@ -58,43 +58,88 @@ function SimpleFrontend_admin_content($params) {
 }
 
 function SimpleFrontEnd_index_cfg() {
-    global $tpl, $cfg, $filter, $LNG, $frontend;
+    global $tpl, $cfg, $filter, $LNG, $frontend, $blocks;
 
-    $page_data = [];
-    $index_layouts = $frontend->getLayouts();
+    $layouts = $frontend->getLayouts();
+    $blocks_pages = $blocks->getPages();
+    $content = '';
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnChangeLayout'])) {
         global $db;
 
-        $index_layout_opt = $filter->post_strict_chars('index_layout', 255, 1);
-
-        if (!empty($index_layout_opt) && $index_layout_opt != $cfg['index_layout']) {
-            if ($index_layout_opt == 'none') {
-                $db->update('config', ['cfg_value' => ''], ['cfg_key' => 'index_layout']);
-                $db->update('config', ['cfg_value' => ''], ['cfg_key' => 'index_sections']);
+        $layout_opt = $filter->post_strict_chars('admin_layout', 255, 1);
+        $layout_page = $filter->post_strict_chars('page', 255, 1);
+        if (!empty($layout_opt) && !empty($layout_page)) {
+            if ($layout_opt == 'none') {
+                $db->upsert('config', ['plugin' => 'SimpleFrontend', 'cfg_value' => ''], ['cfg_key' => $layout_page . '_layout']);
+                $db->upsert('config', ['plugin' => 'SimpleFrontend', 'cfg_value' => ''], ['cfg_key' => $layout_page . '_plugin_layout']);
+                $db->upsert('config', ['plugin' => 'SimpleFrontend', 'cfg_value' => ''], ['cfg_key' => $layout_page . '_sections']);
             } else {
-                foreach ($index_layouts as $layout) {
-                    if ($layout['file'] == $index_layout_opt) {
-                        $db->update('config', ['cfg_value' => $layout['file']], ['cfg_key' => 'index_layout']);
-                        $db->update('config', ['cfg_value' => $layout['sections']], ['cfg_key' => 'index_sections']);
-                        $cfg['index_layout'] = $layout['file'];
-                        $cfg['index_sections'] = $layout['sections'];
+                foreach ($layouts as $layout) {
+                    if ($layout['file'] == $layout_opt) {
+                        $db->upsert('config', ['plugin' => 'SimpleFrontend', 'cfg_value' => $layout['file']], ['cfg_key' => $layout_page . '_layout']);
+                        $db->upsert('config', ['plugin' => 'SimpleFrontend', 'cfg_value' => $layout['plugin']], ['cfg_key' => $layout_page . '_plugin_layout']);
+                        $db->upsert('config', ['plugin' => 'SimpleFrontend', 'cfg_value' => $layout['sections']], ['cfg_key' => $layout_page . '_sections']);
+                        $cfg[$layout_page . '_layout'] = $layout['file'];
+                        $cfg[$layout_page . '_plugin_layout'] = $layout['plugin'];
+                        $cfg[$layout_page . '_sections'] = $layout['sections'];
                     }
                 }
             }
         }
     }
-
-    $page_data['layouts_select'] = '<option value="none">' . $LNG['L_NONE'] . '</option>';
-    foreach ($index_layouts as $layout) {
-        if ($layout['file'] == $cfg['index_layout']) {
-            $page_data['layouts_select'] .= "<option selected value='{$layout['file']}'>{$layout['name']}</option>";
-        } else {
-            $page_data['layouts_select'] .= "<option value='{$layout['file']}'>{$layout['name']}</option>";
+    foreach ($blocks_pages as $blocks_page) {
+        $page_data['page_name'] = $blocks_page['page_name'];
+        $page_data['layouts_select'] = '<option value="none">' . $LNG['L_NONE'] . '</option>';
+        foreach ($layouts as $layout) {
+            if (isset($cfg[$blocks_page['page_name'] . '_layout']) && ($layout['file'] == $cfg[$blocks_page['page_name'] . '_layout'])) {
+                $page_data['layouts_select'] .= '<option selected value="' . $layout['file'] . '">' . $layout['name'] . '</option>';
+            } else {
+                $page_data['layouts_select'] .= '<option value="' . $layout['file'] . '">' . $layout['name'] . '</option>';
+            }
         }
+        $content .= $tpl->getTplFile('SimpleFrontend', 'admin_layouts', $page_data);
     }
 
-    return $tpl->getTplFile('SimpleFrontend', 'admin_index', $page_data);
+    return $content;
+    /* OLD DELETE NEXT UPDATE
+      $page_data = [];
+      $index_layouts = $frontend->getLayouts();
+
+      if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+      global $db;
+
+      $index_layout_opt = $filter->post_strict_chars('index_layout', 255, 1);
+
+      if (!empty($index_layout_opt) && $index_layout_opt != $cfg['index_layout']) {
+      if ($index_layout_opt == 'none') {
+      $db->update('config', ['cfg_value' => ''], ['cfg_key' => 'index_layout']);
+      $db->update('config', ['cfg_value' => ''], ['cfg_key' => 'index_sections']);
+      } else {
+      foreach ($index_layouts as $layout) {
+      if ($layout['file'] == $index_layout_opt) {
+      $db->update('config', ['cfg_value' => $layout['file']], ['cfg_key' => 'index_layout']);
+      $db->update('config', ['cfg_value' => $layout['sections']], ['cfg_key' => 'index_sections']);
+      $cfg['index_layout'] = $layout['file'];
+      $cfg['index_sections'] = $layout['sections'];
+      }
+      }
+      }
+      }
+      }
+
+      $page_data['layouts_select'] = '<option value="none">' . $LNG['L_NONE'] . '</option>';
+      foreach ($index_layouts as $layout) {
+      if ($layout['file'] == $cfg['index_layout']) {
+      $page_data['layouts_select'] .= "<option selected value='{$layout['file']}'>{$layout['name']}</option>";
+      } else {
+      $page_data['layouts_select'] .= "<option value='{$layout['file']}'>{$layout['name']}</option>";
+      }
+      }
+
+      return $tpl->getTplFile('SimpleFrontend', 'admin_index', $page_data);
+
+     */
 }
 
 function Admin_getLayouts() {
