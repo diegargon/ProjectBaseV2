@@ -18,6 +18,12 @@ function SimpleFrontend_AdminInit() {
     $frontend->registerLayout(['name' => 'Index 3 Colums', 'plugin' => 'SimpleFrontend', 'file' => 'index_3', 'sections' => 3]);
     $frontend->registerLayout(['name' => 'Index 2 Colums', 'plugin' => 'SimpleFrontend', 'file' => 'index_2', 'sections' => 2]);
     $frontend->registerLayout(['name' => 'Index 1 Colums', 'plugin' => 'SimpleFrontend', 'file' => 'index_1', 'sections' => 2]);
+
+    if (defined('BLOCKS')) {
+        global $blocks, $cfg;
+
+        $blocks->registerBlocksPage('index', $cfg['index_sections']);
+    }
 }
 
 function SimpleFrontend_AdminMenu($params) {

@@ -178,12 +178,6 @@ class SimpleFrontend {
         $this->show_load_time = $cfg['show_load_time'];
         $this->show_memory_usage = $cfg['show_memory_usage'];
 
-        if (defined('BLOCKS')) {
-            global $blocks;
-
-            $blocks->registerBlocksPage('index', $cfg['index_sections']);
-        }
-
         if (defined('DEBUG') && $cfg['simplefrontend_debug']) {
             global $debug;
             $this->debug = & $debug;
