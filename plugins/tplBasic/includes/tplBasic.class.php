@@ -131,7 +131,7 @@ class TPL {
             if (!$this->checkScript($filename)) {
                 if (array_key_exists($filename, $this->std_remote_scripts)) {
                     $script_url = $this->std_remote_scripts[$filename];
-                    $script = '<script type="text/javascript" src="' . $script_url . '" charset="UTF-8" ' . $async . '></script>\n';
+                    $script = '<script type="text/javascript" src="' . $script_url . '" charset="UTF-8" ' . $async . '></script>';
                     $this->addtoTplVar("SCRIPTS_" . $place . "", $script);
                     $this->scripts[] = $filename;
                     $backtrace = debug_backtrace();
