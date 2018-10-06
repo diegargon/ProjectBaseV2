@@ -49,26 +49,19 @@ $news_db = get_news_query($q_where, $q_opt);
 if (count($news_db) < 1) {
     return $frontend->messageBox(['title' => 'L_NEWS_SEC_EMPTY_TITLE', 'msg' => 'L_NEWS_SEC_EMPTY']);
 }
-$column = '';
+
+$lnews = layout_news('news_section_article', $news_db);
+
+$column = [];
 $i = 1;
-foreach ($news_db as $news) {
-    //ARTICLE DATA
-    if ($cfg['FRIENDLY_URL']) {
-        $friendly_title = news_friendly_title($news['title']);
-        $article_data['url'] = '/' . $cfg['WEB_LANG'] . "/news/{$news['nid']}/{$news['page']}/{$news['lang_id']}/$friendly_title";
-    } else {
-        $article_data['url'] = "/{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news['nid']}&lang=" . $cfg['WEB_LANG'] . "&npage={$news['page']}&news_lang_id={$news['lang_id']}";
-    }
-    $article_data['title'] = $news['title'];
-    $article_data['lead'] = $news['lead'];
-    $article_data['featured'] = $news['featured'];
-    $article_data['date'] = format_date($news['created']);
+
+foreach ($lnews as $lnews_row) {
     if (!empty($column[$i])) {
-        $column[$i] .= $tpl->getTplFile('News', 'news_section_article', $article_data);
+        $column[$i] .= $lnews_row['html'];
     } else {
-        $column[$i] = $tpl->getTplFile('News', 'news_section_article', $article_data);
+        $column[$i] = $lnews_row['html'];
     }
-    //
+
     $i++;
     $i > $cfg['news_section_sections'] ? $i = 1 : null;
 }
