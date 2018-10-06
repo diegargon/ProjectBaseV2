@@ -135,5 +135,5 @@ function get_load_time($start) {
     $time = explode(' ', $time);
     $time = $time[1] + $time[0];
     $finish = $time;
-    return round(($finish - $start), 4);
+    return round(($finish - $start), 3);
 }
