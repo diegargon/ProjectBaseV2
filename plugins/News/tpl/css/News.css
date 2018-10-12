@@ -358,17 +358,12 @@
     box-shadow: 0 0 5px #818181;
 }
 .featured h1 {
-    font-size: 1.4em;
     font-weight: bold;
     color: #000 !important;
 }
 .featured h2 {
-    font-size: 1.3em;
-    font-weight: normal;
 } 
 .featured h3 {
-    font-size: 0.9em;
-    font-weight: normal;
 }
 .featured h1, .featured, h2, .featured h3 {
     color: #473636;
