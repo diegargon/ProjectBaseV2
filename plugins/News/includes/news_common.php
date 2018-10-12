@@ -28,6 +28,7 @@ function get_news_query($where, $q_conf = null, $order = null) {
         $what = 'nid, lang_id, title, created, page, featured, visits';
     } else if (isset($q_conf['lead'])) {
         $what = 'nid, lang_id, title, lead, page, created, featured, visits';
+        isset($q_conf['main_image']) ? $what .= ', text' : null;
     } else {
         $what = 'nid, lang_id, title, lead, text, page, author_id, created, last_edited, featured, visits, translator_id, tags';
     }
@@ -51,7 +52,8 @@ function layout_news($template, $news) {
 
         $news_row['date'] = format_date($news_row['created']);
         if (isset($news_row['text'])) {
-            $news_row['main_image'] = news_get_main_image($news_row);
+            $image = preg_replace('/\[S\]/si', DIRECTORY_SEPARATOR . $cfg['img_selector'] . DIRECTORY_SEPARATOR, news_get_main_image($news_row));
+            $news_row['main_image'] = preg_replace('~\[localimg w=((?:[1-9][0-9]?[0-9]?))\](.*?)\[\/localimg\]~si', '$2', $image);
         }
         $news_row['html'] = $tpl->getTplFile('News', $template, $news_row);
 

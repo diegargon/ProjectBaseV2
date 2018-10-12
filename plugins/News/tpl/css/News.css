@@ -81,9 +81,7 @@
 .article_text a {
     text-decoration:none;
 }
-
 #adm_nav {
-
     overflow: hidden;
     clear: both;
 }
@@ -93,7 +91,6 @@
     margin:0;
 }
 #adm_nav li {
-
     padding-top:9px;
     padding-bottom:9px;
     float:left;
@@ -113,7 +110,6 @@
 #adm_nav li a:hover {
     background-color: #000;
 }
-
 .text_small {
     font-size: 0.6em;
 }
@@ -292,6 +288,7 @@
     background-color: #FFFFFF;
     border: 1px solid #dcdcdc;
     padding: 5px;
+    padding-top: 10px;    
     width:97%;
 }
 .newsbox:hover {
@@ -356,6 +353,7 @@
 .featured {
     background-color: #DEDEDE;
     box-shadow: 0 0 5px #818181;
+    overflow:auto;
 }
 .featured h1 {
     font-weight: bold;

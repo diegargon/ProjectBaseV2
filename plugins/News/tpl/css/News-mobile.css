@@ -20,6 +20,7 @@
     .featured {
         float:none;
         height:100%;
+        overflow:auto;
     }
     .featured article h3, .featured article p {        
         display: block;
