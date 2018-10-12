@@ -26,6 +26,7 @@ function get_news_query($where, $q_conf = null, $order = null) {
 
     if (isset($q_conf['headlines'])) {
         $what = 'nid, lang_id, title, created, page, featured, visits';
+        isset($q_conf['main_image']) ? $what .= ', text' : null;
     } else if (isset($q_conf['lead'])) {
         $what = 'nid, lang_id, title, lead, page, created, featured, visits';
         isset($q_conf['main_image']) ? $what .= ', text' : null;
