@@ -50,7 +50,11 @@ function layout_news($template, $news) {
         }
 
         $news_row['date'] = format_date($news_row['created']);
+        if (isset($news_row['text'])) {
+            $news_row['main_image'] = news_get_main_image($news_row);
+        }
         $news_row['html'] = $tpl->getTplFile('News', $template, $news_row);
+
         $lnews[] = $news_row;
     }
 
