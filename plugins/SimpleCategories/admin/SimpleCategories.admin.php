@@ -18,18 +18,18 @@ function SimpleCats_AdminMenu($params) {
     if ($params['admtab'] == $tab_num) {
         register_uniq_action('admin_get_aside_menu', 'SimpleCats_AdminAside', $params);
         register_uniq_action('admin_get_section_content', 'SimpleCats_AdminContent', $params);
-        return "<li class='tab_active'><a href='{$params['url']}&admtab=$tab_num'>SimpleCats</a></li>";
+        return '<li class="tab_active"><a href="' . $params['url'] . '&admtab=$tab_num">SimpleCats</a></li>';
     } else {
-        return "<li><a href='{$params['url']}&admtab=$tab_num'>SimpleCats</a></li>";
+        return '<li><a href="' . $params['url'] . '&admtab=$tab_num">SimpleCats</a></li>';
     }
 }
 
 function SimpleCats_AdminAside($params) {
     global $LNG;
 
-    return "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=1'>" . $LNG['L_PL_STATE'] . "</a></li>\n" .
-            "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=2'>" . $LNG['L_CATS_CATS'] . "</a></li>\n" .
-            "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=4'>" . $LNG['L_PL_CONFIG'] . "</a></li>\n";
+    return '<li><a href="admin&admtab=' . $params['admtab'] . '&opt=1">' . $LNG['L_PL_STATE'] . '</a></li>' .
+            '<li><a href="admin&admtab=' . $params['admtab'] . '&opt=2">' . $LNG['L_CATS_CATS'] . '</a></li>' .
+            '<li><a href="admin&admtab=' . $params['admtab'] . '&opt=4">' . $LNG['L_PL_CONFIG'] . '</a></li>';
 }
 
 function SimpleCats_AdminContent($params) {
@@ -37,7 +37,7 @@ function SimpleCats_AdminContent($params) {
 
     //$tpl->getCssFile("SimpleCats");
 
-    $page_data = "";
+    $page_data = '';
 
     if ($params['opt'] == 1 || $params['opt'] == false) {
         $page_data = '<h1>' . $LNG['L_GENERAL'] . ': ' . $LNG['L_PL_STATE'] . '</h1>';
@@ -72,7 +72,7 @@ function SimpleCats_AdminCats($plugin = null) {
     $catdata['catlist'] = '';
 
     foreach ($langs as $lang) {
-        $catdata['catrow_new'] .= "<label>{$lang['lang_name']}</label> <input type='text' name='{$lang['lang_id']}' value='' />";
+        $catdata['catrow_new'] .= '<label>' . $lang['lang_name'] . '</label> <input type="text" name="' . $lang['lang_id'] . '" value="" />';
     }
     $content = $tpl->getTplFile('SimpleCategories', 'adm_create_cat', $catdata);
 
@@ -98,8 +98,8 @@ function SimpleCats_AdminCats($plugin = null) {
 
                 foreach ($cats as $cat) {
                     if (($catid == $cat['cid']) && ($cat['lang_id'] == $lang['lang_id'])) {
-                        $catdata['catlist'] .= "<label>{$lang['lang_name']}</label>";
-                        $catdata['catlist'] .= "<input type='text' name='{$lang['lang_id']}' class='cat_name' value='{$cat['name']}' />";
+                        $catdata['catlist'] .= '<label>' . $lang['lang_name'] . '</label>';
+                        $catdata['catlist'] .= '<input type="text" name="' . $lang['lang_id'] . '" class="cat_name" value="' . $cat['name'] . '" />';
                         $foundit = 1;
                         $catdata['catFather'] = $cat['father'];
                         $catdata['catWeight'] = $cat['weight'];
@@ -108,7 +108,7 @@ function SimpleCats_AdminCats($plugin = null) {
                 }
 
                 if ($foundit == 0) { //Not traslated
-                    $catdata['catlist'] .= "<label>{$lang['lang_name']}</label> <input type='text' name='{$lang['lang_id']}' value='' />";
+                    $catdata['catlist'] .= '<label>' . $lang['lang_name'] . '</label> <input type="text" name="' . $lang['lang_id'] . '" value="" />';
                 }
                 $foundit = 0;
             }
@@ -167,11 +167,11 @@ function SimpleCats_NewCategory($plugin) {
         $posted_weight = $filter->post_int('weight', 127, 1);
         if (!empty($posted_name)) {
             $new_cat_ary = [
-                "cid" => $new_cid,
-                "lang_id" => $lang['lang_id'],
-                "plugin" => $plugin,
-                "name" => $posted_name,
-                "father" => $posted_father,
+                'cid' => $new_cid,
+                'lang_id' => $lang['lang_id'],
+                'plugin' => $plugin,
+                'name' => $posted_name,
+                'father' => $posted_father,
             ];
             empty($posted_weight) ? $new_cat_ary['weight'] = 0 : $new_cat_ary['posted_weight'];
 
