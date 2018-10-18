@@ -25,13 +25,13 @@ function get_news_query($where, $q_conf = null, $order = null) {
     }
 
     if (isset($q_conf['headlines'])) {
-        $what = 'nid, lang_id, title, created, page, featured, visits';
+        $what = 'nid, lang_id, title, category, created, page, featured, visits';
         isset($q_conf['main_image']) ? $what .= ', text' : null;
     } else if (isset($q_conf['lead'])) {
-        $what = 'nid, lang_id, title, lead, page, created, featured, visits';
+        $what = 'nid, lang_id, title, category, lead, page, created, featured, visits';
         isset($q_conf['main_image']) ? $what .= ', text' : null;
     } else {
-        $what = 'nid, lang_id, title, lead, text, page, author_id, created, last_edited, featured, visits, translator_id, tags';
+        $what = 'nid, lang_id, title, category, lead, text, page, author_id, created, last_edited, featured, visits, translator_id, tags';
     }
     $extra = $order . $limit;
     $result = $db->select('news', $what, $where, $extra);
@@ -53,8 +53,10 @@ function layout_news($template, $news) {
 
         $news_row['date'] = format_date($news_row['created']);
         if (isset($news_row['text'])) {
-            $image = preg_replace('/\[S\]/si', DIRECTORY_SEPARATOR . $cfg['img_selector'] . DIRECTORY_SEPARATOR, news_get_main_image($news_row));
-            $news_row['main_image'] = preg_replace('~\[localimg w=((?:[1-9][0-9]?[0-9]?))\](.*?)\[\/localimg\]~si', '$2', $image);
+            $main_image = preg_replace('/\[S\]/si', DIRECTORY_SEPARATOR . $cfg['img_selector'] . DIRECTORY_SEPARATOR, news_get_main_image($news_row));
+            $thumb_image = preg_replace('/\[S\]/si', DIRECTORY_SEPARATOR . 'thumbs' . DIRECTORY_SEPARATOR, news_get_main_image($news_row));
+            $news_row['main_image'] = preg_replace('~\[localimg w=((?:[1-9][0-9]?[0-9]?))\](.*?)\[\/localimg\]~si', '$2', $main_image);
+            $news_row['thumb_image'] = preg_replace('~\[localimg w=((?:[1-9][0-9]?[0-9]?))\](.*?)\[\/localimg\]~si', '$2', $thumb_image);
         }
         $news_row['html'] = $tpl->getTplFile('News', $template, $news_row);
 
@@ -71,6 +73,16 @@ function news_get_main_image($news) {
     preg_match($match_regex, $news_body, $match);
 
     return !empty($match[0]) ? $match[0] : false;
+}
+
+function news_extract_bycat($news, $cat) {
+    $r_news = [];
+    foreach ($news as $news_row) {
+        if ($news_row['category'] == $cat) {
+            $r_news[] = $news_row;
+        }
+    }
+    return $r_news;
 }
 
 function get_news_byId($nid, $lang_id, $page = null) {

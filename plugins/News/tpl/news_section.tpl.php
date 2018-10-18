@@ -3,20 +3,21 @@
  *  Copyright @ 2016 - 2018 Diego Garcia
  */
 !defined('IN_WEB') ? exit : true;
-
-if ($data['TPL_CTRL'] == 1) {
-    ?>
-    <div  class="clear bodysize page">
-        <?php
-        isset($tpldata['ADD_TOP_SECTION']) ? print $tpldata['ADD_TOP_SECTION'] : null;
-    }
-    ?>
-    <div class="cols col<?= $data['NUM_SECTIONS'] ?>">
-        <?= $data[$data['TPL_CTRL']] ?>
-    </div>
+?>
+<div  class="clear bodysize page">
     <?php
-    if ($data['TPL_FOOT']) {
-        isset($tpldata['ADD_BOTTOM_SECTION']) ? print $tpldata['ADD_BOTTOM_SECTION'] : null;
-        ?>    
+    isset($tpldata['ADD_TOP_SECTION']) ? print $tpldata['ADD_TOP_SECTION'] : null;
+    ?>
+    <div class="news_row">
+        <?= isset($data['section_1']) ? $data['section_1'] : null; ?>
     </div>
-<?php } ?>
+    <div class="news_row">
+        <?= isset($data['section_2']) ? $data['section_2'] : null; ?>
+    </div>
+    <div class="news_row">        
+        <?= isset($data['section_3']) ? $data['section_3'] : null; ?>
+    </div>        
+    <?php
+    isset($tpldata['ADD_BOTTOM_SECTION']) ? print $tpldata['ADD_BOTTOM_SECTION'] : null;
+    ?>    
+</div>

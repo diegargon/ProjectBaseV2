@@ -548,3 +548,20 @@
     margin-top: 5px;
     padding:5px;
 }
+.news_article_container {
+    max-width: 32%;
+    margin: 5px;
+    min-width: 400px;
+    float:left;
+}
+.news_row {
+    overflow: auto;
+}
+.section_head {
+    font-family: 'Georgia';
+    color: #000;
+    font-size: 1.4em;
+    box-shadow: 0 0 10px #ccc;
+    padding-left: 4px;
+    border-top: 2px solid #1f6ba5;   
+}

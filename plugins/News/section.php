@@ -46,39 +46,53 @@ if (!empty($user['news_lang'])) {
 }
 
 $news_db = get_news_query($q_where, $q_opt);
-if (count($news_db) < 1) {
+if (($num_news = count($news_db)) < 1) {
     return $frontend->messageBox(['title' => 'L_NEWS_SEC_EMPTY_TITLE', 'msg' => 'L_NEWS_SEC_EMPTY']);
 }
 
 $lnews = layout_news('news_section_article', $news_db);
 
-$column = [];
-$i = 1;
+$content = '';
+$cats = [];
 
 foreach ($lnews as $lnews_row) {
-    if (!empty($column[$i])) {
-        $column[$i] .= $lnews_row['html'];
-    } else {
-        $column[$i] = $lnews_row['html'];
-    }
+    $cats[] = $lnews_row['category'];
+}
+$cats = array_unique($cats);
 
-    $i++;
-    $i > $cfg['news_section_sections'] ? $i = 1 : null;
+$TPL_CTRL = 1;
+$TPL_FOOT = 0;
+
+$per_section = $num_news / $cfg['news_section_sections'];
+$num_section = 1;
+$section = [];
+$news_counter = 1;
+
+foreach ($cats as $cat) {
+    $cat_news = news_extract_bycat($lnews, $cat);
+    $CATHEAD = 1;
+
+    foreach ($cat_news as $cat_news_row) {
+
+        !isset($section[$num_section]) ? $section[$num_section] = '' : false;
+
+        if ($CATHEAD) {
+            $section[$num_section] .= '<h2 class="section_head">' . $ctgs->getCatNameByID($cat) . '</h2>';
+            $CATHEAD = 0;
+        }
+        $section[$num_section] .= $cat_news_row['html'];
+        $news_counter++;
+    }
+    $num_section++;
 }
 
-$content = '';
-
-$section_data['TPL_CTRL'] = 1;
-$section_data['TPL_FOOT'] = 0;
-$section_data['NUM_SECTIONS'] = $cfg['news_section_sections'];
-
+$section_data = [];
 for ($i = 1; $i <= $cfg['news_section_sections']; $i++) {
-    if (!empty($column[$i])) {
-        $section_data[$i] = $column[$i];
-        $i == $cfg['news_section_sections'] ? $section_data['TPL_FOOT'] = 1 : null;
-        $content .= $tpl->getTplFile('News', 'news_section', $section_data);
-        $section_data['TPL_CTRL'] ++;
+    if (!empty($section[$i])) {
+        $section_data['section_' . $i] = $section[$i];
     }
 }
+$section_data['NUM_SECTIONS'] = $cfg['news_section_sections'];
+$content .= $tpl->getTplFile('News', 'news_section', $section_data);
 
 $tpl->addtoTplVar('ADD_TO_BODY', $content);
