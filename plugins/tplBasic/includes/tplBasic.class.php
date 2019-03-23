@@ -164,7 +164,7 @@ class TPL {
             $SCRIPT_PATH = $DEFAULT_PATH;
         }
         if (!empty($SCRIPT_PATH)) {
-            $script = '<script type="text/javascript" src="' . $this->static_url . $SCRIPT_PATH . '" charset="UTF-8" ' . $async . '></script>\n';
+            $script = '<script type="text/javascript" src="' . $this->static_url . $SCRIPT_PATH . '" charset="UTF-8" ' . $async . '></script>';
         } else {
             $this->debug ? $this->debug->log("AddScriptFile called by-> $plugin for get a $filename but NOT FOUND IT", 'tplBasic', 'ERROR') : null;
             return false;
