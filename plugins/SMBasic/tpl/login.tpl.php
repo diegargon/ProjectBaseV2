@@ -19,7 +19,7 @@
             </p>
             <p>
                 <label id="label_password" for="password"><?= $LNG['L_PASSWORD'] ?></label>
-                <input id="password" name="password" required="required" type="password"  maxlength="<?= $cfg['smbasic_max_password'] ?>" minlength="<?= $cfg['smbasic_min_password'] ?>"placeholder="<?= $LNG['L_PASSWORD_EXAMPLE'] ?>" />
+                <input id="password" name="password" required="required" type="password"  maxlength="<?= $cfg['smbasic_max_password'] ?>" minlength="<?= $cfg['smbasic_min_password'] ?>" placeholder="<?= $LNG['L_PASSWORD_EXAMPLE'] ?>" />
             </p>
             <p class="rememberme">
                 <?php if ($cfg['smbasic_persistence']) { ?>
