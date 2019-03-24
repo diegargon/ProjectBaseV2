@@ -1,7 +1,7 @@
 <?php
 
 /*
- *  Copyright @ 2016 - 2018 Diego Garcia
+ *  Copyright @ 2016 - 2019 Diego Garcia
  * 
  *  Class: register_uniq_action("action",  array($class, "method"));
  *  Function: register_uniq_action("action", "function"))

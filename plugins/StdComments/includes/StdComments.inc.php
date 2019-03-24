@@ -1,7 +1,7 @@
 <?php
 
 /*
- *  Copyright @ 2016 - 2018 Diego Garcia
+ *  Copyright @ 2016 - 2019 Diego Garcia
  */
 
 function stdGetComments($comm_conf) {

@@ -1,7 +1,7 @@
 <?php
 
 /*
- *  Copyright @ 2016 - 2018 Diego Garcia
+ *  Copyright @ 2016 - 2019 Diego Garcia
  * 
  * Fast Implementation, need some basic ACL now,  work on this later
  */

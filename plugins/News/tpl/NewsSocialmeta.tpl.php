@@ -1,6 +1,6 @@
 <?php
 /*
- *  Copyright @ 2016 - 2018 Diego Garcia
+ *  Copyright @ 2016 - 2019 Diego Garcia
  */
 ?>
 <meta name="news_keywords" content="<?= !empty($data['tags']) ? $data['tags'] : null ?> " />

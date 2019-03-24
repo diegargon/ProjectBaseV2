@@ -1,7 +1,7 @@
 <?php
 
 /*
- *  Copyright @ 2016 - 2018 Diego Garcia
+ *  Copyright @ 2016 - 2019 Diego Garcia
  *  
  *  Not really a template engine, just a logic/design separator
  *
