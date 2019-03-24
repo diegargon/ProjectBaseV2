@@ -76,7 +76,7 @@ function SMBasic_RequestResetOrActivation() {
         } else {
             $reset = mt_rand(11111111, 2147483647);
             $db->update("users", ["reset" => "$reset"], ["email" => $db->escape_strip($email)]);
-            $URL = $cfg['WEB_URL'] . "login" . "&reset=$reset&email=$email";
+            $URL = $cfg['WEB_URL'] . $cfg['WEB_LANG'] . "/login" . "&reset=$reset&email=$email";
             $msg = $LNG['L_RESET_EMAIL_MSG'] . "\n" . "$URL";
             mail($email, $LNG['L_RESET_EMAIL_SUBJECT'], $msg, "From: {$cfg['smbasic_register_reply_email']} \r\n");
             die('[{"status": "2", "msg": "' . $LNG['L_RESET_EMAIL'] . '"}]');
@@ -89,7 +89,7 @@ function SMBasic_RequestResetOrActivation() {
 function SMBasic_user_reset_password() {
     global $cfg, $LNG, $db, $filter, $sm, $frontend;
 
-    $reset = $filter->get_int('reset', 1, 1);
+    $reset = $filter->get_int('reset', 10, 1);
     $email = $filter->get_email('email');
     if ($reset == false || $email == false) {
         return false;

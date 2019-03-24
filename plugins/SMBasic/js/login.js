@@ -70,7 +70,7 @@ window.addEventListener("load", function () {
             $('#password').css("border", "2px solid red");
             $('#password').css("box-shadow", "0 0 3px red");
             alert("Password incorrect");
-        } else if (password.length < 8) {
+        } else if (password.length < 5) {
             $('#password').css("border", "2px solid red");
             $('#password').css("box-shadow", "0 0 3px red");
             alert("Password too small");

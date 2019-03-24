@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     if (isset($_GET['reset'])) {
         if (!SMBasic_user_reset_password()) {
-            $msgbox['msg'] = "L_SM_E_ACTIVATION";
+            $msgbox['msg'] = "L_SM_E_RESET";
         } else {
             $msgbox['title'] = 'L_SM_TITLE_OK';
             $msgbox['msg'] = "L_SM_RESET_OK";
@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['email']) && isset($_POST['password'])) {
+    if (isset($_POST['email']) && !empty($_POST['password'])) {
         $email = $filter->post_email("email");
         $password = $filter->post_password("password");
         ($filter->post_int("rememberme")) ? $rememberme = 1 : $rememberme = 0;
@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             die('[{"status": "error", "msg": "' . $LNG['L_E_EMAILPASSWORD'] . '"}]');
         }
-    } else if (!empty($_POST['reset_password_chk'])) {
+    } else if (isset($_POST['email']) && !empty($_POST['reset_password_chk'])) {
         SMBasic_RequestResetOrActivation();
     }
 } else {

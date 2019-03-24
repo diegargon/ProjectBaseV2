@@ -26,8 +26,8 @@ class SecureFilter {
 //$_GET
     //S_GET_INT
     function get_int($var, $max_size = null, $min_size = null) {
-        if ((!isset($_GET[$var])) || !is_numeric($_GET[$var]) || (!empty($max_size) && ($_GET[$var] > $max_size) ) ||
-                (!empty($min_size) && ($_GET[$var] < $min_size))
+        if ((!isset($_GET[$var])) || !is_numeric($_GET[$var]) || (!empty($max_size) && ( strlen((string) $_GET[$var]) > $max_size) ) ||
+                (!empty($min_size) && (strlen((string) $_GET[$var]) < $min_size))
         ) {
             return false;
         }

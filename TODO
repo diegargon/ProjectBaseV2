@@ -1,7 +1,10 @@
+HIGH
+
+MED
+
+* CORE/INSTALL/PLUGINS: Cuando se instalan plugins comprobar que sus dependencias estan cumplidas, si no al instalar por ejemplo NewsComments y no estar instalado News, no puede modificar la tabla.
 * CORE/plugins: Cuando habilitas un plugin o autostart debiria comprobar y activar si se cumplen las dependencias o avisar 
 de la dependencia no habilitada.
-* CORE/INSTALL/PLUGINS: Cuando se instalan plugins comprobar que sus dependencias estan cumplidas, si no al instalar por ejemplo NewsComments y no estar instalado News, no puede modificar la tabla.
-
 * ADMIN: Admin actualmente instala ACL si ACL esta activo, al instalar no esta activo y no hay opcion para instalar las opciones admin ACL
 que necesitan la tabla permissions
  - Solucion 1 despues de iniciado dar opcion para habilitar ACL en el plugin si el ACL esta activo despues y luego dar opcion para insertar lo necesario
@@ -9,6 +12,10 @@ que necesitan la tabla permissions
     en vez registarlos añadirlos a la DB
  - Solucion 3, en la instalacion presentar opcion para activar el ACL y activarlo antes (problema:probablemente necesitara tambien la S1 si se quiere poder activar despues),
    (problema: ACL tambien necesita groups)
+
+LOW
+
+
 
 * CORE: Config por grupos (añadidada la tambla pero sin usar) ver como agrupar y mostrar agrupados en admin
 para luego presentarlos por grupos, ej: L_NEWS_SUBMIT, L_NEWS_VIEW
@@ -32,3 +39,6 @@ para luego presentarlos por grupos, ej: L_NEWS_SUBMIT, L_NEWS_VIEW
 * GoogleAnalycts: Que añada dns-prefetch de google a head.tpl
 
 * X: Investigar rel="preload" y donde lo podemos añadir.
+
+* Firefox no pide guarda los datos de identificacion
+

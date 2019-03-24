@@ -49,6 +49,7 @@ Author
 
 Lastest add/canges? first latest
 ================================
+* rewrite section
 * add preliminar support for ratings on newscomments plugin (optional)
 * add stdRatings for rating things
 * NewsMediaUpload rewrite and works.

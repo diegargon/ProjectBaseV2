@@ -36,7 +36,7 @@ window.addEventListener("load", function() {
             $('#cur_password').css("border","2px solid red");
             $('#cur_password').css("box-shadow","0 0 3px red");
             alert("Password required");
-        } else if( cur_password.length < 8 ){
+        } else if( cur_password.length < 5){
             $('#cur_password').css("border","2px solid red");
             $('#cur_password').css("box-shadow","0 0 3px red");
             alert("Password too small");

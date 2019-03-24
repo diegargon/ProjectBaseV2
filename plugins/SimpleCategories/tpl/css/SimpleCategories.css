@@ -2,11 +2,15 @@
  Copyright @ 2016 - 2018 Diego Garcia
 */
 
-
+.cat_row {
+    display: inline-block;    
+    border:1px solid black;
+    margin: 2px;
+    padding: 4px;
+}
 .catlist label {
     margin-left: 5px;
 }
-
 .cat_row_main_cat {
     background: #0099ff;
 }

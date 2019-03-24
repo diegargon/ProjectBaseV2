@@ -18,9 +18,9 @@ function SimpleCats_AdminMenu($params) {
     if ($params['admtab'] == $tab_num) {
         register_uniq_action('admin_get_aside_menu', 'SimpleCats_AdminAside', $params);
         register_uniq_action('admin_get_section_content', 'SimpleCats_AdminContent', $params);
-        return '<li class="tab_active"><a href="' . $params['url'] . '&admtab=$tab_num">SimpleCats</a></li>';
+        return '<li class="tab_active"><a href="' . $params['url'] . '&admtab=' . $tab_num . '">SimpleCats</a></li>';
     } else {
-        return '<li><a href="' . $params['url'] . '&admtab=$tab_num">SimpleCats</a></li>';
+        return '<li><a href="' . $params['url'] . '&admtab=' . $tab_num . '">SimpleCats</a></li>';
     }
 }
 
@@ -104,6 +104,7 @@ function SimpleCats_AdminCats($plugin = null) {
                         $catdata['catFather'] = $cat['father'];
                         $catdata['catWeight'] = $cat['weight'];
                         $catdata['plugin'] = $cat['plugin'];
+                        !empty($cat['image']) ? $catdata['image'] = $cat['image'] : $catdata['image'] = '';
                     }
                 }
 
@@ -137,14 +138,19 @@ function SimpleCats_ModCategories() {
 
         if (!empty($posted_name)) {
             $posted_cid = $filter->post_int('cid');
-            $posted_father = $filter->post_int('father', 32767, 1);
+            $posted_father = $filter->post_int('father', 32767);
             $posted_weight = $filter->post_int('weight', 128, 1);
+            $posted_image = $filter->post_URL('cat_image', 255, 1);
+
             if ($posted_cid != false) {
-                empty($posted_father) ? $posted_father = 0 : null;
-                empty($posted_weight) ? $posted_weight = 0 : null;
+                $mod_cat_ary = ['name' => $posted_name];
+                !empty($posted_father) ? $mod_cat_ary['father'] = $posted_father : $mod_cat_ary['father'] = 0;
+                !empty($posted_weight) ? $mod_cat_ary['weight'] = $posted_weight : $mod_cat_ary['weight'] = 0;
+                !empty($posted_image) ? $mod_cat_ary['image'] = $posted_image : null;
+
                 $query = $db->select_all('categories', ['cid' => $posted_cid, 'lang_id' => $lang_id]);
                 if ($db->num_rows($query) > 0) {
-                    $db->update("categories", ['name' => $posted_name, 'father' => $posted_father, 'weight' => $posted_weight], ['cid' => $posted_cid, 'lang_id' => $lang_id]);
+                    $db->update('categories', $mod_cat_ary, ['cid' => $posted_cid, 'lang_id' => $lang_id]);
                 }
             }
         }
@@ -163,16 +169,19 @@ function SimpleCats_NewCategory($plugin) {
     foreach ($langs as $lang) {
         $lang_id = $lang['lang_id'];
         $posted_name = $filter->post_alphanum_middle_underscore_unicode($lang_id); //POST['1'] 2... id return text value
-        $posted_father = $filter->post_int('father', 32767, 1);
+        $posted_father = $filter->post_int('father', 32767);
         $posted_weight = $filter->post_int('weight', 127, 1);
+        $posted_image = $filter->post_URL('cat_image', 255, 1);
+
         if (!empty($posted_name)) {
             $new_cat_ary = [
                 'cid' => $new_cid,
                 'lang_id' => $lang['lang_id'],
                 'plugin' => $plugin,
                 'name' => $posted_name,
-                'father' => $posted_father,
+                'father' => $posted_father
             ];
+            !empty($posted_image) ? $new_cat_ary['image'] = $posted_image : null;
             empty($posted_weight) ? $new_cat_ary['weight'] = 0 : $new_cat_ary['posted_weight'];
 
             $db->insert('categories', $new_cat_ary);
