@@ -10,7 +10,7 @@ CREATE TABLE `" . DB_PREFIX . "blocks` (
   `uid` int(10) UNSIGNED NOT NULL,
   `blockname` char(255) NOT NULL,
   `plugin` char(255) NOT NULL,
-  `blockconf` varchar(255) NOT NULL,
+  `blockconf` text(65535) NOT NULL,
   `page` char(255) NOT NULL,
   `section` int(10) UNSIGNED NOT NULL,
   `weight` tinyint(1) NOT NULL DEFAULT '5',

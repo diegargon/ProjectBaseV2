@@ -152,13 +152,13 @@ class Blocks {
     public function blockHtmlConfRestricted() {
         global $filter;
 
-        $block_conf = $filter->post_array('block_conf', 255, 1);
+        $block_conf = $filter->post_array('block_conf', 60000, 1);
         $block_conf['admin_block'] = 0;
         //TODO CHECK AND FILTER return false if something fail.
         $content['config'] = $block_conf;
 
-        //field config its 256, reserved 56 for array serialice payload 
-        $content['content'] = '<textarea name="block_conf[html_code]" maxlength="200" rows="3" cols="75">';
+        //field config its 65535, reserved 5545 for array serialice payload 
+        $content['content'] = '<textarea name="block_conf[html_code]" maxlength="60000" rows="10" cols="100">';
         if (isset($content['config']['html_code'])) {
             $content['content'] .= $content['config']['html_code'];
         }
@@ -170,13 +170,13 @@ class Blocks {
     public function blockHtmlConf() {
         global $filter;
 
-        $block_conf = $filter->post_array('block_conf', 255, 1);
+        $block_conf = $filter->post_array('block_conf', 60000, 1);
         $block_conf['admin_block'] = 0;
         //TODO CHECK AND FILTER return false if something fail.
         $content['config'] = $block_conf;
 
-        //field config its 256, reserved 56 for array serialice payload 
-        $content['content'] = '<textarea name="block_conf[html_code]" maxlength="200" rows="3" cols="75">';
+        //field config its 65535, reserved 5545 for array serialice payload 
+        $content['content'] = '<textarea name="block_conf[html_code]" maxlength="60000" rows="10" cols="100">';
         if (isset($content['config']['html_code'])) {
             $content['content'] .= $content['config']['html_code'];
         }
@@ -199,12 +199,12 @@ class Blocks {
 
     public function blockHtmlFileConf() {
         global $filter;
-        $block_conf = $filter->post_array('block_conf', 255, 1);
+        $block_conf = $filter->post_array('block_conf', 60000, 1);
         $block_conf['admin_block'] = 1;
         //TODO CHECK AND FILTER return false if something fail        
 
         $content['config'] = $block_conf;
-        $content['content'] = "<br/><input type='text' maxlength='256' size='100' name='block_conf[file]'/>";
+        $content['content'] = "<br/><input type='text' maxlength='60000' size='100' name='block_conf[file]'/>";
 
         return $content;
     }
@@ -217,12 +217,12 @@ class Blocks {
 
     public function blockPhpFileConf() {
         global $filter;
-        $block_conf = $filter->post_array('block_conf', 255, 1);
+        $block_conf = $filter->post_array('block_conf', 60000, 1);
         $block_conf['admin_block'] = 1;
         //TODO CHECK AND FILTER return false if something fail        
 
         $content['config'] = $block_conf;
-        $content['content'] = '<br/><input type="text" maxlength="256" size="100" name="block_conf[php_file]"/>';
+        $content['content'] = '<br/><input type="text" maxlength="60000" size="100" name="block_conf[php_file]"/>';
 
         return $content;
     }
