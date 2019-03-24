@@ -102,8 +102,9 @@ class SimpleFrontend {
             global $blocks;
 
             $page_data = $blocks->getBlocksContent('index', $cfg['index_sections']);
+            $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile($cfg['index_plugin_layout'], $cfg['index_layout'] . '_layout', $page_data));
         }
-        $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile($cfg['index_plugin_layout'], $cfg['index_layout'] . '_layout', $page_data));
+        
     }
 
     function sendPage() {
