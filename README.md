@@ -37,7 +37,10 @@ chown www-data:www-data ???? && chmod 755 ????
 
 INSTALLATION
 ============
-TODO
+1º copy files
+2º rename /config/config.inc_ex.php to config.inc.php
+3º Edit config.inc.php
+4º Open web in browser and follow the steps
 
 DEVELOPEMENT
 ============
