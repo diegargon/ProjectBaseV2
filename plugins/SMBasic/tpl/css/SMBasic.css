@@ -27,7 +27,7 @@
 }
 .login_box input, .register_box input {
     outline:none;
-    color: rgb(190, 188, 188); 
+    color: rgb(81, 81, 81); 
     font-style: italic;
     width: 94%;
 }
