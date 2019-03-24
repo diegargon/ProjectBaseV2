@@ -12,6 +12,11 @@
     "version": 0.2,
     "depends": [
         {
+            "name": "NEWS",
+            "min_version": 0.2,
+            "max_version": 0.9
+        },        
+        {
             "name": "COMMENTS",
             "min_version": 0.2,
             "max_version": 0.9
