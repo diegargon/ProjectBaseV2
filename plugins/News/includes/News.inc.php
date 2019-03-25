@@ -34,7 +34,7 @@ function news_friendly_title($title) {
 
 function news_section_nav_elements() {
     global $ctgs, $cfg;
-
+    $ctgs->sortCatsByWeight();
     $menu_cats = $ctgs->getRootCats('News');
     $menu_data = '';
 
