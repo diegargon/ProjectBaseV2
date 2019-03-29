@@ -1,7 +1,7 @@
 <?php
 
 /*
- *  Copyright @ 2016 - 2019 Diego Garcia
+ *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
  */
 
 class Blocks {
@@ -145,7 +145,7 @@ class Blocks {
     }
 
     public function blockHtml($conf) {
-
+        
         return $conf['html_code'];
     }
 

@@ -1,7 +1,7 @@
 <?php
 
 /*
- *  Copyright @ 20016 - 2019 Diego Garcia
+ *  Copyright @ 20016 - 2019 Diego Garcia (diego@envigo.net)
  * 
  *  default_session -> user php build in or not
  *  session_start -> start session_start, ignore in default session (start yes)
