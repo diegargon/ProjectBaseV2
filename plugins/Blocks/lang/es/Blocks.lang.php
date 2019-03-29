@@ -17,4 +17,7 @@ $LNG['L_BLK_HTMLRESTRIC_DESC'] = 'Bloque HTML restrictivo [Max: 200 caracteres]'
 $LNG['L_BLK_HTML_DESC'] = 'Block HTML sin restricciones (solo admin) [Max: 200 caracteres]';
 $LNG['L_BLK_HTMLFILE_DESC'] = 'Bloque archivo HTML, (solo admin)';
 $LNG['L_BLK_PHPFILE_DESC'] = 'Block php llamado por tpl (solo admin), nombre archivo sin extension y situado en /tpl/...theme';
+$LNG['L_DELETE'] = 'Delete';
+$LNG['L_EDIT'] = 'Edit';
+$LNG['L_CREATE'] = 'Crear';
 //$LNG['L_BLK'] = '';

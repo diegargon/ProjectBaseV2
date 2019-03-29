@@ -101,6 +101,7 @@ if ($data['TPL_CTRL'] == 1) {
                 <div class="divTableCell">
                     <form id="delBlock" action="#" method="POST">
                         <input type="hidden" name="block_id" value="<?= $data['block_id'] ?>"/>
+                        <input type="submit" name="btnEditBlock" value="<?= $LNG['L_EDIT'] ?>"/>
                         <input type="submit" name="btnDelBlock" value="<?= $LNG['L_DELETE'] ?>"/>
                     </form>
                 </div>
