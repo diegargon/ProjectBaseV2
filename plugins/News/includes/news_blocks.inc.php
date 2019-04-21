@@ -50,7 +50,7 @@ function news_block($block_conf) {
     return $content;
 }
 
-function news_block_conf() {
+function news_block_conf($blocks_data = null) {
     global $filter, $cfg, $tpl;
     require_once (__DIR__ . '/news_common.php');
     require_once (__DIR__ . '/news_form_common.php');
