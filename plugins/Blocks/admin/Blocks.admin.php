@@ -52,6 +52,7 @@ function Blocks_admin_content($params) {
 function Blocks_blk_mng() {
     global $blocks, $tpl, $filter, $LNG;
 
+    $block_config_data = [];
     $content = '';
     $selected_page = $filter->post_AlphaNum('block_page', 255, 1);
     $selected_blockname = $filter->post_strict_chars('blockname', 255, 1);
@@ -62,7 +63,7 @@ function Blocks_blk_mng() {
 
     //Edit Block
     if (isset($_POST['btnEditBlock'])) {
-        Blocks_showEditBlock();
+        Blocks_showEditBlock($block_config_data);
     }
     //Submit Edit Block
     if (isset($_POST['btnSubmitEditBlock'])) { //Click Submit edit
@@ -161,7 +162,7 @@ function Blocks_blk_mng() {
     return $content;
 }
 
-function Blocks_showEditBlock() {
+function Blocks_showEditBlock(& $blk_cfg_data) {
     global $filter, $blocks, $LNG;
 
     $editblock_id = $filter->post_int('block_id');
