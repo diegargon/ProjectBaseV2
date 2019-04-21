@@ -18,7 +18,6 @@ if ($data['TPL_CTRL'] == 1) {
                 <div class="divTableHeadCell"><?= $LNG['L_DESC'] ?></div>
                 <div class="divTableHeadCell"><?= $LNG['L_BLK_WEIGHT'] ?></div>
                 <div class="divTableHeadCell"><?= $LNG['L_BLK_CANUSERDISABLE'] ?></div>
-                <div class="divTableHeadCell"><?= $LNG['L_BLK_ACTIONS'] ?></div>
             </div>
             <div class="divTableBody">
                 <div class="divTableRow">  
@@ -50,11 +49,8 @@ if ($data['TPL_CTRL'] == 1) {
                         </select>
                     </div>
                     <div class="divTableCell"><input type="checkbox" name="disable_by_user" value="1"/></div>
-                    <div class="divTableCell">
-                        <input type="submit" name="btnNewBlock" value="<?= $LNG['L_CREATE'] ?>"/>                    
-                    </div>
                 </div>
-            </div> <!-- TableBody --->
+            </div> <!-- TableBody -->
             <div class="divTableFootRow">
                 <div class="divTableFootCell"></div>
                 <div class="divTableFootCell"></div>
@@ -62,7 +58,7 @@ if ($data['TPL_CTRL'] == 1) {
                 <div class="divTableFootCell"></div>
                 <div class="divTableFootCell"></div>
                 <div class="divTableFootCell"></div>
-                <div class="divTableFootCell"></div>
+                <!-- <div class="divTableFootCell"></div> -->
             </div>                
         </div>
         <?= isset($data['block_config_request']) ? $data['block_config_request'] : null ?>
@@ -101,12 +97,13 @@ if ($data['TPL_CTRL'] == 1) {
                 <div class="divTableCell">
                     <form id="delBlock" action="#" method="POST">
                         <input type="hidden" name="block_id" value="<?= $data['block_id'] ?>"/>
+                        <input type="hidden" name="editblockname" value="<?= $data['block'] ?>"/>
                         <input type="submit" name="btnEditBlock" value="<?= $LNG['L_EDIT'] ?>"/>
                         <input type="submit" name="btnDelBlock" value="<?= $LNG['L_DELETE'] ?>"/>
                     </form>
                 </div>
             </div>              
-        </div> <!-- TableBody --->
+        </div> <!-- TableBody -->
     <?php } ?>    
     <?php if ($data['TPL_FOOT'] == 1) { ?>
         <div class="divTableFootRow">

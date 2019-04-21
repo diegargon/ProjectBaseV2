@@ -6,7 +6,7 @@
 !defined('IN_WEB') ? exit : true;
 
 function Blocks_AdminInit() {
-    global $blocks, $plugins;
+    global $plugins;
 
     $plugins->express_start('Blocks') ? register_action('add_admin_menu', 'Blocks_AdminMenu', '5') : null;
 }
@@ -42,15 +42,15 @@ function Blocks_admin_content($params) {
         $page_data .= Admin_GetPluginState("Blocks");
     } else if ($params['opt'] == 2) {
         $page_data = '<h1>' . $LNG['L_BLK_MANAGE'] . '</h1>';
-        $page_data .= Blocks_blk_config();
+        $page_data .= Blocks_blk_mng();
     } else if ($params['opt'] == 4) {
         $page_data .= AdminPluginConfig('Blocks');
     }
     return $page_data;
 }
 
-function Blocks_blk_config() {
-    global $blocks, $tpl, $filter;
+function Blocks_blk_mng() {
+    global $blocks, $tpl, $filter, $LNG;
 
     $content = '';
     $selected_page = $filter->post_AlphaNum('block_page', 255, 1);
@@ -60,16 +60,33 @@ function Blocks_blk_config() {
     $page_data['sections'] = '';
     $page_data['reg_blocks'] = '';
 
-    !empty($selected_blockname) ? $block_config_data = $blocks->blockConfig($selected_blockname) : null;
+    //Edit Block
+    if (isset($_POST['btnEditBlock'])) {
+        Blocks_showEditBlock();
+    }
+    //Submit Edit Block
+    if (isset($_POST['btnSubmitEditBlock'])) { //Click Submit edit
+        $block_config_data = $blocks->blockConfig($selected_blockname);
+        Blocks_updateBlock();
+    }
 
+    //Delete New Block
+    (isset($_POST['btnDelBlock'])) ? Blocks_delBlock() : null;
+
+    //Display config new block
+    if (!empty($selected_blockname) && !isset($_POST['btnEditBlock']) && !isset($_POST['btnDelBlock'])) {
+        $block_config_data = $blocks->blockConfig($selected_blockname);
+        $block_config_data['content'] .= '<br/><input type="submit" name="btnNewBlock" value="' . $LNG['L_CREATE'] . '"/>';
+    }
+
+    //Add New block
     if (isset($_POST['btnNewBlock']) && !empty($block_config_data['config'])) {
         $block_added = Blocks_addBlock($block_config_data['config']);
     } else {
         $block_added = false;
     }
 
-    (isset($_POST['btnDelBlock'])) ? Blocks_delBlock() : null;
-
+    //Display Create New Block
     $pages = $blocks->getPages();
 
     (empty($selected_page) || $selected_page == false) ? $selected = 1 : $selected = 0;
@@ -96,7 +113,7 @@ function Blocks_blk_config() {
 
     $reg_blocks = $blocks->getRegisteredBlocks();
 
-    $page_data['reg_blocks'] .= '<option value="None">None</option>';
+    $page_data['reg_blocks'] .= '<option value="">None</option>';
     $page_data['block_desc'] = '';
 
     foreach ($reg_blocks as $reg_block) {
@@ -126,6 +143,7 @@ function Blocks_blk_config() {
         $page_data['blocks_notempty'] = 1;
     }
 
+    // DISPLAY CREATE BLOCK AND ACTUAL BLOCKS
     foreach ($admin_blocks as $admin_block) {
         $page_data['TPL_CTRL'] = $counter;
         $counter == $num_items ? $page_data['TPL_FOOT'] = 1 : $page_data['TPL_FOOT'] = 0;
@@ -139,7 +157,22 @@ function Blocks_blk_config() {
         $content .= $tpl->getTplFile('Blocks', 'admin_blocks', $page_data);
         $counter++;
     }
+
     return $content;
+}
+
+function Blocks_showEditBlock() {
+    global $filter, $blocks, $LNG;
+
+    $editblock_id = $filter->post_int('block_id');
+
+    if (empty($editblock_id)) {
+        return;
+    }
+    $blk_cfg_data = $blocks->blockEditConfig($editblock_id);
+
+    $blk_cfg_data['content'] .= '<input type="hidden" name="block_id" value="' . $editblock_id . '"/>';
+    $blk_cfg_data['content'] .= '<br/><input type="submit" name="btnSubmitEditBlock" value="' . $LNG['L_SEND'] . '"/>';
 }
 
 function Blocks_delBlock() {
@@ -186,5 +219,17 @@ function Blocks_addBlock($config_array) {
 
     $ret = $db->insert('blocks', $insert_ary);
 
+    return $ret ? true : false;
+}
+
+function Blocks_updateBlock() {
+    global $filter, $db;
+    $editblock_id = $filter->post_int('block_id');
+    $block_conf = $filter->post_array('block_conf', 60000, 1);
+    $upd_ary = [
+        'blockconf' => serialize($block_conf)
+    ];
+
+    $ret = $db->update('blocks', $upd_ary, ['blocks_id' => $editblock_id]);
     return $ret ? true : false;
 }
