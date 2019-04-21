@@ -213,7 +213,7 @@ function Blocks_addBlock($config_array) {
         'admin_block' => $admin_block,
         'blockname' => $blockname,
         'plugin' => 'Blocks',
-        'blockconf' => serialize($config_array),
+        'blockconf' => $db->escape(serialize($config_array)),
         'weight' => $block_weight,
         'canUserDisable' => $canUserDisable
     ];
@@ -228,7 +228,7 @@ function Blocks_updateBlock() {
     $editblock_id = $filter->post_int('block_id');
     $block_conf = $filter->post_array('block_conf', 60000, 1);
     $upd_ary = [
-        'blockconf' => serialize($block_conf)
+        'blockconf' => $db->escape(serialize($block_conf))
     ];
 
     $ret = $db->update('blocks', $upd_ary, ['blocks_id' => $editblock_id]);
