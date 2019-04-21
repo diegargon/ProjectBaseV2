@@ -105,6 +105,8 @@ h1,h2,h3,h4,h5,h6{
     overflow:hidden;
     color: #870505;
     border: 1px solid #000;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
 }
 #header-menu ul{
     margin:0;
