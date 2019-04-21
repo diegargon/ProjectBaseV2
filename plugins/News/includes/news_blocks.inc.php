@@ -58,31 +58,75 @@ function news_block_conf($blocks_data = null) {
     $tpl->getCssFile('News');
     $tpl->getCssFile('News', 'News-mobile');
 
-    $block_conf = $filter->post_array('block_conf', 255, 1);
-    $block_conf['admin_block'] = 0;
-
-    $content['config'] = $block_conf;
-    $form_data['categories_select'] = news_getCatsSelect(null, 'block_conf[news_cat]');
-
-    if (defined('MULTILANG')) {
-        global $ml;
-        $langs = $ml->get_site_langs();
-        if (count($langs) > 0) {
-            $form_data['lang_select'] = '<select name="block_conf[news_lang]" id="news_lang">';
-            foreach ($langs as $lang) {
-                $form_data['lang_select'] .= "<option value='{$lang['lang_id']}'>{$lang['lang_name']}</option>";
-            }
-            $form_data['lang_select'] .= '</select>';
+    if (!empty($blocks_data)) {
+        $block_conf = $blocks_data['blockconf'];
+        $content['config'] = $block_conf;
+        $_blockconf = unserialize($block_conf);
+        $news_data['category'] = $_blockconf['news_cat'];
+        $form_data['block_title'] = $_blockconf['block_title'];
+        $_blockconf['featured'] == 'on' ? $form_data['featured_chk'] = 1 : null;
+        $_blockconf['frontpage'] == 'on' ? $form_data['frontpage_chk'] = 1 : null;
+        $_blockconf['childs'] == 'on' ? $form_data['childs_chk'] = 1 : null;
+        if ($_blockconf['news_type'] = 'lead') {
+            $form_data['lead_sel'] = 1;
+        } else if ($_blockconf['news_type'] = 'head') {
+            $form_data['head_sel'] = 1;
+        } else if ($_blockconf['news_type'] = 'full') {
+            $form_data['full_sel'] = 1;
         }
+
+        $form_data['categories_select'] = news_getCatsSelect($news_data, 'block_conf[news_cat]');
+
+        if (defined('MULTILANG')) {
+            global $ml;
+            $langs = $ml->get_site_langs();
+            if (count($langs) > 0) {
+                $form_data['lang_select'] = '<select name="block_conf[news_lang]" id="news_lang">';
+                foreach ($langs as $lang) {
+                    if ($lang['lang_id'] == $_blockconf['news_lang']) {
+                        $form_data['lang_select'] .= "<option selected value='{$lang['lang_id']}'>{$lang['lang_name']}</option>";
+                    } else {
+                        $form_data['lang_select'] .= "<option value='{$lang['lang_id']}'>{$lang['lang_name']}</option>";
+                    }
+                }
+                $form_data['lang_select'] .= '</select>';
+            }
+        }
+        $form_data['limits'] = '';
+        for ($i = 1; $i <= $cfg['news_dflt_getnews_limit']; $i++) {
+            if ($_blockconf['limits'] == $i) {
+                $form_data['limits'] .= '<option selected value="' . $i . '">' . $i . '</option>';
+            } else {
+                $form_data['limits'] .= '<option value="' . $i . '">' . $i . '</option>';
+            }
+        }
+        $content['content'] = $tpl->getTplFile('News', 'news_block_conf', $form_data);
+        $content['config'] = $block_conf;
+    } else {
+        $block_conf = $filter->post_array('block_conf', 255, 1);
+        $block_conf['admin_block'] = 0;
+
+        $form_data['categories_select'] = news_getCatsSelect(null, 'block_conf[news_cat]');
+
+        if (defined('MULTILANG')) {
+            global $ml;
+            $langs = $ml->get_site_langs();
+            if (count($langs) > 0) {
+                $form_data['lang_select'] = '<select name="block_conf[news_lang]" id="news_lang">';
+                foreach ($langs as $lang) {
+                    $form_data['lang_select'] .= "<option value='{$lang['lang_id']}'>{$lang['lang_name']}</option>";
+                }
+                $form_data['lang_select'] .= '</select>';
+            }
+        }
+        $form_data['limits'] = '';
+        for ($i = 1; $i <= $cfg['news_dflt_getnews_limit']; $i++) {
+            $form_data['limits'] .= '<option value="' . $i . '">' . $i . '</option>';
+        }
+
+        $content['content'] = $tpl->getTplFile('News', 'news_block_conf', $form_data);
+
+        $content['config'] = $block_conf;
     }
-    $form_data['limits'] = '';
-    for ($i = 1; $i <= $cfg['news_dflt_getnews_limit']; $i++) {
-        $form_data['limits'] .= '<option value="' . $i . '">' . $i . '</option>';
-    }
-
-    $content['content'] = $tpl->getTplFile('News', 'news_block_conf', $form_data);
-
-    $content['config'] = $block_conf;
-
     return $content;
 }
