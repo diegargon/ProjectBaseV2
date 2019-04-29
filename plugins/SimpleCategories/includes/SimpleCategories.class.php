@@ -72,6 +72,15 @@ class Categories {
         return false;
     }
 
+    function getCatURLByID($catid) {
+        foreach ($this->categories as $category) {
+            if ($category['cid'] == $catid) {
+                return $category['image'];
+            }
+        }
+        return false;
+    }
+
     function getCatChildsId($plugin, $cats, $separator = ',') {
         $cat_ids = '';
 

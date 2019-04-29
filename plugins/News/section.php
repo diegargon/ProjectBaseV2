@@ -78,6 +78,9 @@ foreach ($cats as $cat) {
 
         if ($CATHEAD) {
             $section[$num_section] .= '<h2 class="section_head">' . $ctgs->getCatNameByID($cat) . '</h2>';
+            if ($cfg['news_section_img'] && !empty($ctgs->getCatURLByID($cat))) {
+                $section[$num_section] .= '<div class="news_section_img"><img src="' . $ctgs->getCatURLByID($cat) . '" width="' . $cfg['news_section_img_width'] . '"></div>';
+            }
             $CATHEAD = 0;
         }
         $section[$num_section] .= $cat_news_row['html'];

@@ -565,3 +565,7 @@
     padding-left: 4px;
     border-top: 2px solid #1f6ba5;   
 }
+
+.news_section_img {
+    float:left;
+}
