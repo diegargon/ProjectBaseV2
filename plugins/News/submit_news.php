@@ -15,6 +15,9 @@ if (!$news_perms['news_submit_new']) {
     return false;
 }
 
+if ($plugins->check_enabled('Multilang')) {
+    $plugins->express_start('Multilang');
+}
 if (!empty($_POST['submitForm'])) {
     news_submit_new_process();
 } else {

@@ -85,9 +85,13 @@ function news_form_newlang_process() {
 function news_newlang_submit($news_data) {
     global $cfg, $db, $ml, $LNG;
 
-    defined('MULTILANG') ? $news_lang_id = $ml->get_web_lang_id() : $news_lang_id = 1;
+    if (!defined('MULTILANG')) {
+        die('[{"status": "10", "msg": "' . $LNG['L_NEWS_NOMULTILANG_SUPPORT'] . '"}]');
+    } else {
+        $new_lang_id = $ml->iso_to_id($news_data['news_lang']);
+    }
 
-    $query = $db->select_all("news", ["nid" => "{$news_data['nid']}", "lang_id" => "$news_lang_id", "page" => "{$news_data['page']}"]);
+    $query = $db->select_all("news", ["nid" => "{$news_data['nid']}", "lang_id" => "$new_lang_id", "page" => "{$news_data['page']}"]);
     if ($db->num_rows($query) > 0) { //already exist
         die('[{"status": "10", "msg": "' . $LNG['L_NEWS_ALREADY_EXIST'] . '"}]');
     }
@@ -101,7 +105,7 @@ function news_newlang_submit($news_data) {
 
     $insert_ary = [
         "nid" => $news_data['nid'],
-        "lang_id" => $news_lang_id,
+        "lang_id" => $new_lang_id,
         "page" => $news_data['page'],
         "translator_id" => $news_data['news_translator_id'],
         "title" => $db->escape_strip($news_data['title']),
@@ -109,7 +113,7 @@ function news_newlang_submit($news_data) {
         "text" => $db->escape_strip($news_data['editor_text']),
         "author_id" => $orig_news['author_id'],
         "category" => $orig_news['category'],
-        "lang" => $news_data['news_lang'],
+        "lang_id" => $new_lang_id,
         "moderation" => $moderation
     ];
     $db->insert("news", $insert_ary);
@@ -118,7 +122,7 @@ function news_newlang_submit($news_data) {
 }
 
 function news_newlang_form_process() {
-    global $LNG, $cfg, $sm;
+    global $LNG, $cfg;
 
     $news_data = news_form_getPost();
 

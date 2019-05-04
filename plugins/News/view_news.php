@@ -19,6 +19,10 @@ if ($plugins->check_enabled('NewsComments')) {
     $plugins->express_start('NewsComments');
 }
 
+if ($plugins->check_enabled('Multilang')) {
+    $plugins->express_start('Multilang');
+}
+
 $tpl->getCssFile("News");
 $tpl->getCssFile("News", "News-mobile");
 

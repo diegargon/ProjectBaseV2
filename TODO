@@ -13,6 +13,9 @@ que necesitan la tabla permissions
  - Solucion 3, en la instalacion presentar opcion para activar el ACL y activarlo antes (problema:probablemente necesitara tambien la S1 si se quiere poder activar despues),
    (problema: ACL tambien necesita groups)
 
+* Añadir soporte multilang en Blocks, al contrario que news que puedes tener interface y noticias a elegir entre idiomas o todos en bloques deberia ser solo el lenguaje del 
+interface.
+
 LOW
 
 

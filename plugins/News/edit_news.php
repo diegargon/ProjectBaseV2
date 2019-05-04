@@ -30,6 +30,10 @@ if (empty($news_nid) || empty($news_lang_id) || empty($news_page)) {
 require_once ('includes/news_common.php');
 require_once ('includes/news_form_common.php');
 
+if ($plugins->check_enabled('Multilang')) {
+    $plugins->express_start('Multilang');
+}
+
 if (!isset($_POST['submitForm'])) {
 
     if (!$plugins->express_start_provider('CATS')) {
