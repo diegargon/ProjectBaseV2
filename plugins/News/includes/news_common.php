@@ -72,7 +72,7 @@ function news_get_main_image($news) {
     $match = false;
     preg_match($match_regex, $news_body, $match);
 
-    return !empty($match[0]) ? $match[0] : false;
+    return !empty($match[0]) ? $match[2] : false;
 }
 
 function news_extract_bycat($news, $cat) {
