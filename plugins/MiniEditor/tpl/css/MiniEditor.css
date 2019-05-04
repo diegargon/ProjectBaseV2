@@ -6,3 +6,31 @@
     width: 99%;
     height: 200px;
 }
+.pre_term {
+    color: #fff;
+    background-color: #000;
+    padding: 4px;
+    border: 1px solid gray;
+    box-shadow: 0 0 4px 2px #000;
+    border-radius: 5px;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    text-align: justify;    
+}
+
+blockquote {
+    display: block;
+    background: #fff;
+    padding: 15px 20px 15px 45px;
+    margin: 0 0 20px;
+    position: relative;
+    font-family: Georgia, serif;
+    font-size: 12px;
+    line-height: 1.2;
+    color: #666;
+    text-align: justify;
+    border-left: 15px solid #c76c0c;
+    border-right: 2px solid #c76c0c;
+    box-shadow: 2px 2px 15px #ccc;
+    width: 75%;
+}
