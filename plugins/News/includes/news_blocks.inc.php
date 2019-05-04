@@ -6,7 +6,7 @@
 !defined('IN_WEB') ? exit : true;
 
 function news_block($block_conf) {
-    global $tpl, $plugins, $cfg, $frontend;
+    global $tpl, $plugins, $frontend;
 
     require_once (__DIR__ . '/news_common.php');
 
@@ -64,14 +64,14 @@ function news_block_conf($blocks_data = null) {
         $_blockconf = unserialize($block_conf);
         $news_data['category'] = $_blockconf['news_cat'];
         $form_data['block_title'] = $_blockconf['block_title'];
-        $_blockconf['featured'] == 'on' ? $form_data['featured_chk'] = 1 : null;
-        $_blockconf['frontpage'] == 'on' ? $form_data['frontpage_chk'] = 1 : null;
-        $_blockconf['childs'] == 'on' ? $form_data['childs_chk'] = 1 : null;
-        if ($_blockconf['news_type'] = 'lead') {
+        !empty($_blockconf['featured']) && $_blockconf['featured'] == 'on' ? $form_data['featured_chk'] = 1 : null;
+        !empty($_blockconf['frontpage']) && $_blockconf['frontpage'] == 'on' ? $form_data['frontpage_chk'] = 1 : null;
+        !empty($_blockconf['childs']) && $_blockconf['childs'] == 'on' ? $form_data['childs_chk'] = 1 : null;
+        if ($_blockconf['news_type'] == 'lead') {
             $form_data['lead_sel'] = 1;
-        } else if ($_blockconf['news_type'] = 'head') {
+        } else if ($_blockconf['news_type'] == 'head') {
             $form_data['head_sel'] = 1;
-        } else if ($_blockconf['news_type'] = 'full') {
+        } else if ($_blockconf['news_type'] == 'full') {
             $form_data['full_sel'] = 1;
         }
 
