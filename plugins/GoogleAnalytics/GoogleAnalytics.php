@@ -8,6 +8,7 @@
 function GoogleAnalytics_init() {
     global $tpl;
 
+    $tpl->setPrefetchURL('https://www.google-analytics.com');
     $tpl->addtoTplVar("SCRIPTS_BOTTOM", $tpl->getTplFile("GoogleAnalytics"));
 }
 

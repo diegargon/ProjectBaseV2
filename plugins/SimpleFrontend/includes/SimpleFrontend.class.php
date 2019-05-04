@@ -104,13 +104,13 @@ class SimpleFrontend {
             $page_data = $blocks->getBlocksContent('index', $cfg['index_sections']);
             $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile($cfg['index_plugin_layout'], $cfg['index_layout'] . '_layout', $page_data));
         }
-        
     }
 
     function sendPage() {
         global $tpl;
 
-        // BEGIN HEAD        
+        // BEGIN HEAD
+        $tpl->addPrefetch();
         $tpl->cssCache();
 
         $web_head = $tpl->getTplFile('SimpleFrontend', 'head');

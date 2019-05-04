@@ -22,6 +22,7 @@ class TPL {
     private $css_cache_filepaths;
     public $css_cache_onefile;
     private $scripts = [];
+    private $dns_prefetch = [];
     private $std_remote_scripts = [//TODO LOAD LIST
         'jquery' => 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js',
         'font-awesome' => 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
@@ -135,6 +136,8 @@ class TPL {
                     $this->addtoTplVar("SCRIPTS_" . $place . "", $script);
                     $this->scripts[] = $filename;
                     $backtrace = debug_backtrace();
+                    $url = parse_url($script_url);
+                    $this->setPrefetchURL($url['scheme'] . '://' . $url['host']);
                     $this->debug ? $this->debug->log("AddcriptFile:CheckScript setting first time * $filename * by " . $backtrace[1]['function'], 'tplBasic', 'DEBUG') : null;
                 } else {
                     $backtrace = debug_backtrace();
@@ -197,9 +200,9 @@ class TPL {
         } else {
             if ($this->css_inline == 0) {
                 if (file_exists($USER_PATH)) {
-                    $css = "<link rel='stylesheet' href='/$USER_PATH'>\n";
+                    $css = '<link rel="stylesheet" href="/' . $USER_PATH . ' ">' . "\n";
                 } else if (file_exists($DEFAULT_PATH)) {
-                    $css = "<link rel='stylesheet' href='/$DEFAULT_PATH'>\n";
+                    $css = '<link rel="stylesheet" href="/' . $DEFAULT_PATH . ' ">' . "\n";
                 }
             } else {
                 if (file_exists($USER_PATH)) {
@@ -299,6 +302,16 @@ class TPL {
             $content = preg_replace('/(\>)\s+(\<)/S', '$1$2', $content); //spaces between > <            
         }
         return $content;
+    }
+
+    public function addPrefetch() {
+        foreach ($this->dns_prefetch as $dns_prefetch) {
+            $this->addtoTplVar('LINK', '<link rel="dns-prefetch" href="' . $dns_prefetch . '">' . "\n");
+        }
+    }
+
+    public function setPrefetchURL($value) {
+        $this->dns_prefetch[] = $value;
     }
 
 }
