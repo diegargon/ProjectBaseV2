@@ -35,6 +35,10 @@ function News_init() {
         register_action('section_nav_element', 'news_section_nav_elements');
         register_action('section_nav_subelement', 'news_section_nav_subelements');
     }
+    if (defined('MULTILANG')) {
+        register_action('SMBasic_ProfileEdit', 'news_dropdown_profile_edit');
+        register_action('SMBasic_ProfileChange', 'news_dropdown_profile_change');
+    }
 }
 
 function News_install() {

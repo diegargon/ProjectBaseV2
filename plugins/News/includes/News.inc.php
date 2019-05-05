@@ -77,3 +77,32 @@ function news_section_nav_subelements() {
     }
     return $submenu_data;
 }
+
+function news_dropdown_profile_edit(& $form_data) {
+    global $LNG, $ml, $sm;
+
+    $user = $sm->getSessionUser();
+    $form_data['dropdown_fields'] = '<dl><dt><label>' . $LNG['L_NEWS_SHOW_LANG'] . '</label></dt><dd>';
+    $user_langs = unserialize($user['news_lang']);
+    $langs = $ml->get_site_langs();
+
+    $checked = '';
+    foreach ($langs as $lang) {
+        if (!empty($user_langs) && in_array($lang['lang_id'], $user_langs)) {
+            $checked = 'checked';
+        }
+        $form_data['dropdown_fields'] .= '<label>' . $lang['lang_name'] . '</label>'
+                . '<input type="checkbox"  ' . $checked . ' name="langs[]" value="' . $lang['lang_id'] . '" />';
+        $checked = '';
+    }
+    $form_data['dropdown_fields'] .= '</dd></dl>';
+}
+
+function news_dropdown_profile_change(& $q_data) {
+    $sanity_fail = 0;
+    $langs = $_POST['langs'];
+    foreach ($langs as $lang) {
+        !is_numeric($lang) ? $sanity_fail = 1 : null;
+    }
+    !$sanity_fail ? $q_data['news_lang'] = serialize($langs) : null;
+}

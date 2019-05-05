@@ -36,7 +36,7 @@ $news_database_install[] = "
         ";
 
 $news_database_install[] = "
-    ALTER TABLE `" . DB_PREFIX . "users` ADD `news_lang` INT(10) DEFAULT NULL;
+    ALTER TABLE `" . DB_PREFIX . "users` ADD `news_lang` varchar(255) DEFAULT NULL;
 ";
 
 /* EXAMPLE NEWS */

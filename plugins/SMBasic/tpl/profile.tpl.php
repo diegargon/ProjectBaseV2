@@ -42,7 +42,7 @@
                 </dl>
                 <dl>
                     <dt><label>Avatar</label></dt>
-                    <dd>
+                    <dd>                                     
                         <input class="avatar_field" name="avatar" type="text"  value="<?= $data['avatar'] ?>" title="" autocomplete="off" maxlength="<?= $cfg['smbasic_max_avatar'] ?>" minlength="<?= $cfg['smbasic_min_avatar'] ?>"  />
                     </dd>
                 </dl>
@@ -88,8 +88,12 @@
                         <input required type="password" name="cur_password" id="cur_password" title="<?= $LNG['L_CUR_PASSWORD_H'] ?>" autocomplete="off"  maxlength="<?= $cfg['smbasic_max_password'] ?>" minlength="<?= $cfg['smbasic_min_password'] ?>"/>
                     </dd>
                 </dl>
+                <a href="#" class="dropdown" onclick="dropdown('profile_dropdown'); return false">+</a>
+                <?= !empty($tpldata['SMB_PROFILE_FIELDS_BOTTOM']) ? $tpldata['SMB_PROFILE_FIELDS_BOTTOM'] : false; ?>           
+                <div id="profile_dropdown" style="display:none">                
+                    <?= !empty($data['dropdown_fields']) ? $data['dropdown_fields'] : null ?>                
+                </div>
             </div>
-            <?= !empty($tpldata['SMB_PROFILE_FIELDS_BOTTOM']) ? $tpldata['SMB_PROFILE_FIELDS_BOTTOM'] : false; ?>
             <p class="inputBtnSend"><input type="submit" id="profile" name="profile" value="<?= $LNG['L_SEND'] ?>" class=""  /></p>                                    
         </form>
     </div>

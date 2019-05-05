@@ -25,18 +25,18 @@ function SMBasic_ProfileView() {
 function SMBasic_ProfileEdit($user) {
     global $cfg, $tpl;
 
-
     $tpl->getCssFile("SMBasic");
     $tpl->getCssFile("SMBasic", "SMBasic-mobile");
     $tpl->addScriptFile("standard", "jquery", "BOTTOM");
     $tpl->addScriptFile("SMBasic", "profile", "BOTTOM");
+    $tpl->addScriptFile("SMBasic", "dropdown", "BOTTOM");
 
     $form_data = [
         "username" => $user['username'],
         "email" => $user['email'],
     ];
-    (empty($user['avatar'])) ? $form_data['avatar'] = $cfg['STATIC_SRV_URL'] . $cfg['smbasic_default_img_avatar'] : $user['avatar'];
-
+    (empty($user['avatar'])) ? $form_data['avatar'] = $cfg['STATIC_SRV_URL'] . $cfg['smbasic_default_img_avatar'] : $form_data['avatar'] = $user['avatar'];
+    do_action("SMBasic_ProfileEdit", $form_data);
     $tpl->addtoTplVar("ADD_TO_BODY", $tpl->getTplFile("SMBasic", "profile", $form_data));
 }
 

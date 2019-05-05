@@ -34,13 +34,15 @@ $cfg['PAGE_DESC'] = $cfg['WEB_NAME'] . ': ' . $category_list;
 $q_opt = ['lead' => 1, 'childs' => 1, 'limit' => $cfg['news_section_getnews_limit'], 'main_image' => 1];
 $q_where = ['category' => $category_id];
 
-/*
- * 0 or empty mean he select ALL, not set (NULL) mean he not configure, show web lang by default
- */
-
 $user = $sm->getSessionUser();
 if (!empty($user['news_lang'])) {
-    $q_where['lang_id'] = $user['news_lang'];
+    $news_langs = unserialize($user['news_lang']);
+    $w_langs_ids = '';
+    foreach ($news_langs as $langs) {
+        !empty($w_langs_ids) ? $w_langs_ids .= ',' : null;
+        $w_langs_ids .= $langs;
+    }
+    $q_where['lang_id'] = ['value' => "({$w_langs_ids})", 'operator' => 'IN'];
 } else if (!isset($user['news_lang'])) {
     defined('MULTILANG') ? $lang_id = $ml->get_web_lang_id() : $lang_id = 1;
 }

@@ -92,3 +92,4 @@ $LNG['L_NEWS_SEC_EMPTY'] = 'Seccion vacia';
 $LNG['L_NEWS_SEC_EMPTY_TITLE'] = 'Oops';
 $LNG['L_NEWS_DELETE_PAGE'] = "Delete page";
 $LNG['L_NEWS_NOMULTILANG_SUPPORT'] = "No multilang support";
+$LNG['L_NEWS_SHOW_LANG'] = "Show news in";

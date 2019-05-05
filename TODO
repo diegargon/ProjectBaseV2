@@ -27,8 +27,6 @@ para luego presentarlos por grupos, ej: L_NEWS_SUBMIT, L_NEWS_VIEW
 
 * NewsComments: Añadir opcion en la admin bar para desabilitar comentarios de determinada noticia, accesible a admins y si $cfg lo permitiera a usuarios.
 
-* News/SMasic : Añadir por medio de News opcion en profile para cambiar el news lang
-
 * CRON?: CRON Plugin y calcular opcionalmente ratio de user global "todas las section"
 
 * SMBasic?: Añadir opcion para que el usuario decida el formato de fecha
@@ -36,6 +34,4 @@ para luego presentarlos por grupos, ej: L_NEWS_SUBMIT, L_NEWS_VIEW
 * News: Si una noticia esta traducida mostrar opcion para que el usuario pueda cambiar de lenguaje
 
 * FRONTEND? : Mostrar fecha y hora actual
-
-* X: Investigar rel="preload" y donde lo podemos añadir.
 
