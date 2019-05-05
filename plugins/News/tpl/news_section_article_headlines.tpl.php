@@ -4,11 +4,11 @@
  */
 !defined('IN_WEB') ? exit : true;
 ?>
-<div class="news_article_container">
+<div class="news_article_section_container">
     <a href="<?= $data['url'] ?>">
-        <article class="newsbox <?= $data['featured'] ? 'featured' : null ?>">
+        <article class="section_newsbox <?= $data['featured'] ? 'featured' : null ?>">
             <p class='p-small'><?= $data['date'] ?></p>
-            <h3><?= $data['title'] ?></h3>
+            <h4><?= $data['title'] ?></h4>
         </article>
     </a>
 </div>

@@ -64,13 +64,7 @@ foreach ($lnews as $lnews_row) {
 }
 $cats = array_unique($cats);
 
-$TPL_CTRL = 1;
-$TPL_FOOT = 0;
-
-$per_section = $num_news / $cfg['news_section_sections'];
-$num_section = 1;
-$section = [];
-$news_counter = 1;
+$news_data['news'] = '';
 
 foreach ($cats as $cat) {
     $cat_news = news_extract_bycat($lnews, $cat);
@@ -78,28 +72,18 @@ foreach ($cats as $cat) {
 
     foreach ($cat_news as $cat_news_row) {
 
-        !isset($section[$num_section]) ? $section[$num_section] = '' : false;
-
         if ($CATHEAD) {
-            $section[$num_section] .= '<h2 class="section_head">' . $ctgs->getCatNameByID($cat) . '</h2>';
+            $news_data['news'] .= '<div class="news_category_container"><h2 class="section_head">' . $ctgs->getCatNameByID($cat) . '</h2>';
             if ($cfg['news_section_img'] && !empty($ctgs->getCatURLByID($cat))) {
-                $section[$num_section] .= '<div class="news_section_img"><img src="' . $ctgs->getCatURLByID($cat) . '" width="' . $cfg['news_section_img_width'] . '"></div>';
+                $news_data['news'] .= '<div class="news_section_img"><img src="' . $ctgs->getCatURLByID($cat) . '" width="' . $cfg['news_section_img_width'] . '"></div>';
             }
             $CATHEAD = 0;
         }
-        $section[$num_section] .= $cat_news_row['html'];
-        $news_counter++;
+        $news_data['news'] .= $cat_news_row['html'];
     }
-    $num_section++;
+    $news_data['news'] .= '</div>';
 }
 
-$section_data = [];
-for ($i = 1; $i <= $cfg['news_section_sections']; $i++) {
-    if (!empty($section[$i])) {
-        $section_data['section_' . $i] = $section[$i];
-    }
-}
-$section_data['NUM_SECTIONS'] = $cfg['news_section_sections'];
-$content .= $tpl->getTplFile('News', 'news_section', $section_data);
+$content .= $tpl->getTplFile('News', 'news_section', $news_data);
 
 $tpl->addtoTplVar('ADD_TO_BODY', $content);
