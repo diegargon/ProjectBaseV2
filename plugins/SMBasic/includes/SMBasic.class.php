@@ -227,7 +227,7 @@ class SessionManager {
         $db->update('sessions', ['session_data' => $data, 'session_expire' => $next_expire], ['uid' => $this->user['uid']], 'LIMIT 1');
     }
 
-    private function loadData() {
+    private function loadSessionData() {
         global $db;
         $query = $db->select_all('sessions', ['uid' => $this->user['uid']], 'LIMIT 1');
         $session = $db->fetch($query);
@@ -391,7 +391,7 @@ class SessionManager {
             $this->session_type = 1;
         } else { //Custom
             $this->session_type = 2;
-            $this->loadData();
+            $this->loadSessionData();
         }
         if ($cfg['smbasic_session_start'] || $cfg['smbasic_default_session']) {
             $this->session_start = 1;
