@@ -108,6 +108,24 @@ class TPL {
         return $tpl_file_content;
     }
 
+    function checkTplFileExists($plugin, $filename) {
+        if (empty($filename)) {
+            return false;
+        }
+
+        $USER_PATH_LANG = "tpl/{$this->theme}/$filename.{$this->lang}.tpl.php";
+        $USER_PATH = "tpl/{$this->theme}/$filename.tpl.php";
+        $DEFAULT_PATH = "plugins/$plugin/tpl/$filename.tpl.php";
+        if (file_exists($USER_PATH_LANG)) {
+            return true;
+        } else if (file_exists($USER_PATH)) {
+            return true;
+        } else if (file_exists($DEFAULT_PATH)) {
+            return true;
+        }
+        return false;
+    }
+
     function addStdScript($key, $url) {
         if (array_key_exists($key, $this->std_remote_scripts)) {
             return 0;

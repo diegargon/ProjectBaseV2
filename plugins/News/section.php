@@ -51,9 +51,11 @@ $news_db = get_news_query($q_where, $q_opt);
 if (($num_news = count($news_db)) < 1) {
     return $frontend->messageBox(['title' => 'L_NEWS_SEC_EMPTY_TITLE', 'msg' => 'L_NEWS_SEC_EMPTY']);
 }
-
-$lnews = layout_news('news_section_article', $news_db);
-
+if ($tpl->checkTplFileExists('News', $cfg['news_section_tpl'] . "-" . $category_id)) {
+    $lnews = layout_news($cfg['news_section_tpl'] . "-" . $category_id, $news_db);
+} else {
+    $lnews = layout_news($cfg['news_section_tpl'], $news_db);
+}
 $content = '';
 $cats = [];
 
