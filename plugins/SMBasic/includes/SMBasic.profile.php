@@ -5,6 +5,23 @@
  */
 !defined('IN_WEB') ? exit : true;
 
+function SMBasic_ProfileView() {
+    global $tpl, $sm, $filter, $frontend;
+
+    $uid = $filter->get_int("viewprofile");
+    if (empty($uid)) {
+        $frontend->messageBox(['msg' => 'L_SM_E_USER_NOT_EXISTS']);
+    }
+    $v_user = $sm->getUserByID($uid);
+    if ($v_user) {
+        $tpl->getCssFile("SMBasic");
+        $tpl->getCssFile("SMBasic", "SMBasic-mobile");
+        $tpl->addtoTplVar("ADD_TO_BODY", $tpl->getTplFile("SMBasic", "viewprofile", $v_user));
+    } else {
+        $frontend->messageBox(['msg' => 'L_SM_E_USER_NOT_EXISTS']);
+    }
+}
+
 function SMBasic_ProfileEdit($user) {
     global $cfg, $tpl;
 
@@ -21,23 +38,6 @@ function SMBasic_ProfileEdit($user) {
     (empty($user['avatar'])) ? $form_data['avatar'] = $cfg['STATIC_SRV_URL'] . $cfg['smbasic_default_img_avatar'] : $user['avatar'];
 
     $tpl->addtoTplVar("ADD_TO_BODY", $tpl->getTplFile("SMBasic", "profile", $form_data));
-}
-
-function SMBasic_ProfileView() {
-    global $tpl, $sm, $filter, $frontend;
-
-    $uid = $filter->get_int("viewprofile");
-    if (empty($uid)) {
-        $frontend->messageBox(['msg' => 'L_SM_E_USER_NOT_EXISTS']);
-    }
-    $v_user = $sm->getUserByID($uid);
-    if ($v_user) {
-        $tpl->getCssFile("SMBasic");
-        $tpl->getCssFile("SMBasic", "SMBasic-mobile");
-        $tpl->addtoTplVar("ADD_TO_BODY", $tpl->getTplFile("SMBasic", "viewprofile", $v_user));
-    } else {
-        $frontend->messageBox(['msg' => 'L_SM_E_USER_NOT_EXISTS']);
-    }
 }
 
 function SMBasic_ProfileChange() {
