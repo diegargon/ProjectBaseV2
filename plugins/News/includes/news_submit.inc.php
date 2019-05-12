@@ -40,7 +40,7 @@ function news_new_form($news_perms) {
     $form_data['news_add_source'] = $news_perms['news_add_source'];
     $form_data['news_add_related'] = $news_perms['news_add_related'];
 
-    if (defined('MULTILANG') && ($site_langs = $ml->deprecated_get_sitelangs_select('news_lang')) != false) {
+    if (defined('MULTILANG') && ($site_langs = $ml->deprecated_getSiteLangsSelect('news_lang')) != false) {
         $form_data['select_langs'] = $site_langs;
     }
 
@@ -64,7 +64,7 @@ function news_create_new($news_data) {
 
     $news_data['nid'] = $db->get_next_num('news', 'nid');
 
-    defined('MULTILANG') ? $lang_id = $ml->iso_to_id($news_data['news_lang']) : $lang_id = 1;
+    defined('MULTILANG') ? $lang_id = $ml->isoToID($news_data['news_lang']) : $lang_id = 1;
 
     empty($news_data['featured']) ? $news_data['featured'] = 0 : null;
 

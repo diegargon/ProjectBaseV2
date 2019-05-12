@@ -7,7 +7,7 @@
 function news_getCatsSelect($news_data = null, $select_name = "news_category") {
     global $cfg, $ctgs, $ml;
 
-    defined('MULTILANG') ? $lang_id = $ml->get_web_lang_id() : $lang_id = 1;
+    defined('MULTILANG') ? $lang_id = $ml->getWebLangID() : $lang_id = 1;
 
     $select = "<select name='{$select_name}' id='news_category'>";
     $fathers = [];
@@ -103,7 +103,7 @@ function news_form_getPost() {
 function news_get_available_langs($news_data) {
     global $cfg, $ml, $db;
 
-    $site_langs = $ml->get_site_langs();
+    $site_langs = $ml->getSiteLangs();
     if (empty($site_langs)) {
         return false;
     }
@@ -130,7 +130,7 @@ function news_get_missed_langs($nid, $page) {
 
     $nolang = 1;
 
-    $site_langs = $ml->get_site_langs();
+    $site_langs = $ml->getSiteLangs();
     if (empty($site_langs)) {
         return false;
     }
@@ -221,7 +221,7 @@ function news_form_news_update($news_data) {
     empty($news_data['featured']) ? $news_data['featured'] = 0 : false;
     //!isset($news_data['news_translator']) ? $news_data['news_translator'] = "" : false;
 
-    defined('MULTILANG') ? $news_lang_id = $ml->get_web_lang_id() : $news_lang_id = 1;
+    defined('MULTILANG') ? $news_lang_id = $ml->getWebLangID() : $news_lang_id = 1;
 
     $set_ary = [
         "title" => $db->escape_strip($news_data['title']),

@@ -112,7 +112,7 @@ class Categories {
         }
         $cat_data = [];
 
-        defined('MULTILANG') ? $lang_id = $ml->get_web_lang_id() : $lang_id = 1;
+        defined('MULTILANG') ? $lang_id = $ml->getWebLangID() : $lang_id = 1;
 
         foreach ($this->categories as $category) {
             if (($category['plugin'] == $plugin && $category['father'] == 0) &&
@@ -134,7 +134,7 @@ class Categories {
             return false;
         }
 
-        defined('MULTILANG') ? $lang_id = $ml->get_web_lang_id() : $lang_id = 1;
+        defined('MULTILANG') ? $lang_id = $ml->getWebLangID() : $lang_id = 1;
 
         foreach ($this->categories as $category) {
             if ($category['plugin'] == $plugin && $category['father'] == $cat_id &&
@@ -211,7 +211,7 @@ class Categories {
             return $this->categories;
         }
 
-        defined('MULTILANG') ? $lang_id = $ml->get_web_lang_id() : $lang_id = 1;
+        defined('MULTILANG') ? $lang_id = $ml->getWebLangID() : $lang_id = 1;
 
         foreach ($this->categories as $category) {
             if (($category['plugin'] == $plugin_name) &&

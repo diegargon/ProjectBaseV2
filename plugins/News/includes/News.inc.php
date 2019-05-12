@@ -84,7 +84,7 @@ function news_dropdown_profile_edit(& $form_data) {
     $user = $sm->getSessionUser();
     $form_data['dropdown_fields'] = '<dl><dt><label>' . $LNG['L_NEWS_SHOW_LANG'] . '</label></dt><dd>';
     $user_langs = unserialize($user['news_lang']);
-    $langs = $ml->get_site_langs();
+    $langs = $ml->getSiteLangs();
 
     $checked = '';
     foreach ($langs as $lang) {

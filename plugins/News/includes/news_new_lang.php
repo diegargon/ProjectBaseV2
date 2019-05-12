@@ -88,7 +88,7 @@ function news_newlang_submit($news_data) {
     if (!defined('MULTILANG')) {
         die('[{"status": "10", "msg": "' . $LNG['L_NEWS_NOMULTILANG_SUPPORT'] . '"}]');
     } else {
-        $new_lang_id = $ml->iso_to_id($news_data['news_lang']);
+        $new_lang_id = $ml->isoToID($news_data['news_lang']);
     }
 
     $query = $db->select_all("news", ["nid" => "{$news_data['nid']}", "lang_id" => "$new_lang_id", "page" => "{$news_data['page']}"]);

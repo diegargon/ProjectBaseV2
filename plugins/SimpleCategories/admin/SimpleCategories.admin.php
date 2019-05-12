@@ -57,7 +57,7 @@ function SimpleCats_AdminCats($plugin = null) {
     $tpl->getCssFile('SimpleCategories');
 
     if (defined('MULTILANG')) {
-        $langs = $ml->get_site_langs();
+        $langs = $ml->getSiteLangs();
     } else {
         $langs['lang_id'] = 1;
         $langs['lang_name'] = $cfg['WEB_LANG'];
@@ -127,7 +127,7 @@ function SimpleCats_ModCategories() {
     global $ml, $db, $filter;
 
     if (defined('MULTILANG')) {
-        $langs = $ml->get_site_langs();
+        $langs = $ml->getSiteLangs();
     } else {
         $langs['lang_id'] = 1;
     }
@@ -162,7 +162,7 @@ function SimpleCats_NewCategory($plugin) {
 
     $new_cid = $db->get_next_num('categories', 'cid');
 
-    (defined('MULTILANG')) ? $langs = $ml->get_site_langs() : $langs['lang_id'] = 1;
+    (defined('MULTILANG')) ? $langs = $ml->getSiteLangs() : $langs['lang_id'] = 1;
 
     !$plugin ? $plugin = "General" : null;
 

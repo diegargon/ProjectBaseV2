@@ -78,7 +78,7 @@ class Blocks {
 
         if (defined('MULTILANG')) {
             global $ml;
-            $langs = '0,' . $ml->get_web_lang_id();
+            $langs = '0,' . $ml->getWebLangID();
             $where_ary['lang'] = ['value' => "({$langs})", 'operator' => 'IN'];
         }
 

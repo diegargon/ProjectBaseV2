@@ -67,7 +67,7 @@ function Multilang_AdminLangs() {
     global $tpl, $ml;
     $content = "";
 
-    $langs = $ml->get_site_langs(0);
+    $langs = $ml->getSiteLangs(0);
     $counter = 1;
     $count = count($langs);
     foreach ($langs as $lang) {

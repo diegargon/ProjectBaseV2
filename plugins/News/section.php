@@ -44,7 +44,7 @@ if (!empty($user['news_lang'])) {
     }
     $q_where['lang_id'] = ['value' => "({$w_langs_ids})", 'operator' => 'IN'];
 } else if (!isset($user['news_lang'])) {
-    defined('MULTILANG') ? $lang_id = $ml->get_web_lang_id() : $lang_id = 1;
+    defined('MULTILANG') ? $lang_id = $ml->getWebLangID() : $lang_id = 1;
 }
 
 $news_db = get_news_query($q_where, $q_opt);

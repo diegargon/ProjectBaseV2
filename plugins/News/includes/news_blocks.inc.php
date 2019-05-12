@@ -79,7 +79,7 @@ function news_block_conf($blocks_data = null) {
 
         if (defined('MULTILANG')) {
             global $ml;
-            $langs = $ml->get_site_langs();
+            $langs = $ml->getSiteLangs();
             if (count($langs) > 0) {
                 $form_data['lang_select'] = '<select name="block_conf[news_lang]" id="news_lang">';
                 foreach ($langs as $lang) {
@@ -110,7 +110,7 @@ function news_block_conf($blocks_data = null) {
 
         if (defined('MULTILANG')) {
             global $ml;
-            $langs = $ml->get_site_langs();
+            $langs = $ml->getSiteLangs();
             if (count($langs) > 0) {
                 $form_data['lang_select'] = '<select name="block_conf[news_lang]" id="news_lang">';
                 foreach ($langs as $lang) {

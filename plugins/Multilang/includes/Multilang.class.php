@@ -16,12 +16,12 @@ class Multilang {
     function __construct() {
         global $cfg;
 
-        $this->retrieve_db_langs();
+        $this->retrieveDbLangs();
         $this->set_to_visit_lang = $cfg['ml_set_to_visit_lang'];
-        register_action("header_menu_element", [$this, "get_nav"], 6);
+        register_action("header_menu_element", [$this, "getLangNav"], 6);
         $this->setLang();
         $this->web_lang = $cfg['WEB_LANG'];
-        $this->web_lang_id = $this->iso_to_id($cfg['WEB_LANG']);
+        $this->web_lang_id = $this->isoToID($cfg['WEB_LANG']);
     }
 
     function setLang() {
@@ -67,22 +67,22 @@ class Multilang {
         return;
     }
 
-    function get_web_lang() {
+    function getWebLang() {
         return $this->web_lang;
     }
 
-    function get_web_lang_id() {
+    function getWebLangID() {
         return $this->web_lang_id;
     }
 
-    function get_nav() {
+    function getLangNav() {
         global $tpl, $cfg;
 
         $content = "";
         $element = 1;
-        $elements = count($this->get_site_langs());
+        $elements = count($this->getSiteLangs());
 
-        foreach ($this->get_site_langs() as $lang) {
+        foreach ($this->getSiteLangs() as $lang) {
             if ($element == 1) {
                 $data['TPL_FIRST'] = 1;
             } else if ($element == $elements) {
@@ -109,7 +109,7 @@ class Multilang {
     }
 
     function checkExists($lang) {
-        foreach ($this->get_site_langs() as $site_lang) {
+        foreach ($this->getSiteLangs() as $site_lang) {
             if ($site_lang['iso_code'] == $lang) {
                 return true;
             }
@@ -117,7 +117,7 @@ class Multilang {
         return false;
     }
 
-    function get_site_langs($active = 1) {
+    function getSiteLangs($active = 1) {
         if ($active) {
             return $this->active_langs;
         } else {
@@ -128,12 +128,12 @@ class Multilang {
     function getSessionLang() {
         global $cfg;
 
-        $lid = $this->iso_to_id($cfg['WEB_LANG']);
+        $lid = $this->isoToID($cfg['WEB_LANG']);
         return $this->active_langs[$lid];
     }
 
-    function iso_to_id($isolang) {
-        foreach ($this->get_site_langs() as $lang) {
+    function isoToID($isolang) {
+        foreach ($this->getSiteLangs() as $lang) {
             if ($lang['iso_code'] == $isolang) {
                 return $lang['lang_id'];
             }
@@ -141,8 +141,8 @@ class Multilang {
         return false;
     }
 
-    function id_to_iso($lang_id) {
-        foreach ($this->get_site_langs() as $lang) {
+    function idToIso($lang_id) {
+        foreach ($this->getSiteLangs() as $lang) {
             if ($lang['lang_id'] == $lang_id) {
                 return $lang['iso_code'];
             }
@@ -150,12 +150,12 @@ class Multilang {
         return false;
     }
 
-    function deprecated_get_sitelangs_select($name = 'lang', $all = 0) {
+    function deprecated_getSiteLangsSelect($name = 'lang', $all = 0) {
         /* La nueva pone IDs en vez de el iso code en el value */
 
         global $LNG;
 
-        $site_langs = $this->get_site_langs();
+        $site_langs = $this->getSiteLangs();
 
         if (empty($site_langs)) {
             return false;
@@ -177,12 +177,12 @@ class Multilang {
         return $select;
     }
 
-    function get_sitelangs_select($name = 'lang', $all = 0) {
+    function getSiteLangsSelect($name = 'lang', $all = 0) {
         /* La nueva pone IDs en vez de el iso code en el value */
 
         global $LNG;
 
-        $site_langs = $this->get_site_langs();
+        $site_langs = $this->getSiteLangs();
 
         if (empty($site_langs)) {
             return false;
@@ -204,7 +204,7 @@ class Multilang {
         return $select;
     }
 
-    private function retrieve_db_langs() {
+    private function retrieveDbLangs() {
         global $db;
 
         $query = $db->select_all("lang");

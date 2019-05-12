@@ -109,7 +109,7 @@ function Blocks_blk_mng() {
     }
 
     if (defined('MULTILANG')) {
-        $page_data['block_lang'] = $ml->get_sitelangs_select('block_lang', 1);
+        $page_data['block_lang'] = $ml->getSiteLangsSelect('block_lang', 1);
     }
 
     for ($i = 1; $i <= $page_selected_sections; $i++) {
@@ -159,7 +159,7 @@ function Blocks_blk_mng() {
         $page_data['page'] = $admin_block['page'];
 
         if (defined('MULTILANG') && $admin_block['lang'] != 0) {
-            $page_data['lang'] = $ml->id_to_iso($admin_block['lang']);
+            $page_data['lang'] = $ml->idToIso($admin_block['lang']);
         } else {
             $page_data['lang'] = $LNG['L_ML_ALL'];
         }

@@ -17,7 +17,7 @@ function news_show_page() {
     if (!empty($_GET['news_lang_id'])) {
         $news_lang_id = $filter->get_int('news_lang_id');
     } else {
-        (defined('MULTILANG')) ? $news_lang_id = $ml->get_web_lang_id() : $news_lang_id = 1;
+        (defined('MULTILANG')) ? $news_lang_id = $ml->getWebLangID() : $news_lang_id = 1;
     }
 
     ($cfg['allow_multiple_pages'] && !empty($_GET['npage'])) ? $page = $filter->get_int('npage') : $page = 1;
