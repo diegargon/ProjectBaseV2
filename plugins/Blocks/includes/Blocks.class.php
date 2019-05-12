@@ -66,26 +66,23 @@ class Blocks {
     function setBlocks($page) {
         global $db;
 
+        $users_id = '0';
         if (defined('SESSIONS')) {
             global $sm;
             $user = $sm->getSessionUSer();
-            if (empty($user)) {
-                $where_ary = [
-                    'uid' => 0,
-                ];
-            } else {
-                $where_ary = [
-                    'uid' => $user['uid'],
-                    'uid' => 0
-                ];
+            if (!empty($user)) {
+                $users_id .= ',' . $user['uid'];
             }
-        } else {
-            $where_ary = [
-                'uid' => 0,
-            ];
+        }
+        $where_ary['uid'] = ['value' => "({$users_id})", 'operator' => 'IN'];
+
+        if (defined('MULTILANG')) {
+            global $ml;
+            $langs = '0,' . $ml->get_web_lang_id();
+            $where_ary['lang'] = ['value' => "({$langs})", 'operator' => 'IN'];
         }
 
-        $q = $db->select_all('blocks', $where_ary, 'ORDER BY section,weight', 'OR');
+        $q = $db->select_all('blocks', $where_ary, 'ORDER BY section,weight', 'AND');
 
         $cfg['user_can_disable_dflt_blocks'] = 1; //TO CFG
         $user_cfg['user_disable_dflt_blocks'] = 0; //TO USER CFG

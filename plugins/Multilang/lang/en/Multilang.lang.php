@@ -7,6 +7,8 @@
 !defined('IN_WEB') ? exit : true;
 
 $LNG['L_ML_LANGS'] = 'Languages';
+$LNG['L_ML_LANG'] = 'Language';
+$LNG['L_ML_ALL'] = 'All';
 $LNG['L_ML_MODIFY_LANGS'] = 'Modify langs';
 $LNG['L_ML_CREATE_LANG'] = 'Create lang';
 $LNG['L_ML_ACTIVE'] = 'Active';

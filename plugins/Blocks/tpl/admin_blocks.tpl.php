@@ -13,6 +13,7 @@ if ($data['TPL_CTRL'] == 1) {
         <div class="divTable">
             <div class="divTableHeadRow">
                 <div class="divTableHeadCell"><?= $LNG['L_BLK_PAGE'] ?></div>
+                <div class="divTableHeadCell"><?= $LNG['L_ML_LANG'] ?></div>
                 <div class="divTableHeadCell"><?= $LNG['L_BLK_SECTION'] ?></div>
                 <div class="divTableHeadCell"><?= $LNG['L_NAME'] ?></div>
                 <div class="divTableHeadCell"><?= $LNG['L_DESC'] ?></div>
@@ -26,6 +27,9 @@ if ($data['TPL_CTRL'] == 1) {
                             <?= $data['page_options'] ?>
                         </select>
                     </div>
+                    <div class="divTableCell">
+                        <?= $data['block_lang'] ?>
+                    </div>                    
                     <div class="divTableCell">
                         <select id="block_section" name="block_section">
                             <?= $data['sections'] ?>
@@ -58,6 +62,7 @@ if ($data['TPL_CTRL'] == 1) {
                 <div class="divTableFootCell"></div>
                 <div class="divTableFootCell"></div>
                 <div class="divTableFootCell"></div>
+                <div class="divTableFootCell"></div>
                 <!-- <div class="divTableFootCell"></div> -->
             </div>                
         </div>
@@ -69,6 +74,7 @@ if ($data['TPL_CTRL'] == 1) {
     <div class="divTable">
         <div class="divTableHeadRow">
             <div class="divTableHeadCell"><?= $LNG['L_BLK_PAGE'] ?></div>
+            <div class="divTableHeadCell"><?= $LNG['L_ML_LANG'] ?></div>
             <div class="divTableHeadCell"><?= $LNG['L_BLK_SECTION'] ?></div>
             <div class="divTableHeadCell"><?= $LNG['L_NAME'] ?></div>
             <div class="divTableHeadCell"><?= $LNG['L_BLK_WEIGHT'] ?></div>
@@ -82,6 +88,9 @@ if ($data['TPL_CTRL'] == 1) {
                 <div class="divTableCell">
                     <?= $data['page'] ?>
                 </div>
+                <div class="divTableCell">
+                    <?= $data['lang'] ?>
+                </div>                
                 <div class="divTableCell">
                     <?= $data['section'] ?>
                 </div>

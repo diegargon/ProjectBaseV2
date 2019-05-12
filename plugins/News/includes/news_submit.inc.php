@@ -40,7 +40,7 @@ function news_new_form($news_perms) {
     $form_data['news_add_source'] = $news_perms['news_add_source'];
     $form_data['news_add_related'] = $news_perms['news_add_related'];
 
-    if (defined('MULTILANG') && ($site_langs = $ml->get_sitelangs_select('news_lang')) != false) {
+    if (defined('MULTILANG') && ($site_langs = $ml->deprecated_get_sitelangs_select('news_lang')) != false) {
         $form_data['select_langs'] = $site_langs;
     }
 

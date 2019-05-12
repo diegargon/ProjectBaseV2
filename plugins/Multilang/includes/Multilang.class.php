@@ -150,7 +150,10 @@ class Multilang {
         return false;
     }
 
-    function get_sitelangs_select($name) {
+    function deprecated_get_sitelangs_select($name = 'lang', $all = 0) {
+        /* La nueva pone IDs en vez de el iso code en el value */
+
+        global $LNG;
 
         $site_langs = $this->get_site_langs();
 
@@ -159,11 +162,41 @@ class Multilang {
         }
 
         $select = "<select name='$name' id='$name'>";
+        if ($all) {
+            $select .= "<option value='0'>" . $LNG['L_ML_ALL'] . "</option>";
+        }
         foreach ($site_langs as $site_lang) {
             if ($site_lang['iso_code'] == $this->web_lang) {
                 $select .= "<option selected value='{$site_lang['iso_code']}'>{$site_lang['lang_name']}</option>";
             } else {
                 $select .= "<option value='{$site_lang['iso_code']}'>{$site_lang['lang_name']}</option>";
+            }
+        }
+        $select .= "</select>";
+
+        return $select;
+    }
+
+    function get_sitelangs_select($name = 'lang', $all = 0) {
+        /* La nueva pone IDs en vez de el iso code en el value */
+
+        global $LNG;
+
+        $site_langs = $this->get_site_langs();
+
+        if (empty($site_langs)) {
+            return false;
+        }
+
+        $select = "<select name='$name' id='$name'>";
+        if ($all) {
+            $select .= "<option value='0'>" . $LNG['L_ML_ALL'] . "</option>";
+        }
+        foreach ($site_langs as $site_lang) {
+            if ($site_lang['iso_code'] == $this->web_lang) {
+                $select .= "<option selected value='{$site_lang['lang_id']}'>{$site_lang['lang_name']}</option>";
+            } else {
+                $select .= "<option value='{$site_lang['lang_id']}'>{$site_lang['lang_name']}</option>";
             }
         }
         $select .= "</select>";

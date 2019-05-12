@@ -52,6 +52,10 @@ function Blocks_admin_content($params) {
 function Blocks_blk_mng() {
     global $blocks, $tpl, $filter, $LNG;
 
+    if (defined('MULTILANG')) {
+        global $ml;
+    }
+
     $block_config_data = [];
     $content = '';
     $selected_page = $filter->post_AlphaNum('block_page', 255, 1);
@@ -104,6 +108,10 @@ function Blocks_blk_mng() {
         }
     }
 
+    if (defined('MULTILANG')) {
+        $page_data['block_lang'] = $ml->get_sitelangs_select('block_lang', 1);
+    }
+
     for ($i = 1; $i <= $page_selected_sections; $i++) {
         if (!empty($selected_section) && $selected_section == $i) {
             $page_data['sections'] .= "<option selected value='$i'>$i</option>";
@@ -149,6 +157,13 @@ function Blocks_blk_mng() {
         $page_data['TPL_CTRL'] = $counter;
         $counter == $num_items ? $page_data['TPL_FOOT'] = 1 : $page_data['TPL_FOOT'] = 0;
         $page_data['page'] = $admin_block['page'];
+
+        if (defined('MULTILANG') && $admin_block['lang'] != 0) {
+            $page_data['lang'] = $ml->id_to_iso($admin_block['lang']);
+        } else {
+            $page_data['lang'] = $LNG['L_ML_ALL'];
+        }
+
         $page_data['block'] = $admin_block['blockname'];
         $page_data['weight'] = $admin_block['weight'];
         $page_data['section'] = $admin_block['section'];
@@ -193,6 +208,7 @@ function Blocks_addBlock($config_array) {
     $block_page = $filter->post_AlphaNum('block_page', 255, 1);
     $block_section = $filter->post_AlphaNum('block_section', 255, 1);
     $blockname = $filter->post_strict_chars('blockname', 255, 1);
+    $block_lang = $filter->post_int('block_lang', 127, 1);
     $block_weight = $filter->post_int('block_weight', 127, 1);
     $canUserDisable = $filter->post_AlphaNum('disable_by_user', 1, 1);
 
@@ -209,6 +225,7 @@ function Blocks_addBlock($config_array) {
     $insert_ary = [
         'uid' => 0,
         'page' => $block_page,
+        'lang' => $block_lang,
         'section' => $block_section,
         'admin_block' => $admin_block,
         'blockname' => $blockname,

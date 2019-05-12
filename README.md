@@ -52,6 +52,7 @@ Author
 
 Lastest add/canges? first latest
 ================================
+* blocks lang support
 * add support for user select show news in others langs
 * rewrite section
 * add preliminar support for ratings on newscomments plugin (optional)
