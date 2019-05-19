@@ -145,26 +145,29 @@ class TPL {
     function addScriptFile($plugin, $filename = null, $place = 'TOP', $async = 'async') {
 
         $this->debug ? $this->debug->log('AddScriptFile request ->' . $plugin . 'for get a ' . $filename, 'tplBasic', 'DEBUG') : null;
-
+        if ($this->checkScript($filename)) {
+            $backtrace = debug_backtrace();
+            $this->debug ? $this->debug->log("AddcriptFile:CheckScript found coincidence * $filename * called by " . $backtrace[1]['function'], 'tplBasic', 'DEBUG') : null;
+            return false;
+        } else {
+            $this->scripts[] = $filename;
+        }
         if (!empty($plugin) && ($plugin == 'standard')) {
-            if (!$this->checkScript($filename)) {
-                if (array_key_exists($filename, $this->std_remote_scripts)) {
-                    $script_url = $this->std_remote_scripts[$filename];
-                    $script = '<script type="text/javascript" src="' . $script_url . '" charset="UTF-8" ' . $async . '></script>';
-                    $this->addtoTplVar("SCRIPTS_" . $place . "", $script);
-                    $this->scripts[] = $filename;
-                    $backtrace = debug_backtrace();
-                    $url = parse_url($script_url);
-                    $this->setPrefetchURL($url['scheme'] . '://' . $url['host']);
-                    $this->debug ? $this->debug->log("AddcriptFile:CheckScript setting first time * $filename * by " . $backtrace[1]['function'], 'tplBasic', 'DEBUG') : null;
-                } else {
-                    $backtrace = debug_backtrace();
-                    $this->debug ? $this->debug->log("AddcriptFile:CheckScript standard script * $filename * not found called by " . $backtrace[1]['function'], 'tplBasic', 'WARNING') : null;
-                }
+
+            if (array_key_exists($filename, $this->std_remote_scripts)) {
+                $script_url = $this->std_remote_scripts[$filename];
+                $script = '<script type="text/javascript" src="' . $script_url . '" charset="UTF-8" ' . $async . '></script>';
+                $this->addtoTplVar('SCRIPTS_' . $place, $script);
+
+                $backtrace = debug_backtrace();
+                $url = parse_url($script_url);
+                $this->setPrefetchURL($url['scheme'] . '://' . $url['host']);
+                $this->debug ? $this->debug->log("AddcriptFile:CheckScript setting first time * $filename * by " . $backtrace[1]['function'], 'tplBasic', 'DEBUG') : null;
             } else {
                 $backtrace = debug_backtrace();
-                $this->debug ? $this->debug->log("AddcriptFile:CheckScript found coincidence * $filename * called by " . $backtrace[1]['function'], 'tplBasic', 'DEBUG') : null;
+                $this->debug ? $this->debug->log("AddcriptFile:CheckScript standard script * $filename * not found called by " . $backtrace[1]['function'], 'tplBasic', 'WARNING') : null;
             }
+
             return true;
         }
 
