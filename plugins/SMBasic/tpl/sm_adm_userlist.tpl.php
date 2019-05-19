@@ -8,8 +8,8 @@
 <tr>
     <td><a href='<?= $data['profile_url'] ?>'><?= $data['username'] ?></a></td>
     <td><?= $data['email'] ?></td>
-    <td><?= format_date($data['regdate']) ?></td>
-    <td><?= format_date($data['last_login']) ?> </td>
+    <td><?= $timeUtil->formatDbDate($data['regdate']) ?></td>
+    <td><?= $timeUtil->formatDbDate($data['last_login']) ?> </td>
     <td>
         <form action='' method='post'>
             <input type='hidden' name='member_uid'  value='<?= $data['uid'] ?>' />

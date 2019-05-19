@@ -39,7 +39,7 @@ function get_news_query($where, $q_conf = null, $order = null) {
 }
 
 function layout_news($template, $news) {
-    global $cfg, $tpl;
+    global $cfg, $tpl, $timeUtil;
 
     $lnews = [];
 
@@ -51,7 +51,8 @@ function layout_news($template, $news) {
             $news_row['url'] = "/{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_row['nid']}&lang=" . $cfg['WEB_LANG'] . "&npage={$news_row['page']}&news_lang_id={$news_row['lang_id']}";
         }
 
-        $news_row['date'] = format_date($news_row['created']);
+        $news_row['date'] = $timeUtil->formatDbDate($news_row['created']);
+
         if (isset($news_row['text'])) {
             $main_image = preg_replace('/\[S\]/si', DIRECTORY_SEPARATOR . $cfg['img_selector'] . DIRECTORY_SEPARATOR, news_get_main_image($news_row));
             $thumb_image = preg_replace('/\[S\]/si', DIRECTORY_SEPARATOR . 'thumbs' . DIRECTORY_SEPARATOR, news_get_main_image($news_row));

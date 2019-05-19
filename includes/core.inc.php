@@ -51,7 +51,9 @@ $plugins->setDepend('DEBUG', CORE_VERSION);
 $plugins->setDepend('SQL', CORE_VERSION);
 
 /* TIME UTILS */
-require_once ('includes/time-utils.inc.php');
+require_once ('includes/TimeUtil.class.php');
+$timeUtil = new TimeUtil();
+$timeUtil->configTime();
 
 if (mobileDetect()) {
     $cfg['ITS_MOBIL'] = 1;

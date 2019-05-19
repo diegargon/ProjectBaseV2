@@ -6,7 +6,7 @@
 !defined('IN_WEB') ? exit : true;
 
 function news_show_page() {
-    global $cfg, $tpl, $sm, $ml, $filter, $frontend;
+    global $cfg, $tpl, $sm, $ml, $filter, $frontend, $timeUtil;
 
     $news_data = [];
     $editor = new Editor();
@@ -43,7 +43,7 @@ function news_show_page() {
     $news_data['title'] = str_replace('\r\n', '', $news_data['title']);
     $news_data['lead'] = str_replace('\r\n', PHP_EOL, $news_data['lead']);
     $news_data['news_url'] = "view_news.php?nid={$news_data['nid']}";
-    $news_data['date'] = format_date($news_data['date']);
+    $news_data['date'] = $timeUtil->formatDbDate($news_data['date']);
     $author_data = $sm->getUserByID($news_data['author_id']);
     $news_data['author'] = $author_data['username'];
     $news_data['author_uid'] = $news_data['author_id'];
@@ -315,9 +315,9 @@ function news_approved($nid, $lang_id) {
 }
 
 function news_featured($nid, $lang_id, $featured) {
-    global $db, $cfg;
+    global $db, $timeUtil;
 
-    $time = date($cfg['dateformat'], time());
+    $time = $timeUtil->getTimeNow();
 
     if (empty($nid) || empty($lang_id)) {
         return false;
