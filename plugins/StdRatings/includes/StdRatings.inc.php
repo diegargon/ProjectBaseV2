@@ -8,7 +8,7 @@
 function rating_rate_getPost($section) {
     global $filter;
 
-    if (!($user_rate = $filter->post_int("rate", 5, 1))) {
+    if (!($user_rate = $filter->post_int('rate', 5, 1))) {
         return false;
     }
 
@@ -67,25 +67,30 @@ function ratings_get_content($section, $resource_id, $author_id, $lang_id, $rati
 
     $user = $sm->getSessionUser();
 
-    $vote_counter = 0;
-    
+    $btn_disable = 0;
     if ($author_id == $user['uid']) {
         $rate_data['show_pointer'] = 0;
-        $rate_data['BTN_EXTRA'] .= "disabled";
+        $btn_disable = 1;
     } else {
         $rate_data['show_pointer'] = 1;
-        $sum_votes = 0;
-        foreach ($ratings_data as $rating_row) { //buscamos si ya hay algun rating, por usuario al comentario  si es asi deshabilitamos
-            if (($resource_id == $rating_row['resource_id'])) {
-                $vote_counter++;
-                $sum_votes = $sum_votes + $rating_row['vote_value'];
-                if (($rating_row['uid'] == $user['uid'])) {
-                    $rate_data['BTN_EXTRA'] .= "disabled";
-                    $rate_data['show_pointer'] = 0;
-                }
+    }
+    $vote_counter = 0;
+    $sum_votes = 0;
+
+    //buscamos si ya hay algun rating, por usuario al recurso  si es asi deshabilitamos
+    foreach ($ratings_data as $rating_row) {
+        if (($resource_id == $rating_row['resource_id'])) {
+            $vote_counter++;
+            $sum_votes = $sum_votes + $rating_row['vote_value'];
+            if (($rating_row['uid'] == $user['uid'])) {
+                $btn_disable = 1;
+                $rate_data['show_pointer'] = 0;
             }
         }
     }
+
+    $btn_disable ? $rate_data['BTN_EXTRA'] .= 'disabled' : null;
+
     $rate_data['id'] = $resource_id;
     $rate_data['lang_id'] = $lang_id;
     $rate_data['section'] = $section;
@@ -135,49 +140,4 @@ function rating_css_display($rating) {
     }
 
     return $rate;
-}
-
-function UNUSED_check_already_vote($uid, $resource_id, $section) {
-    global $cfg, $filter, $db;
-
-    $where_ary = [];
-
-    if ($cfg['one_ip_one_vote']) {
-        $ip = $filter->srv_remote_addr();
-        if (!$ip) {
-            return false;
-        }
-        $where_ary = [
-            'ip' => $ip,
-        ];
-    } else if ($cfg['allow_anonoymous_vote'] && ($uid < 1)) {
-        return true; // if not ip check and user its anonymous always allow; 
-    }
-
-    $where_ary = [
-        'uid' => $uid,
-        'section' => $section,
-        'resource_id' => $resource_id,
-    ];
-
-    $query = "SELECT uid, vote_value, date FROM rating WHERE section = $section AND resource_id = $resource_id ";
-    if ($cfg['one_ip_one_vote']) {
-        if ($cfg['allow_anonymous_vote']) {
-            $query .= 'AND ip = ' . $ip;
-        } else {
-            $query .= "AND (uid = $uid OR ip = $ip)";
-        }
-    } else {
-        $query .= 'AND uid = ' . $uid;
-    }
-    $query .= ' LIMIT 1';
-
-    $result = $db->query($query);
-
-
-    if ($db->num_rows($result) > 0) {
-        return $db->fetch($result);
-    } else {
-        return false;
-    }
 }
