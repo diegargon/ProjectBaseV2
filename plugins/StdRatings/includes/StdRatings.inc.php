@@ -67,12 +67,13 @@ function ratings_get_content($section, $resource_id, $author_id, $lang_id, $rati
 
     $user = $sm->getSessionUser();
 
+    $vote_counter = 0;
+    
     if ($author_id == $user['uid']) {
         $rate_data['show_pointer'] = 0;
         $rate_data['BTN_EXTRA'] .= "disabled";
     } else {
         $rate_data['show_pointer'] = 1;
-        $vote_counter = 0;
         $sum_votes = 0;
         foreach ($ratings_data as $rating_row) { //buscamos si ya hay algun rating, por usuario al comentario  si es asi deshabilitamos
             if (($resource_id == $rating_row['resource_id'])) {

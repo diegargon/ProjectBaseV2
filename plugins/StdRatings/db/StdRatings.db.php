@@ -30,7 +30,7 @@ ALTER TABLE `" . DB_PREFIX . "rating`
 
 $StdRatings_database_install[] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('StdRatings', 'one_ip_one_vote', '1');";
 $StdRatings_database_install[] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('StdRatings', 'allow_anonymous_vote', '1');";
-$StdRatings_database_install[] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('StdRatings', 'dflt_vote_visuals_url', '/plugins/StdComments/tpl/img/stars.png');";
+$StdRatings_database_install[] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('StdRatings', 'dflt_vote_visuals_url', '/plugins/StdRatings/tpl/img/stars.png');";
 //$StdRatings_database_install[] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('StdRatings', '', '');";
 
 /* UNINSTALL */
