@@ -50,8 +50,9 @@ Author
 
 * Diego Garcia <diego@envigo.net>
 
-Lastest add/canges? first latest
+Lastest add/changes exclude, minor/fixes first latest
 ================================
+* add vote to news
 * blocks lang support
 * add support for user select show news in others langs
 * rewrite section

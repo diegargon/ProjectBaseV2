@@ -482,3 +482,11 @@ function news_format_source($link) {
 
     return $result;
 }
+
+function newsvote_news_addrate($news) {
+    global $tpl;
+
+    $ratings_data = ratings_get_ratings($news['nid'], 'news_rate');
+    $rating_content = ratings_get_content('news_rate', $news['nid'], $news['author_id'], $news['lang_id'], $ratings_data);
+    $tpl->addtoTplVar('ADD_NEWS_INFO_POST_AVATAR', $rating_content);
+}
