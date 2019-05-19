@@ -117,7 +117,7 @@ function news_noacl_admin_perms(&$perm, $news_data) {
 function news_noacl_user(&$perm, $news_data) {
     global $cfg, $sm;
 
-    $user = $sm->getSessionUserID();
+    $user = $sm->getSessionUser();
 
     /* TRANSLATE */
     if ($cfg['news_translate']) {
