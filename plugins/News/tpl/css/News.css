@@ -273,10 +273,9 @@
 }
 .avatar img:hover {
     position: absolute;
-    width: 250px;
+    width: 100px;
     background-color: #ffffff;
-    transition: all 0.5s linear;
-    transition-delay:1s;
+    transition: all 0.2s linear;
 }
 .newsbox {
     font-family: Georgia;
