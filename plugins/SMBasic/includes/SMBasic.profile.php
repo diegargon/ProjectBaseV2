@@ -6,7 +6,7 @@
 !defined('IN_WEB') ? exit : true;
 
 function SMBasic_ProfileView() {
-    global $tpl, $sm, $filter, $frontend;
+    global $tpl, $sm, $filter, $frontend, $timeUtil;
 
     $uid = $filter->get_int("viewprofile");
     if (empty($uid)) {
@@ -14,6 +14,8 @@ function SMBasic_ProfileView() {
     }
     $v_user = $sm->getUserByID($uid);
     if ($v_user) {
+        $v_user['regdate'] = $timeUtil->formatDbDate($v_user['regdate']);
+        $v_user['last_login'] = $timeUtil->formatDbDate($v_user['last_login']);
         $tpl->getCssFile("SMBasic");
         $tpl->getCssFile("SMBasic", "SMBasic-mobile");
         $tpl->addtoTplVar("ADD_TO_BODY", $tpl->getTplFile("SMBasic", "viewprofile", $v_user));
