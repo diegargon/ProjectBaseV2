@@ -15,7 +15,7 @@ if (!empty($data['TPL_FIRST'])) {
                 <a href="<?= $data['p_url'] ?>"><img width="35"  src="<?= $data['avatar'] ?>" alt="" /></a>
             </span>
             <span class="c_author"><a href="<?= $data['p_url'] ?>"><?= $data['username'] ?></a></span>
-            <span class="c_date"><?= $timeUtil->formatDbDate($data['date']) ?></span>
+            <span class="c_date"><?= $data['date'] ?></span>
             <?= !empty($data['COMMENT_EXTRA']) ? $data['COMMENT_EXTRA'] : null; ?>
             <p class="comment_body"><?= $data['comment'] ?></p>
             <?= !empty($data['COMMENT_POST_MESSAGE_EXTRA']) ? $data['COMMENT_POST_MESSAGE_EXTRA'] : null; ?>                    

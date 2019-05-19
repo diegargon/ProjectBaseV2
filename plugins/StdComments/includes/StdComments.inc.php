@@ -26,7 +26,7 @@ function stdGetComments($comm_conf) {
 }
 
 function stdFormatComments($comments, $comm_conf) {
-    global $sm, $tpl, $cfg, $LNG;
+    global $sm, $tpl, $cfg, $LNG, $timeUtil;
 
     $counter = 0;
     $uid_list = $content = '';
@@ -63,6 +63,7 @@ function stdFormatComments($comments, $comm_conf) {
             $comment_row['p_url'] = '/' . $cfg['CON_FILE'] . '?module=SMBasic&page=profile&viewprofile=' . $author_data['uid'] . '&lang=' . $cfg['WEB_LANG'];
         }
 
+        $comment_row['date'] = $timeUtil->formatDbDate($comment_row['date']);
         $content .= $tpl->getTplFile('StdComments', 'comments', $comment_row);
     }
 
