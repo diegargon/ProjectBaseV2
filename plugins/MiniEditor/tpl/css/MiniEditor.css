@@ -1,7 +1,6 @@
 /*
  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
 */
-
 #editor_text {
     width: 99%;
     height: 200px;
@@ -17,7 +16,6 @@
     white-space: pre-wrap;
     text-align: justify;    
 }
-
 blockquote {
     display: block;
     background: #fff;

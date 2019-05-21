@@ -13,6 +13,8 @@ que necesitan la tabla permissions
  - Solucion 3, en la instalacion presentar opcion para activar el ACL y activarlo antes (problema:probablemente necesitara tambien la S1 si se quiere poder activar despues),
    (problema: ACL tambien necesita groups)
 
+* Rating opcion de calcular en carga o mostrar total pre-calculado via cron
+
 LOW
 
 
