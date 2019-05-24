@@ -108,44 +108,6 @@ function SimpleFrontEnd_index_cfg() {
     }
 
     return $content;
-    /* OLD DELETE NEXT UPDATE
-      $page_data = [];
-      $index_layouts = $frontend->getLayouts();
-
-      if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      global $db;
-
-      $index_layout_opt = $filter->post_strict_chars('index_layout', 255, 1);
-
-      if (!empty($index_layout_opt) && $index_layout_opt != $cfg['index_layout']) {
-      if ($index_layout_opt == 'none') {
-      $db->update('config', ['cfg_value' => ''], ['cfg_key' => 'index_layout']);
-      $db->update('config', ['cfg_value' => ''], ['cfg_key' => 'index_sections']);
-      } else {
-      foreach ($index_layouts as $layout) {
-      if ($layout['file'] == $index_layout_opt) {
-      $db->update('config', ['cfg_value' => $layout['file']], ['cfg_key' => 'index_layout']);
-      $db->update('config', ['cfg_value' => $layout['sections']], ['cfg_key' => 'index_sections']);
-      $cfg['index_layout'] = $layout['file'];
-      $cfg['index_sections'] = $layout['sections'];
-      }
-      }
-      }
-      }
-      }
-
-      $page_data['layouts_select'] = '<option value="none">' . $LNG['L_NONE'] . '</option>';
-      foreach ($index_layouts as $layout) {
-      if ($layout['file'] == $cfg['index_layout']) {
-      $page_data['layouts_select'] .= "<option selected value='{$layout['file']}'>{$layout['name']}</option>";
-      } else {
-      $page_data['layouts_select'] .= "<option value='{$layout['file']}'>{$layout['name']}</option>";
-      }
-      }
-
-      return $tpl->getTplFile('SimpleFrontend', 'admin_index', $page_data);
-
-     */
 }
 
 function Admin_getLayouts() {
