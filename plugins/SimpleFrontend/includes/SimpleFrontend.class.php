@@ -45,13 +45,10 @@ class SimpleFrontend {
     }
 
     function getPage($request_module, $request_page) {
-        //var_dump($this->pages);
         if (empty($this->pages)) {
-
-            $this->messageBox(['msg' => 'L_E_PLUGPAGE_NOEXISTS']);
+            $this->messageBox(['msg' => 'L_E_PLUGPAGE_NOEXISTS']);            
             return;
         }
-
         foreach ($this->pages as $page) {
             if ($page['module'] == $request_module && $page['page'] == $request_page) {
                 return $page;
@@ -118,13 +115,10 @@ class SimpleFrontend {
         echo $web_head;
         //END HEAD
         //BEGIN BODY
-        if ($this->nav_menu) { //we use do_action for select order
-            $tpl->addtoTplVar('HEADER_MENU_ELEMENT', do_action('header_menu_element'));
-        }
-        if ($this->display_section_menu) {
-            $tpl->addtoTplVar('SECTIONS_NAV', do_action('section_nav_element'));
-            $tpl->addtoTplVar('SECTIONS_NAV_SUBMENU', do_action('section_nav_subelement'));
-        }
+        
+        //we use do_action for select order
+        $this->nav_menu ? $this->addNavMenu() : null;
+        $this->display_section_menu ? $this->addSectionNav() : null;
 
         $tpl->addtoTplVar('ADD_TO_BODY', do_action('add_to_body'));
         $web_body = $tpl->getTplFile('SimpleFrontend', 'body');
@@ -180,7 +174,6 @@ class SimpleFrontend {
         $this->show_memory_usage = $cfg['show_memory_usage'];
 
         if (defined('DEBUG') && $cfg['simplefrontend_debug']) {
-            global $debug;
             $this->debug = & $debug;
         } else {
             $this->debug = false;
@@ -195,4 +188,15 @@ class SimpleFrontend {
         $tpl->getCssFile('SimpleFrontend', 'basic-mobile');
     }
 
+    private function addNavMenu() {
+        global $tpl;
+        
+        $tpl->addtoTplVar('HEADER_MENU_ELEMENT', do_action('header_menu_element'));        
+    }
+    private function addSectionNav() {
+        global $tpl;
+
+        $tpl->addtoTplVar('SECTIONS_NAV', do_action('section_nav_element'));
+        $tpl->addtoTplVar('SECTIONS_NAV_SUBMENU', do_action('section_nav_subelement'));
+    }
 }
