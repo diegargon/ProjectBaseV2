@@ -40,7 +40,7 @@ function get_news_perms($resource, $news_data = null) {
         }
     }
     /* BY RESOURCE */
-    if ($resource == "new_page" || $resource == "news_new_lang") { //not related/resource in secondary pages
+    if ($resource == 'new_page' || $resource == 'news_new_lang') { //not related/resource in secondary pages
         $perm['news_add_related'] = false;
         $perm['news_add_source'] = false;
     }
@@ -52,49 +52,49 @@ function news_acl_perms(&$perm, $news_data) {
 
     //ACL must return true to all if isFounder, not if only isAdmin.
 
-    $perm['news_feature'] = $acl_auth->acl_ask("news_feature");
-    $perm['news_frontpage'] = $acl_auth->acl_ask("news_frontpage");
+    $perm['news_feature'] = $acl_auth->acl_ask('news_feature');
+    $perm['news_frontpage'] = $acl_auth->acl_ask('news_frontpage');
     /* ACL EDIT_NEWS */
-    if (!($perm['news_edit'] = $acl_auth->acl_ask("news_edit_all"))) {
+    if (!($perm['news_edit'] = $acl_auth->acl_ask('news_edit_all'))) {
         if ($cfg['news_allow_users_edit_own_news'] && isset($news_data['author_id']) && $news_data['author_id'] == $user['uid']) {
-            $perm['news_edit'] = $acl_auth->acl_ask("news_edit_own_news");
+            $perm['news_edit'] = $acl_auth->acl_ask('news_edit_own_news');
         }
     }
     /* SUBMIT NEW */
-    !$cfg['news_allow_submit_anon'] ? $perm['news_submit_new'] = $acl_auth->$acl_ask("news_submit_new") : $perm['news_submit_new'] = true;
+    !$cfg['news_allow_submit_anon'] ? $perm['news_submit_new'] = $acl_auth->$acl_ask('news_submit_new') : $perm['news_submit_new'] = true;
 
     /* NEWS_TRANSLATE */
     if ($cfg['news_translate']) {
         if ($cfg['news_anon_translate']) {
             $perm['news_translate'] = true;
-        } else if ($acl_auth->acl_ask("news_translate_all")) {
+        } else if ($acl_auth->acl_ask('news_translate_all')) {
             $perm['news_translate'] = true;
-        } else if (!empty($news_data) && !empty($user) && $news_data['author_id'] == $user['uid'] && $acl_auth->acl_ask("news_translate_own")) {
+        } else if (!empty($news_data) && !empty($user) && $news_data['author_id'] == $user['uid'] && $acl_auth->acl_ask('news_translate_own')) {
             $perm['news_translate'] = true;
         }
     }
 
     /* NEWS_VIEW */
-    $perm['news_view'] = $acl_auth->acl_ask("news_view");
+    $perm['news_view'] = $acl_auth->acl_ask('news_view');
 
     /* DELETE NEWS */
-    if (!($perm['news_delete'] = $acl_auth->acl_ask("news_delete_all"))) {
+    if (!($perm['news_delete'] = $acl_auth->acl_ask('news_delete_all'))) {
         if ($cfg['news_allow_users_delete_own_news'] && isset($news_data['author_id']) && $news_data['author_id'] == $user['uid']) {
-            $perm['news_delete'] = $acl_auth->acl_ask("news_delete_own_news");
+            $perm['news_delete'] = $acl_auth->acl_ask('news_delete_own_news');
         }
     }
     /* ADMIN THINGS */
-    $perm['news_moderation'] = $acl_auth->acl_ask("news_moderation");
-    $perm['news_can_change_author'] = $acl_auth->acl_ask("news_can_change_author");
+    $perm['news_moderation'] = $acl_auth->acl_ask('news_moderation');
+    $perm['news_can_change_author'] = $acl_auth->acl_ask('news_can_change_author');
 
     /* RELATED / SOURCE */
-    if ($cfg['display_news_related'] && $acl_auth->acl_ask("news_add_related")) {
+    if ($cfg['display_news_related'] && $acl_auth->acl_ask('news_add_related')) {
         $perm['news_add_related'] = true;
     }
-    if ($cfg['display_news_source'] && $acl_auth->acl_ask("news_add_source")) {
+    if ($cfg['display_news_source'] && $acl_auth->acl_ask('news_add_source')) {
         $perm['news_add_source'] = true;
     }
-    //$perm['news_'] = $acl_auth->acl_ask("news_");    
+    //$perm['news_'] = $acl_auth->acl_ask('news_');    
 
     return $perm;
 }
@@ -140,18 +140,31 @@ function news_noacl_user(&$perm, $news_data) {
         $perm['news_view'] = $cfg['news_view_user'] ? true : false;
     }
 
-    $perm['news_create_new_page'] = ($cfg['allow_multiple_pages'] && $perm['news_submit_new']) ? true : false;
+    if ($cfg['allow_multiple_pages']) {
+        if (isset($news_data['author_id']) && $news_data['author_id'] == $user['uid']) {
+            $perm['news_create_new_page'] = true;
+        } else {
+            $perm['news_create_new_page'] = false;
+        }
+    }
 }
 
 function news_noacl_anon(&$perm, $news_data) {
     global $cfg;
 
     /* SUBMIT */
-    $cfg['news_allow_submit_anon'] ? $perm['news_submit_new'] = true : $perm['news_submit_new'] = false;
-    $perm['news_create_new_page'] = ($cfg['allow_multiple_pages'] && $perm['news_submit_new']) ? true : false;
+    if ($perm['news_submit_new'] && $cfg['news_allow_submit_anon']) {
+        $perm['news_submit_new'] = true;
+    } else {
+        $perm['news_submit_new'] = false;
+    }
+
+    $perm['news_create_new_page'] = false;
 
     /* TRANSLATE */
     if ($cfg['news_translate'] && $cfg['news_anon_translate']) {
         $perm['news_translate'] = true;
+    } else {
+        $perm['news_translate'] = false;
     }
 }
