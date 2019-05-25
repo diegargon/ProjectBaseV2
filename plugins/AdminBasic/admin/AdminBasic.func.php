@@ -83,7 +83,7 @@ function AdminBasic_GetConfig($plugin) {
     global $db;
 
     $query = $db->select("config", "cfg_key,cfg_value", ["plugin" => $plugin]);
-    return $db->fetch_all($query);
+    return $db->fetchAll($query);
 }
 
 function admin_general_aside($params) {
@@ -279,10 +279,10 @@ function AdminPluginConfig($plugin) {
         }
     }
 
-    $cfg_result = $db->select_all("config", ["plugin" => $plugin], "ORDER BY plugin");
+    $cfg_result = $db->selectAll("config", ["plugin" => $plugin], "ORDER BY plugin");
     $content = "";
     $counter = 1;
-    $num_items = $db->num_rows($cfg_result);
+    $num_items = $db->numRows($cfg_result);
 
     while ($cfg_row = $db->fetch($cfg_result)) {
         $cfg_row['TPL_CTRL'] = $counter;

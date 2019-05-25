@@ -22,7 +22,7 @@ class Debug {
         $this->debug_msg[] = ['msg' => $msg, 'module' => $module, 'level' => $level];
     }
 
-    function get_debug($module = 'all', $level = 'all') {
+    function getDebug($module = 'all', $level = 'all') {
         $filter_debug = [];
         foreach ($this->debug_msg as $element) {
             if ($module == 'all' || $module == $element['module']) {
@@ -34,10 +34,10 @@ class Debug {
         return $filter_debug;
     }
 
-    function print_debug($module = 'all', $level = 'all') {
+    function printDebug($module = 'all', $level = 'all') {
         $module_track_br = '';
         $result = '';
-        foreach ($this->get_debug($module, $level) as $element) {
+        foreach ($this->getDebug($module, $level) as $element) {
             if ($module_track_br != $element['module']) { // add space between modules
                 $module_track_br = $element['module'];
                 $result .= '<br/>';

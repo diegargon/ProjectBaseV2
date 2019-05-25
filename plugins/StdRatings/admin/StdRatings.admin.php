@@ -7,7 +7,7 @@
 
 function StdRatings_AdminInit() {
     global $plugins;
-    $plugins->express_start('StdRatings') ? register_action('add_admin_menu', 'StdRatings_AdminMenu', '5') : null;
+    $plugins->expressStart('StdRatings') ? register_action('add_admin_menu', 'StdRatings_AdminMenu', '5') : null;
 }
 
 function StdRatings_AdminMenu($params) {

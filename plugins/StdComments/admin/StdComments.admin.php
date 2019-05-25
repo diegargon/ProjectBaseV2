@@ -8,7 +8,7 @@
 function StdComments_AdminInit() {
     global $plugins;
 
-    $plugins->express_start('StdComments') ? register_action('add_admin_menu', 'StdComments_AdminMenu', '5') : null;
+    $plugins->expressStart('StdComments') ? register_action('add_admin_menu', 'StdComments_AdminMenu', '5') : null;
 }
 
 function StdComments_AdminMenu($params) {

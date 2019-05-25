@@ -59,8 +59,8 @@ function SMBasic_ProfileChange() {
         die('[{"status": "0", "msg": "' . $LNG['L_E_INTERNAL'] . '"}]');
     }
     //Check USER password
-    $query = $db->select_all("users", ["uid" => $user['uid'], "password" => "$password_encrypted"], "LIMIT 1");
-    if ($db->num_rows($query) <= 0) {
+    $query = $db->selectAll("users", ["uid" => $user['uid'], "password" => "$password_encrypted"], "LIMIT 1");
+    if ($db->numRows($query) <= 0) {
         die('[{"status": "2", "msg": "' . $LNG['L_WRONG_PASSWORD'] . '"}]');
     }
 
@@ -76,7 +76,7 @@ function SMBasic_ProfileChange() {
                     die('[{"status": "6", "msg": "' . $LNG['L_SM_E_HTTPS'] . $avatar . '"}]');
                 }
             }
-            $user['avatar'] != $avatar ? $q_set_ary['avatar'] = $db->escape_strip(urldecode($avatar)) : false;
+            $user['avatar'] != $avatar ? $q_set_ary['avatar'] = $db->escapeStrip(urldecode($avatar)) : false;
         }
     }
 
@@ -115,11 +115,11 @@ function SMBasic_ProfileChange() {
                 die('[{"status": "4", "msg": "' . $LNG['L_USERNAME_CHARS'] . '"}]');
             }
             if ($user['username'] != $username && !empty($username)) {
-                $query = $db->select_all("users", ["username" => "$username"], "LIMIT 1");
-                if ($db->num_rows($query) > 0) {
+                $query = $db->selectAll("users", ["username" => "$username"], "LIMIT 1");
+                if ($db->numRows($query) > 0) {
                     die('[{"status": "4", "msg": "' . $LNG['L_E_USERNAME_EXISTS'] . '"}]');
                 } else {
-                    $q_set_ary['username'] = $db->escape_strip($username);
+                    $q_set_ary['username'] = $db->escapeStrip($username);
                 }
             }
         }
@@ -133,11 +133,11 @@ function SMBasic_ProfileChange() {
             die('[{"status": "4", "msg": "' . $LNG['L_EMAIL_LONG'] . '"}]');
         }
         if ($email != $user['email']) {
-            $query = $db->select_all("users", ["email" => "$email"], "LIMIT 1");
-            if ($db->num_rows($query) > 0) {
+            $query = $db->selectAll("users", ["email" => "$email"], "LIMIT 1");
+            if ($db->numRows($query) > 0) {
                 die('[{"status": "5", "msg": "' . $LNG['L_E_EMAIL_EXISTS'] . '"}]');
             } else {
-                $q_set_ary["email"] = $db->escape_strip($email);
+                $q_set_ary["email"] = $db->escapeStrip($email);
             }
         }
     }

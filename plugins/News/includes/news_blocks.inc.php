@@ -11,12 +11,12 @@ function news_block($block_conf) {
     require_once (__DIR__ . '/news_common.php');
 
     if (!empty($block_conf['headlines']) || !empty($block_conf['lead'])) { //we going to show news['text'] need editor
-        if (!($plugins->express_start_provider('EDITOR'))) {
+        if (!($plugins->expressStartProvider('EDITOR'))) {
             $frontend->messageBox(['msg' => 'L_E_PL_CANTEXPRESS']);
             return false;
         }
     }
-    if (!($plugins->express_start_provider('CATS'))) {
+    if (!($plugins->expressStartProvider('CATS'))) {
         $frontend->messageBox(['msg' => 'L_E_PL_CANTEXPRESS']);
         return false;
     }

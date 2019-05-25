@@ -30,8 +30,8 @@ class ACL {
 
         $this->permissions = null;
 
-        $query = $db->select_all("permissions", null, "ORDER BY plugin");
-        if ($db->num_rows($query) > 0) {
+        $query = $db->selectAll("permissions", null, "ORDER BY plugin");
+        if ($db->numRows($query) > 0) {
             while ($row = $db->fetch($query)) {
                 $this->permissions[] = $row;
             }
@@ -266,7 +266,7 @@ class ACL {
       "perm_group" => $perm['group'],
       "perm_type" => $perm['type'],
       "perm_name" => $perm['name'],
-      "perm_description" => $db->escape_strip($perm['description'])
+      "perm_description" => $db->escapeStrip($perm['description'])
       ];
 
       $db->insert("acl_perms", $insert_ary);
@@ -365,9 +365,9 @@ class ACL {
       global $db;
 
       if (!empty($acl_group)) {
-      $query = $db->select_all("acl_perms", ["perm_group" => "$acl_group"]);
+      $query = $db->selectAll("acl_perms", ["perm_group" => "$acl_group"]);
       } else {
-      $query = $db->select_all("acl_perms");
+      $query = $db->selectAll("acl_perms");
       }
 
       return $query;

@@ -8,7 +8,7 @@
 function news_edit($news_nid, $news_lang_id, $news_page) {
     global $LNG, $tpl, $frontend, $sm, $plugins;
 
-    $plugins->express_start_provider('NEWSMEDIAUPLOAD');
+    $plugins->expressStartProvider('NEWSMEDIAUPLOAD');
     
     if (!is_array($news_data = get_news_byId($news_nid, $news_lang_id, $news_page))) {
         $frontend->messageBox(['msg' => $news_data]);

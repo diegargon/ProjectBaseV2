@@ -53,8 +53,8 @@ function ratings_get_ratings($ids, $section) {
     $where_ary['section'] = $section;
     $where_ary['resource_id'] = ['value' => '(' . $ids . ')', 'operator' => 'IN'];
 
-    $query = $db->select_all('rating', $where_ary);
-    return $db->fetch_all($query);
+    $query = $db->selectAll('rating', $where_ary);
+    return $db->fetchAll($query);
 }
 
 function ratings_get_content($section, $resource_id, $author_id, $lang_id, $ratings_data, $image_vote = null) {

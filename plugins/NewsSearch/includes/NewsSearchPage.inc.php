@@ -9,7 +9,7 @@ function NS_build_result_page(& $query) {
     global $db, $cfg, $tpl, $frontend;
     $content = "";
 
-    if ($query && ($num_rows = $db->num_rows($query)) > 0) {
+    if ($query && ($num_rows = $db->numRows($query)) > 0) {
         $counter = 0;
         while ($result = $db->fetch($query)) {
             $counter == 0 ? $result['TPL_FIRST'] = 1 : false;

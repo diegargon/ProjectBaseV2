@@ -207,7 +207,7 @@ class Multilang {
     private function retrieveDbLangs() {
         global $db;
 
-        $query = $db->select_all("lang");
+        $query = $db->selectAll("lang");
 
         while ($lang_row = $db->fetch($query)) {
             if ($lang_row['active'] == 1) {

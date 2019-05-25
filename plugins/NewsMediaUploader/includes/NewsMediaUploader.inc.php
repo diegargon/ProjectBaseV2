@@ -41,7 +41,7 @@ function NMU_upload_list($user) {
         'source_id' => $user['uid'],
     ];
 
-    $query = $db->select_all('links', $select_ary, 'ORDER BY `date` DESC LIMIT ' . $cfg['upload_max_list_files']);
+    $query = $db->selectAll('links', $select_ary, 'ORDER BY `date` DESC LIMIT ' . $cfg['upload_max_list_files']);
     while ($link = $db->fetch($query)) {
         $link_thumb = str_replace('[S]', '/thumbs/', $link['link']);
         $textToadd = '[localimg]' . $link['link'] . '[/localimg]';

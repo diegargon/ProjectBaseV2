@@ -91,15 +91,15 @@ function news_newlang_submit($news_data) {
         $new_lang_id = $ml->isoToID($news_data['news_lang']);
     }
 
-    $query = $db->select_all("news", ["nid" => "{$news_data['nid']}", "lang_id" => "$new_lang_id", "page" => "{$news_data['page']}"]);
-    if ($db->num_rows($query) > 0) { //already exist
+    $query = $db->selectAll("news", ["nid" => "{$news_data['nid']}", "lang_id" => "$new_lang_id", "page" => "{$news_data['page']}"]);
+    if ($db->numRows($query) > 0) { //already exist
         die('[{"status": "10", "msg": "' . $LNG['L_NEWS_ALREADY_EXIST'] . '"}]');
     }
     //GET original main news (page 1) for copy values
     $orig_news_nid = $news_data['nid'];
     $orig_news_lang_id = $news_data['old_news_lang_id'];
 
-    $query = $db->select_all("news", ["nid" => "$orig_news_nid", "lang_id" => "$orig_news_lang_id", "page" => 1], "LIMIT 1");
+    $query = $db->selectAll("news", ["nid" => "$orig_news_nid", "lang_id" => "$orig_news_lang_id", "page" => 1], "LIMIT 1");
     $orig_news = $db->fetch($query);
     $moderation = $cfg['news_moderation'];
 
@@ -108,9 +108,9 @@ function news_newlang_submit($news_data) {
         "lang_id" => $new_lang_id,
         "page" => $news_data['page'],
         "translator_id" => $news_data['news_translator_id'],
-        "title" => $db->escape_strip($news_data['title']),
-        "lead" => $db->escape_strip($news_data['lead']),
-        "text" => $db->escape_strip($news_data['editor_text']),
+        "title" => $db->escapeStrip($news_data['title']),
+        "lead" => $db->escapeStrip($news_data['lead']),
+        "text" => $db->escapeStrip($news_data['editor_text']),
         "author_id" => $orig_news['author_id'],
         "category" => $orig_news['category'],
         "lang_id" => $new_lang_id,

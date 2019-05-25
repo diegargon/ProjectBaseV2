@@ -45,12 +45,12 @@ class Groups {
         }
 
         $query = $db->select('groups', 'group_id', ['group_name' => $group['group_name']]);
-        if ($db->num_rows($query) > 0) {
+        if ($db->numRows($query) > 0) {
             return $LNG['L_GROUP_DUPLICATE'];
         } else {
             $insert_ary = [
                 'group_name' => $group['group_name'],
-                'group_desc' => $db->escape_strip($group['group_desc']),
+                'group_desc' => $db->escapeStrip($group['group_desc']),
                 'plugin' => $group['plugin'],
             ];
 
@@ -64,7 +64,7 @@ class Groups {
 
         $q = $db->select('users', 'groups', ['uid' => $uid], 'LIMIT 1');
 
-        if ($db->num_rows($q) > 0) {
+        if ($db->numRows($q) > 0) {
             $row = $db->fetch($q);
             if (empty($row['groups'])) {
                 return false;
@@ -142,8 +142,8 @@ class Groups {
     private function setGroups() {
         global $db;
 
-        $query = $db->select_all('groups');
-        if ($db->num_rows($query) > 0) {
+        $query = $db->selectAll('groups');
+        if ($db->numRows($query) > 0) {
             while ($row = $db->fetch($query)) {
                 $this->groups[] = $row;
             }

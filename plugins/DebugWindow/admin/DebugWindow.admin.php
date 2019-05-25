@@ -7,7 +7,7 @@
 
 function DebugWindow_AdminInit() {
     global $plugins;
-    $plugins->express_start('DebugWindow') ? register_action('add_admin_menu', 'DebugWindow_AdminMenu', '5') : null;
+    $plugins->expressStart('DebugWindow') ? register_action('add_admin_menu', 'DebugWindow_AdminMenu', '5') : null;
 }
 
 function DebugWindow_AdminMenu($params) {

@@ -9,7 +9,7 @@ function News_init() {
     define('NEWS', true);
     global $frontend, $cfg, $plugins;
 
-    $plugins->express_start_provider('SESSIONS');
+    $plugins->expressStartProvider('SESSIONS');
     
     $news_perms = get_news_perms('init');
     if ($news_perms['news_submit_new']) {
@@ -33,7 +33,7 @@ function News_init() {
         $blocks->registerBlock('news_block', '', 'news_block', 'news_block_conf', null, 0);
     }
     if ($cfg['display_section_menu']) {
-        $plugins->express_start_provider('CATS');
+        $plugins->expressStartProvider('CATS');
         register_action('section_nav_element', 'news_section_nav_elements');
         register_action('section_nav_subelement', 'news_section_nav_subelements');
     }

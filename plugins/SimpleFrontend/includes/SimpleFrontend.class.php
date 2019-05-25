@@ -19,7 +19,7 @@ class SimpleFrontend {
 
     public function __construct() {
         global $plugins;
-        $plugins->express_start('Blocks');
+        $plugins->expressStart('Blocks');
         $this->setConfig();
     }
 
@@ -127,7 +127,7 @@ class SimpleFrontend {
         //END BODY
         //BEGIN FOOTER
         if (defined('SQL') && $this->db != null && $this->show_stats_query) {
-            $tpl->addtoTplVar('ADD_TO_FOOTER', '<p class="db_querys">Querys(' . $this->db->num_querys() . ')</p>');
+            $tpl->addtoTplVar('ADD_TO_FOOTER', '<p class="db_querys">Querys(' . $this->db->numQuerys() . ')</p>');
         }
         if ($this->show_load_time) {
             $tpl->addtoTplVar('ADD_TO_FOOTER', '<p class="page_render">Page render in (' . get_load_time($this->load_start_time) . ')</p>');

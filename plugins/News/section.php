@@ -12,7 +12,7 @@ do_action('section_page_begin');
 $tpl->getCssFile('News');
 $tpl->getCssFile('News', 'News-mobile');
 
-if (!($plugins->express_start_provider('CATS'))) {
+if (!($plugins->expressStartProvider('CATS'))) {
     $frontend->messageBox(['msg' => 'L_E_PL_CANTEXPRESS']);
     return false;
 }

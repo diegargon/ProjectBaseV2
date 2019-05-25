@@ -295,8 +295,8 @@ function news_delete($nid, $lang_id, $page = null) {
     }
 
     //check if other lang exist if not delete all links and call for delete other possible mod data.
-    $query = $db->select_all('news', ['nid' => $nid], 'LIMIT 1'); //check if other lang
-    if ($db->num_rows($query) <= 0) {
+    $query = $db->selectAll('news', ['nid' => $nid], 'LIMIT 1'); //check if other lang
+    if ($db->numRows($query) <= 0) {
         $db->delete('links', ['plugin' => 'News', 'source_id' => $nid]);
         do_action('news_delete_mod', $nid);
     }
@@ -362,12 +362,12 @@ function news_adv_stats($nid, $lang) {
     ];
     $user['uid'] == 0 ? $where_ary['ip'] = $ip : false;
 
-    $query = $db->select_all('adv_stats', $where_ary, 'LIMIT 1');
+    $query = $db->selectAll('adv_stats', $where_ary, 'LIMIT 1');
 
     $user_agent = S_SERVER_USER_AGENT();
     $referer = S_SERVER_URL('HTTP_REFERER');
 
-    if ($db->num_rows($query) > 0) {
+    if ($db->numRows($query) > 0) {
         $user_adv_stats = $db->fetch($query);
         $counter = ++$user_adv_stats['counter'];
         $db->update('adv_stats', ['counter' => $counter, 'user_agent' => $user_agent, 'referer' => $referer], ['advstatid' => $user_adv_stats['advstatid']]);
@@ -388,8 +388,8 @@ function news_adv_stats($nid, $lang) {
     }
 
     if ((!empty($referer)) && ( (strpos($referer, '://' . $_SERVER['SERVER_NAME']) ) === false)) {
-        $query = $db->select_all('adv_stats', ['type' => 'referers_only', 'referer' => $referer], 'LIMIT 1');
-        if ($db->num_rows($query) > 0) {
+        $query = $db->selectAll('adv_stats', ['type' => 'referers_only', 'referer' => $referer], 'LIMIT 1');
+        if ($db->numRows($query) > 0) {
             $allreferers = $db->fetch($query);
             $counter = ++$allreferers['counter'];
             $db->update('adv_stats', ['counter' => $counter], ['advstatid' => $allreferers['advstatid']]);

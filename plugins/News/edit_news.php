@@ -5,7 +5,7 @@
  */
 !defined('IN_WEB') ? exit : true;
 
-if (!$plugins->express_start_provider('EDITOR')) {
+if (!$plugins->expressStartProvider('EDITOR')) {
     $frontend->messageBox(['msg' => 'L_E_PL_CANTEXPRESS']);
     return false;
 }
@@ -30,13 +30,13 @@ if (empty($news_nid) || empty($news_lang_id) || empty($news_page)) {
 require_once ('includes/news_common.php');
 require_once ('includes/news_form_common.php');
 
-if ($plugins->check_enabled('Multilang')) {
-    $plugins->express_start('Multilang');
+if ($plugins->checkEnabled('Multilang')) {
+    $plugins->expressStart('Multilang');
 }
 
 if (!isset($_POST['submitForm'])) {
 
-    if (!$plugins->express_start_provider('CATS')) {
+    if (!$plugins->expressStartProvider('CATS')) {
         $frontend->messageBox(['msg' => 'L_E_PL_CANTEXPRESS']);
         return false;
     }

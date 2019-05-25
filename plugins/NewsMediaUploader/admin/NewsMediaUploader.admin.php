@@ -7,7 +7,7 @@
 
 function NewsMediaUploader_AdminInit() {
     global $plugins;
-    $plugins->express_start('NewsMediaUploader') ? register_action('add_admin_menu', 'NewsMediaUploader_AdminMenu', '5') : null;
+    $plugins->expressStart('NewsMediaUploader') ? register_action('add_admin_menu', 'NewsMediaUploader_AdminMenu', '5') : null;
 }
 
 function NewsMediaUploader_AdminMenu($params) {

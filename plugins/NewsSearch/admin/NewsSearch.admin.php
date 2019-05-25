@@ -7,7 +7,7 @@
 
 function NewsSearch_AdminInit() {
     global $plugins;
-    $plugins->express_start("NewsSearch") ? register_action("add_admin_menu", "NewsSearch_AdminMenu", "5") : null;
+    $plugins->expressStart("NewsSearch") ? register_action("add_admin_menu", "NewsSearch_AdminMenu", "5") : null;
 }
 
 function NewsSearch_AdminMenu($params) {

@@ -54,9 +54,9 @@ function news_form_getPost() {
     $form_data['page'] = $filter->get_int("npage");
     //POST    
     $form_data['author_id'] = $filter->post_int("news_author_id");
-    $form_data['title'] = $db->escape_strip($filter->post_UTF8_txt("news_title"));
-    $form_data['lead'] = $db->escape_strip($filter->post_UTF8_txt("news_lead"));
-    $form_data['editor_text'] = $db->escape_strip($filter->post_UTF8_txt("editor_text"));
+    $form_data['title'] = $db->escapeStrip($filter->post_UTF8_txt("news_title"));
+    $form_data['lead'] = $db->escapeStrip($filter->post_UTF8_txt("news_lead"));
+    $form_data['editor_text'] = $db->escapeStrip($filter->post_UTF8_txt("editor_text"));
     $form_data['category'] = $filter->post_int("news_category");
     $form_data['news_lang'] = $filter->post_AZChar("news_lang", 2, 2);
     $form_data['news_source'] = $filter->post_url("news_source", 255, 1);
@@ -113,8 +113,8 @@ function news_get_available_langs($news_data) {
         if ($site_lang['lang_id'] == $news_data['lang_id']) {
             $select .= "<option selected value='{$site_lang['iso_code']}'>{$site_lang['lang_name']}</option>";
         } else {
-            $query = $db->select_all("news", ["nid" => $news_data['nid'], "lang_id" => $site_lang['lang_id']], "LIMIT 1");
-            if ($db->num_rows($query) <= 0) {
+            $query = $db->selectAll("news", ["nid" => $news_data['nid'], "lang_id" => $site_lang['lang_id']], "LIMIT 1");
+            if ($db->numRows($query) <= 0) {
                 $select .= "<option value='{$site_lang['iso_code']}'>{$site_lang['lang_name']}</option>";
             }
         }
@@ -137,8 +137,8 @@ function news_get_missed_langs($nid, $page) {
 
     $select = "<select name='news_lang' id='news_lang'>";
     foreach ($site_langs as $site_lang) {
-        $query = $db->select_all("news", ["nid" => $nid, "lang_id" => $site_lang['lang_id'], "page" => "$page"], "LIMIT 1");
-        if ($db->num_rows($query) <= 0) {
+        $query = $db->selectAll("news", ["nid" => $nid, "lang_id" => $site_lang['lang_id'], "page" => "$page"], "LIMIT 1");
+        if ($db->numRows($query) <= 0) {
             $select .= "<option value='{$site_lang['iso_code']}'>{$site_lang['lang_name']}</option>";
             $nolang = 0;
         }
@@ -224,9 +224,9 @@ function news_form_news_update($news_data) {
     defined('MULTILANG') ? $news_lang_id = $ml->getWebLangID() : $news_lang_id = 1;
 
     $set_ary = [
-        "title" => $db->escape_strip($news_data['title']),
-        "lead" => $db->escape_strip($news_data['lead']),
-        "text" => $db->escape_strip($news_data['editor_text']),
+        "title" => $db->escapeStrip($news_data['title']),
+        "lead" => $db->escapeStrip($news_data['lead']),
+        "text" => $db->escapeStrip($news_data['editor_text']),
         "author_id" => $news_data['author_id'],
         "category" => $news_data['category'],
     ];
@@ -251,16 +251,16 @@ function news_form_news_update($news_data) {
         $plugin = "News";
         $type = "source";
 
-        $query = $db->select_all("links", ["source_id" => $source_id, "type" => $type, "plugin" => $plugin], "LIMIT 1");
-        if ($db->num_rows($query) > 0) {
+        $query = $db->selectAll("links", ["source_id" => $source_id, "type" => $type, "plugin" => $plugin], "LIMIT 1");
+        if ($db->numRows($query) > 0) {
 
-            $db->update("links", ["link" => $db->escape_strip(urldecode($news_data['news_source']))], ["source_id" => $source_id, "type" => $type, "plugin" => $plugin]);
+            $db->update("links", ["link" => $db->escapeStrip(urldecode($news_data['news_source']))], ["source_id" => $source_id, "type" => $type, "plugin" => $plugin]);
         } else {
             $insert_ary = [
                 "source_id" => $source_id,
                 "plugin" => $plugin,
                 "type" => $type,
-                "link" => $db->escape_strip(urldecode($news_data['news_source'])),
+                "link" => $db->escapeStrip(urldecode($news_data['news_source'])),
             ];
             $db->insert("links", $insert_ary);
         }
@@ -277,7 +277,7 @@ function news_form_news_update($news_data) {
         $type = "related";
         $insert_ary = [
             "source_id" => $source_id, "plugin" => $plugin,
-            "type" => $type, "link" => $db->escape_strip(urldecode($news_data['news_new_related'])),
+            "type" => $type, "link" => $db->escapeStrip(urldecode($news_data['news_new_related'])),
         ];
         $db->insert("links", $insert_ary);
     }
@@ -288,7 +288,7 @@ function news_form_news_update($news_data) {
                 if (empty($value)) {
                     $db->delete("links", ["link_id" => $link_id], "LIMIT 1");
                 } else {
-                    $db->update("links", ["link" => $db->escape_strip(urldecode($value))], ["link_id" => $link_id], "LIMIT 1");
+                    $db->update("links", ["link" => $db->escapeStrip(urldecode($value))], ["link_id" => $link_id], "LIMIT 1");
                 }
             }
         }

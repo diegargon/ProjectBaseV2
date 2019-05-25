@@ -20,9 +20,9 @@ function stdGetComments($comm_conf) {
         unset($comm_conf['limit']);
     }
 
-    $query = $db->select_all('comments', $comm_conf, $LIMIT);
+    $query = $db->selectAll('comments', $comm_conf, $LIMIT);
 
-    return ($db->num_rows($query) < 1) ? false : $db->fetch_all($query);
+    return ($db->numRows($query) < 1) ? false : $db->fetchAll($query);
 }
 
 function stdFormatComments($comments, $comm_conf) {
@@ -79,7 +79,7 @@ function stdNewComment() {
 function stdAddComment($comment) {
     global $db;
 
-    $comment['comment'] = $db->escape_strip($comment['comment']);
+    $comment['comment'] = $db->escapeStrip($comment['comment']);
     $r = $db->insert('comments', $comment);
 
     return $r ? true : false;
@@ -92,6 +92,6 @@ function stdGetNumComm($conf) {
         return false;
     }
 
-    $query = $db->select_all('comments', $conf);
-    return $db->num_rows($query);
+    $query = $db->selectAll('comments', $conf);
+    return $db->numRows($query);
 }

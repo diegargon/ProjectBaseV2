@@ -57,8 +57,8 @@ class Blocks {
     function getAdminBlocks() {
         global $db;
 
-        $q = $db->select_all('blocks');
-        $admin_blocks = $db->fetch_all($q);
+        $q = $db->selectAll('blocks');
+        $admin_blocks = $db->fetchAll($q);
 
         return (count($admin_blocks) > 0) ? $admin_blocks : false;
     }
@@ -82,7 +82,7 @@ class Blocks {
             $where_ary['lang'] = ['value' => "({$langs})", 'operator' => 'IN'];
         }
 
-        $q = $db->select_all('blocks', $where_ary, 'ORDER BY section,weight', 'AND');
+        $q = $db->selectAll('blocks', $where_ary, 'ORDER BY section,weight', 'AND');
 
         $cfg['user_can_disable_dflt_blocks'] = 1; //TO CFG
         $user_cfg['user_disable_dflt_blocks'] = 0; //TO USER CFG
@@ -139,7 +139,7 @@ class Blocks {
         global $db;
 
         $query = $db->select('blocks', 'blocks_id, uid, blockname, blockconf', ['blocks_id' => $block_id], 'LIMIT 1');
-        if ($db->num_rows($query) > 0) {
+        if ($db->numRows($query) > 0) {
             $block_data = $db->fetch($query);
             $block_conf = $this->blockConfig($block_data['blockname'], $block_data);
             return $block_conf;

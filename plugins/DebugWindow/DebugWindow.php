@@ -16,12 +16,12 @@ function debug_window() {
 
         ($cfg['smbasic_debug']) ? setSessionDebugDetails() : null;
 
-        $q_history = $db->get_query_history();
+        $q_history = $db->getQueryHistory();
         foreach ($q_history as $value) {
             $debug->log($value, 'MYSQL');
         }
         $debug_data = '<div style="height:250px;width:100%;border:1px solid #ccc;;overflow:auto;">';
-        $debug_data .= $debug->print_debug();
+        $debug_data .= $debug->printDebug();
         $debug_data .= '</div>';
         return $debug_data;
     }

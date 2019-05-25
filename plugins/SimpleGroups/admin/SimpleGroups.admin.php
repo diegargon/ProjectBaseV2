@@ -8,7 +8,7 @@
 function SimpleGroups_AdminInit() {
     global $plugins;
 
-    $plugins->express_start("SimpleGroups") ? register_action("add_admin_menu", "SimpleGroups_AdminMenu", 5) : null;
+    $plugins->expressStart("SimpleGroups") ? register_action("add_admin_menu", "SimpleGroups_AdminMenu", 5) : null;
 }
 
 function SimpleGroups_AdminMenu($params) {

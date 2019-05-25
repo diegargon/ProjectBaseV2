@@ -35,7 +35,7 @@ function get_news_query($where, $q_conf = null, $order = null) {
     }
     $extra = $order . $limit;
     $result = $db->select('news', $what, $where, $extra);
-    return $db->fetch_all($result);
+    return $db->fetchAll($result);
 }
 
 function layout_news($template, $news) {
@@ -91,12 +91,12 @@ function get_news_byId($nid, $lang_id, $page = null) {
     empty($page) ? $page = 1 : false;
 
     $where_ary = ['nid' => $nid, 'lang_id' => $lang_id, 'page' => $page];
-    $query = $db->select_all('news', $where_ary, 'LIMIT 1');
+    $query = $db->selectAll('news', $where_ary, 'LIMIT 1');
 
     //TODO ONE SELECT ALL LANG AND THEN CHOOSE IF EXISTS OR NOT EXIST
-    if ($db->num_rows($query) < 1) { //IF NOT FOUND CHECK IN OTHER LANG        
-        $query = $db->select_all('news', ['nid' => $nid, 'page' => $page], 'LIMIT 1');
-        return $db->num_rows($query) > 0 ? 'L_NEWS_NOLANG' : 'L_NEWS_DELETE_NOEXISTS';
+    if ($db->numRows($query) < 1) { //IF NOT FOUND CHECK IN OTHER LANG        
+        $query = $db->selectAll('news', ['nid' => $nid, 'page' => $page], 'LIMIT 1');
+        return $db->numRows($query) > 0 ? 'L_NEWS_NOLANG' : 'L_NEWS_DELETE_NOEXISTS';
     }
     $news_row = $db->fetch($query);
 
@@ -113,8 +113,8 @@ function get_news_byId($nid, $lang_id, $page = null) {
 function get_news_links(& $news_data) {
     global $db;
 
-    $query = $db->select_all('links', ['source_id' => $news_data['nid']]);
-    if ($db->num_rows($query) < 1) {
+    $query = $db->selectAll('links', ['source_id' => $news_data['nid']]);
+    if ($db->numRows($query) < 1) {
         return false;
     } else {
         $news_data['news_related'] = '';
@@ -132,8 +132,8 @@ function get_news_links(& $news_data) {
 function news_get_source($nid) {
     global $db;
 
-    $query = $db->select_all('links', ['source_id' => $nid, 'type' => 'source'], 'LIMIT 1');
-    if ($db->num_rows($query) <= 0) {
+    $query = $db->selectAll('links', ['source_id' => $nid, 'type' => 'source'], 'LIMIT 1');
+    if ($db->numRows($query) <= 0) {
         return false;
     } else {
         $source_link = $db->fetch($query);
@@ -146,8 +146,8 @@ function news_get_source($nid) {
 function news_get_related($nid) {
     global $db;
 
-    $query = $db->select_all('links', ['source_id' => $nid, 'plugin' => 'News', 'type' => 'related']);
-    if ($db->num_rows($query) <= 0) {
+    $query = $db->selectAll('links', ['source_id' => $nid, 'plugin' => 'News', 'type' => 'related']);
+    if ($db->numRows($query) <= 0) {
         return false;
     } else {
         while ($relate_row = $db->fetch($query)) {

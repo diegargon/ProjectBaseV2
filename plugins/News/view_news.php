@@ -10,17 +10,17 @@ require_once('includes/news_view.php');
 
 do_action('news_page_begin');
 
-if (!($plugins->express_start_provider('EDITOR')) || !($plugins->express_start_provider('CATS'))) {
+if (!($plugins->expressStartProvider('EDITOR')) || !($plugins->expressStartProvider('CATS'))) {
     $frontend->messageBox(['msg' => 'L_E_PL_CANTEXPRESS']);
     return false;
 }
 
-if ($plugins->check_enabled('NewsComments')) {
-    $plugins->express_start('NewsComments');
+if ($plugins->checkEnabled('NewsComments')) {
+    $plugins->expressStart('NewsComments');
 }
 
-if ($plugins->check_enabled('Multilang')) {
-    $plugins->express_start('Multilang');
+if ($plugins->checkEnabled('Multilang')) {
+    $plugins->expressStart('Multilang');
 }
 
 
@@ -28,8 +28,8 @@ if ($cfg['news_vote_disable_by_stress'] && is_server_stressed()) {
     
 } else {   
     if (!$cfg['ITS_BOT'] && $cfg['news_vote_enabled'] &&
-            $plugins->check_enabled_provider('RATINGS') &&
-            $plugins->express_start_provider('RATINGS')
+            $plugins->checkEnabledProvider('RATINGS') &&
+            $plugins->expressStartProvider('RATINGS')
     ) {
         $tpl->addScriptFile('StdRatings', 'rate', 'BOTTOM');
         register_action('news_show_page', 'newsvote_news_addrate');

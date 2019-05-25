@@ -8,7 +8,7 @@
 
 function SimpleFrontend_AdminInit() {
     global $frontend, $plugins;
-    if ((!$plugins->express_start('SimpleFrontend'))) {
+    if ((!$plugins->expressStart('SimpleFrontend'))) {
         $frontend->messageBox(['msg' => 'L_E_PL_CANTEXPRESS']);
         return false;
     }

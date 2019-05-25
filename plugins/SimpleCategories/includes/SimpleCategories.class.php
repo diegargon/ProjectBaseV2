@@ -193,9 +193,9 @@ class Categories {
 
         ($plugin) ? $plugin_name['plugin'] = $plugin : $plugin_name = null;
 
-        $query = $db->select_all('categories', $plugin_name, 'ORDER BY father,weight');
+        $query = $db->selectAll('categories', $plugin_name, 'ORDER BY father,weight');
 
-        if ($db->num_rows($query) > 0) {
+        if ($db->numRows($query) > 0) {
             while ($row = $db->fetch($query)) {
                 $cats[] = $row;
             }
@@ -226,9 +226,9 @@ class Categories {
     private function loadCategories() {
         global $db;
 
-        $query = $db->select_all('categories', null, 'ORDER BY father,cid, weight');
+        $query = $db->selectAll('categories', null, 'ORDER BY father,cid, weight');
 
-        $this->categories = $db->fetch_all($query);
+        $this->categories = $db->fetchAll($query);
         $db->free($query);
     }
 

@@ -5,7 +5,7 @@
  */
 !defined('IN_WEB') ? exit : true;
 
-$plugins->express_start("NewsSearch");
+$plugins->expressStart("NewsSearch");
 
 require_once __DIR__ . '/includes/NewsSearchPage.inc.php';
 
@@ -15,7 +15,7 @@ if (!empty($_GET['q'])) {
     if (empty($q)) {
         $frontend->messageBox(['title' => 'L_NS_SEARCH', 'msg' => 'L_NS_SEARCH_ERROR']);
     }
-    $q = $db->escape_strip($q);
+    $q = $db->escapeStrip($q);
 
     (defined('MULTILANG')) ? $where_ary['lang_id'] = $ml->getWebLangID() : $where_ary['lang_id'] = 1;
 
@@ -32,7 +32,7 @@ if (!empty($_GET["searchTag"])) {
     if (empty($searchTag)) {
         $frontend->messageBox(['title' => 'L_NS_SEARCH', 'msg' => 'L_NS_SEARCH_ERROR']);
     }
-    $searchTag = $db->escape_strip($searchTag);
+    $searchTag = $db->escapeStrip($searchTag);
 
     (defined('MULTILANG')) ? $where_ary['lang_id'] = $ml->getWebLangID() : $where_ary['lang_id'] = 1;
 

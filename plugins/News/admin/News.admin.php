@@ -8,7 +8,7 @@
 function News_AdminInit() {
     global $plugins;
 
-    $plugins->express_start('News') ? register_action('add_admin_menu', 'News_AdminMenu', '5') : null;
+    $plugins->expressStart('News') ? register_action('add_admin_menu', 'News_AdminMenu', '5') : null;
 }
 
 function News_AdminMenu($params) {
@@ -62,9 +62,9 @@ function News_AdminModeration() {
     global $cfg, $LNG, $db;
 
     $content = '<div>';
-    $query = $db->select_all('news', ['moderation' => '1'], 'LIMIT ' . $cfg['news_list_moderation_limits']);
+    $query = $db->selectAll('news', ['moderation' => '1'], 'LIMIT ' . $cfg['news_list_moderation_limits']);
 
-    if ($db->num_rows($query) <= 0) {
+    if ($db->numRows($query) <= 0) {
 
         return '<p>' . $LNG['L_NEWS_NONEWS_MOD'] . '</p>';
     }

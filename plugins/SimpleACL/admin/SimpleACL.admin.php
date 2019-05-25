@@ -8,7 +8,7 @@
 function SimpleACL_AdminInit() {
     global $plugins;
 
-    $plugins->express_start("SimpleACL") ? register_action("add_admin_menu", "SimpleACL_AdminMenu", 5) : null;
+    $plugins->expressStart("SimpleACL") ? register_action("add_admin_menu", "SimpleACL_AdminMenu", 5) : null;
 }
 
 function SimpleACL_AdminMenu($params) {

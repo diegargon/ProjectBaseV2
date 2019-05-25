@@ -26,7 +26,7 @@ function NS_tag_add_form() {
 function NS_news_mod_insert(& $insert_ary) {
     global $db, $filter;
 
-    $tags = $db->escape_strip($filter->post_UTF8_txt("news_tags"));
+    $tags = $db->escapeStrip($filter->post_UTF8_txt("news_tags"));
     !empty($tags) ? $insert_ary['tags'] = $tags : false;
 }
 
@@ -62,7 +62,7 @@ function NS_tags_edit_form_add($news_data) {
 function NS_news_edit_set_tag(& $set_ary) {
     global $db, $filter;
 
-    $tags = $db->escape_strip($filter->post_UTF8_txt("news_tags"));
+    $tags = $db->escapeStrip($filter->post_UTF8_txt("news_tags"));
     !empty($tags) ? $set_ary['tags'] = $tags : false;
 }
 

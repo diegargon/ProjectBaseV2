@@ -8,7 +8,7 @@
 function SimpleCats_AdminInit() {
     global $plugins;
 
-    $plugins->express_start('SimpleCategories') ? register_action('add_admin_menu', 'SimpleCats_AdminMenu', 5) : null;
+    $plugins->expressStart('SimpleCategories') ? register_action('add_admin_menu', 'SimpleCats_AdminMenu', 5) : null;
 }
 
 function SimpleCats_AdminMenu($params) {
@@ -148,8 +148,8 @@ function SimpleCats_ModCategories() {
                 !empty($posted_weight) ? $mod_cat_ary['weight'] = $posted_weight : $mod_cat_ary['weight'] = 0;
                 !empty($posted_image) ? $mod_cat_ary['image'] = $posted_image : null;
 
-                $query = $db->select_all('categories', ['cid' => $posted_cid, 'lang_id' => $lang_id]);
-                if ($db->num_rows($query) > 0) {
+                $query = $db->selectAll('categories', ['cid' => $posted_cid, 'lang_id' => $lang_id]);
+                if ($db->numRows($query) > 0) {
                     $db->update('categories', $mod_cat_ary, ['cid' => $posted_cid, 'lang_id' => $lang_id]);
                 }
             }
@@ -160,7 +160,7 @@ function SimpleCats_ModCategories() {
 function SimpleCats_NewCategory($plugin) {
     global $filter, $ml, $db;
 
-    $new_cid = $db->get_next_num('categories', 'cid');
+    $new_cid = $db->getNextNum('categories', 'cid');
 
     (defined('MULTILANG')) ? $langs = $ml->getSiteLangs() : $langs['lang_id'] = 1;
 

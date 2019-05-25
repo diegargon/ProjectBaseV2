@@ -7,7 +7,7 @@
 
 function ExampleTemplate_AdminInit() {
     global $plugins;
-    $plugins->express_start('ExampleTemplate') ? register_action('add_admin_menu', 'ExampleTemplate_AdminMenu', '5') : null;
+    $plugins->expressStart('ExampleTemplate') ? register_action('add_admin_menu', 'ExampleTemplate_AdminMenu', '5') : null;
 }
 
 function ExampleTemplate_AdminMenu($params) {

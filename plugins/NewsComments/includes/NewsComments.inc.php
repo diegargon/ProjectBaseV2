@@ -16,8 +16,8 @@ function News_Comments($news) {
     $user = $sm->getSessionUser();
 
     if (!$cfg['ITS_BOT'] && $cfg['nc_vote_comments'] &&
-            $plugins->check_enabled_provider('RATINGS') &&
-            $plugins->express_start_provider('RATINGS')
+            $plugins->checkEnabledProvider('RATINGS') &&
+            $plugins->expressStartProvider('RATINGS')
     ) {
         $tpl->addScriptFile('StdRatings', 'rate', 'BOTTOM');
         $tpl->getCssFile('NewsComments');
@@ -34,7 +34,7 @@ function News_Comments($news) {
         }
     }
 
-    if (!$plugins->check_enabled_provider('COMMENTS') || !$plugins->express_start_provider('COMMENTS')) {
+    if (!$plugins->checkEnabledProvider('COMMENTS') || !$plugins->expressStartProvider('COMMENTS')) {
         return false;
     }
 
@@ -93,7 +93,7 @@ function NewsComments_AddrateDisplay(& $comments) {
 function newsvote_news_user_rating($nid, $lang_id, $user_rating) {
     global $db, $cfg, $UXtra;
 
-    $query = $db->select_all("news", ["nid" => "$nid", "lang_id" => $lang_id, "page" => 1], "LIMIT 1");
+    $query = $db->selectAll("news", ["nid" => "$nid", "lang_id" => $lang_id, "page" => 1], "LIMIT 1");
     $news_data = $db->fetch($query);
     $author_xtrData = $UXtra->getById($news_data['author_id']);
     if ($author_xtrData == false) {
@@ -117,7 +117,7 @@ function newsvote_news_user_rating($nid, $lang_id, $user_rating) {
 function newsvote_comment_user_rating($cid, $lang_id, $user_rating) {
     global $db, $cfg, $UXtra;
 
-    $query = $db->select_all("comments", ["cid" => "$cid", "lang_id" => $lang_id], "LIMIT 1");
+    $query = $db->selectAll("comments", ["cid" => "$cid", "lang_id" => $lang_id], "LIMIT 1");
     $comment_data = $db->fetch($query);
     $author_xtrData = $UXtra->getById($comment_data['author_id']);
     if ($author_xtrData == false) {

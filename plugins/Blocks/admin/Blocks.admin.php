@@ -8,7 +8,7 @@
 function Blocks_AdminInit() {
     global $plugins;
 
-    $plugins->express_start('Blocks') ? register_action('add_admin_menu', 'Blocks_AdminMenu', '5') : null;
+    $plugins->expressStart('Blocks') ? register_action('add_admin_menu', 'Blocks_AdminMenu', '5') : null;
 }
 
 function Blocks_AdminMenu($params) {

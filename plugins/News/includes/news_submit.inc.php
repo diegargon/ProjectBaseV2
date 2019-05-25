@@ -9,11 +9,11 @@
 function news_new_form($news_perms) {
     global $LNG, $tpl, $sm, $frontend, $ml, $plugins;
 
-    if (!($plugins->express_start_provider('EDITOR')) || !($plugins->express_start_provider('CATS'))) {
+    if (!($plugins->expressStartProvider('EDITOR')) || !($plugins->expressStartProvider('CATS'))) {
         $frontend->messageBox(['msg' => 'L_E_PL_CANTEXPRESS']);
         return false;
     }
-    $plugins->express_start_provider('NEWSMEDIAUPLOAD');
+    $plugins->expressStartProvider('NEWSMEDIAUPLOAD');
 
     $editor = new Editor();
 
@@ -62,7 +62,7 @@ function news_new_form($news_perms) {
 function news_create_new($news_data) {
     global $cfg, $ml, $db;
 
-    $news_data['nid'] = $db->get_next_num('news', 'nid');
+    $news_data['nid'] = $db->getNextNum('news', 'nid');
 
     defined('MULTILANG') ? $lang_id = $ml->isoToID($news_data['news_lang']) : $lang_id = 1;
 
@@ -80,9 +80,9 @@ function news_create_new($news_data) {
         'nid' => $news_data['nid'],
         'lang_id' => $lang_id,
         'page' => 1,
-        'title' => $db->escape_strip($news_data['title']),
-        'lead' => $db->escape_strip($news_data['lead']),
-        'text' => $db->escape_strip($news_data['editor_text']),
+        'title' => $db->escapeStrip($news_data['title']),
+        'lead' => $db->escapeStrip($news_data['lead']),
+        'text' => $db->escapeStrip($news_data['editor_text']),
         'featured' => $news_data['featured'],
         'author_id' => $news_data['author_id'],
         'category' => $news_data['category'],
@@ -103,7 +103,7 @@ function news_create_new($news_data) {
             'source_id' => $news_data['nid'],
             'plugin' => $plugin,
             'type' => 'source',
-            'link' => $db->escape_strip(urlencode($news_data['news_source']))
+            'link' => $db->escapeStrip(urlencode($news_data['news_source']))
         ];
         $db->insert('links', $insert_ary);
     }
@@ -111,7 +111,7 @@ function news_create_new($news_data) {
     if (!empty($news_data['news_new_related'])) {
         $insert_ary = [
             'source_id' => $news_data['nid'], 'plugin' => $plugin,
-            'type' => 'related', 'link' => $db->escape_strip(urlencode($news_data['news_new_related'])),
+            'type' => 'related', 'link' => $db->escapeStrip(urlencode($news_data['news_new_related'])),
         ];
         $db->insert('links', $insert_ary);
     }

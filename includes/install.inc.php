@@ -32,7 +32,7 @@ if ($step == null || $step == false) {
 
         if ($step == 1) {
 
-            if ($db->table_exist('config') || $db->table_exist('plugin')) {
+            if ($db->tableExists('config') || $db->tableExists('plugin')) {
                 exit('ERROR: Core tables exist, install failed? drop tables');
             }
             foreach ($core_database as $query) {

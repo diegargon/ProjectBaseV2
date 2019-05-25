@@ -13,7 +13,7 @@ function core_set_config() {
     $db->silent(false);
 
     if ($result) {
-        $config = $db->fetch_all($result);
+        $config = $db->fetchAll($result);
         foreach ($config as $conf) {
             $cfg[$conf['cfg_key']] = $conf['cfg_value'];
         }
@@ -26,19 +26,19 @@ function core_setup_database() {
     require_once ('includes/' . DB_TYPE . '.class.php');
 
     $db = new Database(DB_HOST, DB, DB_USER, DB_PASSWORD);
-    $db->set_charset(DB_CHARSET);
-    $db->set_prefix(DB_PREFIX);
-    $db->set_minchar_search(DB_MINCHAR_SEARCH);
+    $db->setCharset(DB_CHARSET);
+    $db->setPrefix(DB_PREFIX);
+    $db->setMinCharSearch(DB_MINCHAR_SEARCH);
     $db->connect();
 }
 
 function core_check_module($module) {
     global $plugins;
 
-    !$plugins->check_enabled($module) ? exit('Error plugin ins\'t enabled') : null;
+    !$plugins->checkEnabled($module) ? exit('Error plugin ins\'t enabled') : null;
 
-    if (!$plugins->check_started($module)) {
-        if (!$plugins->express_start($module)) {
+    if (!$plugins->checkStarted($module)) {
+        if (!$plugins->expressStart($module)) {
             return false;
         }
     }

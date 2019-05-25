@@ -14,7 +14,7 @@ function SMBasic_Login($email, $password, $rememberme) {
         die('[{"status": "error", "msg": "' . $LNG['L_E_INTERNAL'] . '"}]');
     }
 
-    $query = $db->select_all('users', ['email' => $email, 'password' => $password_encrypt], 'LIMIT 1');
+    $query = $db->selectAll('users', ['email' => $email, 'password' => $password_encrypt], 'LIMIT 1');
     if (($user = $db->fetch($query))) {
         $db->free($query);
 
@@ -41,10 +41,10 @@ function SMBasic_Login($email, $password, $rememberme) {
 function SMBasic_user_activate_account($activation_code) {
     global $db;
 
-    $activation_code = $db->escape_strip($activation_code);
+    $activation_code = $db->escapeStrip($activation_code);
 
-    $query = $db->select_all('users', ['active' => $activation_code], 'LIMIT 1');
-    if ($db->num_rows($query) <= 0) {
+    $query = $db->selectAll('users', ['active' => $activation_code], 'LIMIT 1');
+    if ($db->numRows($query) <= 0) {
         return false;
     }
 
@@ -64,8 +64,8 @@ function SMBasic_RequestResetOrActivation() {
         die('[{"status": "1", "msg": "' . $LNG['L_EMAIL_LONG'] . '"}]');
         return false;
     }
-    $query = $db->select_all('users', ['email' => $email], 'LIMIT 1');
-    if ($db->num_rows($query) <= 0) {
+    $query = $db->selectAll('users', ['email' => $email], 'LIMIT 1');
+    if ($db->numRows($query) <= 0) {
         die('[{"status": "1", "msg": "' . $LNG['L_E_EMAIL_NOEXISTS'] . '"}]');
     } else {
         $user = $db->fetch($query);
@@ -75,7 +75,7 @@ function SMBasic_RequestResetOrActivation() {
             die('[{"status": "2", "msg": "' . $LNG['L_ACTIVATION_EMAIL'] . '"}]');
         } else {
             $reset = mt_rand(11111111, 2147483647);
-            $db->update('users', ['reset' => $reset], ['email' => $db->escape_strip($email)]);
+            $db->update('users', ['reset' => $reset], ['email' => $db->escapeStrip($email)]);
             $URL = $cfg['WEB_URL'] . $cfg['WEB_LANG'] . '/login' . "&reset=$reset&email=$email";
             $msg = $LNG['L_RESET_EMAIL_MSG'] . '\n' . $URL;
             mail($email, $LNG['L_RESET_EMAIL_SUBJECT'], $msg, "From: {$cfg['smbasic_register_reply_email']} \r\n");
@@ -94,8 +94,8 @@ function SMBasic_user_reset_password() {
     if ($reset == false || $email == false) {
         return false;
     }
-    $query = $db->select_all('users', ['email' => $email, 'reset' => $reset]);
-    if ($db->num_rows($query) > 0) {
+    $query = $db->selectAll('users', ['email' => $email, 'reset' => $reset]);
+    if ($db->numRows($query) > 0) {
         $user = $db->fetch($query);
         $password = SMBasic_randomPassword();
         $password_encrypted = $sm->encryptPassword($password);

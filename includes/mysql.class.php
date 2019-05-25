@@ -52,19 +52,19 @@ class Database {
         return true;
     }
 
-    function set_prefix($prefix) {
+    function setPrefix($prefix) {
         $this->db_prefix = $prefix;
     }
 
-    function set_charset($charset) {
+    function setCharset($charset) {
         $this->charset = $charset;
     }
 
-    function set_collate($collate) {
+    function setCollate($collate) {
         $this->collate = $collate;
     }
 
-    function set_minchar_search($value) {
+    function setMinCharSearch($value) {
         $this->min_search_char = $value;
     }
 
@@ -87,9 +87,9 @@ class Database {
         return $row = $query->fetch_assoc();
     }
 
-    function fetch_all($query) {
+    function fetchAll($query) {
         $return_ary = [];
-        if ($this->num_rows($query) > 0) {
+        if ($this->numRows($query) > 0) {
             while ($row = $this->fetch($query)) {
                 $return_ary[] = $row;
             }
@@ -101,11 +101,11 @@ class Database {
         return $this->dblink->real_escape_string($var);
     }
 
-    function escape_strip($var) {
+    function escapeStrip($var) {
         return $this->dblink->real_escape_string(strip_tags($var));
     }
 
-    function num_rows($result) {
+    function numRows($result) {
         return $result->num_rows;
     }
 
@@ -122,7 +122,7 @@ class Database {
         exit;
     }
 
-    function insert_id() {
+    function insertID() {
         if (!($id = $this->dblink->insert_id)) {
             die('Could not connect: ' . $this->dblink->error);
             $this->dblink->close();
@@ -136,17 +136,17 @@ class Database {
         $query->free();
     }
 
-    function table_exist($table) {
+    function tableExists($table) {
         $query = "SHOW TABLES LIKE '$table'";
         $result = $this->query($query);
-        if ($this->num_rows($result) == 1) {
+        if ($this->numRows($result) == 1) {
             return true;
         } else {
             return false;
         }
     }
 
-    function get_next_num($table, $field) {
+    function getNextNum($table, $field) {
 
         if (empty($table) || empty($field)) {
             return false;
@@ -160,13 +160,13 @@ class Database {
     }
 
     /*
-     * $db->select_all("users", ['uid' => 1, 'username' => "myname"], "LIMIT 1"); 
+     * $db->selectAll("users", ['uid' => 1, 'username' => "myname"], "LIMIT 1"); 
      * Especify operator default '=';
-     * $query = $db->select_all("news", ["frontpage" => ["value"=> 1, "operator" => "="], "moderation" => 0, "disabled" => 0]);
+     * $query = $db->selectAll("news", ["frontpage" => ["value"=> 1, "operator" => "="], "moderation" => 0, "disabled" => 0]);
      * extra not array 
      */
 
-    function select_all($table, $where = null, $extra = null, $logic = 'AND') {
+    function selectAll($table, $where = null, $extra = null, $logic = 'AND') {
 
         if (empty($table)) {
             return false;
@@ -175,7 +175,7 @@ class Database {
 
         if (!empty($where)) {
             $query .= ' WHERE ';
-            $query .= $this->where_process($where, $logic);
+            $query .= $this->whereProcess($where, $logic);
         }
         !empty($extra) ? $query .= " $extra" : false;
 
@@ -190,7 +190,7 @@ class Database {
 
         if (!empty($where)) {
             $query .= ' WHERE ';
-            $query .= $this->where_process($where, $logic);
+            $query .= $this->whereProcess($where, $logic);
         }
         !empty($extra) ? $query .= " $extra" : false;
 
@@ -209,7 +209,7 @@ class Database {
         $query = 'SELECT * FROM ' . $this->db_prefix . $table . ' WHERE ';
 
         if (!empty($where)) {
-            $query .= $this->where_process($where, $logic = 'AND');
+            $query .= $this->whereProcess($where, $logic = 'AND');
             $query .= ' AND ';
         }
 
@@ -245,10 +245,10 @@ class Database {
         if (empty($set) || empty($table)) {
             return false;
         }
-        $query .= $this->set_process($set);
+        $query .= $this->setProcess($set);
 
         if (!empty($where)) {
-            $query .= ' WHERE ' . $this->where_process($where, $logic);
+            $query .= ' WHERE ' . $this->whereProcess($where, $logic);
         }
         !empty($extra) ? $query .= " $extra" : false;
         return $this->query($query);
@@ -261,7 +261,7 @@ class Database {
         if (empty($table) || empty($insert_data)) {
             return false;
         }
-        $insert_ary = $this->insert_process($insert_data);
+        $insert_ary = $this->insertProcess($insert_data);
         $query = "INSERT INTO " . $this->db_prefix . $table . " ( {$insert_ary['fields']} ) VALUES ( {$insert_ary['values']} ) $extra";
 
         return $this->query($query);
@@ -273,7 +273,7 @@ class Database {
             return false;
         }
         $query = 'DELETE FROM ' . $this->db_prefix . $table . ' WHERE ';
-        $query .= $this->where_process($where, $logic);
+        $query .= $this->whereProcess($where, $logic);
         !empty($extra) ? $query .= " $extra" : false;
 
         return $this->query($query);
@@ -281,19 +281,19 @@ class Database {
 
     function upsert($table, $set_ary, $where_ary) {
         $insert_data = array_merge($where_ary, $set_ary);
-        $set_data = $this->set_process($set_ary);
+        $set_data = $this->setProcess($set_ary);
         $this->insert($table, $insert_data, "ON DUPLICATE KEY UPDATE $set_data");
     }
 
-    function num_querys() {
+    function numQuerys() {
         return $this->query_stats;
     }
 
-    function get_query_history() {
+    function getQueryHistory() {
         return $this->query_history;
     }
 
-    private function insert_process($insert_data) {
+    private function insertProcess($insert_data) {
         foreach ($insert_data as $field => $value) {
             $fields_ary[] = $field;
             $values_ary[] = "'" . $value . "'";
@@ -304,7 +304,7 @@ class Database {
         return $insert;
     }
 
-    private function set_process($set) {
+    private function setProcess($set) {
         foreach ($set as $field => $value) {
             $newset[] = "$field = " . "'" . $value . "'";
         }
@@ -312,7 +312,7 @@ class Database {
         return $query;
     }
 
-    private function where_process($where, $logic) {
+    private function whereProcess($where, $logic) {
 
         foreach ($where as $field => $value) {
             if (!is_array($value)) {

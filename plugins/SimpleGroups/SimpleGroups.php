@@ -24,22 +24,22 @@ function SimpleGroups_install() {
     if (!$db->query($simplegroups_database_install_insert_admin_group)) {
         return false;
     }
-    $admin_grp_id = $db->insert_id();
+    $admin_grp_id = $db->insertID();
 
     if (!$db->query($simplegroups_database_install_insert_admin_limited_group)) {
         return false;
     }
-    $admin_limited_id = $db->insert_id();
+    $admin_limited_id = $db->insertID();
 
     if (!$db->query($simplegroups_database_install_insert_registered_group)) {
         return false;
     }
-    $registered_grp_id = $db->insert_id();
+    $registered_grp_id = $db->insertID();
 
     if (!$db->query($simplegroups_database_install_anon_group)) {
         return false;
     }
-    $anon_grp_id = $db->insert_id();
+    $anon_grp_id = $db->insertID();
 
     if (
             !$db->update('groups', ['group_father' => $admin_grp_id], ['group_id' => $admin_limited_id]) ||

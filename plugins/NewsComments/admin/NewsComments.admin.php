@@ -6,7 +6,7 @@
 
 function NewsComments_AdminInit() {
     global $plugins;
-    $plugins->express_start("NewsComments") ? register_action("add_admin_menu", "NewsComments_AdminMenu", "5") : null;
+    $plugins->expressStart("NewsComments") ? register_action("add_admin_menu", "NewsComments_AdminMenu", "5") : null;
 }
 
 function NewsComments_AdminMenu($params) {

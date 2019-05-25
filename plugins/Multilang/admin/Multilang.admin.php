@@ -8,7 +8,7 @@
 function Multilang_AdminInit() {
     global $plugins, $ml;
     /* Check if start for configure */
-    $plugins->express_start("Multilang") ? register_action("add_admin_menu", "Multilang_AdminMenu") : null;
+    $plugins->expressStart("Multilang") ? register_action("add_admin_menu", "Multilang_AdminMenu") : null;
 }
 
 function Multilang_AdminMenu($params) {
@@ -95,20 +95,20 @@ function Multilang_ModifyLang() {
     $modify_ary["active"] = $active;
 
     if ($lang_name != false && $iso_code != false && $lang_id != false) {
-        $query2 = $db->select_all("lang", ["lang_id" => "$lang_id"], "LIMIT 1");
-        if ($db->num_rows($query2) > 0) {
+        $query2 = $db->selectAll("lang", ["lang_id" => "$lang_id"], "LIMIT 1");
+        if ($db->numRows($query2) > 0) {
             $lang_data = $db->fetch($query2);
             if ($lang_data['lang_name'] != $lang_name) {
-                $query3 = $db->select_all("lang", ["lang_name" => "$lang_name"], "LIMIT 1");
-                if ($db->num_rows($query3) > 0) {
+                $query3 = $db->selectAll("lang", ["lang_name" => "$lang_name"], "LIMIT 1");
+                if ($db->numRows($query3) > 0) {
                     return $LNG['L_ML_E_FIELDS_EXISTS'];
                 } else {
                     $modify_ary["lang_name"] = $lang_name;
                 }
             }
             if ($lang_data['iso_code'] != $iso_code) {
-                $query3 = $db->select_all("lang", ["iso_code" => "$iso_code"], "LIMIT 1");
-                if ($db->num_rows($query3) > 0) {
+                $query3 = $db->selectAll("lang", ["iso_code" => "$iso_code"], "LIMIT 1");
+                if ($db->numRows($query3) > 0) {
                     return $LNG['L_ML_E_FIELDS_EXISTS'];
                 } else {
                     $modify_ary["iso_code"] = $iso_code;
@@ -140,9 +140,9 @@ function Multilang_CreateLang() {
             "lang_name" => ["value" => "$lang_name", "operator" => "LIKE"],
             "iso_code" => ["value" => "$iso_code", "operator" => "LIKE"]
         ];
-        $query = $db->select_all("lang", $where_ary, "LIMIT 1", "OR");
+        $query = $db->selectAll("lang", $where_ary, "LIMIT 1", "OR");
 
-        if ($db->num_rows($query) == 0) {
+        if ($db->numRows($query) == 0) {
             $db->insert("lang", ["lang_name" => "$lang_name", "active" => "$active", "iso_code" => "$iso_code"]);
         } else {
             $error = $LNG['L_ML_E_FIELDS_EXISTS'];

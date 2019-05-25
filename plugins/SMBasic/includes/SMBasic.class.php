@@ -70,7 +70,7 @@ class SessionManager {
         }
 
         if (!empty($retrieve_ids_list)) {
-            $query = $db->select_all('users', ['uid' => ['value' => '(' . $retrieve_ids_list . ')', 'operator' => 'IN']], 'LIMIT ' . $elements . '');
+            $query = $db->selectAll('users', ['uid' => ['value' => '(' . $retrieve_ids_list . ')', 'operator' => 'IN']], 'LIMIT ' . $elements . '');
 
             while ($user = $db->fetch($query)) {
                 $this->users_cache_db[$user['uid']] = $user;
@@ -88,8 +88,8 @@ class SessionManager {
             return $this->users_cache_db[$uid];
         }
 
-        $query = $db->select_all('users', ['uid' => $uid], 'LIMIT 1');
-        if ($db->num_rows($query) <= 0) {
+        $query = $db->selectAll('users', ['uid' => $uid], 'LIMIT 1');
+        if ($db->numRows($query) <= 0) {
             return false;
         }
         $user = $db->fetch($query);
@@ -104,9 +104,9 @@ class SessionManager {
         if (($uid = array_search($username, array_column($this->users_cache_db, 'username')))) {
             return $this->users_cache_db[$uid];
         }
-        $query = $db->select_all('users', ['username' => $username], 'LIMIT 1');
+        $query = $db->selectAll('users', ['username' => $username], 'LIMIT 1');
 
-        if ($db->num_rows($query) <= 0) {
+        if ($db->numRows($query) <= 0) {
             return false;
         }
         $user = $db->fetch($query);
@@ -144,7 +144,7 @@ class SessionManager {
     function getAllUsersArray($order_field = 'regdate', $order = 'ASC', $limit = 20) {
         global $db;
         $extra = 'ORDER BY ' . $order_field . ' ' . $order . ' LIMIT ' . $limit;
-        $query = $db->select_all('users', null, $extra);
+        $query = $db->selectAll('users', null, $extra);
         while ($user_row = $db->fetch($query)) {
             $users_ary[] = $user_row;
         }
@@ -170,8 +170,8 @@ class SessionManager {
                 $where_ary = ['username' => ['value' => '\'%' . $string . '%\'', 'operator' => 'LIKE']];
             }
         }
-        $query = $db->select_all('users', $where_ary);
-        if ($db->num_rows($query) > 0) {
+        $query = $db->selectAll('users', $where_ary);
+        if ($db->numRows($query) > 0) {
             while ($user_row = $db->fetch($query)) {
                 $users_ary[] = $user_row;
             }
@@ -229,7 +229,7 @@ class SessionManager {
 
     private function loadSessionData() {
         global $db;
-        $query = $db->select_all('sessions', ['uid' => $this->user['uid']], 'LIMIT 1');
+        $query = $db->selectAll('sessions', ['uid' => $this->user['uid']], 'LIMIT 1');
         $session = $db->fetch($query);
 
         if ($session['session_expire'] < time()) {
@@ -267,8 +267,8 @@ class SessionManager {
             $q_ary = [
                 'session_id' => $sid,
                 'session_uid' => $user['uid'],
-                'session_ip' => $db->escape_strip($filter->srv_remote_addr()),
-                'session_browser' => $db->escape_strip($filter->srv_user_agent()),
+                'session_ip' => $db->escapeStrip($filter->srv_remote_addr()),
+                'session_browser' => $db->escapeStrip($filter->srv_user_agent()),
                 'session_expire' => $session_expire
             ];
 
@@ -579,9 +579,9 @@ class SessionManager {
         $uid = $cookies['uid'];
 
         $this->debug ? $debug->log('Check persistence ' . $uid . ',' . $sid, 'SMBasic', 'DEBUG') : null;
-        $query = $db->select_all('sessions', ['session_id' => $sid, 'session_uid' => $uid], 'LIMIT 1');
+        $query = $db->selectAll('sessions', ['session_id' => $sid, 'session_uid' => $uid], 'LIMIT 1');
 
-        if ($db->num_rows($query) < 1) {
+        if ($db->numRows($query) < 1) {
             return false;
         }
         $session = $db->fetch($query);
