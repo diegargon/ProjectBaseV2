@@ -15,18 +15,18 @@ function NS_basicSearchbox() {
         $sbox_data['searchUrl'] = "/{$cfg['CON_FILE']}?module=NewsSearch&page=search&lang={$cfg['WEB_LANG']}";
     }
 
-    return $search_box = $tpl->getTplFile("NewsSearch", "NewsSearchBarbox", $sbox_data);
+    return $search_box = $tpl->getTplFile('NewsSearch', 'NewsSearchBarbox', $sbox_data);
 }
 
 function NS_tag_add_form() {
     global $cfg, $tpl;
-    $cfg['ns_tag_support'] ? $tpl->addtoTplVar("NEWS_FORM_BOTTOM_OPTION", NS_tags_option()) : false;
+    $cfg['ns_tag_support'] ? $tpl->addtoTplVar('NEWS_FORM_BOTTOM_OPTION', NS_tags_option()) : false;
 }
 
 function NS_news_mod_insert(& $insert_ary) {
     global $db, $filter;
 
-    $tags = $db->escapeStrip($filter->post_UTF8_txt("news_tags"));
+    $tags = $db->escapeStrip($filter->post_UTF8_txt('news_tags'));
     !empty($tags) ? $insert_ary['tags'] = $tags : false;
 }
 
@@ -35,20 +35,20 @@ function NS_news_tag_show_page(& $news_row) {
 
     if (!empty($news_row['tags'])) {
         $cfg['PAGE_KEYWORDS'] = $news_row['tags'];
-        $exploted_tags = explode(",", $news_row['tags']);
-        $tag_data = "<div class='tags'> <p>" . $LNG['L_NS_TAGS'] . ": ";
+        $exploted_tags = explode(',', $news_row['tags']);
+        $tag_data = '<div class="tags"> <p>' . $LNG['L_NS_TAGS'] . ': ';
         foreach ($exploted_tags as $tag) {
             $tag = trim($tag);
-            preg_replace("/\s+/", "%20", $tag);
+            preg_replace('/\s+/', "%20", $tag);
             $link_tag = urldecode($tag);
             if ($cfg['FRIENDLY_URL']) {
-                $tag_data .= "<a href='/{$cfg['WEB_LANG']}/searchTag/$link_tag'>$tag</a> ";
+                $tag_data .= "<a href=\"/{$cfg['WEB_LANG']}/searchTag/$link_tag\">$tag</a> ";
             } else {
-                $tag_data .= "<a href='/{$cfg['CON_FILE']}&lang={$cfg['WEB_LANG']}&searchTag=$link_tag'>$tag</a> ";
+                $tag_data .= "<a href=\"/{$cfg['CON_FILE']}&lang={$cfg['WEB_LANG']}&searchTag=$link_tag\">$tag</a> ";
             }
         }
-        $tag_data .= "</p></div>";
-        $tpl->addtoTplVar("ADD_TO_NEWSSHOW_BOTTOM", $tag_data);
+        $tag_data .= '</p></div>';
+        $tpl->addtoTplVar('ADD_TO_NEWSSHOW_BOTTOM', $tag_data);
     } else {
         $cfg['PAGE_KEYWORDS'] = $news_row['title'];
     }
@@ -56,13 +56,13 @@ function NS_news_tag_show_page(& $news_row) {
 
 function NS_tags_edit_form_add($news_data) {
     global $tpl;
-    $news_data['page'] == 1 ? $tpl->addtoTplVar("NEWS_FORM_BOTTOM_OPTION", NS_tags_option($news_data['tags'])) : null;
+    $news_data['page'] == 1 ? $tpl->addtoTplVar('NEWS_FORM_BOTTOM_OPTION', NS_tags_option($news_data['tags'])) : null;
 }
 
 function NS_news_edit_set_tag(& $set_ary) {
     global $db, $filter;
 
-    $tags = $db->escapeStrip($filter->post_UTF8_txt("news_tags"));
+    $tags = $db->escapeStrip($filter->post_UTF8_txt('news_tags'));
     !empty($tags) ? $set_ary['tags'] = $tags : false;
 }
 
@@ -70,7 +70,7 @@ function NS_news_edit_set_tag(& $set_ary) {
 function NS_tags_option($tags = null) {
     global $LNG, $cfg;
 
-    $content = "<label for='news_tags'>{$LNG['L_NS_TAGS']}</label>";
-    $content .= "<input  value='$tags' maxlength='{$cfg['ns_tag_size_limit']}' id='news_tags' class='news_tags' name='news_tags' type='text' placeholder='{$LNG['L_NS_TAGS_PLACEHOLDER']}' />";
+    $content = '<label for="news_tags">' . $LNG['L_NS_TAGS'] . '</label>';
+    $content .= '<input  value="'. $tags.'" maxlength="' . $cfg['ns_tag_size_limit'] . '" id="news_tags" class="news_tags" name="news_tags" type="text" placeholder="' . $LNG['L_NS_TAGS_PLACEHOLDER'] . '" />';
     return $content;
 }
