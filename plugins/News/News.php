@@ -9,6 +9,8 @@ function News_init() {
     define('NEWS', true);
     global $frontend, $cfg, $plugins;
 
+    $plugins->express_start_provider('SESSIONS');
+    
     $news_perms = get_news_perms('init');
     if ($news_perms['news_submit_new']) {
         register_action('header_menu_element', 'submit_news_menu');
