@@ -221,6 +221,7 @@ function Blocks_addBlock($config_array) {
 
     $admin_block = $config_array['admin_block'];
     unset($config_array['admin_block']);
+    empty($block_lang) ? $block_lang = 0 : null;
 
     $insert_ary = [
         'uid' => 0,

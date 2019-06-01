@@ -8,6 +8,7 @@ $blocks_database_install[] = "
 CREATE TABLE `" . DB_PREFIX . "blocks` (
   `blocks_id` int(10) UNSIGNED NOT NULL,
   `uid` int(10) UNSIGNED NOT NULL,
+  `lang` int(10) NOT NULL DEFAULT '0',
   `blockname` char(255) NOT NULL,
   `plugin` char(255) NOT NULL,
   `blockconf` text(65535) NOT NULL,
@@ -15,7 +16,6 @@ CREATE TABLE `" . DB_PREFIX . "blocks` (
   `section` int(10) UNSIGNED NOT NULL,
   `weight` tinyint(1) NOT NULL DEFAULT '5',
   `canUserDisable` tinyint(1) NOT NULL DEFAULT '1',
-  `lang` int(10) NOT NULL DEFAULT '0',
   `admin_block` tinyint(1) NOT NULL 
 ) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . ";
 ";
