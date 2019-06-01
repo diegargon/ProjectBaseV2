@@ -89,11 +89,11 @@ function AdminBasic_GetConfig($plugin) {
 function admin_general_aside($params) {
     global $LNG;
 
-    $general = "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=1'>" . $LNG['L_PL_STATE'] . '</a></li>\n'
-            . "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=2'>" . $LNG['L_PL_PLUGINS'] . '</a></li>\n'
-            . "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=3'>" . $LNG['L_PL_ADMIN_DEBUG'] . '</a></li>\n'
-            . "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=4'>" . $LNG['L_PL_CONFIG'] . '</a></li>\n'
-            . "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=10'>Php Info</a></li>\n";
+    $general = "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=1'>" . $LNG['L_PL_STATE'] . '</a></li>'
+            . "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=2'>" . $LNG['L_PL_PLUGINS'] . '</a></li>'
+            . "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=3'>" . $LNG['L_PL_ADMIN_DEBUG'] . '</a></li>'
+            . "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=4'>" . $LNG['L_PL_CONFIG'] . '</a></li>'
+            . "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=10'>Php Info</a></li>";
 
     $general .= do_action('ADD_ADM_GENERAL_OPT');
     return $general;
@@ -102,7 +102,7 @@ function admin_general_aside($params) {
 function admin_general_content($params) {
     global $db, $plugins, $filter, $LNG;
 
-    $content = "";
+    $content = '';
 
     if (($_SERVER['REQUEST_METHOD'] === 'POST') && ($plugin_id = $filter->post_int('plugin_id')) != false) {
         if (!admin_auth("w_plugin_cfg")) {
