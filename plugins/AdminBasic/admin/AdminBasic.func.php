@@ -18,9 +18,9 @@ function admin_auth($tokens) {
 
     global $frontend;
 
-    $msgbox['msg'] = "L_E_NOACCESS";
-    $msgbox['backlink'] = $sm->getPage("login");
-    $msgbox['backlink_title'] = "L_LOGIN";
+    $msgbox['msg'] = 'L_E_NOACCESS';
+    $msgbox['backlink'] = $sm->getPage('login');
+    $msgbox['backlink_title'] = 'L_LOGIN';
 
     $frontend->messageBox($msgbox);
 
@@ -33,29 +33,29 @@ function admin_load_plugin_files() {
     global $plugins, $debug, $cfg;
 
     foreach ($plugins->getEnabled() as $plugin) {
-        (defined('DEBUG') && $cfg['adminbasic_debug']) ? $debug->log("Admin processing " . $plugin['plugin_name'], "AdminBasic", "DEBUG") : null;
+        (defined('DEBUG') && $cfg['adminbasic_debug']) ? $debug->log('Admin processing ' . $plugin['plugin_name'], 'AdminBasic', 'DEBUG') : null;
         if (!empty($plugin['function_admin_init'])) {
-            $admin_file = "plugins/" . $plugin['plugin_name'] . "/admin/" . $plugin['plugin_name'] . ".admin.php";
+            $admin_file = 'plugins/' . $plugin['plugin_name'] . '/admin/' . $plugin['plugin_name'] . '.admin.php';
             if (file_exists($admin_file)) {
                 require_once($admin_file);
                 if (function_exists($plugin['function_admin_init'])) {
                     $init_function = $plugin['function_admin_init'];
                     $init_function();
                 } else {
-                    (defined('DEBUG') && $cfg['adminbasic_debug']) ? $debug->log("ADMIN: Function {$plugin['function_admin_init']} not exist", "AdminBasic", "DEBUG") : null;
+                    (defined('DEBUG') && $cfg['adminbasic_debug']) ? $debug->log("ADMIN: Function {$plugin['function_admin_init']} not exist", 'AdminBasic', 'DEBUG') : null;
                 }
             } else {
-                (defined('DEBUG') && $cfg['adminbasic_debug']) ? $debug->log("ADMIN: File $admin_file not exist", "AdminBasic", "DEBUG") : null;
+                (defined('DEBUG') && $cfg['adminbasic_debug']) ? $debug->log("ADMIN: File $admin_file not exist", 'AdminBasic', 'DEBUG') : null;
             }
         } else {
-            (defined('DEBUG') && $cfg['adminbasic_debug']) ? $debug->log("ADMIN: Plugin {$plugin['plugin_name']} haven't the function admin_init declared in his json file", "AdminBasic", "DEBUG") : null;
+            (defined('DEBUG') && $cfg['adminbasic_debug']) ? $debug->log("ADMIN: Plugin {$plugin['plugin_name']} haven't the function admin_init declared in his json file", 'AdminBasic', 'DEBUG') : null;
         }
     }
 }
 
 function Admin_GetPluginState($plugin) {
     global $plugins, $tpl;
-    $content = "";
+    $content = '';
 
     foreach ($plugins->getEnabled() as $enabled_plugin) {
         if ($enabled_plugin['plugin_name'] == $plugin) {
@@ -64,17 +64,17 @@ function Admin_GetPluginState($plugin) {
             $enabled_plugin['optional'] = AdminBasic_unserialize_forPrint($enabled_plugin['optional']);
             $enabled_plugin['conflicts'] = AdminBasic_unserialize_forPrint($enabled_plugin['conflicts']);
 
-            $content = $tpl->getTplFile("AdminBasic", "plugin_state_info", (array) $enabled_plugin);
+            $content = $tpl->getTplFile('AdminBasic', 'plugin_state_info', (array) $enabled_plugin);
         }
     }
     return $content;
 }
 
-function AdminBasic_unserialize_forPrint($data, $htmlseparator = "<br/>") {
+function AdminBasic_unserialize_forPrint($data, $htmlseparator = '<br/>') {
     $a_data = unserialize($data);
-    $result = "";
+    $result = '';
     foreach ($a_data as $data) {
-        $result .= $data->name . " " . $data->min_version . "/" . $data->max_version . $htmlseparator;
+        $result .= $data->name . ' ' . $data->min_version . '/' . $data->max_version . $htmlseparator;
     }
     return $result;
 }
@@ -82,20 +82,20 @@ function AdminBasic_unserialize_forPrint($data, $htmlseparator = "<br/>") {
 function AdminBasic_GetConfig($plugin) {
     global $db;
 
-    $query = $db->select("config", "cfg_key,cfg_value", ["plugin" => $plugin]);
+    $query = $db->select('config', 'cfg_key,cfg_value', ['plugin' => $plugin]);
     return $db->fetchAll($query);
 }
 
 function admin_general_aside($params) {
     global $LNG;
 
-    $general = "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=1'>" . $LNG['L_PL_STATE'] . "</a></li>\n"
-            . "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=2'>" . $LNG['L_PL_PLUGINS'] . "</a></li>\n"
-            . "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=3'>" . $LNG['L_PL_ADMIN_DEBUG'] . "</a></li>\n"
-            . "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=4'>" . $LNG['L_PL_CONFIG'] . "</a></li>\n"
+    $general = "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=1'>" . $LNG['L_PL_STATE'] . '</a></li>\n'
+            . "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=2'>" . $LNG['L_PL_PLUGINS'] . '</a></li>\n'
+            . "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=3'>" . $LNG['L_PL_ADMIN_DEBUG'] . '</a></li>\n'
+            . "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=4'>" . $LNG['L_PL_CONFIG'] . '</a></li>\n'
             . "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=10'>Php Info</a></li>\n";
 
-    $general .= do_action("ADD_ADM_GENERAL_OPT");
+    $general .= do_action('ADD_ADM_GENERAL_OPT');
     return $general;
 }
 
@@ -104,7 +104,7 @@ function admin_general_content($params) {
 
     $content = "";
 
-    if (($_SERVER['REQUEST_METHOD'] === 'POST') && ($plugin_id = $filter->post_int("plugin_id")) != false) {
+    if (($_SERVER['REQUEST_METHOD'] === 'POST') && ($plugin_id = $filter->post_int('plugin_id')) != false) {
         if (!admin_auth("w_plugin_cfg")) {
             return false;
         }
@@ -136,7 +136,7 @@ function admin_general_content($params) {
             $plugins->setAutostart($plugin_id, 0);
         }
         if (isset($_POST['btnDeleteMissing'])) {
-            $db->delete("plugins", ["plugin_id" => $plugin_id], "LIMIT 1");
+            $db->delete('plugins', ['plugin_id' => $plugin_id], 'LIMIT 1');
         }
         if (isset($_POST['btnUpgrade'])) {
             $plugins->upgrade($plugin_id);
@@ -146,18 +146,18 @@ function admin_general_content($params) {
     if (($_SERVER['REQUEST_METHOD'] === 'POST') && $plugin_id == false) {
 
         if (isset($_POST['btnReScan'])) {
-            if (!admin_auth("w_plugin_cfg")) {
+            if (!admin_auth('w_plugin_cfg')) {
                 return false;
             }
             $plugins->reScanToDB();
         }
 
         if (isset($_POST['btnDebugChange'])) {
-            if (!admin_auth("w_plugin_cfg")) {
+            if (!admin_auth('w_plugin_cfg')) {
                 return false;
             }
 
-            $q = $db->search("config", "cfg_key", "_debug");
+            $q = $db->search('config', 'cfg_key', '_debug');
             while ($result = $db->fetch($q)) {
                 $checked_value = 0;
                 if (isset($_POST['debug_list'])) { //avoid warning if uncheck all
@@ -167,16 +167,16 @@ function admin_general_content($params) {
                         }
                     }
                 }
-                $db->update("config", ["cfg_value" => $checked_value], ["cfg_id" => $result['cfg_id']]);
+                $db->update('config', ['cfg_value' => $checked_value], ['cfg_id' => $result['cfg_id']]);
             }
         }
     }
 
     if ($params['opt'] == 1) {
-        $content = "<h1>" . $LNG['L_PL_STATE'] . "</h1>";
-        $content .= Admin_GetPluginState("AdminBasic");
+        $content = '<h1>' . $LNG['L_PL_STATE'] . '</h1>';
+        $content .= Admin_GetPluginState('AdminBasic');
     } else if ($params['opt'] == 2) {
-        if (!admin_auth("r_plugin_cfg")) {
+        if (!admin_auth('r_plugin_cfg')) {
             return false;
         }
 
@@ -185,9 +185,9 @@ function admin_general_content($params) {
         $plugins_list = array_merge($plugins->getEnabled($force_reload), $plugins->getDisabled($force_reload));
         $content .= plugins_ctrl_display($plugins_list);
     } else if ($params['opt'] == 3) {
-        $content .= "<form method='post' action=''>";
+        $content .= '<form method="post" action="">';
 
-        $q = $db->search("config", "cfg_key", "_debug");
+        $q = $db->search('config', 'cfg_key', '_debug');
         while ($result = $db->fetch($q)) {
             $content .= "<p>{$result['cfg_key']}";
 
@@ -196,20 +196,20 @@ function admin_general_content($params) {
             } else if ($result['cfg_value'] == 0) {
                 $content .= "<input type='checkbox' name='debug_list[]' value='{$result['cfg_id']}'>";
             }
-            $content .= "</p>";
+            $content .= '</p>';
         }
-        $content .= "<input type='submit' name='btnDebugChange'/>";
-        $content .= "</form>";
+        $content .= '<input type="submit" name="btnDebugChange"/>';
+        $content .= '</form>';
     } else if ($params['opt'] == 4) {
-        if (!admin_auth("r_general_cfg")) {
+        if (!admin_auth('r_general_cfg')) {
             return false;
         }
-        $content .= AdminPluginConfig("CORE");
+        $content .= AdminPluginConfig('CORE');
     } else if ($params['opt'] == 10) {
-        if (!admin_auth("r_phpinfo")) {
+        if (!admin_auth('r_phpinfo')) {
             return false;
         }
-        $content .= "<div style='width:100%'>" . get_phpinfo() . "</div>";
+        $content .= '<div style="width:100%">' . get_phpinfo() . '</div>';
     }
     return $content;
 }
@@ -217,7 +217,7 @@ function admin_general_content($params) {
 function plugins_ctrl_display($plugins) {
     global $LNG, $tpl;
 
-    $content = "";
+    $content = '';
     $counter = 1;
     $num_items = count($plugins);
 
@@ -225,9 +225,9 @@ function plugins_ctrl_display($plugins) {
         $plugin['TPL_CTRL'] = $counter;
         ($counter == $num_items) ? $plugin['TPL_FOOT'] = 1 : $plugin['TPL_FOOT'] = 0;
 
-        $plugin['DEPENDS'] = !empty($r = AdminBasic_unserialize_forPrint($plugin['depends'])) ? $LNG['L_PL_DEPENDS'] . "<br/>" . $r : null;
-        $plugin['OPTIONAL'] = !empty($r = AdminBasic_unserialize_forPrint($plugin['optional'])) ? $LNG['L_PL_OPTIONAL'] . "<br/>" . $r : null;
-        $plugin['CONFLICTS'] = !empty($r = AdminBasic_unserialize_forPrint($plugin['conflicts'])) ? $LNG['L_PL_CONFLICTS'] . "<br/>" . $r : null;
+        $plugin['DEPENDS'] = !empty($r = AdminBasic_unserialize_forPrint($plugin['depends'])) ? $LNG['L_PL_DEPENDS'] . '<br/>' . $r : null;
+        $plugin['OPTIONAL'] = !empty($r = AdminBasic_unserialize_forPrint($plugin['optional'])) ? $LNG['L_PL_OPTIONAL'] . '<br/>' . $r : null;
+        $plugin['CONFLICTS'] = !empty($r = AdminBasic_unserialize_forPrint($plugin['conflicts'])) ? $LNG['L_PL_CONFLICTS'] . '<br/>' . $r : null;
 
         $plugin['BUTTOMS_CODE'] = "";
 
@@ -257,7 +257,7 @@ function plugins_ctrl_display($plugins) {
             }
         }
 
-        $content .= $tpl->getTplFile("AdminBasic", "plugins_list", $plugin);
+        $content .= $tpl->getTplFile('AdminBasic', 'plugins_list', $plugin);
         $counter++;
     }
     return $content;
@@ -268,26 +268,26 @@ function AdminPluginConfig($plugin) {
 
     if (($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSubmitConfig']))) {
 
-        if (!admin_auth("w_general_cfg", "ADMIN_CONFIG_" . $plugin)) {
+        if (!admin_auth('w_general_cfg', 'ADMIN_CONFIG_' . $plugin)) {
             return false;
         }
-        $cfg_id = $filter->post_int("configID");
+        $cfg_id = $filter->post_int('configID');
         //TODO: UNFILTERING, UNCHECKING
         $value = $_POST['cfg_value'];
         if (!empty($cfg_id) && ($cfg_id != false) && ($value !== false)) {
-            $db->update("config", ["cfg_value" => $value], ["cfg_id" => $cfg_id], "LIMIT 1");
+            $db->update('config', ['cfg_value' => $value], ['cfg_id' => $cfg_id], 'LIMIT 1');
         }
     }
 
-    $cfg_result = $db->selectAll("config", ["plugin" => $plugin], "ORDER BY plugin");
-    $content = "";
+    $cfg_result = $db->selectAll('config', ['plugin' => $plugin], 'ORDER BY plugin');
+    $content = '';
     $counter = 1;
     $num_items = $db->numRows($cfg_result);
 
     while ($cfg_row = $db->fetch($cfg_result)) {
         $cfg_row['TPL_CTRL'] = $counter;
         $counter == $num_items ? $cfg_row['TPL_FOOT'] = 1 : $cfg_row['TPL_FOOT'] = 0;
-        $content .= $tpl->getTplFile("AdminBasic", "plugin_config", $cfg_row);
+        $content .= $tpl->getTplFile('AdminBasic', 'plugin_config', $cfg_row);
         $counter++;
     }
 
