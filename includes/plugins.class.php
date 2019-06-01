@@ -38,6 +38,7 @@ class Plugins {
                         $this->debug ? $debug->log('Check sucessfull ' . $plugin['plugin_name'] . '...', 'PLUGINS', 'INFO') : null;
                         $this->startPlugin($plugin);
                     } else {
+                        $plugin['fail'] = 1;
                         $this->debug ? $debug->log('Check unsucessfull ' . $plugin['plugin_name'] . '...', 'PLUGINS', 'ERROR') : null;
                     }
                 } else {
@@ -52,17 +53,6 @@ class Plugins {
     function getPluginsDB() {
         $this->setPluginsDB();
         return $this->plugins_db;
-    }
-
-    function setPluginsDB($force = 0) {
-        global $db;
-
-        if (empty($this->plugins_db) || $force == 1) {
-            $result = $db->selectAll('plugins');
-            if ($result) {
-                $this->plugins_db = $db->fetchAll($result);
-            }
-        }
     }
 
     function startPlugin($plugin) {
@@ -119,7 +109,7 @@ class Plugins {
                     $db->update('plugins', ['installed' => 1], ['plugin_id' => $pluginid]);
                 }
             } else {
-                die('FUNCION NO EXISTE');
+                die('function no exists');
             }
         } else {
             return false;
@@ -141,7 +131,7 @@ class Plugins {
                     $db->update('plugins', ['installed' => 0], ['plugin_id' => $pluginid]);
                 }
             } else {
-                die('FUNCION NO EXISTE');
+                die('function no exists');
             }
         } else {
             return false;
@@ -163,7 +153,7 @@ class Plugins {
                     $db->update('plugins', ['upgrade_from' => 0], ['plugin_id' => $pluginid]);
                 }
             } else {
-                die('FUNCION NO EXISTE');
+                die('function no exists');
             }
         } else {
             return false;
@@ -195,7 +185,7 @@ class Plugins {
         return true;
     }
 
-    public function scanDir() {
+    function scanDir() {
         global $debug;
         foreach (glob('plugins/*', GLOB_ONLYDIR) as $plugins_dir) {
             $filename = str_replace('plugins/', '', $plugins_dir);
@@ -210,7 +200,7 @@ class Plugins {
         }
     }
 
-    public function getPluginProvide($provide) {
+    function getPluginProvide($provide) {
         $result = [];
 
         foreach ($this->registered_plugins as $plugin) {
@@ -222,7 +212,7 @@ class Plugins {
         return $result;
     }
 
-    public function getPluginByName($plug_name) {
+    function getPluginByName($plug_name) {
         foreach ($this->registered_plugins as $plugin) {
             if (!empty($plugin) && (trim($plugin->plugin_name)) == $plug_name) {
                 return $plugin;
@@ -283,12 +273,12 @@ class Plugins {
         $this->depends_provide[$depend] = $version;
     }
 
-    function expressStart($pluginname) {
+    function expressStart($plugin_name) {
         global $debug;
 
-        $this->debug ? $debug->log('Express order to start plugin -> ' . $pluginname, 'PLUGINS', 'INFO') : null;
+        $this->debug ? $debug->log('Express order to start plugin -> ' . $plugin_name, 'PLUGINS', 'INFO') : null;
         foreach ($this->plugins_db as $plugin) {
-            if ($plugin['enabled'] && $plugin['plugin_name'] == $pluginname) {
+            if ($plugin['enabled'] && $plugin['plugin_name'] == $plugin_name) {
                 if (!empty($plugin['started'])) {
                     $this->debug ? $debug->log('Plugin ' . $plugin['plugin_name'] . ' already started', 'PLUGINS', 'INFO') : null;
                     return true;
@@ -299,10 +289,13 @@ class Plugins {
                     } else {
                         return false;
                     }
+                } else {
+                    $this->debug ? $debug->log('Plugin ' . $plugin_name . ': check fail', 'PLUGINS', 'ERROR') : null;
+                    return false;
                 }
             }
         }
-        $this->debug ? $debug->log('Plugin ' . $pluginname . ' not exist ', 'PLUGINS', 'ERROR') : null;
+        $this->debug ? $debug->log('Plugin ' . $plugin_name . ' not exist ', 'PLUGINS', 'ERROR') : null;
 
         return false;
     }
@@ -332,32 +325,44 @@ class Plugins {
         return false;
     }
 
-    function checkDepends($depends) {
-        foreach ($depends as $depend) {
-            foreach ($this->registered_plugins as $registered) {
-                foreach ($registered->depends as $reg_depends) {
+    function checkStarted($plugin_name) {
 
-                    if ($depend->name == 'CORE') {
-
-                        if (($depend->min_version >= CORE_VERSION) &&
-                                (CORE_VERSION <= $depend->max_version )
-                        ) {
-                            return true;
-                        }
-                    } else if ($depend->name == $reg_depends->name) {
-                        if (($depend->min_version >= $registered->version) &&
-                                ($depend->max_version <= $registered->version)
-                        ) {
-                            return true;
-                        }
-                    }
-                }
+        foreach ($this->plugins_db as $plugins) {
+            if ($plugins['plugin_name'] == $plugin_name && !empty($plugins['started'])) {
+                return true;
             }
         }
         return false;
     }
 
-    function includePluginFiles($plugin, $admin = 0) {
+    /*
+      private function checkDepends($depends) {
+      foreach ($depends as $depend) {
+      foreach ($this->registered_plugins as $registered) {
+      foreach ($registered->depends as $reg_depends) {
+
+      if ($depend->name == 'CORE') {
+
+      if (($depend->min_version >= CORE_VERSION) &&
+      (CORE_VERSION <= $depend->max_version )
+      ) {
+      return true;
+      }
+      } else if ($depend->name == $reg_depends->name) {
+      if (($depend->min_version >= $registered->version) &&
+      ($depend->max_version <= $registered->version)
+      ) {
+      return true;
+      }
+      }
+      }
+      }
+      }
+      return false;
+      }
+     */
+
+    private function includePluginFiles($plugin, $admin = 0) {
         global $cfg, $LNG, $debug; //LNG used on include
 
         $class_file = '';
@@ -390,14 +395,15 @@ class Plugins {
         }
     }
 
-    function checkStarted($plugin_name) {
+    private function setPluginsDB($force = 0) {
+        global $db;
 
-        foreach ($this->plugins_db as $plugins) {
-            if ($plugins['plugin_name'] == $plugin_name && !empty($plugins['started'])) {
-                return true;
+        if (empty($this->plugins_db) || $force == 1) {
+            $result = $db->selectAll('plugins');
+            if ($result) {
+                $this->plugins_db = $db->fetchAll($result);
             }
         }
-        return false;
     }
 
     private function pluginCheck($plugin) {
@@ -447,7 +453,7 @@ class Plugins {
     private function resolvePluginDepends($plugin) {
         global $debug;
 
-        $this->debug ? $debug->log('Resolving depends... ', 'PLUGINS', 'INFO') : null;
+        $this->debug ? $debug->log('Resolving depends...' . $plugin['plugin_name'], 'PLUGINS', 'INFO') : null;
         $depends = unserialize($plugin['depends']);
 
 
@@ -466,7 +472,7 @@ class Plugins {
                 if ($this->findDepsAndStart($depend->name, $depend->min_version, $depend->max_version)) {
                     $this->debug ? $debug->log('We found dependence ' . $depend->name . ' for ' . $plugin['plugin_name'], 'PLUGINS', 'INFO') : null;
                 } else {
-                    $this->debug ? $debug->log('No depedence ' . $depend->name . ' for ' . $plugin['plugin_name'] . ' in the registered plugins', 'PLUGINS', 'ERROR') : null;
+                    $this->debug ? $debug->log('No depedence ' . $depend->name . ' for ' . $plugin['plugin_name'] . ' in the enabled plugins list', 'PLUGINS', 'ERROR') : null;
                     return false;
                 }
             } else {
