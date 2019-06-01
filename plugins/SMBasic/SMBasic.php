@@ -14,7 +14,7 @@ function SMBasic_Init() {
 
     !isset($sm) ? $sm = new SessionManager : null;
     $sm->start();
-
+    
     register_action('header_menu_element', 'SMBasic_navLogReg');
 
     $frontend->registerPage(['module' => 'SMBasic', 'page' => 'login', 'type' => 'disk']);

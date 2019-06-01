@@ -11,10 +11,8 @@ class Plugins {
 
     private $debug;
     private $registered_plugins = [];
-    private $enabled_plugins;
-    private $disabled_plugins;
-    private $started_plugins = [];
     private $depends_provide = [];
+    private $plugins_db = [];
 
     function __construct() {
         
@@ -29,11 +27,13 @@ class Plugins {
          * Init enabled plugins with autostart=1, and depends with autostart 0 or 1.
          */
 
+        $this->setPluginsDB();
 
-        foreach ($this->getEnabled() as $plugin) {
-            if ($plugin['autostart']) {
+        //We use &reference because setStarted add field in the loop and foreach copy the array
+        foreach ($this->plugins_db as &$plugin) {
+            if ($plugin['autostart'] && $plugin['enabled']) {
                 $this->debug ? $debug->log('WORKING on ' . $plugin['plugin_name'] . '...', 'PLUGINS', 'INFO') : null;
-                if (!$this->checkStarted($plugin['plugin_name'])) {
+                if (empty($plugin['started'])) {
                     if ($this->pluginCheck($plugin)) {
                         $this->debug ? $debug->log('Check sucessfull ' . $plugin['plugin_name'] . '...', 'PLUGINS', 'INFO') : null;
                         $this->startPlugin($plugin);
@@ -49,28 +49,25 @@ class Plugins {
         }
     }
 
-    private function setPluginsData($enabled, $force_reload = 0) {
+    function getPluginsDB() {
+        $this->setPluginsDB();
+        return $this->plugins_db;
+    }
+
+    function setPluginsDB($force = 0) {
         global $db;
 
-        if ($enabled && !$force_reload && !empty($this->enabled_plugins)) {
-            return;
-        }
-        if (!$enabled && !$force_reload && !empty($this->disabled_plugins)) {
-            return;
-        }
-
-        $result = $db->selectAll('plugins', ['enabled' => $enabled], 'ORDER BY priority');
-        if ($result) {
-            if ($enabled) {
-                $this->enabled_plugins = $db->fetchAll($result);
-            } else {
-                $this->disabled_plugins = $db->fetchAll($result);
+        if (empty($this->plugins_db) || $force == 1) {
+            $result = $db->selectAll('plugins');
+            if ($result) {
+                $this->plugins_db = $db->fetchAll($result);
             }
         }
     }
 
     function startPlugin($plugin) {
         global $debug;
+
         $this->debug ? $debug->log('STARTING plugin ' . $plugin['plugin_name'] . ' ...', 'PLUGINS', 'INFO') : null;
 
         require_once('plugins/' . $plugin['plugin_name'] . '/' . $plugin['main_file']);
@@ -82,30 +79,27 @@ class Plugins {
             $this->debug ? $debug->log('Function init on ' . $plugin['plugin_name'] . ' no exist', 'PLUGINS', 'ERROR') : null;
             return false;
         }
-        array_push($this->started_plugins, $plugin);
-
+        $this->setStarted($plugin);
         $allprovide = preg_split('/\s+/', $plugin['provide']);
         foreach ($allprovide as $provide) {
-            $this->setDepend($provide, $plugin['version']);
+            $this->setCoreDepend($provide, $plugin['version']);
         }
 
         return true;
     }
 
-    function getEnabled($force_reload = 0) {
-        $this->setPluginsData($enabled = 1, $force_reload);
-        return $this->enabled_plugins;
-    }
-
-    function getDisabled($force_reload = 0) {
-        $this->setPluginsData($enabled = 0, $force_reload);
-
-        return $this->disabled_plugins;
+    function setStarted($plugin) {
+        foreach ($this->plugins_db as $key => $plugin_db) {
+            if ($plugin['plugin_id'] == $plugin_db['plugin_id']) {
+                $this->plugins_db[$key]['started'] = 1;
+                return;
+            }
+        }
     }
 
     function getPluginID($plugin_name) {
-        foreach ($this->getEnabled() as $plugin) {
-            if ($plugin['plugin_name'] == $plugin_name) {
+        foreach ($this->plugins_db as $plugin) {
+            if ($plugin['plugin_name'] == $plugin_name && $plugin['enabled'] == 1) {
                 return $plugin['plugin_id'];
             }
         }
@@ -130,6 +124,7 @@ class Plugins {
         } else {
             return false;
         }
+        $this->setPluginsDB(1);
         return true;
     }
 
@@ -151,6 +146,7 @@ class Plugins {
         } else {
             return false;
         }
+        $this->setPluginsDB(1);
         return true;
     }
 
@@ -182,9 +178,11 @@ class Plugins {
             return false;
         }
         $db->update('plugins', ['enabled' => $value], ['plugin_id' => $pluginid], 'LIMIT 1');
+        $this->setPluginsDB(1);
         return true;
     }
 
+//TODO: Cambiar para que actualice $plugins_db?
     function setAutostart($pluginid, $value) {
         global $db;
 
@@ -193,23 +191,9 @@ class Plugins {
         }
 
         $db->update('plugins', ['autostart' => $value], ['plugin_id' => $pluginid], 'LIMIT 1');
+        $this->setPluginsDB(1);
         return true;
     }
-
-    /*
-      private function getEnabledPlugins() {
-      global $db;
-
-      $result = $db->selectAll("plugins", ["enabled" => 1]);
-      if ($result) {
-      $this->enabled_plugins += $db->fetchAll($result);
-      }
-      usort($this->enabled_plugins, function($a, $b) {
-      return $a['priority'] - $b['priority'];
-      });
-      }
-     * 
-     */
 
     public function scanDir() {
         global $debug;
@@ -252,8 +236,7 @@ class Plugins {
 
         $this->registered_plugins = [];
         $this->scanDir();
-
-        $db->update('plugins', ['missing' => 1]); //mark missing
+        $db->update('plugins', ['missing' => 1]); //mark everything missing
 
         foreach ($this->registered_plugins as $plugin) {
             $result = $db->selectAll('plugins', ['plugin_name' => $plugin->plugin_name], 'LIMIT 1');
@@ -296,7 +279,7 @@ class Plugins {
         }
     }
 
-    function setDepend($depend, $version) {
+    function setCoreDepend($depend, $version) {
         $this->depends_provide[$depend] = $version;
     }
 
@@ -304,10 +287,9 @@ class Plugins {
         global $debug;
 
         $this->debug ? $debug->log('Express order to start plugin -> ' . $pluginname, 'PLUGINS', 'INFO') : null;
-
-        foreach ($this->enabled_plugins as $plugin) {
-            if ($plugin['plugin_name'] == $pluginname) {
-                if ($this->checkStarted($plugin['plugin_name'])) {
+        foreach ($this->plugins_db as $plugin) {
+            if ($plugin['enabled'] && $plugin['plugin_name'] == $pluginname) {
+                if (!empty($plugin['started'])) {
                     $this->debug ? $debug->log('Plugin ' . $plugin['plugin_name'] . ' already started', 'PLUGINS', 'INFO') : null;
                     return true;
                 }
@@ -330,8 +312,8 @@ class Plugins {
 
         $this->debug ? $debug->log('Express order to start provider ' . $provider, 'PLUGINS', 'INFO') : null;
 
-        foreach ($this->enabled_plugins as $plugin) {
-            if ($plugin['provide'] == $provider) {
+        foreach ($this->plugins_db as $plugin) {
+            if ($plugin['enabled'] && $plugin['provide'] == $provider) {
                 if ($this->checkStarted($plugin['plugin_name'])) {
                     $this->debug ? $debug->log('Plugin ' . $plugin['plugin_name'] . ' providing ' . $provider . ' already started', 'PLUGINS', 'INFO') : null;
                     return true;
@@ -410,8 +392,8 @@ class Plugins {
 
     function checkStarted($plugin_name) {
 
-        foreach ($this->started_plugins as $started_plugin) {
-            if ($started_plugin['plugin_name'] == $plugin_name) {
+        foreach ($this->plugins_db as $plugins) {
+            if ($plugins['plugin_name'] == $plugin_name && !empty($plugins['started'])) {
                 return true;
             }
         }
@@ -449,11 +431,13 @@ class Plugins {
 
     private function checkDuplicatedProvide($provide) {
 
-        foreach ($this->started_plugins as $plugin) {
-            $allprovide = preg_split('/\s+/', $plugin['provide']);
-            foreach ($allprovide as $started_provide) {
-                if ($started_provide == $provide) {
-                    return true;
+        foreach ($this->plugins_db as $plugin) {
+            if (!empty($plugin['started'])) {
+                $allprovide = preg_split('/\s+/', $plugin['provide']);
+                foreach ($allprovide as $started_provide) {
+                    if ($started_provide == $provide) {
+                        return true;
+                    }
                 }
             }
         }
@@ -493,9 +477,9 @@ class Plugins {
         return true;
     }
 
-    function checkEnabled($plugin) {
-        foreach ($this->enabled_plugins as $enabled) {
-            if ($enabled['plugin_name'] == $plugin) {
+    function checkEnabled($plugin_name) {
+        foreach ($this->plugins_db as $plugin) {
+            if ($plugin['enabled'] == 1 && $plugin['plugin_name'] == $plugin_name) {
                 return true;
             }
         }
@@ -503,8 +487,23 @@ class Plugins {
     }
 
     function checkEnabledProvider($provide) {
-        foreach ($this->enabled_plugins as $enabled) {
-            if ($enabled['provide'] == $provide) {
+        if ($provide == 'CORE' || $provide == 'SQL' || $provide == 'DEBUG') {
+            return true;
+        }
+        foreach ($this->plugins_db as $plugin) {
+            if ($plugin['enabled'] == 1 && $plugin['provide'] == $provide) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function checkInstalledProvider($provide) {
+        if ($provide == 'CORE' || $provide == 'SQL' || $provide == 'DEBUG') {
+            return true;
+        }
+        foreach ($this->plugins_db as $plugin) {
+            if ($plugin['installed'] == 1 && $plugin['provide'] == $provide) {
                 return true;
             }
         }
@@ -527,21 +526,22 @@ class Plugins {
     private function findDepsAndStart($depend_name, $min_version, $max_version) {
         global $debug;
 
-        foreach ($this->enabled_plugins as $plugin) {
+        foreach ($this->plugins_db as $plugin) {
+            if ($plugin['enabled']) {
+                $allprovide = preg_split('/\s+/', $plugin['provide']);
+                foreach ($allprovide as $provide) {
 
-            $allprovide = preg_split('/\s+/', $plugin['provide']);
-            foreach ($allprovide as $provide) {
-
-                if (($provide == $depend_name) && ($plugin['version'] >= $min_version) && ($plugin['version'] <= $max_version)
-                ) {
-                    if ($this->resolvePluginDepends($plugin)) {//resolv de dependes of the depends
-                        if ($plugin['autostart']) {
-                            $this->debug ? $debug->log('Starting ' . $depend_name . ' as depend', 'PLUGINS', 'INFO') : null;
-                            $this->startPlugin($plugin);
-                        } else {
-                            $this->debug ? $debug->log('NOT Starting  as depend ' . $depend_name . ' because autostart its off, express start need', 'PLUGINS', 'INFO') : null;
+                    if (($provide == $depend_name) && ($plugin['version'] >= $min_version) && ($plugin['version'] <= $max_version)
+                    ) {
+                        if ($this->resolvePluginDepends($plugin)) {//resolv de dependes of the depends
+                            if ($plugin['autostart']) {
+                                $this->debug ? $debug->log('Starting ' . $depend_name . ' as depend', 'PLUGINS', 'INFO') : null;
+                                $this->startPlugin($plugin);
+                            } else {
+                                $this->debug ? $debug->log('NOT Starting  as depend ' . $depend_name . ' because autostart its off, express start need', 'PLUGINS', 'INFO') : null;
+                            }
+                            return true;
                         }
-                        return true;
                     }
                 }
             }

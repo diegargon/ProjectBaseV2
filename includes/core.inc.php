@@ -46,9 +46,9 @@ require_once ('includes/' . FILTER . '.class.php');
 $filter = new SecureFilter();
 
 //SET CORE VERSIONS
-$plugins->setDepend('CORE', CORE_VERSION);
-$plugins->setDepend('DEBUG', CORE_VERSION);
-$plugins->setDepend('SQL', CORE_VERSION);
+$plugins->setCoreDepend('CORE', CORE_VERSION);
+$plugins->setCoreDepend('DEBUG', CORE_VERSION);
+$plugins->setCoreDepend('SQL', CORE_VERSION);
 
 /* TIME UTILS */
 require_once ('includes/TimeUtil.class.php');

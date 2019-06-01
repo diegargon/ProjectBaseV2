@@ -29,42 +29,43 @@ function admin_auth($tokens) {
 
 function admin_load_plugin_files() {
     //Load administration side from all register plugins (all enabled) and init the admin_init function.
-
     global $plugins, $debug, $cfg;
 
-    foreach ($plugins->getEnabled() as $plugin) {
-        (defined('DEBUG') && $cfg['adminbasic_debug']) ? $debug->log('Admin processing ' . $plugin['plugin_name'], 'AdminBasic', 'DEBUG') : null;
-        if (!empty($plugin['function_admin_init'])) {
-            $admin_file = 'plugins/' . $plugin['plugin_name'] . '/admin/' . $plugin['plugin_name'] . '.admin.php';
-            if (file_exists($admin_file)) {
-                require_once($admin_file);
-                if (function_exists($plugin['function_admin_init'])) {
-                    $init_function = $plugin['function_admin_init'];
-                    $init_function();
+    foreach ($plugins->getPluginsDB() as $plugin) {
+        if ($plugin['enabled']) {
+            (defined('DEBUG') && $cfg['adminbasic_debug']) ? $debug->log('Admin processing ' . $plugin['plugin_name'], 'AdminBasic', 'DEBUG') : null;
+            if (!empty($plugin['function_admin_init'])) {
+                $admin_file = 'plugins/' . $plugin['plugin_name'] . '/admin/' . $plugin['plugin_name'] . '.admin.php';
+                if (file_exists($admin_file)) {
+                    require_once($admin_file);
+                    if (function_exists($plugin['function_admin_init'])) {
+                        $init_function = $plugin['function_admin_init'];
+                        $init_function();
+                    } else {
+                        (defined('DEBUG') && $cfg['adminbasic_debug']) ? $debug->log("ADMIN: Function {$plugin['function_admin_init']} not exist", 'AdminBasic', 'DEBUG') : null;
+                    }
                 } else {
-                    (defined('DEBUG') && $cfg['adminbasic_debug']) ? $debug->log("ADMIN: Function {$plugin['function_admin_init']} not exist", 'AdminBasic', 'DEBUG') : null;
+                    (defined('DEBUG') && $cfg['adminbasic_debug']) ? $debug->log("ADMIN: File $admin_file not exist", 'AdminBasic', 'DEBUG') : null;
                 }
             } else {
-                (defined('DEBUG') && $cfg['adminbasic_debug']) ? $debug->log("ADMIN: File $admin_file not exist", 'AdminBasic', 'DEBUG') : null;
+                (defined('DEBUG') && $cfg['adminbasic_debug']) ? $debug->log("ADMIN: Plugin {$plugin['plugin_name']} haven't the function admin_init declared in his json file", 'AdminBasic', 'DEBUG') : null;
             }
-        } else {
-            (defined('DEBUG') && $cfg['adminbasic_debug']) ? $debug->log("ADMIN: Plugin {$plugin['plugin_name']} haven't the function admin_init declared in his json file", 'AdminBasic', 'DEBUG') : null;
         }
     }
 }
 
-function Admin_GetPluginState($plugin) {
+function Admin_GetPluginState($plugin_name) {
     global $plugins, $tpl;
     $content = '';
 
-    foreach ($plugins->getEnabled() as $enabled_plugin) {
-        if ($enabled_plugin['plugin_name'] == $plugin) {
+    foreach ($plugins->getPluginsDB() as $plugin) {
+        if ($plugin['enabled'] && $plugin['plugin_name'] == $plugin_name) {
             //Switch array to text for display
-            $enabled_plugin['depends'] = AdminBasic_unserialize_forPrint($enabled_plugin['depends']);
-            $enabled_plugin['optional'] = AdminBasic_unserialize_forPrint($enabled_plugin['optional']);
-            $enabled_plugin['conflicts'] = AdminBasic_unserialize_forPrint($enabled_plugin['conflicts']);
+            $plugin['depends'] = AdminBasic_unserialize_forPrint($plugin['depends']);
+            $plugin['optional'] = AdminBasic_unserialize_forPrint($plugin['optional']);
+            $plugin['conflicts'] = AdminBasic_unserialize_forPrint($plugin['conflicts']);
 
-            $content = $tpl->getTplFile('AdminBasic', 'plugin_state_info', (array) $enabled_plugin);
+            $content = $tpl->getTplFile('AdminBasic', 'plugin_state_info', (array) $plugin);
         }
     }
     return $content;
@@ -182,7 +183,7 @@ function admin_general_content($params) {
 
         ($_SERVER['REQUEST_METHOD'] === 'POST') ? $force_reload = 1 : $force_reload = 0;
 
-        $plugins_list = array_merge($plugins->getEnabled($force_reload), $plugins->getDisabled($force_reload));
+        $plugins_list = $plugins->getPluginsDB();
         $content .= plugins_ctrl_display($plugins_list);
     } else if ($params['opt'] == 3) {
         $content .= '<form method="post" action="">';
@@ -214,14 +215,14 @@ function admin_general_content($params) {
     return $content;
 }
 
-function plugins_ctrl_display($plugins) {
-    global $LNG, $tpl;
+function plugins_ctrl_display($plugins_list) {
+    global $LNG, $tpl, $plugins;
 
     $content = '';
     $counter = 1;
-    $num_items = count($plugins);
+    $num_items = count($plugins_list);
 
-    foreach ($plugins as $plugin) {
+    foreach ($plugins_list as $plugin) {
         $plugin['TPL_CTRL'] = $counter;
         ($counter == $num_items) ? $plugin['TPL_FOOT'] = 1 : $plugin['TPL_FOOT'] = 0;
 
@@ -235,8 +236,18 @@ function plugins_ctrl_display($plugins) {
             $plugin['BUTTOMS_CODE'] .= "<p>{$LNG['L_PL_E_ITSMISSING']}</p>";
             $plugin['BUTTOMS_CODE'] .= "<input type='submit' name='btnDeleteMissing'  value='" . $LNG['L_PL_DELETE'] . "'>";
         } else if (!$plugin['installed']) {
-            $plugin['BUTTOMS_CODE'] .= "<input type='submit' name='btnInstall'  value='" . $LNG['L_PL_INSTALL'] . "'>";
-            $plugin['BUTTOMS_CODE'] .= "<input type='submit' name='btnCleanFailed'  value='" . $LNG['L_PL_CLEAN_FAILED'] . "'>";
+
+            $missing_install_depends = 0;
+            //check if depends its installed for show install button because perhaps need the depends table for install.
+            foreach (unserialize($plugin['depends']) as $depend) {
+                if (!$plugins->checkInstalledProvider($depend->name)) {
+                    $missing_install_depends = 1;
+                }
+            }
+            if (!$missing_install_depends) {
+                $plugin['BUTTOMS_CODE'] .= "<input type='submit' name='btnInstall'  value='" . $LNG['L_PL_INSTALL'] . "'>";
+                $plugin['BUTTOMS_CODE'] .= "<input type='submit' name='btnCleanFailed'  value='" . $LNG['L_PL_CLEAN_FAILED'] . "'>";
+            }
         } else if ($plugin['upgrade_from'] != 0) {
             $plugin['BUTTOMS_CODE'] .= "<input type='submit' name='btnUpgrade'  value='" . $LNG['L_PL_UPGRADE'] . "'>";
         } else {
