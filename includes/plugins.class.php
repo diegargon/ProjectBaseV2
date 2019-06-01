@@ -409,7 +409,7 @@ class Plugins {
     }
 
     function checkStarted($plugin_name) {
-        
+
         foreach ($this->started_plugins as $started_plugin) {
             if ($started_plugin['plugin_name'] == $plugin_name) {
                 return true;
@@ -426,7 +426,7 @@ class Plugins {
             return false;
         }
 
-        if (empty($plugin['depends']) || $this->ResolvePluginDepends($plugin)) {
+        if (empty($plugin['depends']) || $this->resolvePluginDepends($plugin)) {
             return true;
         }
         return false;
@@ -460,7 +460,7 @@ class Plugins {
         return false;
     }
 
-    private function ResolvePluginDepends($plugin) {
+    private function resolvePluginDepends($plugin) {
         global $debug;
 
         $this->debug ? $debug->log('Resolving depends... ', 'PLUGINS', 'INFO') : null;
@@ -534,7 +534,7 @@ class Plugins {
 
                 if (($provide == $depend_name) && ($plugin['version'] >= $min_version) && ($plugin['version'] <= $max_version)
                 ) {
-                    if ($this->ResolvePluginDepends($plugin)) {//resolv de dependes of the depends
+                    if ($this->resolvePluginDepends($plugin)) {//resolv de dependes of the depends
                         if ($plugin['autostart']) {
                             $this->debug ? $debug->log('Starting ' . $depend_name . ' as depend', 'PLUGINS', 'INFO') : null;
                             $this->startPlugin($plugin);
