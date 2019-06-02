@@ -509,8 +509,8 @@ class TPL {
         $content = ob_get_contents();
         ob_end_clean();
 
-        if ($cfg['tplbasic_html_optimize']) { // that going to give problems... :)
-            //TODO...
+        if ($cfg['tplbasic_html_optimize']) { //FIXME this give problems don't use... :)
+            //TODO a regex that not give problems to remove html spaces
             $content = preg_replace('/(\>)\s+(\<)/S', '$1$2', $content); //spaces between > <            
         }
         return $content;

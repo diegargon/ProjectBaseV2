@@ -8,25 +8,59 @@
  *  @subpackage CORE
  *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
-
+/**
+ * Debug messages true, comment to disable
+ */
 define('DEBUG', true);
 //SQL
+/**
+ * We use SQL always must be true
+ */
 define('SQL', true);
 
+/**
+ * Support type: mysql only atm
+ */
 define('DB_TYPE', 'mysql');
+/**
+ * Database name
+ */
 define('DB_NAME', 'ProjectBaseV2');
+/**
+ * Database host
+ */
 define('DB_HOST', 'localhost');
-define('DB_USER', 'projectbase');
+/**
+ * Database User
+ */
+define('DB_USER', '');
+/**
+ *  Database Password
+ */
 define('DB_PASSWORD', '');
+/**
+ * Default database charset
+ */
 define('DB_CHARSET', 'utf8');
+/**
+ * Default table prefix
+ */
 define('DB_PREFIX', 'pb_');
+/**
+ * Default minimal chars for seach
+ */
 define('DB_MINCHAR_SEARCH', 2);
 
-//Filter
-define('FILTER', "SecureFilter");
+/**
+ * Default filter class
+ */
+define('FILTER', 'SecureFilter');
 
-//DEBUG
-define('DEBUG_CORE', "DebugBasic");
+/**
+ * Debug debug class
+ */
+define('DEBUG_CORE', 'DebugBasic');
+
 
 //CORE 
 //ONLY EFFECT FOR INSTALL LATER WE USE THE CONF IN DATABASE

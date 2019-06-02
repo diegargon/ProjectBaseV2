@@ -30,10 +30,10 @@ class Database {
     public $charset;
 
     /**
-     * TODO collate
+     * collate
      * @var type 
      */
-    public $collate; //TODO
+    public $collate; //TODO unused atm
     /**
      * Min search char default: 2 (have setter)
      * @var int

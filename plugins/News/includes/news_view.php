@@ -405,7 +405,7 @@ function news_adv_stats($nid, $lang) {
     }
 }
 
-function news_add_social_meta($news) { // TODO: Move to plugin NewsSocialExtra
+function news_add_social_meta($news) { // TODO:  Move to plugin NewsSocialExtra? Unused Atm
     global $tpl, $cfg, $filter;
     $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://';
     $news['url'] = $protocol . $_SERVER['HTTP_HOST'] . $filter->srvRequestUri();
@@ -415,7 +415,7 @@ function news_add_social_meta($news) { // TODO: Move to plugin NewsSocialExtra
     preg_match($match_regex, $news['text'], $match);
     if (!empty($match[1])) {
         $url = preg_replace('/\[S\]/si', $cfg['img_selector'] . '/', $match[1]);
-        $cfg['IMG_UPLOAD_DIR'] = 'news_img'; //TODO
+        $cfg['IMG_UPLOAD_DIR'] = 'news_img'; //TODO i forget why add a TODO here :)
         $news['mainimage'] = $cfg['STATIC_SRV_URL'] . $cfg['IMG_UPLOAD_DIR'] . '/' . $url;
     }
     $content = $tpl->getTplFile('News', 'NewsSocialmeta', $news);

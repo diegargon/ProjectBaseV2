@@ -12,6 +12,9 @@
  */
 !defined('IN_WEB') ? exit : true;
 
+/**
+ * Absolute path
+ */
 define('ABSPATH', dirname(__FILE__));
 
 error_reporting(E_ALL);

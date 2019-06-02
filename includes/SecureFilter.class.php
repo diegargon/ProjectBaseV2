@@ -573,7 +573,7 @@ class SecureFilter {
         ) {
             return false;
         }
-        //  TODO
+        // TODO check if work the regex
         if (!preg_match("//u", $var)) {
             return false;
         }
