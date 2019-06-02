@@ -1,48 +1,52 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
- */
-
 /**
  *  TimeUtil
- *  Time Util
+ * 
  *  @author diego@envigo.net
  *  @package ProjectBase
  *  @subpackage CORE
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 
-//TODO: Check user preferences
-
+/**
+ * Class TimeUtil
+ * 
+ * TODO: Check user preferences
+ */
 Class TimeUtil {
 
     /**
+     * Dateformat
      * 
      * @var string
      */
     private $dateformat;
 
     /**
+     * Timezone
      * 
      * @var string 
      */
     private $timezone;
 
     /**
-     *
+     * Server Timezone
+     * 
      * @var string
      */
     private $server_timezone;
 
     /**
-     *
+     * Database date time format
      * @var string
      */
     private $date_db_format;
 
     /**
-     * Set time defaults
+     * configure time defaults
+     * 
      * @global array $cfg
      */
     function configTime() {
@@ -55,6 +59,7 @@ Class TimeUtil {
     }
 
     /**
+     * get time zone
      * 
      * @return string
      */
@@ -63,6 +68,7 @@ Class TimeUtil {
     }
 
     /**
+     * get time now
      * 
      * @return string|false
      */
@@ -72,6 +78,7 @@ Class TimeUtil {
     }
 
     /**
+     * convert timestamp to date
      * 
      * @param int $timestamp
      * @return string|false
@@ -83,6 +90,7 @@ Class TimeUtil {
     }
 
     /**
+     * format a date retrieve from db
      * 
      * @param string $db_date
      * @return string|false
@@ -94,6 +102,7 @@ Class TimeUtil {
 
     /**
      * get timezone identifiers
+     * 
      * @return array|false
      */
     function getTzList() {
@@ -101,7 +110,7 @@ Class TimeUtil {
     }
 
     /**
-     * 
+     * set time zone
      */
     private function setTimeZone() {
         date_default_timezone_set($this->timezone);

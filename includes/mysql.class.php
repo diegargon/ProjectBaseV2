@@ -1,17 +1,20 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
- */
 /**
  *  Mysql
+ * 
  *  DB Utils
+ * 
  *  @author diego@envigo.net
  *  @package ProjectBase
  *  @subpackage CORE
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 
+/**
+ * Database Class
+ */
 class Database {
 
     /**
@@ -56,19 +59,19 @@ class Database {
     protected $dbhost;
 
     /**
-     *
+     * db name
      * @var string
      */
     protected $dbname;
 
     /**
-     *
+     * db user
      * @var string
      */
     protected $dbuser;
 
     /**
-     *
+     * db password
      * @var string 
      */
     protected $dbpassword;
@@ -102,6 +105,9 @@ class Database {
         $this->dbpassword = $dbpassword;
     }
 
+    /**
+     * Destruct
+     */
     function __destruct() {
         $this->close();
     }
@@ -161,6 +167,7 @@ class Database {
     }
 
     /**
+     * Query
      * 
      * @param string $query
      * @return array
@@ -177,6 +184,7 @@ class Database {
     }
 
     /**
+     * fetch
      * 
      * @param object $query
      * @return array
@@ -186,6 +194,7 @@ class Database {
     }
 
     /**
+     * fetch all
      * 
      * @param array $query
      * @return array
@@ -202,6 +211,7 @@ class Database {
 
     /**
      * Escape string
+     * 
      * @param string $var
      * @return string
      */
@@ -211,6 +221,7 @@ class Database {
 
     /**
      * Escape and Strip tags
+     * 
      * @param string $var
      * @return string
      */
@@ -220,6 +231,7 @@ class Database {
 
     /**
      * Return num rows
+     * 
      * @param object $result
      * @return int
      */
@@ -227,6 +239,9 @@ class Database {
         return $result->num_rows;
     }
 
+    /**
+     *  Close dblink
+     */
     function close() {
         !$this->dblink ? die('Could not connect: ' . $this->dblink->error) : false;
         $this->dblink->close();
@@ -234,6 +249,7 @@ class Database {
 
     /**
      * Print db error and exit
+     * 
      * @param string $query
      */
     private function dbdie($query) {
@@ -246,6 +262,7 @@ class Database {
 
     /**
      * Return next table id
+     * 
      * @return int
      */
     function insertID() {
@@ -259,6 +276,7 @@ class Database {
     }
 
     /**
+     * free
      * 
      * @param object $query
      */
@@ -268,6 +286,7 @@ class Database {
 
     /**
      * Check if table exists
+     * 
      * @param string $table
      * @return boolean
      */
@@ -283,8 +302,9 @@ class Database {
 
     /**
      * Calculate next row number 
+     * 
      * @param string $table
-     * @param type $field
+     * @param string $field
      * @return boolean
      */
     function getNextNum($table, $field) {
@@ -309,6 +329,7 @@ class Database {
 
     /**
      * Select all fields
+     * 
      * @param string $table
      * @param array $where
      * @param string $extra
@@ -333,6 +354,7 @@ class Database {
 
     /**
      * Select specific fields using $what
+     * 
      * @param string $table
      * @param string $what comma field separated
      * @param array $where
@@ -357,6 +379,7 @@ class Database {
 
     /**
      * Search databse
+     * 
      * @param string $table
      * @param string $s_fields
      * @param string $searchText
@@ -403,6 +426,7 @@ class Database {
 
     /**
      * Update database
+     * 
      * @param string $table
      * @param array $set
      * @param array $where
@@ -428,6 +452,7 @@ class Database {
 
     /**
      * Insert
+     * 
      * @param string $table
      * @param array $insert_data
      * @param string $extra
@@ -446,6 +471,7 @@ class Database {
 
     /**
      * Delete 
+     * 
      * @param string $table
      * @param array $where
      * @param string $extra
@@ -466,6 +492,7 @@ class Database {
 
     /**
      * Insert or update if exists
+     * 
      * @param string $table
      * @param array $set_ary
      * @param array $where_ary
@@ -478,6 +505,7 @@ class Database {
 
     /**
      * Return number of executed querys 
+     * 
      * @return int
      */
     function numQuerys() {
@@ -486,6 +514,7 @@ class Database {
 
     /**
      * return query history
+     * 
      * @return array
      */
     function getQueryHistory() {
@@ -494,6 +523,7 @@ class Database {
 
     /**
      * Insert Processs
+     * 
      * @param array $insert_data
      * @return array
      */
@@ -510,6 +540,7 @@ class Database {
 
     /**
      * Set process
+     * 
      * @param array $set
      * @return string
      */
@@ -523,6 +554,7 @@ class Database {
 
     /**
      * Where process
+     * 
      * @param array $where
      * @param string $logic
      * @return string

@@ -1,17 +1,16 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
- */
-!defined('IN_WEB') ? exit : true;
-
 /**
  *  Core Functions
- *  Core funcitions
+ * 
+ *  Core functions
+ * 
  *  @author diego@envigo.net
  *  @package ProjectBase
  *  @subpackage CORE
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
+!defined('IN_WEB') ? exit : true;
 
 /**
  * Retrieve from the databse the confiog to populate $cfg

@@ -1,17 +1,20 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
- */
 /**
  *  Plugins
+ * 
  *  Plugins load/manager
+ * 
  *  @author diego@envigo.net
  *  @package ProjectBase
  *  @subpackage CORE
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
  */
 !defined('IN_WEB') ? exit : true;
 
+/**
+ * Class Plugins
+ */
 class Plugins {
 
     /**
@@ -37,10 +40,6 @@ class Plugins {
      * @var array
      */
     private $plugins_db = [];
-
-    function __construct() {
-        
-    }
 
     /**
      * Init plugins with autostart 1 and depends with autostart 0/1

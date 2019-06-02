@@ -1,13 +1,20 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  Here begin the core initialization
  * 
- * actions: "index_page" "finalize" "preload_$module_$page"
+ *  actions: "index_page" "finalize" "preload_$module_$page"
  * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage CORE
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 
+/**
+ * Core Init
+ */
 define('CORE_VERSION', 0.2);
 
 require_once ('includes/core.utils.php');

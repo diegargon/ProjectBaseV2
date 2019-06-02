@@ -1,15 +1,14 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
- */
-!defined('IN_WEB') ? exit : true;
 /**
  *  Core util functions
+ * 
  *  @author diego@envigo.net
  *  @package ProjectBase
  *  @subpackage CORE
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
  */
+!defined('IN_WEB') ? exit : true;
 
 /**
  * Detect if its a bot
@@ -71,9 +70,9 @@ function mobileDetect() {
 
 /**
  * Format bytes to K/M/G/T bytes
- * @param int $size
- * @param type $precision
- * @return type
+ * @param int $nbytes
+ * @param int $precision
+ * @return float
  */
 function formatBytes($nbytes, $precision = 2) {
     $base = log($nbytes, 1024);
@@ -116,13 +115,11 @@ function remote_check($url) {
 }
 
 /**
+ * Return server load respect cpu's number 1.0 = 100% all cores
  * 
  * @return float|false
  */
 function getServerLoad() {
-    /*
-     *  Return server load respect cpu's number 1.0 = 100% all cores
-     */
 
     $pattern = '/[^\n]*processor[^\n]*/';
 
@@ -145,6 +142,7 @@ function getServerLoad() {
 }
 
 /**
+ * Return if server is stressed
  * 
  * @global array $cfg
  * @return boolean
@@ -163,6 +161,7 @@ function is_server_stressed() {
 }
 
 /**
+ * Set load time
  * 
  * @return float
  */
@@ -174,8 +173,9 @@ function set_load_time() {
 }
 
 /**
+ * get load time
  * 
- * @param type $start
+ * @param int $start
  * @return float
  */
 function get_load_time($start) {

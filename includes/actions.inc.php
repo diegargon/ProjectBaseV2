@@ -1,14 +1,12 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
- */
-
 /**
  *  Action Functions
+ * 
  *  @author diego@envigo.net
  *  @package ProjectBase
  *  @subpackage CORE
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  * 
  *  Class: register_uniq_action("action",  array($class, "method"));
  *  Function: register_uniq_action("action", "function")) * 

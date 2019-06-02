@@ -1,19 +1,21 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
- */
-
 /**
  *  DebugBasic
+ * 
  *  Log debug messsages
+ * 
  *  Error levels: ERROR, WARNING, NOTICE, DEBUG
  *  @author diego@envigo.net
  *  @package ProjectBase
  *  @subpackage CORE
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 
+/**
+ * Class Debug
+ */
 class Debug {
 
     /**
@@ -21,10 +23,6 @@ class Debug {
      * @var array
      */
     private $debug_msg = [];
-
-    function __construct() {
-        
-    }
 
     /**
      * Log message

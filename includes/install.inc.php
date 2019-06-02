@@ -1,15 +1,18 @@
 <?php
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
- */
+
 /**
  *  New Install process
+ * 
  *  @author diego@envigo.net
  *  @package ProjectBase
  *  @subpackage CORE
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
  */
 !defined('IN_WEB') ? exit : true;
 
+/**
+ * Install script
+ */
 require_once ('install.db.php');
 
 $step = filter_input(INPUT_GET, 'step', FILTER_VALIDATE_INT);

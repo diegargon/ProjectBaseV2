@@ -1,43 +1,51 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2018 Diego Garcia
- * 
- */
-
 /**
  *  SecureFilter
+ * 
  *  Validation filters
+ * 
  *  @author diego@envigo.net
  *  @package ProjectBase
  *  @subpackage CORE
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
+ */
+
+/**
+ * Class SecureFilter
  */
 class SecureFilter {
 
     /**
+     * Max Mysql INT
      * 
      * @var int
      */
-    private $max_int; //MYSQL INT
+    private $max_int;
+
     /**
      * Do remote checks
+     * 
      * @var int
      */
     private $remote_checks;
 
     /**
      * Media file extension regex
+     * 
      * @var string
      */
     private $media_regex;
 
     /**
      * User name regex
+     * 
      * @var string
      */
     private $user_name_regex;
 
     /**
+     * Construct
      * 
      * @global array $cfg
      */
@@ -51,6 +59,7 @@ class SecureFilter {
     }
 
     /**
+     * setter name regex
      * 
      * @param string $regex
      */
@@ -59,6 +68,7 @@ class SecureFilter {
     }
 
     /**
+     * setter media regex
      * 
      * @param string $regex
      */
@@ -68,6 +78,7 @@ class SecureFilter {
 
     /**
      * GET & check integer
+     * 
      * @param string $var
      * @param int $max_size
      * @param int $min_size
@@ -88,6 +99,7 @@ class SecureFilter {
 
     /**
      * GET & check A-Z character
+     * 
      * @param string $var
      * @param int $max_size
      * @param int $min_size
@@ -102,9 +114,10 @@ class SecureFilter {
 
     /**
      * GET & check utf8 text
-     * @param type $var
-     * @param type $max_size
-     * @param type $min_size
+     * 
+     * @param string $var
+     * @param int $max_size
+     * @param int $min_size
      * @return boolean
      */
     function getUtf8Txt($var, $max_size = null, $min_size = null) {
@@ -116,6 +129,7 @@ class SecureFilter {
 
     /**
      * GET & check email
+     * 
      * @param string $var
      * @return boolean
      */
@@ -140,6 +154,7 @@ class SecureFilter {
 
     /**
      * GET & check and strict char list chars & '_'
+     * 
      * @param string $var
      * @param int $max_size
      * @param int $min_size
@@ -155,6 +170,7 @@ class SecureFilter {
 
     /**
      * POST & check password
+     * 
      * @param string $var
      * @param int $max_size
      * @param int $min_size
@@ -170,6 +186,7 @@ class SecureFilter {
 
     /**
      * POST & Check password
+     * 
      * @param string $var
      * @return boolean
      */
@@ -182,6 +199,7 @@ class SecureFilter {
 
     /**
      * POST & check a string with char and numbers
+     * 
      * @param string $var
      * @param int $max_size
      * @param int $min_size
@@ -197,6 +215,7 @@ class SecureFilter {
 
     /**
      * POST & check A-Z char
+     * 
      * @param string $var
      * @param int $max_size
      * @param int $min_size
@@ -212,6 +231,7 @@ class SecureFilter {
 
     /**
      * POST & check a utf8 text
+     * 
      * @param string $var
      * @param int $max_size
      * @param int $min_size
@@ -227,6 +247,7 @@ class SecureFilter {
 
     /**
      * POST & check a strict list of chars
+     * 
      * @param string $var
      * @param int $max_size
      * @param int $min_size
@@ -242,6 +263,7 @@ class SecureFilter {
 
     /**
      * POST & Check int
+     * 
      * @param string $var
      * @param int $max_size
      * @param int $min_size
@@ -262,6 +284,7 @@ class SecureFilter {
 
     /**
      * POST & check url
+     * 
      * @param string $var
      * @param int $max_size
      * @param int $min_size
@@ -290,6 +313,7 @@ class SecureFilter {
 
     /**
      * POST & Check a username (custom regex)
+     * 
      * @param string $var
      * @param int $max_size
      * @param int $min_size
@@ -305,6 +329,7 @@ class SecureFilter {
 
     /**
      * POST & Check Alpha Numeric characteres Unicode
+     * 
      * @param string $var
      * @param int $max_size
      * @param int $min_size
@@ -320,6 +345,7 @@ class SecureFilter {
 
     /**
      * POST & Check a array
+     * 
      * @param string $var
      * @return boolean
      */
@@ -332,6 +358,7 @@ class SecureFilter {
 
     /**
      * get the request uri filtered
+     * 
      * @return boolean
      */
     function srvRequestUri() {
@@ -343,6 +370,7 @@ class SecureFilter {
 
     /**
      * get the user agent filtered
+     * 
      * @return boolean
      */
     function srvUserAgent() {
@@ -365,6 +393,7 @@ class SecureFilter {
 
     /**
      * get the _SERVER
+     * 
      * @param string $var
      * @return boolean
      */
@@ -377,6 +406,7 @@ class SecureFilter {
 
     /**
      * get the accept language
+     * 
      * @return type
      */
     function srvAcceptLang() {
@@ -385,6 +415,7 @@ class SecureFilter {
 
     /**
      * check password
+     * 
      * @param string $var
      * @param int $max_size
      * @param int $min_size
@@ -410,6 +441,7 @@ class SecureFilter {
 
     /**
      * check int
+     * 
      * @param int $var
      * @param int $max_size
      * @param int $min_size
@@ -430,6 +462,7 @@ class SecureFilter {
 
     /**
      * check A-Z char
+     * 
      * @param string $var
      * @param int $max_size
      * @param int $min_size
@@ -450,6 +483,7 @@ class SecureFilter {
 
     /**
      * Check filename
+     * 
      * @param string $file
      * @param int $max_size
      * @param int $min_size
@@ -469,6 +503,7 @@ class SecureFilter {
 
     /**
      * check for valid url
+     * 
      * @param string $var
      * @param int $max_size
      * @param int $min_size
@@ -501,6 +536,7 @@ class SecureFilter {
 
     /**
      * check for a strict char list
+     * 
      * @param string $var
      * @param int $max_size
      * @param int $min_size
@@ -526,6 +562,7 @@ class SecureFilter {
 
     /**
      * check for a utf8 text
+     * 
      * @param string $var
      * @param int $max_size
      * @param int $min_size
@@ -546,6 +583,7 @@ class SecureFilter {
 
     /**
      * Check for alpha numeric unicode string
+     * 
      * @param string $var
      * @param int $max_size
      * @param int $min_size
@@ -567,6 +605,7 @@ class SecureFilter {
 
     /**
      * check for char unicode
+     * 
      * @param string $var
      * @param string $max_size
      * @param string $min_size
@@ -588,10 +627,12 @@ class SecureFilter {
 
     /**
      * Check for unicode char with underscore in middle
+     * 
      * TODO  hacer generica, funcion supliendo el caracter deseado que ira en el medio
-     * @param type $var
-     * @param type $max_size
-     * @param type $min_size
+     * 
+     * @param string $var
+     * @param int $max_size
+     * @param int $min_size
      * @return boolean
      */
     function varCharUnderscoreUnicode($var, $max_size = null, $min_size = null) {
@@ -610,10 +651,12 @@ class SecureFilter {
 
     /**
      *  Check for unicode char and numeric with underscore in middle
+     * 
      * TODO  hacer generica, funcion supliendo el caracter deseado que ira en el medio
-     * @param type $var
-     * @param type $max_size
-     * @param type $min_size
+     * 
+     * @param string $var
+     * @param int $max_size
+     * @param int $min_size
      * @return boolean
      */
     function varAlphaUnderscoreUnicode($var, $max_size = null, $min_size = null) {
@@ -632,6 +675,7 @@ class SecureFilter {
 
     /**
      * Check for alpha numeric 
+     * 
      * @param string $var
      * @param int $max_size
      * @param int $min_size
@@ -651,6 +695,7 @@ class SecureFilter {
 
     /**
      * check user name
+     * 
      * @param string $var
      * @param int $max_size
      * @param int $min_size
@@ -671,6 +716,7 @@ class SecureFilter {
 
     /**
      * Check for int in a cookie
+     * 
      * @param string $var
      * @param int $max_size
      * @param int $min_size
@@ -686,6 +732,7 @@ class SecureFilter {
 
     /**
      * check for alpha numeric in a cookie
+     * 
      * @param string $var
      * @param int $max_size
      * @param int $min_size
@@ -700,6 +747,7 @@ class SecureFilter {
 
     /**
      * Validate a media file url, and opt, do a remote check
+     * 
      * @param string $url
      * @param int $max_size
      * @param int $min_size
