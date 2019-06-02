@@ -283,9 +283,9 @@ function AdminPluginConfig($plugin) {
             return false;
         }
         $cfg_id = $filter->post_int('configID');
-        //TODO: UNFILTERING, UNCHECKING
         $value = $_POST['cfg_value'];
         if (!empty($cfg_id) && ($cfg_id != false) && ($value !== false)) {
+            $value = $db->escape($value);
             $db->update('config', ['cfg_value' => $value], ['cfg_id' => $cfg_id], 'LIMIT 1');
         }
     }
@@ -298,6 +298,7 @@ function AdminPluginConfig($plugin) {
     while ($cfg_row = $db->fetch($cfg_result)) {
         $cfg_row['TPL_CTRL'] = $counter;
         $counter == $num_items ? $cfg_row['TPL_FOOT'] = 1 : $cfg_row['TPL_FOOT'] = 0;
+        $cfg_row['cfg_value'] = htmlentities($cfg_row['cfg_value'], ENT_QUOTES);
         $content .= $tpl->getTplFile('AdminBasic', 'plugin_config', $cfg_row);
         $counter++;
     }

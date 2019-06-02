@@ -375,7 +375,7 @@ class SessionManager {
     }
 
     private function setConfig() {
-        global $cfg;
+        global $cfg, $filter;
 
         (defined('DEBUG') && $cfg['smbasic_debug']) ? $this->debug = 1 : $this->debug = 0;
 
@@ -403,6 +403,11 @@ class SessionManager {
         !empty($cfg['smbasic_persistence']) ? $this->persistence = $cfg['smbasic_persistence'] : false;
         !empty($cfg['smbasic_cookie_prefix']) ? $this->cookie_prefix = $cfg['smbasic_cookie_prefix'] : false;
         !empty($cfg['smbasic_cookie_expire']) ? $this->cookie_prefix = $cfg['smbasic_cookie_expire'] : false;
+        if ($cfg['smbasic_allow_realnames']) {
+            $filter->setNameRegex($cfg['smbasic_realname_regex']);
+        } else {
+            $filter->setNameRegex($cfg['smbasic_username_regex']);
+        }
     }
 
     /*

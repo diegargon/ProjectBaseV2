@@ -19,8 +19,16 @@ class SecureFilter {
 
         $this->max_int = $cfg['max_int'];
         $this->remote_checks = $cfg['remote_checks'];
-        $this->user_name_regex = $cfg['user_name_regex'];
-        $this->media_regex = $cfg['accepted_media_regex'];
+        $this->user_name_regex = "/^[A-Za-z][A-Za-z0-9]{5,31}$/";
+        $this->media_regex = 'jpe?g|bmp|png|JPE?G|BMP|PNG|gif';
+    }
+
+    function setNameRegex($regex) {
+        $this->user_name_regex = $regex;
+    }
+
+    function setMediaRegex($regex) {
+        $this->media_regex = $regex;
     }
 
 //$_GET
@@ -294,7 +302,6 @@ class SecureFilter {
     //S_VAR_URL
     function var_URL($var, $max_size = null, $min_size = null, $force_no_remote_checks = null) {
 
-
         if (empty($var)) {
             return false;
         }
@@ -428,8 +435,7 @@ class SecureFilter {
 
     //REALNAME
     function var_user_name($var, $max_size = null, $min_size = null) {
-
-
+        
         if ((empty($var) ) || (!empty($max_size) && (strlen($var) > $max_size) ) || (!empty($min_size) && (strlen($var) < $min_size))
         ) {
             return false;
@@ -461,7 +467,6 @@ class SecureFilter {
 
     //S_VALIDATE_MEDIA
     function validate_media($url, $max_size = null, $min_size = null, $force_no_remote_check = null) {
-
 
         $regex = '/\.(' . $this->media_regex . ')(?:[\?\#].*)?$/';
 

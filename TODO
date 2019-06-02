@@ -14,12 +14,8 @@ que necesitan la tabla permissions
 
 LOW
 
-
-
 * CORE: Config por grupos (añadidada la tambla pero sin usar) ver como agrupar y mostrar agrupados en admin
 para luego presentarlos por grupos, ej: L_NEWS_SUBMIT, L_NEWS_VIEW
-
-* SMBASIC: Comprobar que funcione el crear una cuenta con un nombre real con espacios
 
 * NewsComments: Añadir opcion en la admin bar para desabilitar comentarios de determinada noticia, accesible a admins y si $cfg lo permitiera a usuarios.
 
