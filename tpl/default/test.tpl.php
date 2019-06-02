@@ -1,7 +1,11 @@
 <?php
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
- *  test file por block php_file
+/**
+ *  Test php file
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage CORE
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 
