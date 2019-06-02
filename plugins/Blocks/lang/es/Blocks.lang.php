@@ -1,8 +1,12 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
- *  ES
+/**
+ *  Lang file - Spanish
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage Blocks
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)  
  */
 !defined('IN_WEB') ? exit : true;
 

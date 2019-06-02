@@ -1,16 +1,32 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  Blocks admin file
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage Blocks
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)  
  */
 !defined('IN_WEB') ? exit : true;
 
+/**
+ * admin init
+ * @global plugins $plugins
+ */
 function Blocks_AdminInit() {
     global $plugins;
 
     $plugins->expressStart('Blocks') ? register_action('add_admin_menu', 'Blocks_AdminMenu', '5') : null;
 }
 
+/**
+ * Blocks Admin menu
+ * @global plugins $plugins
+ * @global array $LNG
+ * @param array $params
+ * @return string
+ */
 function Blocks_AdminMenu($params) {
     global $plugins, $LNG;
 
@@ -25,6 +41,12 @@ function Blocks_AdminMenu($params) {
     }
 }
 
+/**
+ * Blocks admin aside
+ * @global array $LNG
+ * @param array $params
+ * @return string
+ */
 function Blocks_AdminAside($params) {
     global $LNG;
 
@@ -33,6 +55,13 @@ function Blocks_AdminAside($params) {
             "<li><a href='admin&admtab=" . $params['admtab'] . "&opt=4'>" . $LNG['L_PL_CONFIG'] . "</a></li>\n";
 }
 
+/**
+ * Blocks admin content
+ * 
+ * @global array $LNG
+ * @param array $params
+ * @return string
+ */
 function Blocks_admin_content($params) {
     global $LNG;
     $page_data = '';
@@ -49,6 +78,16 @@ function Blocks_admin_content($params) {
     return $page_data;
 }
 
+/**
+ * Blocks Block Manager
+ * 
+ * @global blocks $blocks
+ * @global tpl $tpl
+ * @global filter $filter
+ * @global array $LNG
+ * @global ml $ml
+ * @return string
+ */
 function Blocks_blk_mng() {
     global $blocks, $tpl, $filter, $LNG;
 
@@ -177,6 +216,15 @@ function Blocks_blk_mng() {
     return $content;
 }
 
+/**
+ * Blocks show edit block
+ * 
+ * @global filter $filter
+ * @global blocks $blocks
+ * @global array $LNG
+ * @param array $blk_cfg_data
+ * @return array
+ */
 function Blocks_showEditBlock(& $blk_cfg_data) {
     global $filter, $blocks, $LNG;
 
@@ -191,6 +239,12 @@ function Blocks_showEditBlock(& $blk_cfg_data) {
     $blk_cfg_data['content'] .= '<br/><input type="submit" name="btnSubmitEditBlock" value="' . $LNG['L_SEND'] . '"/>';
 }
 
+/**
+ * Blocks Delete block
+ * 
+ * @global filter $filter
+ * @global blocks $blocks
+ */
 function Blocks_delBlock() {
     global $filter, $blocks;
 
@@ -200,6 +254,15 @@ function Blocks_delBlock() {
     }
 }
 
+/**
+ * Blocks add block
+ * 
+ * @global filter $filter
+ * @global blocks $blocks
+ * @global db $db
+ * @param array $config_array
+ * @return boolean
+ */
 function Blocks_addBlock($config_array) {
     global $filter, $blocks, $db;
 
@@ -241,6 +304,13 @@ function Blocks_addBlock($config_array) {
     return $ret ? true : false;
 }
 
+/**
+ * Update Block
+ * 
+ * @global filter $filter
+ * @global db $db
+ * @return boolean
+ */
 function Blocks_updateBlock() {
     global $filter, $db;
     $editblock_id = $filter->postInt('block_id');

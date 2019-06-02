@@ -53,6 +53,7 @@ class Debug {
     }
 
     /**
+     * Print debug
      * 
      * @param string $module
      * @param string $level

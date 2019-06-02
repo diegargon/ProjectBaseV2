@@ -1,15 +1,30 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  ExampleTemplate
+ *  
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage ExampleTemplate
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 
+/**
+ * Init
+ * @global ExampleTemplate $example_template
+ */
 function ExampleTemplate_init() {
     global $example_template;
     !isset($example_template) ? $example_template = new ExampleTemplate() : null;
 }
 
+/**
+ * Install
+ * 
+ * @global db $db
+ * @return boolean
+ */
 function ExampleTemplate_install() {
     global $db;
     require_once ('db/ExampleTemplate.db.php');
@@ -21,14 +36,32 @@ function ExampleTemplate_install() {
     return true;
 }
 
+/**
+ * PreInstall
+ * 
+ * @return boolean
+ */
 function ExampleTemplate_preInstall() {
     return true;
 }
 
+/**
+ * PreInstall Info
+ * 
+ * @return boolean
+ */
 function ExampleTemplate_preInstall_info() {
     return true;
 }
 
+/**
+ * Upgrade 
+ * 
+ * @global db $db
+ * @param flaot $version
+ * @param float $from_version
+ * @return boolean
+ */
 function ExampleTemplate_upgrade($version, $from_version) {
     global $db;
     require_once ('db/ExampleTemplate.db.php');
@@ -43,6 +76,11 @@ function ExampleTemplate_upgrade($version, $from_version) {
     return false;
 }
 
+/**
+ * Uninstall
+ * @global db $db
+ * @return boolean
+ */
 function ExampleTemplate_uninstall() {
     global $db;
     require_once ('db/ExampleTemplate.db.php');

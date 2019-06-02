@@ -1,26 +1,61 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
- */
-
 /**
- *  Blocks plugin 
+ *  Blocks class file 
+ * 
  *  @author diego@envigo.net
  *  @package ProjectBase
  *  @subpackage Blocks
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)  
+ */
+
+/**
+ * Blocks Class
  */
 class Blocks {
 
+    /**
+     * List register blocks
+     * 
+     * @var array 
+     */
     private $registered_blocks;
+
+    /**
+     * List user blocks
+     * 
+     * @var array 
+     */
     private $user_blocks;
+
+    /**
+     * List pages
+     * 
+     * @var array
+     */
     private $pages;
+
+    /**
+     * Debug reference
+     * 
+     * @var debug|false
+     */
     public $debug;
 
+    /**
+     * _construct
+     */
     public function __construct() {
         $this->setConfig();
     }
 
+    /**
+     * Set config
+     * 
+     * @global array $cfg
+     * @global debug $debug
+     * @global array $LNG
+     */
     private function setConfig() {
         global $cfg, $debug, $LNG;
 
@@ -33,6 +68,16 @@ class Blocks {
         $this->registerBlock('block_php_file', $LNG['L_BLK_PHPFILE_DESC'], [$this, 'blockPhpFile'], [$this, 'blockPhpFileConf'], null, 1);
     }
 
+    /**
+     * Register block
+     * 
+     * @param string $block_name
+     * @param string $block_desc
+     * @param string $func_show
+     * @param string $func_conf
+     * @param string $def_conf
+     * @param string $admin_block
+     */
     function registerBlock($block_name, $block_desc, $func_show, $func_conf, $def_conf, $admin_block) {
         $this->registered_blocks[] = [
             'blockname' => $block_name,
@@ -44,6 +89,12 @@ class Blocks {
         ];
     }
 
+    /**
+     * register blocks page
+     * 
+     * @param string $page_name
+     * @param string $page_sections
+     */
     function registerBlocksPage($page_name, $page_sections) {
         isset($this->debug) ? $this->debug->log('Registered blocks page, ' . $page_name . ' sections ' . $page_sections, 'Blocks', 'INFO') : null;
         $this->pages [] = [
@@ -52,14 +103,30 @@ class Blocks {
         ];
     }
 
+    /**
+     * get pages
+     * 
+     * @return array
+     */
     function getPages() {
         return $this->pages;
     }
 
+    /**
+     * get registered blocks
+     * 
+     * @return array
+     */
     function getRegisteredBlocks() {
         return $this->registered_blocks;
     }
 
+    /**
+     * get admin blocks
+     * 
+     * @global db $db
+     * @return array|false
+     */
     function getAdminBlocks() {
         global $db;
 
@@ -69,6 +136,14 @@ class Blocks {
         return (count($admin_blocks) > 0) ? $admin_blocks : false;
     }
 
+    /**
+     * set a block in page
+     * 
+     * @global db $db
+     * @global sm $sm
+     * @global ml $ml
+     * @param string $page
+     */
     function setBlocks($page) {
         global $db;
 
@@ -103,8 +178,13 @@ class Blocks {
         }
     }
 
-    /* Gets content by column */
-
+    /**
+     * get content by section/column
+     * 
+     * @param string $page
+     * @param int $sections
+     * @return boolean
+     */
     function getBlocksContent($page, $sections) {
 
         !isset($this->user_blocks) ? $this->setBlocks($page) : null;
@@ -132,6 +212,13 @@ class Blocks {
         return $page_data;
     }
 
+    /**
+     * Block config
+     * 
+     * @param string $blockname
+     * @param string $block_data
+     * @return boolean
+     */
     function blockConfig($blockname, $block_data = null) {
         foreach ($this->registered_blocks as $reg_block) {
             if ($reg_block['blockname'] == $blockname) {
@@ -141,6 +228,13 @@ class Blocks {
         return false;
     }
 
+    /**
+     * Blocks edit config
+     * 
+     * @global db $db
+     * @param int $block_id
+     * @return array|null
+     */
     function blockEditConfig($block_id) {
         global $db;
 
@@ -153,19 +247,38 @@ class Blocks {
         return null;
     }
 
+    /**
+     * Delete block
+     * 
+     * @global db $db
+     * @param int $block_id
+     */
     function deleteBlock($block_id) {
         global $db;
 
         $db->delete('blocks', ['blocks_id' => $block_id], 'LIMIT 1');
     }
 
-    /* BASIC BLOCKS PROVIDED */
-
+    /**
+     * Block html
+     * 
+     * Basic block provide
+     * 
+     * @param arraye $conf
+     * @return string
+     */
     public function blockHtml($conf) {
 
         return nl2br($conf['html_code']);
     }
 
+    /**
+     * block html config
+     * 
+     * @global filter $filter
+     * @param array $block_data
+     * @return string
+     */
     public function blockHtmlConf($block_data = null) {
         global $filter;
 
@@ -192,6 +305,13 @@ class Blocks {
         return $content;
     }
 
+    /**
+     * block htmlrestricted config
+     * 
+     * @global filter $filter
+     * @param array $block_data
+     * @return string
+     */
     public function blockHtmlConfRestricted($block_data = null) {
         global $filter;
 
@@ -217,6 +337,13 @@ class Blocks {
         return $content;
     }
 
+    /**
+     * Block html file
+     * 
+     * @global array $cfg
+     * @param array $conf
+     * @return boolean
+     */
     public function blockHtmlFile($conf) {
         global $cfg;
 
@@ -229,6 +356,13 @@ class Blocks {
         return false;
     }
 
+    /**
+     * Block html file config
+     * 
+     * @global filter $filter
+     * @param array $block_data
+     * @return string
+     */
     public function blockHtmlFileConf($block_data = null) {
         global $filter;
         if (!empty($block_data)) {
@@ -247,12 +381,25 @@ class Blocks {
         return $content;
     }
 
+    /**
+     * Block php file
+     * 
+     * @global tpl $tpl
+     * @param array $conf
+     * @return string
+     */
     public function blockPhpFile($conf) {
         global $tpl;
         //file without ext. "test" and look at /tpl/default/test.tpl.php
         return $tpl->getTplFile('Blocks', $conf['php_file']);
     }
 
+    /**
+     * block php file conf
+     * @global filter $filter
+     * @param array $block_data
+     * @return string
+     */
     public function blockPhpFileConf($block_data = null) {
         global $filter;
 

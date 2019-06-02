@@ -1,9 +1,13 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  Blocks db
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage Blocks
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)  
  */
-
 $blocks_database_install[] = "
 CREATE TABLE `" . DB_PREFIX . "blocks` (
   `blocks_id` int(10) UNSIGNED NOT NULL,

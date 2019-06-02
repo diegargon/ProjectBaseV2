@@ -1,17 +1,24 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
- */
-
 /**
  *  AdminBasic Functions
+ * 
  *  @author diego@envigo.net
  *  @package ProjectBase
  *  @subpackage AdminBasic
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)  
  */
 !defined('IN_WEB') ? exit : true;
 
+/**
+ * check auth
+ * 
+ * @global sm $sm
+ * @global acl_auth $acl_auth
+ * @global frontend $frontend
+ * @param string $tokens
+ * @return boolean
+ */
 function admin_auth($tokens) {
     global $sm, $acl_auth;
 
@@ -33,6 +40,13 @@ function admin_auth($tokens) {
     return false;
 }
 
+/**
+ * Load plugin files
+ * 
+ * @global plugins $plugins
+ * @global debug $debug
+ * @global array $cfg
+ */
 function admin_load_plugin_files() {
     //Load administration side from all register plugins (all enabled) and init the admin_init function.
     global $plugins, $debug, $cfg;
@@ -60,6 +74,14 @@ function admin_load_plugin_files() {
     }
 }
 
+/**
+ * Get Plugin State
+ * 
+ * @global plugins $plugins
+ * @global tpl $tpl
+ * @param string $plugin_name
+ * @return string
+ */
 function Admin_GetPluginState($plugin_name) {
     global $plugins, $tpl;
     $content = '';
@@ -77,6 +99,15 @@ function Admin_GetPluginState($plugin_name) {
     return $content;
 }
 
+/**
+ * Unserialize data to print
+ * 
+ * TODO: Change this
+ * 
+ * @param string $data
+ * @param string $htmlseparator
+ * @return string
+ */
 function AdminBasic_unserialize_forPrint($data, $htmlseparator = '<br/>') {
     $a_data = unserialize($data);
     $result = '';
@@ -86,6 +117,13 @@ function AdminBasic_unserialize_forPrint($data, $htmlseparator = '<br/>') {
     return $result;
 }
 
+/**
+ * Get Config
+ * 
+ * @global db $db
+ * @param string $plugin
+ * @return string
+ */
 function AdminBasic_GetConfig($plugin) {
     global $db;
 
@@ -93,6 +131,13 @@ function AdminBasic_GetConfig($plugin) {
     return $db->fetchAll($query);
 }
 
+/**
+ * Aside Panel
+ * 
+ * @global array $LNG
+ * @param array $params
+ * @return string
+ */
 function admin_general_aside($params) {
     global $LNG;
 
@@ -106,6 +151,16 @@ function admin_general_aside($params) {
     return $general;
 }
 
+/**
+ * Show general content 
+ * 
+ * @global db $db
+ * @global plugins $plugins
+ * @global filter $filter
+ * @global array $LNG
+ * @param array $params
+ * @return boolean|string
+ */
 function admin_general_content($params) {
     global $db, $plugins, $filter, $LNG;
 
@@ -221,6 +276,15 @@ function admin_general_content($params) {
     return $content;
 }
 
+/**
+ * What display
+ * 
+ * @global array $LNG
+ * @global tpl $tpl
+ * @global plugins $plugins
+ * @param array $plugins_list
+ * @return array
+ */
 function plugins_ctrl_display($plugins_list) {
     global $LNG, $tpl, $plugins;
 
@@ -280,6 +344,15 @@ function plugins_ctrl_display($plugins_list) {
     return $content;
 }
 
+/**
+ * Plugin config
+ * 
+ * @global db $db
+ * @global filter $filter
+ * @global tpl $tpl
+ * @param string $plugin
+ * @return boolean
+ */
 function AdminPluginConfig($plugin) {
     global $db, $filter, $tpl;
 
@@ -312,6 +385,10 @@ function AdminPluginConfig($plugin) {
     return $content;
 }
 
+/**
+ * Get phpinfo()
+ * @return string
+ */
 function get_phpinfo() {
     ob_start();
     phpinfo();

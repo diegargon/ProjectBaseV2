@@ -1,11 +1,20 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
- * EN
+/**
+ *  AdminBasic lang file
+ * 
+ *  English file
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage AdminBasic
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 
+/**
+ * Array english
+ */
 $LNG['L_ERROR'] = 'Error';
 $LNG['L_BACKHOME'] = 'Back to home';
 $LNG['L_GENERAL'] = 'General';

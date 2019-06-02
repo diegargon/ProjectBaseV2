@@ -1,15 +1,31 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  ExampleTemplate - Admin file
+ *  
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage ExampleTemplate
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 
+/**
+ * Init
+ * @global plugins $plugins
+ */
 function ExampleTemplate_AdminInit() {
     global $plugins;
     $plugins->expressStart('ExampleTemplate') ? register_action('add_admin_menu', 'ExampleTemplate_AdminMenu', '5') : null;
 }
 
+/**
+ * Admin menu
+ * 
+ * @global plugins $plugins
+ * @param array $params
+ * @return string
+ */
 function ExampleTemplate_AdminMenu($params) {
     global $plugins;
 
@@ -23,6 +39,13 @@ function ExampleTemplate_AdminMenu($params) {
     }
 }
 
+/**
+ * Admin aside
+ * 
+ * @global array $LNG
+ * @param array $params
+ * @return string
+ */
 function ExampleTemplate_AdminAside($params) {
     global $LNG;
 
@@ -30,6 +53,12 @@ function ExampleTemplate_AdminAside($params) {
             '<li><a href="admin&admtab=' . $params['admtab'] . '&opt=4">' . $LNG['L_PL_CONFIG'] . '</a></li>';
 }
 
+/**
+ * Admin content
+ * @global array $LNG
+ * @param array $params
+ * @return string
+ */
 function ExampleTemplate_admin_content($params) {
     global $LNG;
     $page_data = '';

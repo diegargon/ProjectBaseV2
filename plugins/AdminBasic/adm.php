@@ -1,12 +1,20 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  AdminBasic
  * 
- *  
+ *  Entry point panel
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage AdminBasic
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 
+/**
+ * Begin admin panel
+ */
 require_once("admin/AdminBasic.func.php");
 
 admin_load_plugin_files();
