@@ -2,27 +2,100 @@
 
 /*
  *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
- * 
- * 
+ */
+/**
+ *  tplBasic
+ *  Template manager
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage tplBasic
  */
 !defined('IN_WEB') ? exit : true;
 
 class TPL {
 
+    /**
+     * Reference to $debug class
+     * @var object 
+     */
     private $debug;
+
+    /**
+     * Theme 
+     * @var string 
+     */
     private $theme;
+
+    /**
+     * Static content url
+     * @var string 
+     */
     private $static_url;
+
+    /**
+     *
+     * @var int
+     */
     private $css_optimize;
+
+    /**
+     *
+     * @var int
+     */
     private $gzip;
+
+    /**
+     *
+     * @var int
+     */
     private $css_inline;
-    private $db;
+
+    /**
+     * UI lang
+     * @var string
+     */
     private $lang;
+
+    /**
+     * hold template data
+     * @var string
+     */
     private $tpldata;
+
+    /**
+     * CSS file array
+     * @var array
+     */
     private $css_added = [];
+
+    /**
+     * Hold css cache filepaths
+     * @var array
+     */
     private $css_cache_filepaths;
-    public $css_cache_onefile;
+
+    /**
+     * Holds one css file name
+     * @var string
+     */
+    private $css_cache_onefile;
+
+    /**
+     * Hold list of script already called for use
+     * @var array
+     */
     private $scripts = [];
+
+    /**
+     * Hold list of domain list for create a html link to dns prefetch
+     * @var type 
+     */
     private $dns_prefetch = [];
+
+    /**
+     * Standard remote script
+     * @var array
+     */
     private $std_remote_scripts = [//TODO LOAD LIST
         'jquery' => 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js',
         'font-awesome' => 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
@@ -40,14 +113,19 @@ class TPL {
         'webfont' => 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js',
     ];
 
-    function __construct($db = null) {
-        $this->setConfig($db);
+    function __construct() {
+        $this->setConfig();
     }
 
-    function setConfig($db) {
+    /**
+     * 
+     * @global debug $debug
+     * @global array $cfg
+     */
+    function setConfig() {
         global $debug, $cfg;
 
-        $this->db = & $db;
+
         (defined('DEBUG') && $cfg['tplbasic_debug']) ? $this->debug = & $debug : $this->debug = false;
 
         $this->theme = $cfg['tplbasic_theme'];
@@ -58,35 +136,74 @@ class TPL {
         $this->lang = $cfg['WEB_LANG'];
     }
 
-    function addtoTplVar($tplvar, $data, $priority = 5) { // change name to appendTo_tplvar? TODO priority support?
-        !isset($this->tpldata[$tplvar]) ? $this->tpldata[$tplvar] = $data : $this->tpldata[$tplvar] .= $data;
+    /**
+     * Append content to template var
+     * @param string $tplvar
+     * @param string $content
+     * @param int $priority
+     */
+    function addtoTplVar($tplvar, $content, $priority = 5) { // change name to appendTo_tplvar? TODO priority support?
+        !isset($this->tpldata[$tplvar]) ? $this->tpldata[$tplvar] = $content : $this->tpldata[$tplvar] .= $content;
     }
 
-    function addtoTplVarUniq($tplvar, $data) {
-        $this->tpldata[$tplvar] = $data;
+    /**
+     * Replace content on template var
+     * @param string $tplvar
+     * @param string $content
+     */
+    function addtoTplVarUniq($tplvar, $content) {
+        $this->tpldata[$tplvar] = $content;
     }
 
-    function addIfEmpty($tplvar, $data) {
-        empty($this->tpldata[$tplvar]) ? $this->tpldata[$tplvar] = $data : null;
+    /**
+     * Add content if template var is empty
+     * @param type $tplvar
+     * @param type $content
+     */
+    function addIfEmpty($tplvar, $content) {
+        empty($this->tpldata[$tplvar]) ? $this->tpldata[$tplvar] = $content : null;
     }
 
-    function addtoTplIfEmpty($tpl_ary) {
-        if (empty($tpl_ary)) {
-            return false;
-        }
-        foreach ($tpl_ary as $key => $value) {
-            $this->addtoTplVar($key, $value);
-        }
-    }
+    /* TODO REMOVE UNUSED
+      function addtoTplIfEmpty($tpl_ary) {
+      if (empty($tpl_ary)) {
+      return false;
+      }
+      foreach ($tpl_ary as $key => $value) {
+      $this->addtoTplVar($key, $value);
+      }
+      }
+     */
 
+    /**
+     * Return tpldata[name] content
+     * @param string $value
+     * @return string
+     */
     function getTplValue($value) {
         return $this->tpldata[$value];
     }
 
+    /**
+     * Get tpldata
+     * @return string
+     */
     function getTplData() {
         return $this->tpldata;
     }
 
+    /**
+     * Get content and parse a template filename in plugin path
+     * Search order:
+     * User path lang: /tpl/theme/file.es.tpl.php
+     * User path: /tpl/theme/file.tpl.php
+     * Default: /plugins/plugin/tpl/filename.tpl.php
+     * 
+     * @param string $plugin
+     * @param string $filename
+     * @param mixed $data
+     * @return boolean
+     */
     function getTplFile($plugin, $filename = null, $data = null) {
 
         empty($filename) ? $filename = $plugin : null;
@@ -108,6 +225,12 @@ class TPL {
         return $tpl_file_content;
     }
 
+    /**
+     * Check if tpl file exists
+     * @param string $plugin
+     * @param string $filename
+     * @return boolean
+     */
     function checkTplFileExists($plugin, $filename) {
         if (empty($filename)) {
             return false;
@@ -126,13 +249,25 @@ class TPL {
         return false;
     }
 
+    /**
+     * Add standard script to page
+     * @param string $key
+     * @param string $url
+     * @return boolean
+     */
     function addStdScript($key, $url) {
         if (array_key_exists($key, $this->std_remote_scripts)) {
-            return 0;
+            return false;
         }
         $this->std_remote_scripts[$key] = $url;
+        return true;
     }
 
+    /**
+     * Check if script exists
+     * @param string $script
+     * @return boolean
+     */
     private function checkScript($script) {
         foreach ($this->scripts as $value) {
             if ($value == $script) {
@@ -142,6 +277,14 @@ class TPL {
         return false;
     }
 
+    /**
+     * Add a script file
+     * @param string $plugin
+     * @param string $filename
+     * @param string $place place on html TOP or BOTTOM
+     * @param string $async default: async 
+     * @return boolean
+     */
     function addScriptFile($plugin, $filename = null, $place = 'TOP', $async = 'async') {
 
         $this->debug ? $this->debug->log('AddScriptFile request ->' . $plugin . 'for get a ' . $filename, 'tplBasic', 'DEBUG') : null;
@@ -196,11 +339,19 @@ class TPL {
         $this->addtoTplVar('SCRIPTS_' . $place, $script);
     }
 
+    /**
+     * Add a css file
+     * by conf, can be added the path, inline, or onefile cached mode 
+     * added to LINK tpldata
+     * @param string $plugin
+     * @param string $filename
+     * @return boolean
+     */
     function getCssFile($plugin, $filename = null) {
 
         empty($filename) ? $filename = $plugin : null;
         if (in_array($filename, $this->css_added)) {
-            return;
+            return true;
         }
         $this->css_added[] = $filename;
         $this->debug ? $this->debug->log("Get CSS called by-> $plugin for get a $filename", 'tplBasic', 'DEBUG') : null;
@@ -219,19 +370,23 @@ class TPL {
                 $this->css_cache_onefile .= '-' . $filename;
             }
         } else {
-            if ($this->css_inline == 0) {
-                if (file_exists($USER_PATH)) {
-                    $css = '<link rel="stylesheet" href="/' . $USER_PATH . ' ">' . "\n";
-                } else if (file_exists($DEFAULT_PATH)) {
-                    $css = '<link rel="stylesheet" href="/' . $DEFAULT_PATH . ' ">' . "\n";
-                }
-            } else {
+            /*
+             * Inline mode: get content of the file to var later we dump the css inline
+             * No Inline mode: build the path and use html tag link
+             */
+            if ($this->css_inline == 1) {
                 if (file_exists($USER_PATH)) {
                     $css_code = $this->parseFile($USER_PATH);
                 } else if (file_exists($DEFAULT_PATH)) {
                     $css_code = $this->parseFile($DEFAULT_PATH);
                 }
                 isset($css_code) ? $css = '<style>' . $this->cssStrip($css_code) . '</style>' : null;
+            } else {
+                if (file_exists($USER_PATH)) {
+                    $css = '<link rel="stylesheet" href="/' . $USER_PATH . ' ">' . "\n";
+                } else if (file_exists($DEFAULT_PATH)) {
+                    $css = '<link rel="stylesheet" href="/' . $DEFAULT_PATH . ' ">' . "\n";
+                }
             }
             if (isset($css)) {
                 $this->addtoTplVar('LINK', $css);
@@ -241,6 +396,10 @@ class TPL {
         }
     }
 
+    /**
+     * Check we can use css cache, by conf and by checking cache dir is writable
+     * @return boolean
+     */
     function cssCacheCheck() {
         if ($this->css_optimize == 0 || !is_writable('cache')) {
             return false;
@@ -254,6 +413,10 @@ class TPL {
         return true;
     }
 
+    /**
+     * Build/Use css cache
+     * @return boolean
+     */
     function cssCache() {
 
         if (!$this->cssCacheCheck() || empty($this->css_cache_onefile)) {
@@ -264,6 +427,9 @@ class TPL {
 
         $cssfile = $this->css_cache_onefile . '.css';
         $this->debug ? $this->debug->log('CSS One file Unify ' . $cssfile, 'tplBasic', 'DEBUG') : null;
+        /*
+         * Check if one file css exist in cache if not build it
+         */
         if (!file_exists('cache/css/' . $cssfile)) {
             foreach ($this->css_cache_filepaths as $cssfile_path) {
                 $this->debug ? $this->debug->log('CSS Unify ' . $cssfile_path, 'tplBasic', 'DEBUG') : null;
@@ -272,6 +438,7 @@ class TPL {
             $css_code = $this->cssStrip($css_code);
             file_put_contents('cache/css/' . $cssfile, $css_code);
         }
+        /* CSS Inline or not */
         if ($this->css_inline == 0) {
             $this->addtoTplVar('LINK', '<link rel="stylesheet" href="/cache/css/' . $cssfile . '">');
         } else {
@@ -282,6 +449,11 @@ class TPL {
         return true;
     }
 
+    /**
+     * Strip/Compress css 
+     * @param string $css
+     * @return string
+     */
     private function cssStrip($css) { #by nyctimus
         $preg_replace = [
             "#/\*.*?\*/#s" => '', // Strip C style comments.
@@ -305,16 +477,25 @@ class TPL {
         return trim($css);
     }
 
+    /**
+     * Parse file
+     * Load file template from disk and parse
+     * @global array $LNG
+     * @global array $cfg
+     * @param string $path
+     * @param mixed $data
+     * @return string
+     */
     private function parseFile($path, $data = null) {
         global $LNG, $cfg;
 
         $this->debug ? $this->debug->log("TPL parse $path, gzip its {$cfg['tplbasic_gzip']}", 'tplBasic', 'DEBUG') : null;
 
-        $tpldata = $this->getTplData();
+        $tpldata = $this->getTplData(); //used in include
 
         isset($this->gzip) && $this->gzip == 1 ? ob_start('ob_gzhandler') : ob_start();
 
-        include ($path);
+        include ($path); // need $tpldata and $LNG
         $content = ob_get_contents();
         ob_end_clean();
 
@@ -325,14 +506,21 @@ class TPL {
         return $content;
     }
 
-    public function addPrefetch() {
+    /**
+     * Add domain to dns_prefetch
+     * @param string $value
+     */
+    function setPrefetchURL($value) {
+        $this->dns_prefetch[] = $value;
+    }
+
+    /**
+     * Build dns_prefech <link> and add to tpldata LINK
+     */
+    private function addPrefetch() {
         foreach ($this->dns_prefetch as $dns_prefetch) {
             $this->addtoTplVar('LINK', '<link rel="dns-prefetch" href="' . $dns_prefetch . '">' . "\n");
         }
-    }
-
-    public function setPrefetchURL($value) {
-        $this->dns_prefetch[] = $value;
     }
 
 }
