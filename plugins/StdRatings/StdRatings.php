@@ -1,14 +1,28 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  StdRatings - Init file
+ *
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage StdRatings
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 
+/**
+ * Init function
+ */
 function StdRatings_init() {
     
 }
 
+/**
+ * Install function
+ * 
+ * @global db $db
+ * @return boolean
+ */
 function StdRatings_install() {
     global $db;
     require_once ('db/StdRatings.db.php');
@@ -20,14 +34,31 @@ function StdRatings_install() {
     return true;
 }
 
+/**
+ * preInstall function
+ * 
+ * @return boolean
+ */
 function StdRatings_preInstall() {
     return true;
 }
 
+/**
+ * preInstall info
+ * 
+ * @return boolean
+ */
 function StdRatings_preInstall_info() {
     return true;
 }
 
+/**
+ * Upgrade function 
+ * @global db $db
+ * @param float $version
+ * @param float $from_version
+ * @return boolean
+ */
 function StdRatings_upgrade($version, $from_version) {
     global $db;
     require_once ('db/StdRatings.db.php');
@@ -42,6 +73,12 @@ function StdRatings_upgrade($version, $from_version) {
     return false;
 }
 
+/**
+ * Uninstall function
+ * 
+ * @global db $db
+ * @return boolean
+ */
 function StdRatings_uninstall() {
     global $db;
     require_once ('db/StdRatings.db.php');

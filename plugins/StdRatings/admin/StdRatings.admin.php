@@ -1,15 +1,32 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  StdRatings main admin file
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage StdRatings
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 
+/**
+ * Admin init function
+ * 
+ * @global plugins $plugins
+ */
 function StdRatings_AdminInit() {
     global $plugins;
     $plugins->expressStart('StdRatings') ? register_action('add_admin_menu', 'StdRatings_AdminMenu', '5') : null;
 }
 
+/**
+ * Show admin menu
+ * 
+ * @global plugins $plugins
+ * @param array $params
+ * @return string
+ */
 function StdRatings_AdminMenu($params) {
     global $plugins;
 
@@ -23,6 +40,13 @@ function StdRatings_AdminMenu($params) {
     }
 }
 
+/**
+ * Show admin aside
+ * 
+ * @global array $LNG
+ * @param array $params
+ * @return string
+ */
 function StdRatings_AdminAside($params) {
     global $LNG;
 
@@ -30,6 +54,13 @@ function StdRatings_AdminAside($params) {
             '<li><a href="admin&admtab=' . $params['admtab'] . '&opt=4">' . $LNG['L_PL_CONFIG'] . '</a></li>';
 }
 
+/**
+ * admin content
+ * 
+ * @global array $LNG
+ * @param array $params
+ * @return string
+ */
 function StdRatings_admin_content($params) {
     global $LNG;
     $page_data = '';

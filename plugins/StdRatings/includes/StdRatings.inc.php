@@ -1,16 +1,22 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
- */
 /**
- *  StdRatings class
+ *  StdRatings main include file
+ * 
  *  @author diego@envigo.net
  *  @package ProjectBase
  *  @subpackage StdRatings
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 
+/**
+ * general rate get post data function
+ * 
+ * @global filter $filter
+ * @param string $section
+ * @return boolean
+ */
 function rating_rate_getPost($section) {
     global $filter;
 
@@ -25,6 +31,17 @@ function rating_rate_getPost($section) {
     return rating_rate($id, $section, $user_rate);
 }
 
+/**
+ * Rating
+ * 
+ * @global filter $filter
+ * @global db $db
+ * @global sm $sm
+ * @param int $resource_id
+ * @param string $section
+ * @param int $rate
+ * @return boolean
+ */
 function rating_rate($resource_id, $section, $rate) {
     global $filter, $db, $sm;
 
@@ -53,6 +70,14 @@ function rating_rate($resource_id, $section, $rate) {
     return $r ? true : false;
 }
 
+/**
+ * Get all ratings by id/section
+ * 
+ * @global db $db
+ * @param string $ids #comma separate ids
+ * @param string $section
+ * @return array
+ */
 function ratings_get_ratings($ids, $section) {
     global $db;
 
@@ -63,6 +88,20 @@ function ratings_get_ratings($ids, $section) {
     return $db->fetchAll($query);
 }
 
+/**
+ * rating get content for display rate
+ * 
+ * @global tpl $tpl
+ * @global array $cfg
+ * @global sm $sm
+ * @param string $section
+ * @param int $resource_id
+ * @param int $author_id
+ * @param int $lang_id
+ * @param array $ratings_data
+ * @param string $image_vote
+ * @return type
+ */
 function ratings_get_content($section, $resource_id, $author_id, $lang_id, $ratings_data, $image_vote = null) {
     global $tpl, $cfg, $sm;
 
@@ -108,6 +147,12 @@ function ratings_get_content($section, $resource_id, $author_id, $lang_id, $rati
     return $tpl->getTplFile('StdRatings', 'display_rate', $rate_data);
 }
 
+/**
+ * rating css format the rating display
+ * 
+ * @param float $rating
+ * @return string
+ */
 function rating_css_display($rating) {
     if ($rating <= 0.25 || empty($rating)) {
         $rate['rating1'] = $rate['rating2'] = $rate['rating3'] = $rate['rating4'] = $rate['rating5'] = 'vVoid';
