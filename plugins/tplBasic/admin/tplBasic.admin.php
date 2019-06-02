@@ -1,13 +1,28 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  tplBasic - admin file
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage tplBasic
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 
+/**
+ *  tplBasic Admin init function
+ */
 function tplBasic_AdminInit() {
     register_action('add_admin_menu', 'tplBasic_AdminMenu', '5');
 }
 
+/**
+ * tplBasic admin menu
+ * 
+ * @global plugins $plugins
+ * @param array $params
+ * @return string
+ */
 function tplBasic_AdminMenu($params) {
     global $plugins;
 
@@ -23,12 +38,26 @@ function tplBasic_AdminMenu($params) {
     }
 }
 
+/**
+ * Admin aside menu
+ * 
+ * @global array $LNG
+ * @param array $params
+ * @return string
+ */
 function tplBasic_AdminAside($params) {
     global $LNG;
     return "<li><a href='{$params['url']}&admtab={$params['admtab']}&opt=1'>" . $LNG['L_PL_STATE'] . '</a></li>' .
             "<li><a href='{$params['url']}&admtab={$params['admtab']}&opt=2'>" . $LNG['L_PL_CONFIG'] . '</a></li>';
 }
 
+/**
+ * tplBasic admin content
+ * 
+ * @global array $LNG
+ * @param array $params
+ * @return string
+ */
 function tplBasic_admin_content($params) {
     global $LNG;
     $page_data = '';

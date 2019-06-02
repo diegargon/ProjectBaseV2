@@ -1,8 +1,12 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
- *  ES
+/**
+ *  SimpleFrontend - spanish lang page
+ *  
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage SimpleFrontend
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 

@@ -1,37 +1,94 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
- * 
- */
 /**
- *  SimpleFrontend class
+ *  SimpleFrontend
+ * 
  *  @author diego@envigo.net
  *  @package ProjectBase
  *  @subpackage SimpleFrontend
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
+ */
+
+/**
+ * SimpleFrontend class
  */
 class SimpleFrontend {
 
+    /**
+     *
+     * @var db 
+     */
     private $db;
-    private $nav_menu;
-    private $theme;
-    private $pages;
-    private $show_load_time;
-    private $load_start_time;
-    private $display_section_menu;
-    private $show_stats_query;
-    private $layouts;
 
+    /**
+     *
+     * @var string
+     */
+    private $nav_menu;
+
+    /**
+     *
+     * @var string
+     */
+    private $theme;
+
+    /**
+     *
+     * @var array
+     */
+    private $pages = [];
+
+    /**
+     *
+     * @var int
+     */
+    private $show_load_time;
+
+    /**
+     *
+     * @var float
+     */
+    private $load_start_time;
+
+    /**
+     *
+     * @var int
+     */
+    private $display_section_menu;
+
+    /**
+     *
+     * @var int
+     */
+    private $show_stats_query;
+
+    /**
+     *
+     * @var array
+     */
+    private $layouts = [];
+
+    /**
+     * Class contructor, iniacilice blocks and set the config
+     * 
+     * @global plugins $plugins
+     */
     public function __construct() {
         global $plugins;
         $plugins->expressStart('Blocks');
         $this->setConfig();
     }
 
+    /**
+     * Provide access to a virtual page calling a function
+     * 
+     * @param array $page
+     * @return boolean
+     */
     function vPage($page) {
         if (empty($this->pages)) {
             $this->messageBox(['msg' => 'L_E_PLUGPAGE_NOEXISTS']);
-            return;
+            return false;
         }
 
         if ($page['type'] == 'virtual' && !empty($page['func'])) {
@@ -49,9 +106,16 @@ class SimpleFrontend {
         }
     }
 
+    /**
+     * Provide access to file disk page 
+     * 
+     * @param string $request_module
+     * @param string $request_page
+     * @return boolean
+     */
     function getPage($request_module, $request_page) {
         if (empty($this->pages)) {
-            $this->messageBox(['msg' => 'L_E_PLUGPAGE_NOEXISTS']);            
+            $this->messageBox(['msg' => 'L_E_PLUGPAGE_NOEXISTS']);
             return;
         }
         foreach ($this->pages as $page) {
@@ -63,6 +127,12 @@ class SimpleFrontend {
         return false;
     }
 
+    /**
+     * Register for be accesible a page virtual+func or disk file (module ambit) 
+     * 
+     * @param array $page
+     * @return boolean
+     */
     function registerPage($page) {
         // TODO avoid duplicates
         if (!empty($page['module']) && !empty($page['page']) &&
@@ -74,6 +144,12 @@ class SimpleFrontend {
         return false;
     }
 
+    /**
+     * Register a page array
+     * 
+     * @param array $pages_array
+     * @return boolean
+     */
     function registerPageArray($pages_array) {
         // TODO avoid duplicates
         foreach ($pages_array as $page) {
@@ -89,14 +165,31 @@ class SimpleFrontend {
         return true;
     }
 
+    /**
+     * get layouts
+     * 
+     * @return array
+     */
     function getLayouts() {
         return $this->layouts;
     }
 
+    /**
+     * register layout
+     * 
+     * @param array $layout
+     */
     function registerLayout($layout) {
         $this->layouts[] = $layout;
     }
 
+    /**
+     * Build the index page
+     * 
+     * @global tpl $tpl
+     * @global array $cfg
+     * @global blocks $blocks
+     */
     function indexPage() {
         global $tpl, $cfg;
 
@@ -108,11 +201,16 @@ class SimpleFrontend {
         }
     }
 
+    /**
+     * Send page to client, last stage
+     * 
+     * @global tpl $tpl
+     */
     function sendPage() {
         global $tpl;
 
         // BEGIN HEAD
-        $tpl->addPrefetch();
+        $tpl->addPrefetchLinks();
         $tpl->cssCache();
 
         $web_head = $tpl->getTplFile('SimpleFrontend', 'head');
@@ -120,7 +218,6 @@ class SimpleFrontend {
         echo $web_head;
         //END HEAD
         //BEGIN BODY
-        
         //we use do_action for select order
         $this->nav_menu ? $this->addNavMenu() : null;
         $this->display_section_menu ? $this->addSectionNav() : null;
@@ -153,6 +250,13 @@ class SimpleFrontend {
         //print $web_head . $web_body . $web_footer;
     }
 
+    /**
+     * Format a message box
+     * 
+     * @global tpl $tpl
+     * @global array $LNG
+     * @param array $box_data
+     */
     function messageBox($box_data) {
         global $tpl, $LNG;
 
@@ -165,10 +269,23 @@ class SimpleFrontend {
         $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('SimpleFrontend', 'msgbox', $data));
     }
 
+    /**
+     * Set start time
+     * 
+     * @param float $start
+     */
     function setStartTime($start) {
         $this->load_start_time = $start;
     }
 
+    /**
+     * set initial config
+     * 
+     * @global array $cfg
+     * @global debug $debug
+     * @global db $db
+     * @global tpl $tpl
+     */
     private function setConfig() {
         global $cfg, $debug, $db, $tpl;
 
@@ -193,15 +310,28 @@ class SimpleFrontend {
         $tpl->getCssFile('SimpleFrontend', 'basic-mobile');
     }
 
+    /**
+     * add element (do action/header_menu_element) to top menu
+     * 
+     * @global tpl $tpl
+     */
     private function addNavMenu() {
         global $tpl;
-        
-        $tpl->addtoTplVar('HEADER_MENU_ELEMENT', do_action('header_menu_element'));        
+
+        $tpl->addtoTplVar('HEADER_MENU_ELEMENT', do_action('header_menu_element'));
     }
+
+    /**
+     * add element (do action section_nav_element/sub_element) to the section
+     * navigator menu and sub menu
+     * 
+     * @global tpl $tpl
+     */
     private function addSectionNav() {
         global $tpl;
 
         $tpl->addtoTplVar('SECTIONS_NAV', do_action('section_nav_element'));
         $tpl->addtoTplVar('SECTIONS_NAV_SUBMENU', do_action('section_nav_subelement'));
     }
+
 }

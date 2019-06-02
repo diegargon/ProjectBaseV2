@@ -21,6 +21,7 @@ $actions = [];
 
 /**
  * Register a new a event
+ * 
  * @global array $actions
  * @param string $event Event name
  * @param string $func  Function to be called
@@ -34,6 +35,7 @@ function register_action($event, $func, $priority = 5) {
 
 /**
  * Add a action if exist replace
+ * 
  * @global array $actions
  * @param string $event
  * @param string $func
@@ -54,6 +56,7 @@ function register_uniq_action($event, $func, $priority = 5) {
 
 /**
  * Execute the action
+ * 
  * @global array $actions
  * @param string $event
  * @param mixed $params
@@ -97,6 +100,7 @@ function do_action($event, &$params = null) {
 
 /**
  * Check if event name exists
+ * 
  * @global array $actions
  * @param string $this_event
  * @return boolean

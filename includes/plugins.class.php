@@ -429,6 +429,9 @@ class Plugins {
                     } else {
                         return false;
                     }
+                } else {
+                    $this->debug ? $debug->log('Plugin check fail on' . $plugin['plugin_name'], 'PLUGINS', 'ERROR') : null;
+                    return false;
                 }
             }
         }
@@ -546,31 +549,36 @@ class Plugins {
     private function pluginCheck($plugin) {
         global $debug;
 
-        if ($this->checkProvideConflicts($plugin)) {
+        if ($this->checkConflicts($plugin)) {
             $this->debug ? $debug->log('Conflicts ' . $plugin['plugin_name'] . ' another plugin provided', 'PLUGINS', 'ERROR') : null;
             return false;
         }
 
         if (empty($plugin['depends']) || $this->resolvePluginDepends($plugin)) {
             return true;
+        } else {
+            $this->debug ? $debug->log('Error resolving depends ' . $plugin['plugin_name'], 'PLUGINS', 'ERROR') : null;
         }
+
         return false;
     }
 
     /**
-     * Check provide plugins
+     * Check plugins conflict
+     * 
+     * Check if already exists the provide
+     * TODO: conflict array check
+     * 
      * @param array $plugin
      * @return boolean
      */
-    private function checkProvideConflicts($plugin) {
-        //TODO: ONLY CHECK FDUPLICATE PROVIDE, DO CONFLICT CHECK
+    private function checkConflicts($plugin) {
         $allprovide = preg_split('/\s+/', $plugin['provide']);
         foreach ($allprovide as $provide) {
             if (empty($provide)) {
                 return false;
             }
-            $result = $this->checkDuplicatedProvide($provide);
-            if ($result) {
+            if ($this->checkDupProvide($provide)) {
                 return true;
             }
         }
@@ -578,11 +586,11 @@ class Plugins {
     }
 
     /**
-     * Check duplicates provide in (@link $plugins_db)
+     * Check duplicate provide in (@link $plugins_db)
      * @param string $provide
      * @return boolean
      */
-    private function checkDuplicatedProvide($provide) {
+    private function checkDupProvide($provide) {
 
         foreach ($this->plugins_db as $plugin) {
             if (!empty($plugin['started'])) {
@@ -707,6 +715,9 @@ class Plugins {
 
     /**
      * Search dependencies and try start
+     * 
+     * cyclic dependences
+     * 
      * @global debug $debug
      * @param string $depend_name
      * @param float $min_version

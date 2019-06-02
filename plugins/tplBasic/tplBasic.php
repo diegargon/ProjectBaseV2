@@ -1,13 +1,24 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
- *  
- *  Not really a template engine, just a logic/design separator
- *
+/**
+ *  tplBasic
+ * 
+ *  responsable get and formating templates
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage tplBasic
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 
+/**
+ * tplBasic init function
+ * 
+ * @global tpl $tpl
+ * @global array $cfg
+ * @global db $db
+ */
 function tplBasic_init() {
     global $tpl, $cfg;
 
@@ -21,6 +32,12 @@ function tplBasic_init() {
     }
 }
 
+/**
+ * Install
+ * 
+ * @global db $db
+ * @return boolean
+ */
 function tplBasic_Install() {
     global $db;
     require_once 'db/tplBasic.db.php';

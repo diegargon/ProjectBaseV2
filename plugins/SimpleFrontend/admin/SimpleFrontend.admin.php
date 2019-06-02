@@ -6,6 +6,14 @@
  */
 !defined('IN_WEB') ? exit : true;
 
+/**
+ * Admin init function
+ * @global frontend $frontend
+ * @global plugins $plugins
+ * @global blocks $blocks
+ * @global array $cfg
+ * @return boolean
+ */
 function SimpleFrontend_AdminInit() {
     global $frontend, $plugins;
     if ((!$plugins->expressStart('SimpleFrontend'))) {
@@ -26,6 +34,13 @@ function SimpleFrontend_AdminInit() {
     }
 }
 
+/**
+ * Admin menu
+ * 
+ * @global plugins $plugins
+ * @param array $params
+ * @return string
+ */
 function SimpleFrontend_AdminMenu($params) {
     global $plugins;
 
@@ -39,6 +54,13 @@ function SimpleFrontend_AdminMenu($params) {
     }
 }
 
+/**
+ * Admin aside menu
+ * 
+ * @global array $LNG
+ * @param array $params
+ * @return string
+ */
 function SimpleFrontend_AdminAside($params) {
     global $LNG;
 
@@ -47,6 +69,13 @@ function SimpleFrontend_AdminAside($params) {
             '<li><a href="admin&admtab=' . $params['admtab'] . '&opt=4">' . $LNG['L_PL_CONFIG'] . '</a></li>';
 }
 
+/**
+ * Admin content
+ * 
+ * @global array $LNG
+ * @param array $params
+ * @return string
+ */
 function SimpleFrontend_admin_content($params) {
     global $LNG;
     $page_data = '';
@@ -63,6 +92,18 @@ function SimpleFrontend_admin_content($params) {
     return $page_data;
 }
 
+/**
+ * Index configuration
+ * 
+ * @global tpl $tpl
+ * @global array $cfg
+ * @global filter $filter
+ * @global array $LNG
+ * @global frontend $frontend
+ * @global blocks $blocks
+ * @global db $db
+ * @return string
+ */
 function SimpleFrontEnd_index_cfg() {
     global $tpl, $cfg, $filter, $LNG, $frontend, $blocks;
 
@@ -108,14 +149,4 @@ function SimpleFrontEnd_index_cfg() {
     }
 
     return $content;
-}
-
-function Admin_getLayouts() {
-
-    require_once('plugins/SimpleFrontend/includes/layouts.php');
-
-    //Custom layouts, tpl going on custom tpl;
-    foreach (glob('frontpage/*.layouts.php') as $layouts) {
-        include($layouts);
-    }
 }

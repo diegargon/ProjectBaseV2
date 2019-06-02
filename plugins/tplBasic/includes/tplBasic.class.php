@@ -12,6 +12,9 @@
  */
 !defined('IN_WEB') ? exit : true;
 
+/**
+ * Class TPL - tplBasic
+ */
 class TPL {
 
     /**
@@ -113,11 +116,15 @@ class TPL {
         'webfont' => 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js',
     ];
 
+    /**
+     * Constructor call set config
+     */
     function __construct() {
         $this->setConfig();
     }
 
     /**
+     * set initial config
      * 
      * @global debug $debug
      * @global array $cfg
@@ -138,6 +145,7 @@ class TPL {
 
     /**
      * Append content to template var
+     * 
      * @param string $tplvar
      * @param string $content
      * @param int $priority
@@ -148,6 +156,7 @@ class TPL {
 
     /**
      * Replace content on template var
+     * 
      * @param string $tplvar
      * @param string $content
      */
@@ -157,26 +166,17 @@ class TPL {
 
     /**
      * Add content if template var is empty
-     * @param type $tplvar
-     * @param type $content
+     * 
+     * @param string $tplvar
+     * @param string $content
      */
     function addIfEmpty($tplvar, $content) {
         empty($this->tpldata[$tplvar]) ? $this->tpldata[$tplvar] = $content : null;
     }
 
-    /* TODO REMOVE UNUSED
-      function addtoTplIfEmpty($tpl_ary) {
-      if (empty($tpl_ary)) {
-      return false;
-      }
-      foreach ($tpl_ary as $key => $value) {
-      $this->addtoTplVar($key, $value);
-      }
-      }
-     */
-
     /**
      * Return tpldata[name] content
+     * 
      * @param string $value
      * @return string
      */
@@ -186,6 +186,7 @@ class TPL {
 
     /**
      * Get tpldata
+     * 
      * @return string
      */
     function getTplData() {
@@ -227,6 +228,7 @@ class TPL {
 
     /**
      * Check if tpl file exists
+     * 
      * @param string $plugin
      * @param string $filename
      * @return boolean
@@ -251,6 +253,7 @@ class TPL {
 
     /**
      * Add standard script to page
+     * 
      * @param string $key
      * @param string $url
      * @return boolean
@@ -265,6 +268,7 @@ class TPL {
 
     /**
      * Check if script exists
+     * 
      * @param string $script
      * @return boolean
      */
@@ -279,6 +283,7 @@ class TPL {
 
     /**
      * Add a script file
+     * 
      * @param string $plugin
      * @param string $filename
      * @param string $place place on html TOP or BOTTOM
@@ -343,6 +348,7 @@ class TPL {
      * Add a css file
      * by conf, can be added the path, inline, or onefile cached mode 
      * added to LINK tpldata
+     * 
      * @param string $plugin
      * @param string $filename
      * @return boolean
@@ -398,6 +404,7 @@ class TPL {
 
     /**
      * Check we can use css cache, by conf and by checking cache dir is writable
+     * 
      * @return boolean
      */
     function cssCacheCheck() {
@@ -415,6 +422,7 @@ class TPL {
 
     /**
      * Build/Use css cache
+     * 
      * @return boolean
      */
     function cssCache() {
@@ -451,6 +459,7 @@ class TPL {
 
     /**
      * Strip/Compress css 
+     * 
      * @param string $css
      * @return string
      */
@@ -480,6 +489,7 @@ class TPL {
     /**
      * Parse file
      * Load file template from disk and parse
+     * 
      * @global array $LNG
      * @global array $cfg
      * @param string $path
@@ -508,6 +518,7 @@ class TPL {
 
     /**
      * Add domain to dns_prefetch
+     * 
      * @param string $value
      */
     function setPrefetchURL($value) {
@@ -517,7 +528,7 @@ class TPL {
     /**
      * Build dns_prefech <link> and add to tpldata LINK
      */
-    private function addPrefetch() {
+    function addPrefetchLinks() {
         foreach ($this->dns_prefetch as $dns_prefetch) {
             $this->addtoTplVar('LINK', '<link rel="dns-prefetch" href="' . $dns_prefetch . '">' . "\n");
         }
