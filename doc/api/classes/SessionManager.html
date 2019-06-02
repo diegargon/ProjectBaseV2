@@ -1,0 +1,2047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>API Documentation</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">API Documentation</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">1153</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">26</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1198605909"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-1198605909" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/ACL.html">ACL</a></li>
+                                                    <li class="class"><a href="../classes/Blocks.html">Blocks</a></li>
+                                                    <li class="class"><a href="../classes/Categories.html">Categories</a></li>
+                                                    <li class="class"><a href="../classes/Database.html">Database</a></li>
+                                                    <li class="class"><a href="../classes/Debug.html">Debug</a></li>
+                                                    <li class="class"><a href="../classes/Editor.html">Editor</a></li>
+                                                    <li class="class"><a href="../classes/ExampleTemplate.html">ExampleTemplate</a></li>
+                                                    <li class="class"><a href="../classes/Groups.html">Groups</a></li>
+                                                    <li class="class"><a href="../classes/ImageLib.html">ImageLib</a></li>
+                                                    <li class="class"><a href="../classes/ImageLib_Thumbs_Thread.html">ImageLib_Thumbs_Thread</a></li>
+                                                    <li class="class"><a href="../classes/Multilang.html">Multilang</a></li>
+                                                    <li class="class"><a href="../classes/Plugins.html">Plugins</a></li>
+                                                    <li class="class"><a href="../classes/SecureFilter.html">SecureFilter</a></li>
+                                                    <li class="class"><a href="../classes/SessionManager.html">SessionManager</a></li>
+                                                    <li class="class"><a href="../classes/SimpleFrontend.html">SimpleFrontend</a></li>
+                                                    <li class="class"><a href="../classes/TimeUtil.html">TimeUtil</a></li>
+                                                    <li class="class"><a href="../classes/TPL.html">TPL</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/default.html">\</a> <i class="icon-level-up"></i>
+                                            </nav>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+
+                    <h1><small>\</small>SessionManager</h1>
+                    <p><em></em></p>
+                    
+                    
+                                        
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/SessionManager.html#method___construct" class="">__construct()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_start" class="">start()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_setUsersInCacheByIDs" class="">setUsersInCacheByIDs()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_getUserByID" class="">getUserByID()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_getUserByUsername" class="">getUserByUsername()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_getSessionUser" class="">getSessionUser()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_checkSession" class="">checkSession()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_getAllUsersArray" class="">getAllUsersArray()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_searchUser" class="">searchUser()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_setData" class="">setData()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_getData" class="">getData()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_unsetData" class="">unsetData()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_destroyData" class="">destroyData()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_setUserSession" class="">setUserSession()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_destroy" class="">destroy()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_logout" class="">logout()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_setAnonSession" class="">setAnonSession()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_encryptPassword" class="">encryptPassword()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_getPage" class="">getPage()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_setPerms" class="">setPerms()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_setACLPerms" class="">setACLPerms()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_setNonACLPerms" class="">setNonACLPerms()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_getPerms" class="">getPerms()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_getPerm" class="">getPerm()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_updateExpire" class="">updateExpire()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No public properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No constants found</em>
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <em>No protected methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No protected properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <a href="../classes/SessionManager.html#method_saveData" class="">saveData()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_loadSessionData" class="">loadSessionData()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_setConfig" class="">setConfig()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_getCookies" class="">getCookies()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_clearCookies" class="">clearCookies()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_setCookies" class="">setCookies()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_checkIp" class="">checkIp()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_check_user_agent" class="">check_user_agent()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_checkAnonSession" class="">checkAnonSession()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_unsetAnonSession" class="">unsetAnonSession()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_check_phpbuildin_session" class="">check_phpbuildin_session()</a><br />
+                                                                    <a href="../classes/SessionManager.html#method_check_persistence" class="">check_persistence()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/SessionManager.html#property_user" class="">$user</a><br />
+                                                                    <a href="../classes/SessionManager.html#property_users_cache_db" class="">$users_cache_db</a><br />
+                                                                    <a href="../classes/SessionManager.html#property_debug" class="">$debug</a><br />
+                                                                    <a href="../classes/SessionManager.html#property_perms" class="">$perms</a><br />
+                                                                    <a href="../classes/SessionManager.html#property_session_type" class="">$session_type</a><br />
+                                                                    <a href="../classes/SessionManager.html#property_session_start" class="">$session_start</a><br />
+                                                                    <a href="../classes/SessionManager.html#property_session_expire" class="">$session_expire</a><br />
+                                                                    <a href="../classes/SessionManager.html#property_cookie_prefix" class="">$cookie_prefix</a><br />
+                                                                    <a href="../classes/SessionManager.html#property_cookie_expire" class="">$cookie_expire</a><br />
+                                                                    <a href="../classes/SessionManager.html#property_persistence" class="">$persistence</a><br />
+                                                                    <a href="../classes/SessionManager.html#property_salt" class="">$salt</a><br />
+                                                                    <a href="../classes/SessionManager.html#property_s_data" class="">$s_data</a><br />
+                                                                    <a href="../classes/SessionManager.html#property_check_ip" class="">$check_ip</a><br />
+                                                                    <a href="../classes/SessionManager.html#property_check_user_agent" class="">$check_user_agent</a><br />
+                                                                    <a href="../classes/SessionManager.html#property_friendly_url" class="">$friendly_url</a><br />
+                                                                    <a href="../classes/SessionManager.html#property_file_path" class="">$file_path</a><br />
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/plugins.SMBasic.includes.SMBasic.class.html"><div class="path-wrapper">plugins\SMBasic\includes\SMBasic.class.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">Default</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                    <div class="namespace-wrapper">\SessionManager</div>
+                            </dd>
+
+                        
+                        
+                        
+                        
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr><td colspan="2"><em>None found</em></td></tr>
+                                        </table>
+                </aside>
+            </div>
+
+                        
+                                    <a id="properties" name="properties"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Properties</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_user" name="property_user" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$user</h3>
+                <pre class="signature">$user : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_users_cache_db" name="property_users_cache_db" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$users_cache_db</h3>
+                <pre class="signature">$users_cache_db : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_debug" name="property_debug" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$debug</h3>
+                <pre class="signature">$debug : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_perms" name="property_perms" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$perms</h3>
+                <pre class="signature">$perms : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_session_type" name="property_session_type" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$session_type</h3>
+                <pre class="signature">$session_type : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_session_start" name="property_session_start" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$session_start</h3>
+                <pre class="signature">$session_start : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_session_expire" name="property_session_expire" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$session_expire</h3>
+                <pre class="signature">$session_expire : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_cookie_prefix" name="property_cookie_prefix" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$cookie_prefix</h3>
+                <pre class="signature">$cookie_prefix : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_cookie_expire" name="property_cookie_expire" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$cookie_expire</h3>
+                <pre class="signature">$cookie_expire : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_persistence" name="property_persistence" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$persistence</h3>
+                <pre class="signature">$persistence : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_salt" name="property_salt" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$salt</h3>
+                <pre class="signature">$salt : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_s_data" name="property_s_data" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$s_data</h3>
+                <pre class="signature">$s_data : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_check_ip" name="property_check_ip" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$check_ip</h3>
+                <pre class="signature">$check_ip : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_check_user_agent" name="property_check_user_agent" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$check_user_agent</h3>
+                <pre class="signature">$check_user_agent : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_friendly_url" name="property_friendly_url" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$friendly_url</h3>
+                <pre class="signature">$friendly_url : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_file_path" name="property_file_path" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$file_path</h3>
+                <pre class="signature">$file_path : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                            
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method___construct" name="method___construct" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">__construct()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">__construct() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_start" name="method_start" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">start()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">start() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setUsersInCacheByIDs" name="method_setUsersInCacheByIDs" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setUsersInCacheByIDs()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setUsersInCacheByIDs(  <span class="argument">$uid_list</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$uid_list </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getUserByID" name="method_getUserByID" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getUserByID()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getUserByID(  <span class="argument">$uid</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$uid </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getUserByUsername" name="method_getUserByUsername" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getUserByUsername()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getUserByUsername(  <span class="argument">$username</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$username </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getSessionUser" name="method_getSessionUser" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getSessionUser()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getSessionUser() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_checkSession" name="method_checkSession" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">checkSession()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">checkSession() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getAllUsersArray" name="method_getAllUsersArray" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getAllUsersArray()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getAllUsersArray(  <span class="argument">$order_field = &#039;regdate&#039;</span>,   <span class="argument">$order = &#039;ASC&#039;</span>,   <span class="argument">$limit = 20</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$order_field </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$order </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$limit </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_searchUser" name="method_searchUser" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">searchUser()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">searchUser(  <span class="argument">$string</span>,   <span class="argument">$email = false</span>,   <span class="argument">$glob = false</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$string </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$email </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$glob </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setData" name="method_setData" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setData()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setData(  <span class="argument">$key</span>,   <span class="argument">$value</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$key </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$value </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getData" name="method_getData" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getData()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getData(  <span class="argument">$key</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$key </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_unsetData" name="method_unsetData" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">unsetData()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">unsetData(  <span class="argument">$key</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$key </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_destroyData" name="method_destroyData" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">destroyData()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">destroyData() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setUserSession" name="method_setUserSession" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setUserSession()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setUserSession(  <span class="argument">$user</span>,   <span class="argument">$remember</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$user </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$remember </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_destroy" name="method_destroy" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">destroy()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">destroy() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_logout" name="method_logout" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">logout()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">logout() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setAnonSession" name="method_setAnonSession" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setAnonSession()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setAnonSession() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_encryptPassword" name="method_encryptPassword" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">encryptPassword()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">encryptPassword(  <span class="argument">$password</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$password </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getPage" name="method_getPage" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getPage()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getPage(  <span class="argument">$page</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$page </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setPerms" name="method_setPerms" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setPerms()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setPerms(  <span class="argument">$cfg</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$cfg </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setACLPerms" name="method_setACLPerms" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setACLPerms()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setACLPerms() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setNonACLPerms" name="method_setNonACLPerms" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setNonACLPerms()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setNonACLPerms() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getPerms" name="method_getPerms" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getPerms()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getPerms() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getPerm" name="method_getPerm" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getPerm()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getPerm(  <span class="argument">$perm</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$perm </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_updateExpire" name="method_updateExpire" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">updateExpire()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">updateExpire(  <span class="argument">$uid</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$uid </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_saveData" name="method_saveData" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">saveData()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">saveData() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_loadSessionData" name="method_loadSessionData" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">loadSessionData()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">loadSessionData() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setConfig" name="method_setConfig" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">setConfig()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setConfig() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getCookies" name="method_getCookies" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">getCookies()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getCookies() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_clearCookies" name="method_clearCookies" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">clearCookies()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">clearCookies() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setCookies" name="method_setCookies" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">setCookies()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setCookies(  <span class="argument">$sid</span>,   <span class="argument">$uid</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$sid </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$uid </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_checkIp" name="method_checkIp" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">checkIp()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">checkIp(  <span class="argument">$session_ip</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$session_ip </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_check_user_agent" name="method_check_user_agent" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">check_user_agent()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">check_user_agent() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_checkAnonSession" name="method_checkAnonSession" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">checkAnonSession()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">checkAnonSession() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_unsetAnonSession" name="method_unsetAnonSession" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">unsetAnonSession()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">unsetAnonSession() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_check_phpbuildin_session" name="method_check_phpbuildin_session" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">check_phpbuildin_session()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">check_phpbuildin_session() </pre>
+                <p><em></em></p>
+                
+
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_check_persistence" name="method_check_persistence" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">check_persistence()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">check_persistence(  <span class="argument">$cookies</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$cookies </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+Warning: count(): Parameter must be an array or an object that implements Countable in phar://F:/xampp/php/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 1293
+
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">SMBasic.class.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/plugins\SMBasic\includes\SMBasic.class.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on June 2nd, 2019 at 15:42.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>

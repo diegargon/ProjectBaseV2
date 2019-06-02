@@ -272,7 +272,7 @@ class Database {
      * @return boolean
      */
     function tableExists($table) {
-        $query = "SHOW TABLES LIKE '$table'";
+        $query = 'SHOW TABLES LIKE ' . $table;
         $result = $this->query($query);
         if ($this->numRows($result) == 1) {
             return true;
