@@ -1,5 +1,6 @@
 HIGH
 
+* clear css cache
 MED
 
 * ADMIN: Admin actualmente instala ACL si ACL esta activo, al instalar no esta activo y no hay opcion para instalar las opciones admin ACL

@@ -27,7 +27,7 @@ if ($plugins->checkEnabled('Multilang')) {
 if ($cfg['news_vote_disable_by_stress'] && is_server_stressed()) {
     
 } else {   
-    if (!$cfg['ITS_BOT'] && $cfg['news_vote_enabled'] &&
+    if (!$cfg['ITS_BOT'] && $cfg['news_vote_enable'] &&
             $plugins->checkEnabledProvider('RATINGS') &&
             $plugins->expressStartProvider('RATINGS')
     ) {
