@@ -5,6 +5,14 @@
  */
 !defined('IN_WEB') ? exit : true;
 
+/**
+ * Detect if its a bot
+ * 
+ * @global array $cfg
+ * @global filter $filter
+ * @param int $match_type
+ * @return boolean
+ */
 function botDetect($match_type = 0) {
     global $cfg, $filter;
 
@@ -21,6 +29,11 @@ function botDetect($match_type = 0) {
     return (empty($matches)) ? false : true;
 }
 
+/**
+ * Detect if its a mobile user
+ * @global filter $filter
+ * @return boolean
+ */
 function mobileDetect() {
     global $filter;
 
@@ -50,13 +63,24 @@ function mobileDetect() {
     }
 }
 
-function formatBytes($size, $precision = 2) {
-    $base = log($size, 1024);
+/**
+ * Format bytes to K/M/G/T bytes
+ * @param int $size
+ * @param type $precision
+ * @return type
+ */
+function formatBytes($nbytes, $precision = 2) {
+    $base = log($nbytes, 1024);
     $suffixes = ['', 'K', 'M', 'G', 'T'];
 
     return round(pow(1024, $base - floor($base)), $precision) . ' ' . $suffixes[floor($base)];
 }
 
+/**
+ * Remote check url
+ * @param string $url
+ * @return boolean
+ */
 function remote_check($url) {
 
     if ((strpos($url, 'http://') !== 0) && (strpos($url, 'https://') !== 0)) {
@@ -85,6 +109,10 @@ function remote_check($url) {
     return true;
 }
 
+/**
+ * 
+ * @return float|false
+ */
 function getServerLoad() {
     /*
      *  Return server load respect cpu's number 1.0 = 100% all cores
@@ -110,6 +138,11 @@ function getServerLoad() {
     return $current_load;
 }
 
+/**
+ * 
+ * @global array $cfg
+ * @return boolean
+ */
 function is_server_stressed() {
     global $cfg;
 
@@ -123,6 +156,10 @@ function is_server_stressed() {
     return false;
 }
 
+/**
+ * 
+ * @return float
+ */
 function set_load_time() {
     $time = microtime();
     $time = explode(' ', $time);
@@ -130,6 +167,11 @@ function set_load_time() {
     return $time;
 }
 
+/**
+ * 
+ * @param type $start
+ * @return float
+ */
 function get_load_time($start) {
     $time = microtime();
     $time = explode(' ', $time);
