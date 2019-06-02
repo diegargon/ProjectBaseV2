@@ -1,19 +1,46 @@
 <?php
 
 /*
- *  Copyright @ 2018 Diego Garcia
- * 
- *  Validation filters
+ *  Copyright @ 2016 - 2018 Diego Garcia
  * 
  */
 
+/**
+ *  SecureFilter
+ *  Validation filters
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage CORE
+ */
 class SecureFilter {
 
+    /**
+     * 
+     * @var int
+     */
     private $max_int; //MYSQL INT
+    /**
+     * Do remote checks
+     * @var int
+     */
     private $remote_checks;
+
+    /**
+     * Media file extension regex
+     * @var string
+     */
     private $media_regex;
+
+    /**
+     * User name regex
+     * @var string
+     */
     private $user_name_regex;
 
+    /**
+     * 
+     * @global array $cfg
+     */
     public function __construct() {
         global $cfg;
 
@@ -23,16 +50,29 @@ class SecureFilter {
         $this->media_regex = 'jpe?g|bmp|png|JPE?G|BMP|PNG|gif';
     }
 
+    /**
+     * 
+     * @param string $regex
+     */
     function setNameRegex($regex) {
         $this->user_name_regex = $regex;
     }
 
+    /**
+     * 
+     * @param string $regex
+     */
     function setMediaRegex($regex) {
         $this->media_regex = $regex;
     }
 
-//$_GET
-    //S_GET_INT
+    /**
+     * GET & check integer
+     * @param string $var
+     * @param int $max_size
+     * @param int $min_size
+     * @return boolean
+     */
     function getInt($var, $max_size = null, $min_size = null) {
         if ((!isset($_GET[$var])) || !is_numeric($_GET[$var]) || (!empty($max_size) && ( strlen((string) $_GET[$var]) > $max_size) ) ||
                 (!empty($min_size) && (strlen((string) $_GET[$var]) < $min_size))
@@ -46,7 +86,13 @@ class SecureFilter {
         return filter_input(INPUT_GET, $var, FILTER_VALIDATE_INT);
     }
 
-    //S_GET_CHAR_AZ
+    /**
+     * GET & check A-Z character
+     * @param string $var
+     * @param int $max_size
+     * @param int $min_size
+     * @return boolean
+     */
     function getAZChar($var, $max_size = null, $min_size = null) {
         if (empty($_GET[$var])) {
             return false;
@@ -54,7 +100,13 @@ class SecureFilter {
         return $this->varAzChar($_GET[$var], $max_size, $min_size);
     }
 
-    //S_GET_TEXT_UTF8
+    /**
+     * GET & check utf8 text
+     * @param type $var
+     * @param type $max_size
+     * @param type $min_size
+     * @return boolean
+     */
     function getUtf8Txt($var, $max_size = null, $min_size = null) {
         if (empty($_GET[$var])) {
             return false;
@@ -62,7 +114,11 @@ class SecureFilter {
         return $this->varUtf8Txt($_GET[$var], $max_size, $min_size);
     }
 
-    //S_GET_EMAIL
+    /**
+     * GET & check email
+     * @param string $var
+     * @return boolean
+     */
     function getEmail($var) {
         if (empty($_GET[$var])) {
             return false;
@@ -70,7 +126,11 @@ class SecureFilter {
         return filter_input(INPUT_GET, $var, FILTER_VALIDATE_EMAIL);
     }
 
-    //S_GET_URI
+    /**
+     * GET & check a url
+     * @param string $var
+     * @return boolean
+     */
     function getUrl($var) {
         if (empty($_GET[$var])) {
             return false;
@@ -78,7 +138,13 @@ class SecureFilter {
         return filter_input(INPUT_GET, $var, FILTER_SANITIZE_URL);
     }
 
-    //S_GET_STRICT_CHARS
+    /**
+     * GET & check and strict char list chars & '_'
+     * @param string $var
+     * @param int $max_size
+     * @param int $min_size
+     * @return boolean
+     */
     function getStrictChars($var, $max_size = null, $min_size = null) {
         if (empty($_GET[$var])) {
             return false;
@@ -87,8 +153,13 @@ class SecureFilter {
         return $this->varStrictChars($_GET[$var], $max_size, $min_size);
     }
 
-//$_POST
-    //S_POST_PASSWORD
+    /**
+     * POST & check password
+     * @param string $var
+     * @param int $max_size
+     * @param int $min_size
+     * @return boolean
+     */
     function postPassword($var, $max_size = null, $min_size = null) {
         if (empty($_POST[$var])) {
             return false;
@@ -97,7 +168,11 @@ class SecureFilter {
         return $this->varPassword($_POST[$var], $max_size = null, $min_size = null);
     }
 
-    //S_POST_EMAIL
+    /**
+     * POST & Check password
+     * @param string $var
+     * @return boolean
+     */
     function postEmail($var) {
         if (empty($_POST[$var])) {
             return false;
@@ -105,7 +180,13 @@ class SecureFilter {
         return filter_input(INPUT_POST, $var, FILTER_VALIDATE_EMAIL);
     }
 
-    //S_POST_CHAR_AZNUM
+    /**
+     * POST & check a string with char and numbers
+     * @param string $var
+     * @param int $max_size
+     * @param int $min_size
+     * @return boolean
+     */
     function postAlphaNum($var, $max_size = null, $min_size = null) {
         if (empty($_POST[$var])) {
             return false;
@@ -114,7 +195,13 @@ class SecureFilter {
         return $this->varAlphaNum($_POST[$var], $max_size, $min_size);
     }
 
-    //S_POST_CHAR_AZ
+    /**
+     * POST & check A-Z char
+     * @param string $var
+     * @param int $max_size
+     * @param int $min_size
+     * @return boolean
+     */
     function postAZChar($var, $max_size = null, $min_size = null) {
         if (empty($_POST[$var])) {
             return false;
@@ -123,7 +210,13 @@ class SecureFilter {
         return $this->varAzChar($_POST[$var], $max_size, $min_size);
     }
 
-    //S_POST_TEXT_UTF8
+    /**
+     * POST & check a utf8 text
+     * @param string $var
+     * @param int $max_size
+     * @param int $min_size
+     * @return boolean
+     */
     function postUtf8Txt($var, $max_size = null, $min_size = null) {
         if (empty($_POST[$var])) {
             return false;
@@ -132,7 +225,13 @@ class SecureFilter {
         return $this->varUtf8Txt($_POST[$var], $max_size, $min_size);
     }
 
-    //S_POST_STRICT_CHARS
+    /**
+     * POST & check a strict list of chars
+     * @param string $var
+     * @param int $max_size
+     * @param int $min_size
+     * @return boolean
+     */
     function postStrictChars($var, $max_size = null, $min_size = null) {
         if (empty($_POST[$var])) {
             return false;
@@ -141,7 +240,13 @@ class SecureFilter {
         return $this->varStrictChars($_POST[$var], $max_size, $min_size);
     }
 
-    //S_POST_INT
+    /**
+     * POST & Check int
+     * @param string $var
+     * @param int $max_size
+     * @param int $min_size
+     * @return boolean
+     */
     function postInt($var, $max_size = null, $min_size = null) {
         if ((!isset($_POST[$var])) || !is_numeric($_POST[$var]) || (!empty($max_size) && ($_POST[$var] > $max_size) ) ||
                 (!empty($min_size) && ($_POST[$var] < $min_size))
@@ -155,7 +260,13 @@ class SecureFilter {
         return filter_input(INPUT_POST, $var, FILTER_VALIDATE_INT);
     }
 
-    //S_POST_URL
+    /**
+     * POST & check url
+     * @param string $var
+     * @param int $max_size
+     * @param int $min_size
+     * @return boolean
+     */
     function postUrl($var, $max_size = null, $min_size = null) {
 
         if (empty($_POST[$var])) {
@@ -177,6 +288,13 @@ class SecureFilter {
         }
     }
 
+    /**
+     * POST & Check a username (custom regex)
+     * @param string $var
+     * @param int $max_size
+     * @param int $min_size
+     * @return boolean
+     */
     function postUsername($var, $max_size = null, $min_size = null) {
         if (!isset($_POST[$var])) {
             return false;
@@ -185,7 +303,13 @@ class SecureFilter {
         return $this->varUsername($_POST[$var], $max_size, $min_size);
     }
 
-    //S_POST_CHARNUM_MIDDLE_UNDERSCORE_UNICODE
+    /**
+     * POST & Check Alpha Numeric characteres Unicode
+     * @param string $var
+     * @param int $max_size
+     * @param int $min_size
+     * @return boolean
+     */
     function postAlphaUnderscoreUnicode($var, $max_size = null, $min_size = null) {
         if (empty($_POST[$var])) {
             return false;
@@ -194,6 +318,11 @@ class SecureFilter {
         return $this->varAlphanumUnicode($_POST[$var], $max_size, $min_size);
     }
 
+    /**
+     * POST & Check a array
+     * @param string $var
+     * @return boolean
+     */
     function postArray($var) {
         $val = filter_input(INPUT_POST, $var, FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
 
@@ -201,8 +330,10 @@ class SecureFilter {
         return $val;
     }
 
-    //$_SERVER
-    // S_SERVER_REQUEST_URI
+    /**
+     * get the request uri filtered
+     * @return boolean
+     */
     function srvRequestUri() {
         if (empty($_SERVER['REQUEST_URI'])) {
             return false;
@@ -210,7 +341,10 @@ class SecureFilter {
         return filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_URL);
     }
 
-    //S_SERVER_USER_AGENT
+    /**
+     * get the user agent filtered
+     * @return boolean
+     */
     function srvUserAgent() {
         if (empty($_SERVER['HTTP_USER_AGENT'])) {
             return false;
@@ -218,7 +352,10 @@ class SecureFilter {
         return filter_input(INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_SANITIZE_ENCODED, FILTER_FLAG_STRIP_LOW);
     }
 
-    //S_SERVER_REMOTE_ADDR
+    /**
+     * get the remote addr filtered
+     * @return boolean
+     */
     function srvRemoteAddr() {
         if (empty($_SERVER['REMOTE_ADDR'])) {
             return false;
@@ -226,7 +363,11 @@ class SecureFilter {
         return filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
     }
 
-    //S_SERVER_URL
+    /**
+     * get the _SERVER
+     * @param string $var
+     * @return boolean
+     */
     function srvUrl($var) {
         if (empty($_SERVER[$var])) {
             return false;
@@ -234,12 +375,21 @@ class SecureFilter {
         return $this->varUrl($_SERVER[$var]);
     }
 
+    /**
+     * get the accept language
+     * @return type
+     */
     function srvAcceptLang() {
         return filter_input(INPUT_SERVER, "HTTP_ACCEPT_LANGUAGE", FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH);
     }
 
-    //VAR
-    //S_VAR_PASSWORD
+    /**
+     * check password
+     * @param string $var
+     * @param int $max_size
+     * @param int $min_size
+     * @return boolean
+     */
     function varPassword($var, $max_size = null, $min_size = null) {
 
         if ((!empty($max_size) && (strlen($var) > $max_size) ) || (!empty($min_size) && (strlen($var) < $min_size))
@@ -258,7 +408,13 @@ class SecureFilter {
         return $var;
     }
 
-    //S_VAR_INTEGER
+    /**
+     * check int
+     * @param int $var
+     * @param int $max_size
+     * @param int $min_size
+     * @return boolean
+     */
     function varInt($var, $max_size = null, $min_size = null) {
 
         if ((!isset($var) ) || (!empty($max_size) && ($var > $max_size) ) || (!empty($min_size) && ($var < $min_size)) || !is_numeric($var)
@@ -272,7 +428,13 @@ class SecureFilter {
         return filter_var($var, FILTER_VALIDATE_INT);
     }
 
-    //S_VAR_CHAR_AZ
+    /**
+     * check A-Z char
+     * @param string $var
+     * @param int $max_size
+     * @param int $min_size
+     * @return boolean
+     */
     function varAzChar($var, $max_size = null, $min_size = null) {
 
         if ((empty($var) ) || (!empty($max_size) && (strlen($var) > $max_size) ) || (!empty($min_size) && (strlen($var) < $min_size))
@@ -286,7 +448,13 @@ class SecureFilter {
         return $var;
     }
 
-    //S_VAR_FILENAME
+    /**
+     * Check filename
+     * @param string $file
+     * @param int $max_size
+     * @param int $min_size
+     * @return boolean
+     */
     function varFilename($file, $max_size = null, $min_size = null) {
 
         if ((empty($file) ) || (!empty($max_size) && (strlen($file) > $max_size) ) || (!empty($min_size) && (strlen($file) < $min_size))
@@ -299,7 +467,14 @@ class SecureFilter {
         return trim($file);
     }
 
-    //S_VAR_URL
+    /**
+     * check for valid url
+     * @param string $var
+     * @param int $max_size
+     * @param int $min_size
+     * @param int $force_no_remote_checks
+     * @return boolean
+     */
     function varUrl($var, $max_size = null, $min_size = null, $force_no_remote_checks = null) {
 
         if (empty($var)) {
@@ -324,7 +499,13 @@ class SecureFilter {
         return $url;
     }
 
-    //S_VAR_STRICT_CHARS
+    /**
+     * check for a strict char list
+     * @param string $var
+     * @param int $max_size
+     * @param int $min_size
+     * @return boolean
+     */
     function varStrictChars($var, $max_size = null, $min_size = null) {
         /*
          * This filter  allow: characters Az 1-9 , "_" (in middle) ... Can't begin with number
@@ -343,7 +524,13 @@ class SecureFilter {
         return $var;
     }
 
-    //S_VAR_TEXT_UTF8
+    /**
+     * check for a utf8 text
+     * @param string $var
+     * @param int $max_size
+     * @param int $min_size
+     * @return boolean
+     */
     function varUtf8Txt($var, $max_size = null, $min_size = null) {
         if ((empty($var) ) || (!empty($max_size) && (strlen($var) > $max_size) ) || (!empty($min_size) && (strlen($var) < $min_size))
         ) {
@@ -357,7 +544,13 @@ class SecureFilter {
         return $var;
     }
 
-    //S_VAR_CHAR_NUM_UNICODE
+    /**
+     * Check for alpha numeric unicode string
+     * @param string $var
+     * @param int $max_size
+     * @param int $min_size
+     * @return boolean
+     */
     function varAlphanumUnicode($var, $max_size = null, $min_size = null) {
         // NO TESTED: Unicode chars and nums only
         if ((empty($var) ) || (!empty($max_size) && (strlen($var) > $max_size) ) || (!empty($min_size) && (strlen($var) < $min_size))
@@ -372,7 +565,13 @@ class SecureFilter {
         return $var;
     }
 
-    //S_VAR_CHAR_UNICODE
+    /**
+     * check for char unicode
+     * @param string $var
+     * @param string $max_size
+     * @param string $min_size
+     * @return boolean
+     */
     function varCharUnicode($var, $max_size = null, $min_size = null) {
         // NO TESTED  Unicode chars only
         if ((empty($var) ) || (!empty($max_size) && (strlen($var) > $max_size) ) || (!empty($min_size) && (strlen($var) < $min_size))
@@ -387,9 +586,14 @@ class SecureFilter {
         return $var;
     }
 
-    //S_VAR_CHAR_MIDDLE_UNDERSCORE_UNICODE
-    //TODO  hacer generica, funcion supliendo el caracter deseado que ira en el medio
-    //
+    /**
+     * Check for unicode char with underscore in middle
+     * TODO  hacer generica, funcion supliendo el caracter deseado que ira en el medio
+     * @param type $var
+     * @param type $max_size
+     * @param type $min_size
+     * @return boolean
+     */
     function varCharUnderscoreUnicode($var, $max_size = null, $min_size = null) {
         // NO TESTED Unicode chars and _ in middle
 
@@ -404,8 +608,14 @@ class SecureFilter {
         return $var;
     }
 
-    //S_VAR_CHARNUM_MIDDLE_UNDERSCORE_UNICODE
-    //TODO  hacer generica, funcion supliendo el caracter deseado que ira en el medio
+    /**
+     *  Check for unicode char and numeric with underscore in middle
+     * TODO  hacer generica, funcion supliendo el caracter deseado que ira en el medio
+     * @param type $var
+     * @param type $max_size
+     * @param type $min_size
+     * @return boolean
+     */
     function varAlphaUnderscoreUnicode($var, $max_size = null, $min_size = null) {
         // NO TESTED Unicode chars and _ in middle
 
@@ -420,7 +630,13 @@ class SecureFilter {
         return $var;
     }
 
-    //S_VAR_CHAR_AZ_NUM
+    /**
+     * Check for alpha numeric 
+     * @param string $var
+     * @param int $max_size
+     * @param int $min_size
+     * @return boolean
+     */
     function varAlphaNum($var, $max_size = null, $min_size = null) {
         if ((empty($var) ) || (!empty($max_size) && (strlen($var) > $max_size) ) || (!empty($min_size) && (strlen($var) < $min_size))
         ) {
@@ -433,7 +649,13 @@ class SecureFilter {
         return $var;
     }
 
-    //REALNAME
+    /**
+     * check user name
+     * @param string $var
+     * @param int $max_size
+     * @param int $min_size
+     * @return boolean
+     */
     function varUsername($var, $max_size = null, $min_size = null) {
 
         if ((empty($var) ) || (!empty($max_size) && (strlen($var) > $max_size) ) || (!empty($min_size) && (strlen($var) < $min_size))
@@ -447,8 +669,13 @@ class SecureFilter {
         return $var;
     }
 
-//COOKIE
-    //S_COOKIE_INT
+    /**
+     * Check for int in a cookie
+     * @param string $var
+     * @param int $max_size
+     * @param int $min_size
+     * @return boolean
+     */
     function cookieInt($var, $max_size = null, $min_size = null) {
 
         if (empty($_COOKIE[$var]) || !is_numeric($_COOKIE[$var])) {
@@ -457,7 +684,13 @@ class SecureFilter {
         return $this->varInt($_COOKIE[$var], $max_size, $min_size);
     }
 
-    //S_COOKIE_CHAR_AZNUM
+    /**
+     * check for alpha numeric in a cookie
+     * @param string $var
+     * @param int $max_size
+     * @param int $min_size
+     * @return boolean
+     */
     function cookieAlphaNum($var, $max_size = null, $min_size = null) {
         if (empty($_COOKIE[$var])) {
             return false;
@@ -465,7 +698,14 @@ class SecureFilter {
         return $this->varAlphaNum($_COOKIE[$var], $max_size, $min_size);
     }
 
-    //S_VALIDATE_MEDIA
+    /**
+     * Validate a media file url, and opt, do a remote check
+     * @param string $url
+     * @param int $max_size
+     * @param int $min_size
+     * @param int $force_no_remote_check
+     * @return type
+     */
     function valMedia($url, $max_size = null, $min_size = null, $force_no_remote_check = null) {
 
         $regex = '/\.(' . $this->media_regex . ')(?:[\?\#].*)?$/';

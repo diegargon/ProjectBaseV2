@@ -2,26 +2,46 @@
 
 /*
  *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
- *  Error levels:
- *  ERROR
- *  WARNING
- *  NOTICE
- *  DEBUG
+ */
+
+/**
+ *  DebugBasic
+ *  Log debug messsages
+ *  Error levels: ERROR, WARNING, NOTICE, DEBUG
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage CORE
  */
 !defined('IN_WEB') ? exit : true;
 
 class Debug {
 
+    /**
+     * Main array with all debug messages
+     * @var array
+     */
     private $debug_msg = [];
 
     function __construct() {
         
     }
 
+    /**
+     * Log message
+     * @param string $msg
+     * @param string $module
+     * @param string $level
+     */
     function log($msg, $module, $level = 'DEBUG') {
         $this->debug_msg[] = ['msg' => $msg, 'module' => $module, 'level' => $level];
     }
 
+    /**
+     * Get debug messages
+     * @param string $module
+     * @param string $level
+     * @return array
+     */
     function getDebug($module = 'all', $level = 'all') {
         $filter_debug = [];
         foreach ($this->debug_msg as $element) {
@@ -34,6 +54,12 @@ class Debug {
         return $filter_debug;
     }
 
+    /**
+     * 
+     * @param string $module
+     * @param string $level
+     * @return string
+     */
     function printDebug($module = 'all', $level = 'all') {
         $module_track_br = '';
         $result = '';

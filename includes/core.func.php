@@ -5,6 +5,19 @@
  */
 !defined('IN_WEB') ? exit : true;
 
+/**
+ *  Core Functions
+ *  Core funcitions
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage CORE
+ */
+
+/**
+ * Retrieve from the databse the confiog to populate $cfg
+ * @global db $db
+ * @global array $cfg
+ */
 function core_set_config() {
     global $db, $cfg;
 
@@ -20,18 +33,29 @@ function core_set_config() {
     }
 }
 
+/**
+ * Setup database
+ * @global db $db
+ */
 function core_setup_database() {
     global $db;
 
     require_once ('includes/' . DB_TYPE . '.class.php');
 
-    $db = new Database(DB_HOST, DB, DB_USER, DB_PASSWORD);
+    $db = new Database(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD);
     $db->setCharset(DB_CHARSET);
     $db->setPrefix(DB_PREFIX);
     $db->setMinCharSearch(DB_MINCHAR_SEARCH);
     $db->connect();
 }
 
+/**
+ * Check the module request (url) exists, enabled, started, will express 
+ * start if enabled and not autostart.
+ * @global plugins $plugins
+ * @param  string $module
+ * @return boolean
+ */
 function core_check_module($module) {
     global $plugins;
 
@@ -45,8 +69,14 @@ function core_check_module($module) {
     return true;
 }
 
+/**
+ * Check if core is installed or need upgrade.
+ * @global array $cfg
+ * @global debug $debug
+ * @global plugins $plugins
+ */
 function core_check_install() {
-    global $cfg, $debug, $plugins, $db;
+    global $cfg, $debug, $plugins;
 
     if (!isset($cfg['CORE_INSTALLED']) || $cfg['CORE_INSTALLED'] != 1) {
         $debug->log('Software ins\'t intalled', 'CORE', 'WARNING');
