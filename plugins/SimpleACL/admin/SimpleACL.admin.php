@@ -57,7 +57,7 @@ function SimpleACL_AdminContent($params) {
 function SimpleACL_ShowPermGroups($msg) {
     global $tpl, $acl_auth, $groups, $filter, $LNG;
 
-    $group_selected = $filter->post_int("group_selected");
+    $group_selected = $filter->postInt("group_selected");
 
 
     $db_groups = $groups->getGroups();
@@ -108,16 +108,16 @@ function SimpleACL_ShowPermGroups($msg) {
 
 function SimpleACL_DelPerm() {
     global $filter, $acl_auth;
-    $perm_id = $filter->post_int("perm_id");
-    $group_id = $filter->post_int("group_id");
+    $perm_id = $filter->postInt("perm_id");
+    $group_id = $filter->postInt("group_id");
     return $acl_auth->deleteGroupPerm($group_id, $perm_id);
 }
 
 function SimpleACL_AddPerm() {
     global $filter, $acl_auth;
 
-    $perm_id = $filter->post_int("perm_id");
-    $group_id = $filter->post_int("group_id");
+    $perm_id = $filter->postInt("perm_id");
+    $group_id = $filter->postInt("group_id");
 
     return $acl_auth->addGroupPerm($group_id, $perm_id);
 }

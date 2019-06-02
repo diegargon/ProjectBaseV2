@@ -33,7 +33,7 @@ class SecureFilter {
 
 //$_GET
     //S_GET_INT
-    function get_int($var, $max_size = null, $min_size = null) {
+    function getInt($var, $max_size = null, $min_size = null) {
         if ((!isset($_GET[$var])) || !is_numeric($_GET[$var]) || (!empty($max_size) && ( strlen((string) $_GET[$var]) > $max_size) ) ||
                 (!empty($min_size) && (strlen((string) $_GET[$var]) < $min_size))
         ) {
@@ -47,23 +47,23 @@ class SecureFilter {
     }
 
     //S_GET_CHAR_AZ
-    function get_AZChar($var, $max_size = null, $min_size = null) {
+    function getAZChar($var, $max_size = null, $min_size = null) {
         if (empty($_GET[$var])) {
             return false;
         }
-        return $this->var_AZChar($_GET[$var], $max_size, $min_size);
+        return $this->varAzChar($_GET[$var], $max_size, $min_size);
     }
 
     //S_GET_TEXT_UTF8
-    function get_UTF8_txt($var, $max_size = null, $min_size = null) {
+    function getUtf8Txt($var, $max_size = null, $min_size = null) {
         if (empty($_GET[$var])) {
             return false;
         }
-        return $this->var_UTF8_txt($_GET[$var], $max_size, $min_size);
+        return $this->varUtf8Txt($_GET[$var], $max_size, $min_size);
     }
 
     //S_GET_EMAIL
-    function get_email($var) {
+    function getEmail($var) {
         if (empty($_GET[$var])) {
             return false;
         }
@@ -71,7 +71,7 @@ class SecureFilter {
     }
 
     //S_GET_URI
-    function get_URL($var) {
+    function getUrl($var) {
         if (empty($_GET[$var])) {
             return false;
         }
@@ -79,26 +79,26 @@ class SecureFilter {
     }
 
     //S_GET_STRICT_CHARS
-    function get_strict_chars($var, $max_size = null, $min_size = null) {
+    function getStrictChars($var, $max_size = null, $min_size = null) {
         if (empty($_GET[$var])) {
             return false;
         }
 
-        return $this->var_strict_chars($_GET[$var], $max_size, $min_size);
+        return $this->varStrictChars($_GET[$var], $max_size, $min_size);
     }
 
 //$_POST
     //S_POST_PASSWORD
-    function post_password($var, $max_size = null, $min_size = null) {
+    function postPassword($var, $max_size = null, $min_size = null) {
         if (empty($_POST[$var])) {
             return false;
         }
 
-        return $this->var_password($_POST[$var], $max_size = null, $min_size = null);
+        return $this->varPassword($_POST[$var], $max_size = null, $min_size = null);
     }
 
     //S_POST_EMAIL
-    function post_email($var) {
+    function postEmail($var) {
         if (empty($_POST[$var])) {
             return false;
         }
@@ -106,43 +106,43 @@ class SecureFilter {
     }
 
     //S_POST_CHAR_AZNUM
-    function post_AlphaNum($var, $max_size = null, $min_size = null) {
+    function postAlphaNum($var, $max_size = null, $min_size = null) {
         if (empty($_POST[$var])) {
             return false;
         }
 
-        return $this->var_AlphaNum($_POST[$var], $max_size, $min_size);
+        return $this->varAlphaNum($_POST[$var], $max_size, $min_size);
     }
 
     //S_POST_CHAR_AZ
-    function post_AZChar($var, $max_size = null, $min_size = null) {
+    function postAZChar($var, $max_size = null, $min_size = null) {
         if (empty($_POST[$var])) {
             return false;
         }
 
-        return $this->var_AZChar($_POST[$var], $max_size, $min_size);
+        return $this->varAzChar($_POST[$var], $max_size, $min_size);
     }
 
     //S_POST_TEXT_UTF8
-    function post_UTF8_txt($var, $max_size = null, $min_size = null) {
+    function postUtf8Txt($var, $max_size = null, $min_size = null) {
         if (empty($_POST[$var])) {
             return false;
         }
 
-        return $this->var_UTF8_txt($_POST[$var], $max_size, $min_size);
+        return $this->varUtf8Txt($_POST[$var], $max_size, $min_size);
     }
 
     //S_POST_STRICT_CHARS
-    function post_strict_chars($var, $max_size = null, $min_size = null) {
+    function postStrictChars($var, $max_size = null, $min_size = null) {
         if (empty($_POST[$var])) {
             return false;
         }
 
-        return $this->var_strict_chars($_POST[$var], $max_size, $min_size);
+        return $this->varStrictChars($_POST[$var], $max_size, $min_size);
     }
 
     //S_POST_INT
-    function post_int($var, $max_size = null, $min_size = null) {
+    function postInt($var, $max_size = null, $min_size = null) {
         if ((!isset($_POST[$var])) || !is_numeric($_POST[$var]) || (!empty($max_size) && ($_POST[$var] > $max_size) ) ||
                 (!empty($min_size) && ($_POST[$var] < $min_size))
         ) {
@@ -156,7 +156,7 @@ class SecureFilter {
     }
 
     //S_POST_URL
-    function post_URL($var, $max_size = null, $min_size = null) {
+    function postUrl($var, $max_size = null, $min_size = null) {
 
         if (empty($_POST[$var])) {
             return false;
@@ -164,7 +164,7 @@ class SecureFilter {
         if (is_array($_POST[$var])) {
             $var_ary = $_POST[$var];
             foreach ($var_ary as $key => $value) {
-                $ret = $this->var_URL($value, $max_size, $min_size);
+                $ret = $this->varUrl($value, $max_size, $min_size);
                 if (!$ret) {
                     $var_ary[$key] = false;
                 } else {
@@ -173,28 +173,28 @@ class SecureFilter {
             }
             return $var_ary;
         } else {
-            return $this->var_URL($_POST[$var], $max_size, $min_size);
+            return $this->varUrl($_POST[$var], $max_size, $min_size);
         }
     }
 
-    function post_user_name($var, $max_size = null, $min_size = null) {
+    function postUsername($var, $max_size = null, $min_size = null) {
         if (!isset($_POST[$var])) {
             return false;
         }
 
-        return $this->var_user_name($_POST[$var], $max_size, $min_size);
+        return $this->varUsername($_POST[$var], $max_size, $min_size);
     }
 
     //S_POST_CHARNUM_MIDDLE_UNDERSCORE_UNICODE
-    function post_alphanum_middle_underscore_unicode($var, $max_size = null, $min_size = null) {
+    function postAlphaUnderscoreUnicode($var, $max_size = null, $min_size = null) {
         if (empty($_POST[$var])) {
             return false;
         }
 
-        return $this->var_alphanum_unicode($_POST[$var], $max_size, $min_size);
+        return $this->varAlphanumUnicode($_POST[$var], $max_size, $min_size);
     }
 
-    function post_array($var) {
+    function postArray($var) {
         $val = filter_input(INPUT_POST, $var, FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
 
         $val == null ? $val = false : null;
@@ -203,7 +203,7 @@ class SecureFilter {
 
     //$_SERVER
     // S_SERVER_REQUEST_URI
-    function srv_request_uri() {
+    function srvRequestUri() {
         if (empty($_SERVER['REQUEST_URI'])) {
             return false;
         }
@@ -211,7 +211,7 @@ class SecureFilter {
     }
 
     //S_SERVER_USER_AGENT
-    function srv_user_agent() {
+    function srvUserAgent() {
         if (empty($_SERVER['HTTP_USER_AGENT'])) {
             return false;
         }
@@ -219,7 +219,7 @@ class SecureFilter {
     }
 
     //S_SERVER_REMOTE_ADDR
-    function srv_remote_addr() {
+    function srvRemoteAddr() {
         if (empty($_SERVER['REMOTE_ADDR'])) {
             return false;
         }
@@ -227,20 +227,20 @@ class SecureFilter {
     }
 
     //S_SERVER_URL
-    function srv_url($var) {
+    function srvUrl($var) {
         if (empty($_SERVER[$var])) {
             return false;
         }
-        return $this->var_URL($_SERVER[$var]);
+        return $this->varUrl($_SERVER[$var]);
     }
 
-    function srv_accept_language() {
+    function srvAcceptLang() {
         return filter_input(INPUT_SERVER, "HTTP_ACCEPT_LANGUAGE", FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH);
     }
 
     //VAR
     //S_VAR_PASSWORD
-    function var_password($var, $max_size = null, $min_size = null) {
+    function varPassword($var, $max_size = null, $min_size = null) {
 
         if ((!empty($max_size) && (strlen($var) > $max_size) ) || (!empty($min_size) && (strlen($var) < $min_size))
         ) {
@@ -259,7 +259,7 @@ class SecureFilter {
     }
 
     //S_VAR_INTEGER
-    function var_int($var, $max_size = null, $min_size = null) {
+    function varInt($var, $max_size = null, $min_size = null) {
 
         if ((!isset($var) ) || (!empty($max_size) && ($var > $max_size) ) || (!empty($min_size) && ($var < $min_size)) || !is_numeric($var)
         ) {
@@ -273,7 +273,7 @@ class SecureFilter {
     }
 
     //S_VAR_CHAR_AZ
-    function var_AZChar($var, $max_size = null, $min_size = null) {
+    function varAzChar($var, $max_size = null, $min_size = null) {
 
         if ((empty($var) ) || (!empty($max_size) && (strlen($var) > $max_size) ) || (!empty($min_size) && (strlen($var) < $min_size))
         ) {
@@ -287,7 +287,7 @@ class SecureFilter {
     }
 
     //S_VAR_FILENAME
-    function var_filename($file, $max_size = null, $min_size = null) {
+    function varFilename($file, $max_size = null, $min_size = null) {
 
         if ((empty($file) ) || (!empty($max_size) && (strlen($file) > $max_size) ) || (!empty($min_size) && (strlen($file) < $min_size))
         ) {
@@ -300,7 +300,7 @@ class SecureFilter {
     }
 
     //S_VAR_URL
-    function var_URL($var, $max_size = null, $min_size = null, $force_no_remote_checks = null) {
+    function varUrl($var, $max_size = null, $min_size = null, $force_no_remote_checks = null) {
 
         if (empty($var)) {
             return false;
@@ -325,7 +325,7 @@ class SecureFilter {
     }
 
     //S_VAR_STRICT_CHARS
-    function var_strict_chars($var, $max_size = null, $min_size = null) {
+    function varStrictChars($var, $max_size = null, $min_size = null) {
         /*
          * This filter  allow: characters Az 1-9 , "_" (in middle) ... Can't begin with number
          * For username, ACL roles    
@@ -344,7 +344,7 @@ class SecureFilter {
     }
 
     //S_VAR_TEXT_UTF8
-    function var_UTF8_txt($var, $max_size = null, $min_size = null) {
+    function varUtf8Txt($var, $max_size = null, $min_size = null) {
         if ((empty($var) ) || (!empty($max_size) && (strlen($var) > $max_size) ) || (!empty($min_size) && (strlen($var) < $min_size))
         ) {
             return false;
@@ -358,7 +358,7 @@ class SecureFilter {
     }
 
     //S_VAR_CHAR_NUM_UNICODE
-    function var_alphanum_unicode($var, $max_size = null, $min_size = null) {
+    function varAlphanumUnicode($var, $max_size = null, $min_size = null) {
         // NO TESTED: Unicode chars and nums only
         if ((empty($var) ) || (!empty($max_size) && (strlen($var) > $max_size) ) || (!empty($min_size) && (strlen($var) < $min_size))
         ) {
@@ -373,7 +373,7 @@ class SecureFilter {
     }
 
     //S_VAR_CHAR_UNICODE
-    function var_char_unicode($var, $max_size = null, $min_size = null) {
+    function varCharUnicode($var, $max_size = null, $min_size = null) {
         // NO TESTED  Unicode chars only
         if ((empty($var) ) || (!empty($max_size) && (strlen($var) > $max_size) ) || (!empty($min_size) && (strlen($var) < $min_size))
         ) {
@@ -390,7 +390,7 @@ class SecureFilter {
     //S_VAR_CHAR_MIDDLE_UNDERSCORE_UNICODE
     //TODO  hacer generica, funcion supliendo el caracter deseado que ira en el medio
     //
-    function var_char_middle_underscore_unicode($var, $max_size = null, $min_size = null) {
+    function varCharUnderscoreUnicode($var, $max_size = null, $min_size = null) {
         // NO TESTED Unicode chars and _ in middle
 
         if ((empty($var) ) || (!empty($max_size) && (strlen($var) > $max_size) ) || (!empty($min_size) && (strlen($var) < $min_size))
@@ -406,7 +406,7 @@ class SecureFilter {
 
     //S_VAR_CHARNUM_MIDDLE_UNDERSCORE_UNICODE
     //TODO  hacer generica, funcion supliendo el caracter deseado que ira en el medio
-    function var_alphanum_middle_underscore_unicode($var, $max_size = null, $min_size = null) {
+    function varAlphaUnderscoreUnicode($var, $max_size = null, $min_size = null) {
         // NO TESTED Unicode chars and _ in middle
 
         if ((empty($var) ) || (!empty($max_size) && (strlen($var) > $max_size) ) || (!empty($min_size) && (strlen($var) < $min_size))
@@ -421,7 +421,7 @@ class SecureFilter {
     }
 
     //S_VAR_CHAR_AZ_NUM
-    function var_AlphaNum($var, $max_size = null, $min_size = null) {
+    function varAlphaNum($var, $max_size = null, $min_size = null) {
         if ((empty($var) ) || (!empty($max_size) && (strlen($var) > $max_size) ) || (!empty($min_size) && (strlen($var) < $min_size))
         ) {
             return false;
@@ -434,8 +434,8 @@ class SecureFilter {
     }
 
     //REALNAME
-    function var_user_name($var, $max_size = null, $min_size = null) {
-        
+    function varUsername($var, $max_size = null, $min_size = null) {
+
         if ((empty($var) ) || (!empty($max_size) && (strlen($var) > $max_size) ) || (!empty($min_size) && (strlen($var) < $min_size))
         ) {
             return false;
@@ -449,28 +449,28 @@ class SecureFilter {
 
 //COOKIE
     //S_COOKIE_INT
-    function cookie_int($var, $max_size = null, $min_size = null) {
+    function cookieInt($var, $max_size = null, $min_size = null) {
 
         if (empty($_COOKIE[$var]) || !is_numeric($_COOKIE[$var])) {
             return false;
         }
-        return $this->var_int($_COOKIE[$var], $max_size, $min_size);
+        return $this->varInt($_COOKIE[$var], $max_size, $min_size);
     }
 
     //S_COOKIE_CHAR_AZNUM
-    function cookie_AlphaNum($var, $max_size = null, $min_size = null) {
+    function cookieAlphaNum($var, $max_size = null, $min_size = null) {
         if (empty($_COOKIE[$var])) {
             return false;
         }
-        return $this->var_AlphaNum($_COOKIE[$var], $max_size, $min_size);
+        return $this->varAlphaNum($_COOKIE[$var], $max_size, $min_size);
     }
 
     //S_VALIDATE_MEDIA
-    function validate_media($url, $max_size = null, $min_size = null, $force_no_remote_check = null) {
+    function valMedia($url, $max_size = null, $min_size = null, $force_no_remote_check = null) {
 
         $regex = '/\.(' . $this->media_regex . ')(?:[\?\#].*)?$/';
 
-        if (($url = $this->var_URL($url, $max_size, $min_size, $force_no_remote_check)) == false) {
+        if (($url = $this->varUrl($url, $max_size, $min_size, $force_no_remote_check)) == false) {
             return -1;
         }
 

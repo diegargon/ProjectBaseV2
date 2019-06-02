@@ -85,8 +85,8 @@ function SimpleGroups_ShowGroups($msg) {
 function SimpleGroups_NewGroup() {
     global $filter, $groups;
 
-    $group['group_name'] = $filter->post_AZChar("group_name", 255, 1);
-    $group['group_desc'] = $filter->post_UTF8_txt("group_desc", 255, 1);
+    $group['group_name'] = $filter->postAZChar("group_name", 255, 1);
+    $group['group_desc'] = $filter->postUtf8Txt("group_desc", 255, 1);
     $group['plugin'] = "USER";
 
     echo $group['group_desc'];
@@ -96,7 +96,7 @@ function SimpleGroups_NewGroup() {
 function SimpleGroups_DeleteGroup() {
     global $filter, $groups;
 
-    return $groups->deleteGroup($filter->post_int("group_id"));
+    return $groups->deleteGroup($filter->postInt("group_id"));
 }
 
 function SimpleGroups_UserGroups($msg) {
@@ -105,7 +105,7 @@ function SimpleGroups_UserGroups($msg) {
     $page_data = [];
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        if (!empty(($search_user = $sm->getUserByUsername($filter->post_user_name("username", 255, 1))))) {
+        if (!empty(($search_user = $sm->getUserByUsername($filter->postUsername("username", 255, 1))))) {
 
             !empty($_POST['btnAddGroup']) && !empty($search_user) ? $msg = SimpleGroups_AddUserGroup($search_user) : false;
             !empty($_POST['btnDeleteGroup']) && !empty($search_user) ? $msg = SimpleGroups_DeleteUserGroup($search_user) : false;
@@ -152,7 +152,7 @@ function SimpleGroups_UserGroups($msg) {
 function SimpleGroups_AddUserGroup($user) {
     global $filter, $groups;
 
-    $group_id = $filter->post_int("add_group_id");
+    $group_id = $filter->postInt("add_group_id");
 
     return $groups->addUserGroup($user['uid'], $group_id);
 }
@@ -160,7 +160,7 @@ function SimpleGroups_AddUserGroup($user) {
 function SimpleGroups_DeleteUserGroup($user) {
     global $filter, $groups;
 
-    $group_id = $filter->post_int("del_group_id");
+    $group_id = $filter->postInt("del_group_id");
 
     return $groups->deleteUserGroup($user['uid'], $group_id);
 }

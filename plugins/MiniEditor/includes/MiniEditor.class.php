@@ -64,7 +64,7 @@ class Editor {
 
     function showPreview() {
         global $db, $filter;
-        $text = $db->escapeStrip($filter->post_UTF8_txt('editor_text'));
+        $text = $db->escapeStrip($filter->postUtf8Txt('editor_text'));
         $text = stripcslashes($text);
 
         echo $this->parseText($text);

@@ -30,11 +30,11 @@ function SMBasic_Register() {
 function SMBasic_RegisterSubmit() {
     global $cfg, $LNG, $db, $filter, $sm;
 
-    if (($email = $filter->post_email("email")) == false) {
+    if (($email = $filter->postEmail("email")) == false) {
         die('[{"status": "1", "msg": "' . $LNG['L_E_EMAIL'] . '"}]');
     }
     if (($cfg['smbasic_need_username'] == 1) &&
-            (($username = $filter->post_user_name("username", $cfg['smbasic_max_username'])) == false)) {
+            (($username = $filter->postUsername("username", $cfg['smbasic_max_username'])) == false)) {
         die('[{"status": "2", "msg": "' . $LNG['L_E_USERNAME'] . '"}]');
     }
     if (($cfg['smbasic_need_username'] == 1) &&
@@ -48,7 +48,7 @@ function SMBasic_RegisterSubmit() {
     if (strlen($_POST['password']) > $cfg['smbasic_max_password']) {
         die('[{"status": "3", "msg": "' . $LNG['L_E_PASSWORD_MAX'] . '"}]');
     }
-    if (($password = $filter->post_password("password", $cfg['smbasic_max_password'], $cfg['smbasic_min_password'])) == false) {
+    if (($password = $filter->postPassword("password", $cfg['smbasic_max_password'], $cfg['smbasic_min_password'])) == false) {
         die('[{"status": "3", "msg": "' . $LNG['L_E_PASSWORD'] . '"}]');
     }
 

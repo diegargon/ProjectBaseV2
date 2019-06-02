@@ -103,7 +103,7 @@ function news_block_conf($blocks_data = null) {
         $content['content'] = $tpl->getTplFile('News', 'news_block_conf', $form_data);
         $content['config'] = $block_conf;
     } else {
-        $block_conf = $filter->post_array('block_conf', 255, 1);
+        $block_conf = $filter->postArray('block_conf', 255, 1);
         $block_conf['admin_block'] = 0;
 
         $form_data['categories_select'] = news_getCatsSelect(null, 'block_conf[news_cat]');

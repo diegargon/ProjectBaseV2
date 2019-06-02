@@ -58,9 +58,9 @@ function Blocks_blk_mng() {
 
     $block_config_data = [];
     $content = '';
-    $selected_page = $filter->post_AlphaNum('block_page', 255, 1);
-    $selected_blockname = $filter->post_strict_chars('blockname', 255, 1);
-    $selected_section = $filter->post_int('block_section', 255, 1);
+    $selected_page = $filter->postAlphaNum('block_page', 255, 1);
+    $selected_blockname = $filter->postStrictChars('blockname', 255, 1);
+    $selected_section = $filter->postInt('block_section', 255, 1);
     $page_data['page_options'] = '';
     $page_data['sections'] = '';
     $page_data['reg_blocks'] = '';
@@ -180,7 +180,7 @@ function Blocks_blk_mng() {
 function Blocks_showEditBlock(& $blk_cfg_data) {
     global $filter, $blocks, $LNG;
 
-    $editblock_id = $filter->post_int('block_id');
+    $editblock_id = $filter->postInt('block_id');
 
     if (empty($editblock_id)) {
         return;
@@ -194,7 +194,7 @@ function Blocks_showEditBlock(& $blk_cfg_data) {
 function Blocks_delBlock() {
     global $filter, $blocks;
 
-    $block_id = $filter->post_int('block_id');
+    $block_id = $filter->postInt('block_id');
     if ($block_id != false) {
         $blocks->deleteBlock($block_id);
     }
@@ -205,12 +205,12 @@ function Blocks_addBlock($config_array) {
 
     /* WARNING: BLOCK PROVIDED MUST FILTER HIS CONFIG ARRAY */
 
-    $block_page = $filter->post_AlphaNum('block_page', 255, 1);
-    $block_section = $filter->post_AlphaNum('block_section', 255, 1);
-    $blockname = $filter->post_strict_chars('blockname', 255, 1);
-    $block_lang = $filter->post_int('block_lang', 127, 1);
-    $block_weight = $filter->post_int('block_weight', 127, 1);
-    $canUserDisable = $filter->post_AlphaNum('disable_by_user', 1, 1);
+    $block_page = $filter->postAlphaNum('block_page', 255, 1);
+    $block_section = $filter->postAlphaNum('block_section', 255, 1);
+    $blockname = $filter->postStrictChars('blockname', 255, 1);
+    $block_lang = $filter->postInt('block_lang', 127, 1);
+    $block_weight = $filter->postInt('block_weight', 127, 1);
+    $canUserDisable = $filter->postAlphaNum('disable_by_user', 1, 1);
 
     !empty($canUserDisable) ? $canUserDisable = 0 : $canUserDisable = 1;
 
@@ -243,8 +243,8 @@ function Blocks_addBlock($config_array) {
 
 function Blocks_updateBlock() {
     global $filter, $db;
-    $editblock_id = $filter->post_int('block_id');
-    $block_conf = $filter->post_array('block_conf', 60000, 1);
+    $editblock_id = $filter->postInt('block_id');
+    $block_conf = $filter->postArray('block_conf', 60000, 1);
     $upd_ary = [
         'blockconf' => $db->escape(serialize($block_conf))
     ];

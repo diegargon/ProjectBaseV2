@@ -105,7 +105,7 @@ function admin_general_content($params) {
 
     $content = '';
 
-    if (($_SERVER['REQUEST_METHOD'] === 'POST') && ($plugin_id = $filter->post_int('plugin_id')) != false) {
+    if (($_SERVER['REQUEST_METHOD'] === 'POST') && ($plugin_id = $filter->postInt('plugin_id')) != false) {
         if (!admin_auth("w_plugin_cfg")) {
             return false;
         }
@@ -282,7 +282,7 @@ function AdminPluginConfig($plugin) {
         if (!admin_auth('w_general_cfg', 'ADMIN_CONFIG_' . $plugin)) {
             return false;
         }
-        $cfg_id = $filter->post_int('configID');
+        $cfg_id = $filter->postInt('configID');
         $value = $_POST['cfg_value'];
         if (!empty($cfg_id) && ($cfg_id != false) && ($value !== false)) {
             $value = $db->escape($value);

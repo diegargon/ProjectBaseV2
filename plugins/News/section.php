@@ -17,7 +17,7 @@ if (!($plugins->expressStartProvider('CATS'))) {
     return false;
 }
 
-if (empty($category_list = $filter->get_UTF8_txt('section')) || preg_match("/\s+/", $category_list)) {
+if (empty($category_list = $filter->getUtf8Txt('section')) || preg_match("/\s+/", $category_list)) {
     return $frontend->messageBox(['msg' => 'L_NEWS_E_SEC_NOEXISTS']);
 }
 

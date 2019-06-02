@@ -54,7 +54,7 @@ if (isset($_REQUEST['name'])) {
 } else {
     $fileName = uniqid('file_');
 }
-$fileName = $filter->var_filename($fileName, 255, 1);
+$fileName = $filter->varFilename($fileName, 255, 1);
 $fileName = preg_replace('/\s+/', '_', $fileName); //spaces to _
 if (empty($fileName)) {
     die('{"jsonrpc" : "2.0", "error" : {"code": 103, "message": "' . $LNG['L_NMU_E_FILENAME'] . '"}, "id" : "id"}');

@@ -74,8 +74,8 @@ $frontend->setStartTime($start_time);
 /*
  * FIN LOAD
  */
-$module = $filter->get_strict_chars('module', 255, 1);
-$page = $filter->get_strict_chars('page', 255, 1);
+$module = $filter->getStrictChars('module', 255, 1);
+$page = $filter->getStrictChars('page', 255, 1);
 
 if (!empty($module) && !empty($page)) {
     if (!core_check_module($module)) {

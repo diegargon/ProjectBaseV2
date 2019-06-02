@@ -16,7 +16,7 @@ function botDetect($match_type = 0) {
         $botList = $cfg['WELCOME_BOTS'] . '|' . $cfg['BAD_BOTS'];
     }
 
-    preg_match("/$botList/i", $filter->srv_user_agent(), $matches);
+    preg_match("/$botList/i", $filter->srvUserAgent(), $matches);
 
     return (empty($matches)) ? false : true;
 }
@@ -24,7 +24,7 @@ function botDetect($match_type = 0) {
 function mobileDetect() {
     global $filter;
 
-    $user_agent = $filter->srv_user_agent();
+    $user_agent = $filter->srvUserAgent();
 
     if (
             preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)'

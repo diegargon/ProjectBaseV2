@@ -24,7 +24,7 @@ function News_Comments($news) {
         register_action('std_format_comments', 'NewsComments_AddrateDisplay');
 
         if (($_SERVER['REQUEST_METHOD'] === 'POST') &&
-                ( ($filter->post_strict_chars('rate_section')) == 'news_comments_rate')
+                ( ($filter->postStrictChars('rate_section')) == 'news_comments_rate')
         ) {
             if (rating_rate_getPost('news_comments_rate')) {
                 die('[{"status": "6", "msg": "' . $LNG['L_VOTE_SUCCESS'] . '"}]');
@@ -47,7 +47,7 @@ function News_Comments($news) {
     if (!empty($_POST['btnSendNewComment']) && $cfg['nc_allow_new_comments'] && !$news['comments_disabled']) {
         if (!empty($user) || $cfg['nc_allow_anon_comments']) {
             empty($user) ? $comm_conf['author_id'] = 0 : $comm_conf['author_id'] = $user['uid'];
-            $comm_conf['comment'] = $filter->post_UTF8_txt('news_comment');
+            $comm_conf['comment'] = $filter->postUtf8Txt('news_comment');
             $comm_conf['comment'] ? stdAddComment($comm_conf) : null;
             unset($comm_conf['comment']);
             unset($comm_conf['author_id']);

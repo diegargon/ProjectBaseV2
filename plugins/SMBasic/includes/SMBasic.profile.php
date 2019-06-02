@@ -8,7 +8,7 @@
 function SMBasic_ProfileView() {
     global $tpl, $sm, $filter, $frontend, $timeUtil;
 
-    $uid = $filter->get_int("viewprofile");
+    $uid = $filter->getInt("viewprofile");
     if (empty($uid)) {
         $frontend->messageBox(['msg' => 'L_SM_E_USER_NOT_EXISTS']);
     }
@@ -48,7 +48,7 @@ function SMBasic_ProfileChange() {
     if (empty($_POST['cur_password']) || strlen($_POST['cur_password']) < $cfg['smbasic_min_password']) {
         die('[{"status": "1", "msg": "' . $LNG['L_E_PASSWORD_EMPTY_SHORT'] . '"}]');
     }
-    if (!$password = $filter->post_password("cur_password", $cfg['smbasic_max_password'], $cfg['smbasic_min_password'])) {
+    if (!$password = $filter->postPassword("cur_password", $cfg['smbasic_max_password'], $cfg['smbasic_min_password'])) {
         die('[{"status": "2", "msg": "' . $LNG['L_E_PASSWORD'] . '"}]');
     }
 
@@ -67,7 +67,7 @@ function SMBasic_ProfileChange() {
     $q_set_ary = [];
 
     if (!empty($_POST['avatar'])) {
-        $avatar = $filter->validate_media($_POST['avatar'], 255, 1);
+        $avatar = $filter->valMedia($_POST['avatar'], 255, 1);
         if ($avatar < 0) {
             die('[{"status": "6", "msg": "' . $LNG['L_SM_E_AVATAR'] . '"}]');
         } else {
@@ -93,7 +93,7 @@ function SMBasic_ProfileChange() {
         if ((strlen($_POST['new_password']) < $cfg['smbasic_min_password'])) {
             die('[{"status": "3", "msg": "' . $LNG['L_E_NEWPASS_TOOSHORT'] . '"}]');
         }
-        if (($new_password = $filter->post_password("new_password", $cfg['smbasic_max_password'], $cfg['smbasic_min_password'])) != false) {
+        if (($new_password = $filter->postPassword("new_password", $cfg['smbasic_max_password'], $cfg['smbasic_min_password'])) != false) {
             $new_password_encrypt = $sm->encryptPassword($new_password);
             $q_set_ary['password'] = $new_password_encrypt;
         }
@@ -111,7 +111,7 @@ function SMBasic_ProfileChange() {
             if (strlen($_POST['username']) > $cfg['smbasic_max_username']) {
                 die('[{"status": "4", "msg": "' . $LNG['L_USERNAME_LONG'] . '"}]');
             }
-            if (($username = $filter->post_user_name("username", $cfg['smbasic_max_username'], $cfg['smbasic_min_username'])) == false) {
+            if (($username = $filter->postUsername("username", $cfg['smbasic_max_username'], $cfg['smbasic_min_username'])) == false) {
                 die('[{"status": "4", "msg": "' . $LNG['L_USERNAME_CHARS'] . '"}]');
             }
             if ($user['username'] != $username && !empty($username)) {
@@ -126,7 +126,7 @@ function SMBasic_ProfileChange() {
     }
 
     if (( $cfg['smbasic_can_change_email'] == 1)) {
-        if (($email = $filter->post_email("email")) == false) {
+        if (($email = $filter->postEmail("email")) == false) {
             die('[{"status": "4", "msg": "' . $LNG['L_E_EMAIL'] . '"}]');
         }
         if (strlen($email) > $cfg['smbasic_max_email']) {
@@ -146,5 +146,5 @@ function SMBasic_ProfileChange() {
 
     !empty($q_set_ary) ? $db->update("users", $q_set_ary, ["uid" => $user['uid']], "LIMIT 1") : false;
 
-    die('[{"status": "ok", "msg": "' . $LNG['L_UPDATE_SUCCESSFUL'] . '", "url": "' . $filter->srv_request_uri() . '"}]');
+    die('[{"status": "ok", "msg": "' . $LNG['L_UPDATE_SUCCESSFUL'] . '", "url": "' . $filter->srvRequestUri() . '"}]');
 }

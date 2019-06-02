@@ -134,13 +134,13 @@ function SimpleCats_ModCategories() {
 
     foreach ($langs as $lang) {
         $lang_id = $lang['lang_id'];
-        $posted_name = $filter->post_alphanum_middle_underscore_unicode($lang_id); // field name value its 1 or 2 depend of lang_id, we get GET['1']
+        $posted_name = $filter->postAlphaUnderscoreUnicode($lang_id); // field name value its 1 or 2 depend of lang_id, we get GET['1']
 
         if (!empty($posted_name)) {
-            $posted_cid = $filter->post_int('cid');
-            $posted_father = $filter->post_int('father', 32767);
-            $posted_weight = $filter->post_int('weight', 128, 1);
-            $posted_image = $filter->post_URL('cat_image', 255, 1);
+            $posted_cid = $filter->postInt('cid');
+            $posted_father = $filter->postInt('father', 32767);
+            $posted_weight = $filter->postInt('weight', 128, 1);
+            $posted_image = $filter->postUrl('cat_image', 255, 1);
 
             if ($posted_cid != false) {
                 $mod_cat_ary = ['name' => $posted_name];
@@ -168,10 +168,10 @@ function SimpleCats_NewCategory($plugin) {
 
     foreach ($langs as $lang) {
         $lang_id = $lang['lang_id'];
-        $posted_name = $filter->post_alphanum_middle_underscore_unicode($lang_id); //POST['1'] 2... id return text value
-        $posted_father = $filter->post_int('father', 32767);
-        $posted_weight = $filter->post_int('weight', 127, 1);
-        $posted_image = $filter->post_URL('cat_image', 255, 1);
+        $posted_name = $filter->postAlphaUnderscoreUnicode($lang_id); //POST['1'] 2... id return text value
+        $posted_father = $filter->postInt('father', 32767);
+        $posted_weight = $filter->postInt('weight', 127, 1);
+        $posted_image = $filter->postUrl('cat_image', 255, 1);
 
         if (!empty($posted_name)) {
             $new_cat_ary = [
@@ -192,7 +192,7 @@ function SimpleCats_NewCategory($plugin) {
 function SimpleCats_DelCategory() {
     global $filter, $db;
 
-    if (( $posted_cid = $filter->post_int('cid'))) {
+    if (( $posted_cid = $filter->postInt('cid'))) {
         $db->delete('categories', ['cid' => $posted_cid]);
     }
 }

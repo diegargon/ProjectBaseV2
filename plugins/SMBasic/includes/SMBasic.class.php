@@ -256,8 +256,8 @@ class SessionManager {
             //$sid = $this->createSID();
         }
 
-        $this->setData('session_ip', $filter->srv_remote_addr());
-        $this->setData('session_user_agent', $filter->srv_user_agent());
+        $this->setData('session_ip', $filter->srvRemoteAddr());
+        $this->setData('session_user_agent', $filter->srvUserAgent());
 
 
         if (!($this->session_type == 1) || ($this->persistence && $remember)) {
@@ -267,8 +267,8 @@ class SessionManager {
             $q_ary = [
                 'session_id' => $sid,
                 'session_uid' => $user['uid'],
-                'session_ip' => $db->escapeStrip($filter->srv_remote_addr()),
-                'session_browser' => $db->escapeStrip($filter->srv_user_agent()),
+                'session_ip' => $db->escapeStrip($filter->srvRemoteAddr()),
+                'session_browser' => $db->escapeStrip($filter->srvUserAgent()),
                 'session_expire' => $session_expire
             ];
 
@@ -415,7 +415,7 @@ class SessionManager {
       global $filter;
 
       $hash_string = mt_rand(0, mt_getrandmax()) .
-      md5(substr($filter->srv_remote_addr(), 0, 5)) .
+      md5(substr($filter->srvRemoteAddr(), 0, 5)) .
       $this->salt .
       md5(microtime(true) . time());
 
@@ -426,8 +426,8 @@ class SessionManager {
     private function getCookies() {
         global $filter;
 
-        $c['uid'] = $filter->cookie_int($this->cookie_prefix . 'uid');
-        $c['sid'] = $filter->cookie_AlphaNum($this->cookie_prefix . 'sid', 255);
+        $c['uid'] = $filter->cookieInt($this->cookie_prefix . 'uid');
+        $c['sid'] = $filter->cookieAlphaNum($this->cookie_prefix . 'sid', 255);
 
         return $c;
     }
@@ -461,7 +461,7 @@ class SessionManager {
     private function checkIp($session_ip) {
         global $filter, $debug;
 
-        $ip = $filter->srv_remote_addr();
+        $ip = $filter->srvRemoteAddr();
 
         $this->debug ? $debug->log('IP check ' . $ip . ' == ' . $session_ip, 'SMBasic', 'DEBUG') : null;
 
@@ -470,7 +470,7 @@ class SessionManager {
 
     private function check_user_agent() {
         $session_user_agent = $this->getData('session_user_agent');
-        $user_agent = srv_user_agent();
+        $user_agent = srvUserAgent();
         return ($user_agent == $session_user_agent) ? true : false;
     }
 

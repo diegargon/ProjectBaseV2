@@ -8,11 +8,11 @@
 function rating_rate_getPost($section) {
     global $filter;
 
-    if (!($user_rate = $filter->post_int('rate', 5, 1))) {
+    if (!($user_rate = $filter->postInt('rate', 5, 1))) {
         return false;
     }
 
-    if (!($id = $filter->post_int('rate_rid'))) {
+    if (!($id = $filter->postInt('rate_rid'))) {
         return false;
     }
 
@@ -29,7 +29,7 @@ function rating_rate($resource_id, $section, $rate) {
     $user = $sm->getSessionUser();
     $uid = $user['uid'];
 
-    $ip = $filter->srv_remote_addr();
+    $ip = $filter->srvRemoteAddr();
     if ($ip == false) {
         return false;
     }

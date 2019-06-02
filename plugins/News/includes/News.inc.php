@@ -51,7 +51,7 @@ function news_section_nav_elements() {
 function news_section_nav_subelements() {
     global $cfg, $ctgs, $filter;
 
-    if (empty($cat_path = $filter->get_UTF8_txt('section'))) {
+    if (empty($cat_path = $filter->getUtf8Txt('section'))) {
         return false;
     }
 

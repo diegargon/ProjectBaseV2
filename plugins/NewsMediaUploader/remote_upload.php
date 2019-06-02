@@ -15,10 +15,10 @@ if ((!$user = $sm->getSessionUser())) {
         exit();
     }
 }
-$url = $filter->post_url('url', null, null, 1);
+$url = $filter->postUrl('url', null, null, 1);
 
 if (!empty($url)) {
-    $url = $filter->validate_media($url, null, null, 1); //force no remote check, we check here
+    $url = $filter->valMedia($url, null, null, 1); //force no remote check, we check here
 }
 
 if (empty($url) || $url == -1 || !$headers = get_headers($url, 1)) {

@@ -19,8 +19,8 @@ if (!admin_auth("r_adminmain_access")) {
 
 $admin_id = $plugins->getPluginID("AdminBasic");
 
-!($admtab = $filter->get_int("admtab")) ? $admtab = $admin_id : null;
-!($opt = $filter->get_int("opt")) ? $opt = $admin_id : null;
+!($admtab = $filter->getInt("admtab")) ? $admtab = $admin_id : null;
+!($opt = $filter->getInt("opt")) ? $opt = $admin_id : null;
 
 $params['admtab'] = $admtab;
 $params['opt'] = $opt;

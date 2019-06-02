@@ -11,16 +11,16 @@ function news_show_page() {
     $news_data = [];
     $editor = new Editor();
 
-    if ((empty($_GET['nid'])) || ($nid = $filter->get_int('nid')) == false) {
+    if ((empty($_GET['nid'])) || ($nid = $filter->getInt('nid')) == false) {
         return $frontend->messageBox(['msg' => 'L_NEWS_NOT_EXIST']);
     }
     if (!empty($_GET['news_lang_id'])) {
-        $news_lang_id = $filter->get_int('news_lang_id');
+        $news_lang_id = $filter->getInt('news_lang_id');
     } else {
         (defined('MULTILANG')) ? $news_lang_id = $ml->getWebLangID() : $news_lang_id = 1;
     }
 
-    ($cfg['allow_multiple_pages'] && !empty($_GET['npage'])) ? $page = $filter->get_int('npage') : $page = 1;
+    ($cfg['allow_multiple_pages'] && !empty($_GET['npage'])) ? $page = $filter->getInt('npage') : $page = 1;
 
     if (!is_array($news_data = get_news_byId($nid, $news_lang_id, $page))) { //Not array, its a error
         $frontend->messageBox(['msg' => $news_data]);
@@ -105,9 +105,9 @@ function news_show_page() {
 function news_catch_admin_actions(&$news_data, $perms) {
     global $filter;
 
-    $news_lang_id = $filter->get_int('news_lang_id');
-    $news_nid = $filter->get_int('nid');
-    $news_page = $filter->get_int('news_delete_page');
+    $news_lang_id = $filter->getInt('news_lang_id');
+    $news_nid = $filter->getInt('nid');
+    $news_page = $filter->getInt('news_delete_page');
 
     if (empty($news_lang_id) || empty($news_nid)) {
         return false;
@@ -351,7 +351,7 @@ function news_adv_stats($nid, $lang) {
 
     $user = $sm->getSessionUser();
     empty($user) ? $user['uid'] = 0 : false; //Anon        
-    $ip = $filter->srv_remote_addr();
+    $ip = $filter->srvRemoteAddr();
     $hostname = gethostbyaddr($ip);
     $where_ary = [
         'type' => 'user_visits_page',
@@ -408,7 +408,7 @@ function news_adv_stats($nid, $lang) {
 function news_add_social_meta($news) { // TODO: Move to plugin NewsSocialExtra
     global $tpl, $cfg, $filter;
     $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://';
-    $news['url'] = $protocol . $_SERVER['HTTP_HOST'] . $filter->srv_request_uri();
+    $news['url'] = $protocol . $_SERVER['HTTP_HOST'] . $filter->srvRequestUri();
     $news['PAGE_TITLE'] = $news['title'];
     $match_regex = '/\[.*img.*\](.*)\[\/.*img\]/';
     $match = '';

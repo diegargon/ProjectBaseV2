@@ -33,21 +33,21 @@ class Multilang {
          * 4 URL lang 
          * 5 default web lang  
          */
-        if (isset($_POST['choose_lang']) && (($choosed_lang = $filter->post_AZChar("choose_lang", 2, 2)) != false)) {
+        if (isset($_POST['choose_lang']) && (($choosed_lang = $filter->postAZChar("choose_lang", 2, 2)) != false)) {
             if ($this->checkExists($choosed_lang)) {
                 $cfg['WEB_LANG'] = $choosed_lang;
                 setcookie("WEB_LANG", $choosed_lang, 2147483647, '/');
                 return;
             }
         } else {
-            if (!empty(($cookie_lang = $filter->cookie_AlphaNum("WEB_LANG", 255, 1))) && $cookie_lang != false) {
+            if (!empty(($cookie_lang = $filter->cookieAlphaNum("WEB_LANG", 255, 1))) && $cookie_lang != false) {
                 $cfg['WEB_LANG'] = $cookie_lang;
                 return;
             }
         }
 
         if ($this->set_to_visit_lang) {
-            $user_pref_lang = $filter->srv_accept_language();
+            $user_pref_lang = $filter->srvAcceptLang();
 
             if (isset($user_pref_lang) && $user_pref_lang != false) {
                 $user_pref_lang = substr($user_pref_lang, 0, 2);
@@ -59,7 +59,7 @@ class Multilang {
         }
 
 
-        $url_lang = $filter->get_AZChar("lang", 2, 2);
+        $url_lang = $filter->getAZChar("lang", 2, 2);
 
         if (isset($url_lang) && $url_lang != false && $this->checkExists($url_lang)) {
             $cfg['WEB_LANG'] = $url_lang;

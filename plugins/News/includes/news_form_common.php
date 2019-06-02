@@ -48,25 +48,25 @@ function news_form_getPost() {
     $perms = get_news_perms("news_get_post");
 
     //GET
-    $form_data['nid'] = $filter->get_int("nid");
-    $form_data['old_news_lang_id'] = $filter->get_int("news_lang_id");
-    $form_data['news_lang_id'] = $filter->get_int("news_lang_id");
-    $form_data['page'] = $filter->get_int("npage");
+    $form_data['nid'] = $filter->getInt("nid");
+    $form_data['old_news_lang_id'] = $filter->getInt("news_lang_id");
+    $form_data['news_lang_id'] = $filter->getInt("news_lang_id");
+    $form_data['page'] = $filter->getInt("npage");
     //POST    
-    $form_data['author_id'] = $filter->post_int("news_author_id");
-    $form_data['title'] = $db->escapeStrip($filter->post_UTF8_txt("news_title"));
-    $form_data['lead'] = $db->escapeStrip($filter->post_UTF8_txt("news_lead"));
-    $form_data['editor_text'] = $db->escapeStrip($filter->post_UTF8_txt("editor_text"));
-    $form_data['category'] = $filter->post_int("news_category");
-    $form_data['news_lang'] = $filter->post_AZChar("news_lang", 2, 2);
-    $form_data['news_source'] = $filter->post_url("news_source", 255, 1);
-    $form_data['news_new_related'] = $filter->post_url("news_new_related", 255, 1);
-    $form_data['news_related'] = $filter->post_url("news_related", 255, 1);
-    $form_data['news_translator_id'] = $filter->post_int("news_translator_id");
+    $form_data['author_id'] = $filter->postInt("news_author_id");
+    $form_data['title'] = $db->escapeStrip($filter->postUtf8Txt("news_title"));
+    $form_data['lead'] = $db->escapeStrip($filter->postUtf8Txt("news_lead"));
+    $form_data['editor_text'] = $db->escapeStrip($filter->postUtf8Txt("editor_text"));
+    $form_data['category'] = $filter->postInt("news_category");
+    $form_data['news_lang'] = $filter->postAZChar("news_lang", 2, 2);
+    $form_data['news_source'] = $filter->postUrl("news_source", 255, 1);
+    $form_data['news_new_related'] = $filter->postUrl("news_new_related", 255, 1);
+    $form_data['news_related'] = $filter->postUrl("news_related", 255, 1);
+    $form_data['news_translator_id'] = $filter->postInt("news_translator_id");
 
     //Author Changes
     if ($perms['news_can_change_author']) {
-        $author = $filter->post_user_name("news_author", $cfg['smbasic_max_username'], $cfg['smbasic_min_username']);
+        $author = $filter->postUsername("news_author", $cfg['smbasic_max_username'], $cfg['smbasic_min_username']);
         if ($author != false) {
             if (!empty($author) && !($author_data = $sm->getUserByUsername($author))) {
                 $form_data['author_id'] = false;
@@ -82,7 +82,7 @@ function news_form_getPost() {
 
     //TRANSLATOR CHANGES
     if ($perms['news_can_change_author']) {
-        $translator = $filter->post_user_name("news_translator", $cfg['smbasic_max_username'], $cfg['smbasic_min_username']);
+        $translator = $filter->postUsername("news_translator", $cfg['smbasic_max_username'], $cfg['smbasic_min_username']);
         if ($translator != false) {
             if (!empty($translator) && !($translator_data = $sm->getUserByUsername($translator))) {
                 $form_data['news_translator_id'] = false;
@@ -284,7 +284,7 @@ function news_form_news_update($news_data) {
     //OLD RELATED
     if (!empty($news_data['news_related'])) {
         foreach ($news_data['news_related'] as $link_id => $value) {
-            if ($filter->var_int($link_id)) { //value its checked on post $link_id no 
+            if ($filter->varInt($link_id)) { //value its checked on post $link_id no 
                 if (empty($value)) {
                     $db->delete("links", ["link_id" => $link_id], "LIMIT 1");
                 } else {

@@ -57,14 +57,14 @@ function SMBasic_UserSearch() {
     $tpl->getCssFile('SMBasic');
     $tpl->getCssFile('SMBasic', 'SMBasic-mobile');
 
-    if (isset($_POST['btnDeleteSubmit']) && ( ($member_id = $filter->post_int('member_uid') )) > 0) {
+    if (isset($_POST['btnDeleteSubmit']) && ( ($member_id = $filter->postInt('member_uid') )) > 0) {
         SMBasic_DeleteUser($member_id);
     }
-    if (isset($_POST['btnActivateSubmit']) && ( ($member_id = $filter->post_int('member_uid') )) > 0) {
+    if (isset($_POST['btnActivateSubmit']) && ( ($member_id = $filter->postInt('member_uid') )) > 0) {
         SMBasic_ActivateUser($member_id);
     }
-    if (isset($_POST['btnDisableSubmit']) && ( ($member_id = $filter->post_int('member_uid') )) > 0) {
-        $disable_state = $filter->post_int('member_disable', 1, 1);
+    if (isset($_POST['btnDisableSubmit']) && ( ($member_id = $filter->postInt('member_uid') )) > 0) {
+        $disable_state = $filter->postInt('member_disable', 1, 1);
         SMBasic_DisableUser($member_id, $disable_state);
     }
 
@@ -72,7 +72,7 @@ function SMBasic_UserSearch() {
 
     isset($_POST['posted_glob']) ? $glob = 1 : $glob = 0;
     isset($_POST['posted_email']) ? $email = 1 : $email = 0;
-    $s_string = $filter->post_user_name('search_user', 255, 1);
+    $s_string = $filter->postUsername('search_user', 255, 1);
 
     if (!empty($_POST['btnSearchUser']) && !empty($s_string)) {
         if (($users_ary = $sm->searchUser($s_string, $email, $glob))) {
@@ -98,14 +98,14 @@ function SMBasic_UserList() {
     $tpl->getCssFile('SMBasic');
     $tpl->getCssFile('SMBasic', 'SMBasic-mobile');
 
-    if (isset($_POST['btnDeleteSubmit']) && ( ($member_id = $filter->post_int('member_uid') )) > 0) {
+    if (isset($_POST['btnDeleteSubmit']) && ( ($member_id = $filter->postInt('member_uid') )) > 0) {
         SMBasic_DeleteUser($member_id);
     }
-    if (isset($_POST['btnActivateSubmit']) && ( ($member_id = $filter->post_int('member_uid') )) > 0) {
+    if (isset($_POST['btnActivateSubmit']) && ( ($member_id = $filter->postInt('member_uid') )) > 0) {
         SMBasic_ActivateUser($member_id);
     }
-    if (isset($_POST['btnDisableSubmit']) && ( ($member_id = $filter->post_int('member_uid') )) > 0) {
-        $disable_state = $filter->post_int('member_disable', 1, 1);
+    if (isset($_POST['btnDisableSubmit']) && ( ($member_id = $filter->postInt('member_uid') )) > 0) {
+        $disable_state = $filter->postInt('member_disable', 1, 1);
         SMBasic_DisableUser($member_id, $disable_state);
     }
 

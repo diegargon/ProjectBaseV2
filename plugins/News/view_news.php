@@ -35,7 +35,7 @@ if ($cfg['news_vote_disable_by_stress'] && is_server_stressed()) {
         register_action('news_show_page', 'newsvote_news_addrate');
 
         if (($_SERVER['REQUEST_METHOD'] === 'POST') &&
-                ( ($filter->post_strict_chars('rate_section')) == 'news_rate')
+                ( ($filter->postStrictChars('rate_section')) == 'news_rate')
         ) {
  
             if (rating_rate_getPost('news_rate')) {

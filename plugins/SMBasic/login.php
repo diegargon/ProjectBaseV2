@@ -26,7 +26,7 @@ require_once('includes/SMBasic.login.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if (isset($_GET['active'])) {
-        if (($activation_code = $filter->get_int('active', 10, 1)) &&
+        if (($activation_code = $filter->getInt('active', 10, 1)) &&
                 !SMBasic_user_activate_account($activation_code)
         ) {
             $msgbox['title'] = 'L_SM_REGISTERED';
@@ -55,9 +55,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['email']) && !empty($_POST['password'])) {
-        $email = $filter->post_email('email');
-        $password = $filter->post_password('password');
-        ($filter->post_int('rememberme')) ? $rememberme = 1 : $rememberme = 0;
+        $email = $filter->postEmail('email');
+        $password = $filter->postPassword('password');
+        ($filter->postInt('rememberme')) ? $rememberme = 1 : $rememberme = 0;
         if ($email != false && $password != false) {
             SMBasic_Login($email, $password, $rememberme);
         } else {

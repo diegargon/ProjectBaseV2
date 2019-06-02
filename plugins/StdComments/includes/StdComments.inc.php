@@ -11,7 +11,7 @@ function stdGetComments($comm_conf) {
         return false;
     }
 
-    if (!empty($comm_conf['limit']) && $filter->var_int($comm_conf['limit'])) {
+    if (!empty($comm_conf['limit']) && $filter->varInt($comm_conf['limit'])) {
         $LIMIT = 'LIMIT ' . $comm_conf['limit'];
     } else {
         $LIMIT = '';

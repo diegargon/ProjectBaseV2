@@ -171,7 +171,7 @@ class Blocks {
             $_blockconf = unserialize($block_conf);
             $content['content'] .= $_blockconf['html_code'];
         } else { //New block
-            $block_conf = $filter->post_array('block_conf', 60000, 1);
+            $block_conf = $filter->postArray('block_conf', 60000, 1);
             $block_conf['admin_block'] = 0;
             //TODO CHECK AND FILTER return false if something fail.
             $content['config'] = $block_conf;
@@ -197,7 +197,7 @@ class Blocks {
             $_blockconf = unserialize($block_conf);
             $content['content'] .= $_blockconf['html_code'];
         } else {
-            $block_conf = $filter->post_array('block_conf', 60000, 1);
+            $block_conf = $filter->postArray('block_conf', 60000, 1);
             $block_conf['admin_block'] = 0;
             //TODO CHECK AND FILTER return false if something fail.
             $content['config'] = $block_conf;
@@ -231,7 +231,7 @@ class Blocks {
             $_blockconf = unserialize($block_conf);
             $content['content'] = '<br/><input type="text" maxlength="60000" size="100" name="block_conf[file]" value="' . $_blockconf['file'] . '"/>';
         } else {
-            $block_conf = $filter->post_array('block_conf', 60000, 1);
+            $block_conf = $filter->postArray('block_conf', 60000, 1);
             $block_conf['admin_block'] = 1;
             //TODO CHECK AND FILTER return false if something fail        
 
@@ -256,7 +256,7 @@ class Blocks {
             $_blockconf = unserialize($block_conf);
             $content['content'] = '<br/><input type="text" maxlength="60000" size="100" name="block_conf[php_file]" value="' . $_blockconf['php_file'] . '"/>';
         } else {
-            $block_conf = $filter->post_array('block_conf', 60000, 1);
+            $block_conf = $filter->postArray('block_conf', 60000, 1);
             $block_conf['admin_block'] = 1;
             //TODO CHECK AND FILTER return false if something fail        
 

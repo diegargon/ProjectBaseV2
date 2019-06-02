@@ -73,8 +73,8 @@ function SimpleFrontEnd_index_cfg() {
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnChangeLayout'])) {
         global $db;
 
-        $layout_opt = $filter->post_strict_chars('admin_layout', 255, 1);
-        $layout_page = $filter->post_strict_chars('page', 255, 1);
+        $layout_opt = $filter->postStrictChars('admin_layout', 255, 1);
+        $layout_page = $filter->postStrictChars('page', 255, 1);
         if (!empty($layout_opt) && !empty($layout_page)) {
             if ($layout_opt == 'none') {
                 $db->upsert('config', ['plugin' => 'SimpleFrontend', 'cfg_value' => ''], ['cfg_key' => $layout_page . '_layout']);

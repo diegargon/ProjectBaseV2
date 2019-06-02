@@ -56,7 +56,7 @@ function SMBasic_user_activate_account($activation_code) {
 function SMBasic_RequestResetOrActivation() {
     global $LNG, $cfg, $db, $filter;
 
-    if (($email = $filter->post_email('email')) == false) {
+    if (($email = $filter->postEmail('email')) == false) {
         die('[{"status": "1", "msg": "' . $LNG['L_E_EMAIL'] . '"}]');
         return false;
     }
@@ -89,8 +89,8 @@ function SMBasic_RequestResetOrActivation() {
 function SMBasic_user_reset_password() {
     global $cfg, $LNG, $db, $filter, $sm, $frontend;
 
-    $reset = $filter->get_int('reset', 10, 1);
-    $email = $filter->get_email('email');
+    $reset = $filter->getInt('reset', 10, 1);
+    $email = $filter->getEmail('email');
     if ($reset == false || $email == false) {
         return false;
     }
