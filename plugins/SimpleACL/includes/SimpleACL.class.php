@@ -2,8 +2,14 @@
 
 /*
  *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
- * 
- * Fast Implementation, need some basic ACL now,  work on this later
+ *  
+ */
+/**
+ *  SimpleACL class
+ *  No work atm
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage SimpleACL
  */
 !defined('IN_WEB') ? exit : true;
 

@@ -3,6 +3,13 @@
 /*
  *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
  */
+
+/**
+ *  Adminbasic DB
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage AdminBasic
+ */
 !defined('IN_WEB') ? exit : true;
 
 /* INSTALL */

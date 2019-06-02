@@ -2,8 +2,13 @@
 
 /*
  *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
- *  Custom config file
- * 
+ */
+
+/**
+ *  Custom config example, rename to config.inc.php
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage CORE
  */
 
 define('DEBUG', true);
@@ -28,10 +33,10 @@ define('DEBUG_CORE', "DebugBasic");
 //CORE 
 //ONLY EFFECT FOR INSTALL LATER WE USE THE CONF IN DATABASE
 
-$cfg['WEB_URL'] = "";
+$cfg['WEB_URL'] = '';
 $cfg['STATIC_SRV_URL'] = $cfg['WEB_URL'];
-$cfg['WEB_LANG'] = "es";
-$cfg['WEB_LOGO'] = $cfg['STATIC_SRV_URL'] . "favicon-96x96.png";
+$cfg['WEB_LANG'] = 'es';
+$cfg['WEB_LOGO'] = $cfg['STATIC_SRV_URL'] . 'favicon-96x96.png';
 $cfg['default_timezone'] = 'Europe/Madrid';
 $cfg['server_timezone'] = 'Europe/Madrid';
 $cfg['default_dateformat'] = 'd/m/y H:i';

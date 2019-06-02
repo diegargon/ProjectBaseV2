@@ -3,6 +3,12 @@
 /*
  *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
  */
+/**
+ *  SMbasic class 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage SMBasic
+ */
 !defined('IN_WEB') ? exit : true;
 
 class SessionManager {

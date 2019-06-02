@@ -4,7 +4,12 @@
  *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
  * 
  */
-
+/**
+ *  SimpleFrontend class
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage SimpleFrontend
+ */
 class SimpleFrontend {
 
     private $db;

@@ -4,6 +4,12 @@
  *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
  */
 
+/**
+ *  Blocks plugin 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage Blocks
+ */
 class Blocks {
 
     private $registered_blocks;

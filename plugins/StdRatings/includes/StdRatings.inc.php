@@ -3,6 +3,12 @@
 /*
  *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
  */
+/**
+ *  StdRatings class
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage StdRatings
+ */
 !defined('IN_WEB') ? exit : true;
 
 function rating_rate_getPost($section) {

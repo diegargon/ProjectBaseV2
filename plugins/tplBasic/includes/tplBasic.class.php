@@ -4,7 +4,7 @@
  *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
  */
 /**
- *  tplBasic
+ *  tplBasic - TPL class
  *  Template manager
  *  @author diego@envigo.net
  *  @package ProjectBase
