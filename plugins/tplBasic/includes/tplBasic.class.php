@@ -260,7 +260,7 @@ class TPL {
             return false;
         }
 
-        $css_code = "";
+        $css_code = '';
 
         $cssfile = $this->css_cache_onefile . '.css';
         $this->debug ? $this->debug->log('CSS One file Unify ' . $cssfile, 'tplBasic', 'DEBUG') : null;

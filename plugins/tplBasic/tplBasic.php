@@ -23,7 +23,7 @@ function tplBasic_init() {
 
 function tplBasic_Install() {
     global $db;
-    require_once "db/tplBasic.db.php";
+    require_once 'db/tplBasic.db.php';
     foreach ($tplbasic_database as $query) {
         if ($db->query($query) == false) {
             return false;
