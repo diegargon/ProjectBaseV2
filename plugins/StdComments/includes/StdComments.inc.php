@@ -60,7 +60,7 @@ function stdFormatComments($comments, $comm_conf) {
             $author_data['uid'] = 0;
             $author_data['username'] = $LNG['L_ANONYMOUS'];
         }
-
+        empty($author_data['avatar']) ? $author_data['avatar'] = $cfg['smbasic_default_img_avatar'] : null;
         $comment_row = array_merge($author_data, $comment_row);
 
         if ($cfg['FRIENDLY_URL']) {
