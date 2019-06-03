@@ -1,9 +1,13 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  StdComments - Database file
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage StdComments
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)  
  */
-
 $stdComments_database_install[] = "
 CREATE TABLE `" . DB_PREFIX . "comments` (
   `cid` int(10) UNSIGNED NOT NULL,

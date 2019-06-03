@@ -1,17 +1,22 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  StdComments - Main file
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage StdComments
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)  
  */
 !defined('IN_WEB') ? exit : true;
 
 function StdComments_init() {
     global $tpl, $cfg;
-    
+
     if ($cfg['stdcomments_disable_by_stress'] && is_server_stressed()) {
         return false;
     }
-    
+
     $tpl->getCssFile('StdComments');
 }
 

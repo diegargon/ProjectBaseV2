@@ -1,14 +1,12 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
- */
-
 /**
- *  StdComments
+ *  StdComments - Main include
+ * 
  *  @author diego@envigo.net
  *  @package ProjectBase
  *  @subpackage StdComments
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)  
  */
 function stdGetComments($comm_conf) {
     global $db, $filter;
