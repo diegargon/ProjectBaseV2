@@ -10,12 +10,24 @@
  */
 !defined('IN_WEB') ? exit : true;
 
+/**
+ * Admin init
+ * 
+ * @global type $plugins
+ */
 function StdComments_AdminInit() {
     global $plugins;
 
     $plugins->expressStart('StdComments') ? register_action('add_admin_menu', 'StdComments_AdminMenu', '5') : null;
 }
 
+/**
+ * Admin menu
+ * 
+ * @global plugins $plugins
+ * @param array $params
+ * @return string
+ */
 function StdComments_AdminMenu($params) {
     global $plugins;
 
@@ -30,6 +42,12 @@ function StdComments_AdminMenu($params) {
     }
 }
 
+/**
+ * Admin aside menu
+ * @global array $LNG
+ * @param array $params
+ * @return string
+ */
 function StdComments_AdminAside($params) {
     global $LNG;
 
@@ -37,6 +55,12 @@ function StdComments_AdminAside($params) {
             '<li><a href="admin&admtab=' . $params['admtab'] . '&opt=4">' . $LNG['L_PL_CONFIG'] . '</a></li>';
 }
 
+/**
+ * Admin content
+ * @global array $LNG
+ * @param array $params
+ * @return string
+ */
 function StdComments_admin_content($params) {
     global $LNG;
     $page_data = '';

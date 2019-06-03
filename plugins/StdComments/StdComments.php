@@ -10,6 +10,12 @@
  */
 !defined('IN_WEB') ? exit : true;
 
+/**
+ * Init
+ * @global tpl $tpl
+ * @global array $cfg
+ * @return boolean
+ */
 function StdComments_init() {
     global $tpl, $cfg;
 
@@ -20,6 +26,11 @@ function StdComments_init() {
     $tpl->getCssFile('StdComments');
 }
 
+/**
+ * Install
+ * @global db $db
+ * @return boolean
+ */
 function StdComments_install() {
     global $db;
     require_once ('db/StdComments.db.php');
@@ -31,14 +42,31 @@ function StdComments_install() {
     return true;
 }
 
+/**
+ * preInstall
+ * 
+ * @return boolean
+ */
 function StdComments_preInstall() {
     return true;
 }
 
+/**
+ * preInstall_info
+ * 
+ * @return boolean
+ */
 function StdComments_preInstall_info() {
     return true;
 }
 
+/**
+ * Upgrade
+ * @global db $db
+ * @param float $version
+ * @param float $from_version
+ * @return boolean
+ */
 function StdComments_upgrade($version, $from_version) {
     global $db;
     require_once ('db/StdComments.db.php');
@@ -53,6 +81,11 @@ function StdComments_upgrade($version, $from_version) {
     return false;
 }
 
+/**
+ * Uninstall
+ * @global db $db
+ * @return boolean
+ */
 function StdComments_uninstall() {
     global $db;
     require_once ('db/StdComments.db.php');

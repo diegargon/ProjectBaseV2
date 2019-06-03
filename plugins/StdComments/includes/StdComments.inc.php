@@ -8,6 +8,18 @@
  *  @subpackage StdComments
  *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)  
  */
+
+/**
+ * Standard funtion for get comments
+ * 
+ * wait for plugin name and resource id in the $comm_conf array
+ * for retrieve the comments relative to the plugin and id
+ * 
+ * @global db $db
+ * @global filter $filter
+ * @param array $comm_conf
+ * @return boolean
+ */
 function stdGetComments($comm_conf) {
     global $db, $filter;
 
@@ -29,6 +41,20 @@ function stdGetComments($comm_conf) {
     return ($db->numRows($query) < 1) ? false : $db->fetchAll($query);
 }
 
+/**
+ * Standard funtion for format comments
+ * 
+ * retrieve list of message with html format using the template "comments"
+ * 
+ * @global sm $sm
+ * @global tpl $tpl
+ * @global array $cfg
+ * @global array $LNG
+ * @global timeUtil $timeUtil
+ * @param array $comments
+ * @param array $comm_conf
+ * @return string
+ */
 function stdFormatComments($comments, $comm_conf) {
     global $sm, $tpl, $cfg, $LNG, $timeUtil;
 
@@ -74,21 +100,42 @@ function stdFormatComments($comments, $comm_conf) {
     return $content;
 }
 
+/**
+ * Show new comment box
+ * @global tpl $tpl
+ * @return string
+ */
 function stdNewComment() {
     global $tpl;
 
     return $tpl->getTplFile('StdComments', 'new_comment');
 }
 
-function stdAddComment($comment) {
+/**
+ * Add specific comment
+ * 
+ * $comm_conf array must have 'plugin' name and 'resource_id' and the 'comment' text
+ * 
+ * @global db $db
+ * @param array $comment
+ * @return string
+ */
+function stdAddComment($comm_conf) {
     global $db;
 
-    $comment['comment'] = $db->escapeStrip($comment['comment']);
-    $r = $db->insert('comments', $comment);
+    $comm_conf['comment'] = $db->escapeStrip($comm_conf['comment']);
+    $r = $db->insert('comments', $comm_conf);
 
     return $r ? true : false;
 }
 
+/**
+ * get the number of commentarys for a give 'plugin' & 'resource_id' on $conf 
+ * 
+ * @global db $db
+ * @param array $conf
+ * @return boolean
+ */
 function stdGetNumComm($conf) {
     global $db;
 
