@@ -1,9 +1,13 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  MiniEditor databse file
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage MiniEditor
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)  
  */
-
 $minieditor_database_install = [
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('MiniEditor', 'minieditor_debug', '0');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('MiniEditor', 'minieditor_parser_allow_ext_img', '1');",

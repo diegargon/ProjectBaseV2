@@ -1,16 +1,18 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
- */
 /**
- *  Multilang class 
+ *  Multilang main class file
+ * 
  *  @author diego@envigo.net
  *  @package ProjectBase
  *  @subpackage Multilang
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)  
  */
 !defined('IN_WEB') ? exit : true;
 
+/**
+ * Multilang class
+ */
 class Multilang {
 
     private $web_lang;
