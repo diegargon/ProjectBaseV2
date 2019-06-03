@@ -1,10 +1,27 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  News - News view template
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage News
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)  
  */
 !defined('IN_WEB') ? exit : true;
 
+/**
+ * news show page
+ * 
+ * @global array $cfg
+ * @global tpl $tpl
+ * @global sm $sm
+ * @global ml $ml
+ * @global filter $filter
+ * @global frontend $frontend
+ * @global timeUtil $timeUtil
+ * @return boolean
+ */
 function news_show_page() {
     global $cfg, $tpl, $sm, $ml, $filter, $frontend, $timeUtil;
 
@@ -62,7 +79,7 @@ function news_show_page() {
     $cfg['PAGE_DESC'] = $news_data['title'] . ":" . $news_data['lead'];
     $cfg['PAGE_AUTHOR'] = $author['username'];
     //END HEAD MOD
-    !empty($author['avatar']) ? $news_data['author_avatar'] = $author['avatar'] : null;
+    !empty($author['avatar']) ? $news_data['author_avatar'] = $author['avatar'] : $news_data['author_avatar'] = $cfg['smbasic_default_img_avatar'];
 
     get_news_links($news_data);
 
@@ -102,6 +119,14 @@ function news_show_page() {
     $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('News', 'news_body', $news_data));
 }
 
+/**
+ * Catch admin actions
+ * 
+ * @global filter $filter
+ * @param array $news_data
+ * @param array $perms
+ * @return boolean
+ */
 function news_catch_admin_actions(&$news_data, $perms) {
     global $filter;
 
@@ -143,6 +168,15 @@ function news_catch_admin_actions(&$news_data, $perms) {
     return true;
 }
 
+/**
+ * News navigation options
+ * 
+ * @global array $LNG
+ * @global array $cfg
+ * @param array $news
+ * @param array $perms
+ * @return array
+ */
 function news_nav_options($news, $perms) {
     global $LNG, $cfg;
     $content = '';
