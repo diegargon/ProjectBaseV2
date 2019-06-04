@@ -546,7 +546,8 @@ class Database {
      */
     private function setProcess($set) {
         foreach ($set as $field => $value) {
-            $newset[] = "$field = " . "'" . $value . "'";
+            //$newset[] = "$field = " . "'" . $value . "'";
+            $newset[] = "$field = $value"; //CHANGE 040619 //need for update comments+1 'comments +1' not work 
         }
         $query = implode(',', $newset);
         return $query;
