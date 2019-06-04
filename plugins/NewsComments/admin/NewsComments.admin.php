@@ -1,9 +1,13 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  Newscomments main admin file
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage Newscomments
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)  
  */
-
 function NewsComments_AdminInit() {
     global $plugins;
     $plugins->expressStart("NewsComments") ? register_action("add_admin_menu", "NewsComments_AdminMenu", "5") : null;
