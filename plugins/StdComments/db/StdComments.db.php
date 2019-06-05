@@ -16,12 +16,15 @@ CREATE TABLE `" . DB_PREFIX . "comments` (
   `lang_id` tinyint(2) NOT NULL,
   `comment` longtext NOT NULL,
   `author_id` int(10) UNSIGNED NOT NULL,
+  `soft_delete` tinyint(1) NOT NULL DEFAULT '0',
+  `shadow_ban` tinyint(1) NOT NULL DEFAULT '0',
+  `reported` int(10) NOT NULL DEFAULT '0',
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . ";
 ";
 
 /* CONFIG */
-$stdComments_database_install[] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('stdComments', 'stdcomments_disable_by_stress', '0');";
+//$stdComments_database_install[] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('stdComments', '', '');";
 
 $stdComments_database_install[] = "
 ALTER TABLE `" . DB_PREFIX . "comments`

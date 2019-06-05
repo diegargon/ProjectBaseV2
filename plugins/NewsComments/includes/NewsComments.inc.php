@@ -61,8 +61,19 @@ function News_Comments($news) {
 
     $comm_conf['limit'] = $cfg['nc_max_comments_perpage'];
 
-    if (($comments = stdGetComments($comm_conf))) {
-        $content .= stdFormatComments($comments, $comm_conf);
+    if ($news['author_id'] == $user['uid']) {
+        $perm_cfg['allow_comm_delete'] = $cfg['nc_allow_author_delete'];
+        $perm_cfg['allow_comm_softdelete'] = $cfg['nc_allow_author_softdelete'];
+        $perm_cfg['allow_comm_shadowban'] = $cfg['nc_allow_author_shadowban'];
+    } else {
+        $perm_cfg['allow_comm_delete'] = 0;
+        $perm_cfg['allow_comm_softdelete'] = 0;
+        $perm_cfg['allow_comm_shadowban'] = 0;
+    }
+    $perm_cfg['allow_comm_report'] = $cfg['nc_allow_comm_report'];
+
+    if (($comments = stdGetComments($comm_conf, $perm_cfg))) {
+        $content .= stdFormatComments($comments, $comm_conf, $perm_cfg);
     }
 
     if ($cfg['nc_allow_new_comments'] && !$news['comments_disabled']) {

@@ -11,9 +11,9 @@
 !defined('IN_WEB') ? exit : true;
 
 /* */
-$newsComments_database_install[] = "
-    ALTER TABLE `" . DB_PREFIX . "news` ADD `comments_disabled` TINYINT(1) NOT NULL DEFAULT '0';
-";
+$newsComments_database_install = [
+    "ALTER TABLE `" . DB_PREFIX . "news` ADD `comments_disabled` TINYINT(1) NOT NULL DEFAULT '0';"
+];
 
 $newsComments_database_install[] = "
     ALTER TABLE `" . DB_PREFIX . "comments` ADD `rating_close` tinyint(1) NOT NULL DEFAULT '0';
@@ -26,6 +26,10 @@ $newsComments_database_install[] = "INSERT INTO `" . DB_PREFIX . "config` (`plug
 $newsComments_database_install[] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('NewsComments', 'nc_vote_comments', '1');";
 $newsComments_database_install[] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('NewsComments', 'nc_allow_vote_comments', '1');";
 $newsComments_database_install[] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('NewsComments', 'nc_allow_new_comments', '1');";
+$stdComments_database_install[] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('stdComments', 'stdcomm_allow_author_delete', '0');";
+$stdComments_database_install[] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('stdComments', 'stdcomm_allow_author_softdelete', '1');";
+$stdComments_database_install[] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('stdComments', 'stdcomm_allow_author_shadowban', '0');";
+$stdComments_database_install[] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('stdComments', 'stdcomm_allow_comm_report', '1');";
 
 /* UNINSTALL */
 $newsComments_database_uninstall = [

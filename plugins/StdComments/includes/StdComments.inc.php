@@ -44,7 +44,7 @@ function stdGetComments($comm_conf) {
 /**
  * Standard funtion for format comments
  * 
- * retrieve list of message with html format using the template "comments"
+ * retrieve list of messages with html format using the template "comments"
  * 
  * @global sm $sm
  * @global tpl $tpl
@@ -53,14 +53,18 @@ function stdGetComments($comm_conf) {
  * @global timeUtil $timeUtil
  * @param array $comments
  * @param array $comm_conf
+ * @param array $perm_cfg
  * @return string
  */
-function stdFormatComments($comments, $comm_conf) {
+function stdFormatComments($comments, $comm_conf, $perm_cfg) {
     global $sm, $tpl, $cfg, $LNG, $timeUtil;
 
     $counter = 0;
     $uid_list = $content = '';
     $num_comments = count($comments);
+
+    //ADM COMMENTS ACTIONS
+    stdCatchAdmActions();
 
     do_action('std_format_comments', $comments);
 
@@ -84,6 +88,13 @@ function stdFormatComments($comments, $comm_conf) {
             $author_data['uid'] = 0;
             $author_data['username'] = $LNG['L_ANONYMOUS'];
         }
+        $user = $sm->getSessionUser();
+        if ($comment_row['shadow_ban'] && !$user['isAdmin'] && $comment_row['author_id'] != $user['uid']) {
+            continue;
+        }
+        if (!$user['isAdmin'] && $comment_row['soft_delete']) {
+            continue;
+        }
         empty($author_data['avatar']) ? $author_data['avatar'] = $cfg['smbasic_default_img_avatar'] : null;
         $comment_row = array_merge($author_data, $comment_row);
 
@@ -93,6 +104,11 @@ function stdFormatComments($comments, $comm_conf) {
             $comment_row['p_url'] = '/' . $cfg['CON_FILE'] . '?module=SMBasic&page=profile&viewprofile=' . $author_data['uid'] . '&lang=' . $cfg['WEB_LANG'];
         }
 
+        $perm_comm = stdGetCommPerms($author_data['uid'], $perm_cfg);
+        $comment_row = array_merge($perm_comm, $comment_row);
+
+        $comment_row['admbar'] = stdAdmBar($comment_row, $perm_comm);
+
         $comment_row['date'] = $timeUtil->formatDbDate($comment_row['date']);
         $content .= $tpl->getTplFile('StdComments', 'comments', $comment_row);
     }
@@ -101,7 +117,65 @@ function stdFormatComments($comments, $comm_conf) {
 }
 
 /**
+ * Get Comment admin bar
+ * 
+ * @global array $LNG
+ * @param array $comm
+ * @param array $perm
+ * @return string
+ */
+function stdAdmBar($comm, $perm) {
+    global $LNG;
+
+    $bar = '';
+    if ($perm['report_comm']) {
+        ($comm['reported'] > 0) ? $class = 'class="adm_btn_on_comm"' : $class = '';
+        $bar .= '<input ' . $class . ' type="submit" value="' . $LNG['L_SC_REPORT'] . '" name="report" />';
+    }
+
+    if ($perm['delete_comm']) {
+        $bar .= '<input type="submit" value="' . $LNG['L_SC_DELETE'] . '" name="delete" />';
+    }
+    if ($perm['soft_delete_comm']) {
+        ($comm['soft_delete'] > 0) ? $class = 'class="adm_btn_on_comm"' : $class = '';
+        $bar .= '<input ' . $class . ' type="submit" value="' . $LNG['L_SC_SOFTDELETE'] . '" name="softdelete" />';
+    }
+
+    if ($perm['shadow_ban_comm']) {
+        ($comm['shadow_ban'] > 0) ? $class = 'class="adm_btn_on_comm"' : $class = '';
+        $bar .= '<input ' . $class . ' type="submit" value="' . $LNG['L_SC_SHADOWBAN'] . '" name="shadowban" />';
+    }
+
+    return $bar;
+}
+
+/**
+ * Catch administrative actions
+ * 
+ * @return boolean
+ */
+function stdCatchAdmActions() {
+
+    if (!isset($_POST['cid']) || !is_numeric($_POST['cid'])) {
+        return false;
+    }
+    if (isset($_POST['report'])) {
+        stdCommReport($_POST['cid']);
+    }
+    if (isset($_POST['delete'])) {
+        stdCommDelete($_POST['cid']);
+    }
+    if (isset($_POST['softdelete'])) {
+        stdCommSofDelete($_POST['cid']);
+    }
+    if (isset($_POST['shadowban'])) {
+        stdCommShadowBan($_POST['cid']);
+    }
+}
+
+/**
  * Show new comment box
+ * 
  * @global tpl $tpl
  * @return string
  */
@@ -130,7 +204,7 @@ function stdAddComment($comm_conf) {
 }
 
 /**
- * get the number of commentarys for a give 'plugin' & 'resource_id' on $conf 
+ * Get the number of commentarys for a give 'plugin' & 'resource_id' on $conf 
  * 
  * @global db $db
  * @param array $conf
@@ -145,4 +219,95 @@ function stdGetNumComm($conf) {
 
     $query = $db->selectAll('comments', $conf);
     return $db->numRows($query);
+}
+
+/**
+ * Determine admistrative bar permission
+ * 
+ * @global sm $sm
+ * @param array $comm_author_id
+ * @param array $perm_cfg
+ * @return array
+ */
+function stdGetCommPerms($comm_author_id, $perm_cfg) {
+    global $sm;
+
+    $user = $sm->getSessionUser();
+
+    $perm_comm['report_comm'] = $perm_cfg['allow_comm_report'];
+
+    if ($user['isAdmin']) {
+        $perm_comm['delete_comm'] = 1;
+        $perm_comm['soft_delete_comm'] = 1;
+        $perm_comm['shadow_ban_comm'] = 1;
+        return $perm_comm;
+    }
+
+    $perm_comm['delete_comm'] = $perm_cfg['allow_comm_delete'];
+    $perm_comm['soft_delete_comm'] = $perm_cfg['allow_comm_softdelete'];
+    $perm_comm['shadow_ban_comm'] = $perm_cfg['allow_comm_shadowban'];
+
+    $comm_author = $sm->getUserByID($comm_author_id);
+    if ($comm_author['isAdmin'] && !$user['isAdmin']) {
+        $perm_comm['delete_comm'] = 0;
+        $perm_comm['soft_delete_comm'] = 0;
+        $perm_comm['shadow_ban_comm'] = 0;
+    }
+
+    if ($user['uid'] == $comm_author_id) {
+        $perm_comm['delete_comm'] = 1;
+        $perm_comm['shadow_ban_comm'] = 0;
+        $perm_comm['soft_delete_comm'] = 0;
+        $perm_comm['report_comm'] = 0;
+    }
+
+
+    return $perm_comm;
+}
+
+/**
+ * Report commentary
+ * 
+ * @global db $db
+ * @param int $comm_id
+ */
+function stdCommReport($comm_id) {
+    global $db;
+
+    $db->update('comments', ['reported' => 'reported +1'], ['cid' => $comm_id]);
+}
+
+/**
+ * Delete commentary
+ * 
+ * @global db $db
+ * @param int $comm_id
+ */
+function stdCommDelete($comm_id) {
+    global $db;
+
+    $db->delete('comments', ['cid' => $comm_id]);
+}
+
+/**
+ * Hide but not delete
+ * @global db $db
+ * @param int $comm_id
+ */
+function stdCommSofDelete($comm_id) {
+    global $db;
+
+    $db->update('comments', ['soft_delete' => '!soft_delete'], ['cid' => $comm_id]);
+}
+
+/**
+ * Hide to all except comm author
+ * 
+ * @global db $db
+ * @param int $comm_id
+ */
+function stdCommShadowBan($comm_id) {
+    global $db;
+
+    $db->update('comments', ['shadow_ban' => '!shadow_ban'], ['cid' => $comm_id]);
 }

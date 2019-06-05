@@ -12,3 +12,7 @@
 $LNG['L_SC_COMMENTS'] = 'Comments';
 $LNG['L_SC_NEW_COMMENT'] = 'New comment';
 $LNG['L_SC_ANONYMOUS'] = 'Anonymous';
+$LNG['L_SC_REPORT'] = 'Report';
+$LNG['L_SC_DELETE'] = 'Delete';
+$LNG['L_SC_SOFTDELETE'] = 'Soft Delete';
+$LNG['L_SC_SHADOWBAN'] = 'Shadow ban';

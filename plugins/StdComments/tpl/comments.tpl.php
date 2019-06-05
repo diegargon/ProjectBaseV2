@@ -1,6 +1,6 @@
 <?php
 /**
- *  StdComments - comments template
+ *  StdComments - display comments template
  * 
  *  @author diego@envigo.net
  *  @package ProjectBase
@@ -16,6 +16,12 @@ if (!empty($data['TPL_FIRST'])) {
             <h2><?= $LNG['L_SC_COMMENTS'] ?></h2>
         <?php } ?>
         <div class="comment">
+            <div id="comm_adm_buttons">
+                <form id="comm_adm_formbar" method="POST" action="">                
+                    <?= $data['admbar'] ?>
+                    <input type="hidden" value="<?= $data['cid'] ?>" name="cid" />
+                </form>
+            </div>
             <span class="avatar">
                 <a href="<?= $data['p_url'] ?>"><img width="35"  src="<?= $data['avatar'] ?>" alt="" /></a>
             </span>

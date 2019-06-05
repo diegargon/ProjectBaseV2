@@ -17,13 +17,11 @@
  * @return boolean
  */
 function StdComments_init() {
-    global $tpl, $cfg;
-
-    if ($cfg['stdcomments_disable_by_stress'] && is_server_stressed()) {
-        return false;
-    }
+    global $tpl;
 
     $tpl->getCssFile('StdComments');
+
+    return true;
 }
 
 /**
