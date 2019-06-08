@@ -10,7 +10,6 @@
  *  @subpackage AdminBasic
  *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
-
 !defined('IN_WEB') ? exit : true;
 
 /**
@@ -27,8 +26,8 @@ function AdminBasic_init() {
 
     define('ADMIN', TRUE);
 
-    /* ACL its optional we must check if ACL was activate after first install for create the admin perms if need  */
-    if (defined('ACL') && !isset($cfg['adminbasic_acl_install'])) {
+    /* ACL its optional we check if acl its installed and admin acl not installe for install the permissions */
+    if ($cfg['acl_installed'] && !isset($cfg['adminbasic_acl_install'])) {
         global $db;
         require_once "db/AdminBasic.db.php";
         foreach ($adminbasic_acl_install as $query) {
