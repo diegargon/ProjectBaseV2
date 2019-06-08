@@ -1,15 +1,13 @@
 <?php
-
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
- */
-
 /**
- *  Adminbasic DB
+ *  AdminBasic - Main db install file
+ *
  *  @author diego@envigo.net
  *  @package ProjectBase
  *  @subpackage AdminBasic
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
+
 !defined('IN_WEB') ? exit : true;
 
 /* INSTALL */

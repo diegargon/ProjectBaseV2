@@ -1,7 +1,12 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  SimpleACL - Init file
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage SimpleACL
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 
@@ -11,7 +16,6 @@ function SimpleACL_init() {
     global $acl_auth;
 
     empty($acl_auth) ? $acl_auth = new ACL : false;
-    
 }
 
 function SimpleACL_install() {

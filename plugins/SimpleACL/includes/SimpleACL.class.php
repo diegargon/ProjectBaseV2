@@ -1,18 +1,18 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
- *  
- */
 /**
- *  SimpleACL class
- *  No work atm
+ *  SimpleACL - Class ACL File
+ *
  *  @author diego@envigo.net
  *  @package ProjectBase
  *  @subpackage SimpleACL
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 
+/**
+ *  ACL class
+ */
 class ACL {
 
     private $debug;
