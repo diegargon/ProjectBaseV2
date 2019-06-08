@@ -70,7 +70,9 @@ class Debug {
             if ($element['level'] == 'ERROR') {
                 $result .= '<span style="color:red">[' . $element['level'] . ']</span> ';
             } else if ($element['level'] == 'WARNING') {
-                $result .= '<span style="color:yellow">[' . $element['level'] . ']</span> ';
+                $result .= '<span style="color:blue">[' . $element['level'] . ']</span> ';
+            } else if ($element['level'] == 'NOTICE') {                
+                 $result .= '<span style="color:yellow">[' . $element['level'] . ']</span> ';
             } else {
                 $result .= '[' . $element['level'] . '] ';
             }
