@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  AdminBasic - Main db install file
  *
@@ -7,7 +8,6 @@
  *  @subpackage AdminBasic
  *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
-
 !defined('IN_WEB') ? exit : true;
 
 /* INSTALL */
@@ -24,6 +24,8 @@ $adminbasic_database_install = [
 
 $adminbasic_acl_install [] = "INSERT INTO `" . DB_PREFIX . "permissions` (`perm_name`, `perm_desc`, `plugin`) VALUES    
 ('r_adminmain_access', 'L_PERM_R_ADMINMAIN_ACCESS','ADMIN'),
+('w_admin_all', 'L_PERM_R_PHPINFO','ADMIN'),
+('r_admin_all', 'L_PERM_R_PHPINFO','ADMIN'),
 ('r_phpinfo', 'L_PERM_R_PHPINFO','ADMIN'),
 ('w_general_cfg', 'L_PERM_W_GENERAL_CFG','ADMIN'),
 ('r_general_cfg', 'L_PERM_R_GENERAL_CFG','ADMIN'),

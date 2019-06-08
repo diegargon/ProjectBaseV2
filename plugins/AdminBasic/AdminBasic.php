@@ -34,14 +34,14 @@ function AdminBasic_init() {
             $db->query($query);
         }
     }
-    
+
     if ($plugins->checkEnabledProvider('ACL')) {
         $plugins->expressStartProvider('ACL');
     }
     $user = $sm->getSessionUser();
     if ($user) {
         global $acl_auth;
-        if (($user['isFounder']) || (defined('ACL') && $acl_auth->acl_ask("admin_all"))) {
+        if (($user['isFounder']) || (defined('ACL') && $acl_auth->acl_ask('w_admin_all||r_admin_all||r_adminmain_access'))) {
             register_action('header_menu_element', 'AdminBasic_menu_opt');
         }
     }

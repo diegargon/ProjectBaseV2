@@ -1,7 +1,12 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  News - Main file
+ *
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage News
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 
@@ -10,7 +15,7 @@ function News_init() {
     global $frontend, $cfg, $plugins;
 
     $plugins->expressStartProvider('SESSIONS');
-    
+
     $news_perms = get_news_perms('init');
     if ($news_perms['news_submit_new']) {
         register_action('header_menu_element', 'submit_news_menu');

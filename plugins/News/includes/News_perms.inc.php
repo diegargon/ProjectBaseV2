@@ -1,7 +1,12 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  News - News Perm file
+ *
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage News
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 
@@ -48,8 +53,9 @@ function get_news_perms($resource, $news_data = null) {
 }
 
 function news_acl_perms(&$perm, $news_data) {
-    global $acl_auth, $cfg;
+    global $acl_auth, $cfg, $sm;
 
+    $user = $sm->getSessionUser();
     //ACL must return true to all if isFounder, not if only isAdmin.
 
     $perm['news_feature'] = $acl_auth->acl_ask('news_feature');
@@ -61,7 +67,7 @@ function news_acl_perms(&$perm, $news_data) {
         }
     }
     /* SUBMIT NEW */
-    !$cfg['news_allow_submit_anon'] ? $perm['news_submit_new'] = $acl_auth->$acl_ask('news_submit_new') : $perm['news_submit_new'] = true;
+    !$cfg['news_allow_submit_anon'] ? $perm['news_submit_new'] = $acl_auth->acl_ask('news_submit_new') : $perm['news_submit_new'] = true;
 
     /* NEWS_TRANSLATE */
     if ($cfg['news_translate']) {
