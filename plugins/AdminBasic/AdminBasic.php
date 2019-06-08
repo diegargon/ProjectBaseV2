@@ -22,7 +22,7 @@
  * @global acl_auth $acl_auth
  */
 function AdminBasic_init() {
-    global $sm, $cfg, $frontend;
+    global $sm, $cfg, $frontend, $plugins;
 
     define('ADMIN', TRUE);
 
@@ -34,7 +34,10 @@ function AdminBasic_init() {
             $db->query($query);
         }
     }
-
+    
+    if ($plugins->checkEnabledProvider('ACL')) {
+        $plugins->expressStartProvider('ACL');
+    }
     $user = $sm->getSessionUser();
     if ($user) {
         global $acl_auth;

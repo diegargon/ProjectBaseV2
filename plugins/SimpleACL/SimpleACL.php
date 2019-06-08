@@ -11,8 +11,10 @@
 !defined('IN_WEB') ? exit : true;
 
 function SimpleACL_init() {
+    global $plugins, $acl_auth;
     define('ACL', TRUE);
-    global $acl_auth;
+
+    $plugins->expressStartProvider('GROUPS');
 
     empty($acl_auth) ? $acl_auth = new ACL : false;
 }
