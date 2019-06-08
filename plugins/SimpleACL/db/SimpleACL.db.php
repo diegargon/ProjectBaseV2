@@ -12,8 +12,10 @@
 
 /* CONFIG */
 
-$simpleacl_database_install [] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SimpleACL', 'simpleacl_debug', '1');"
-;
+$simpleacl_database_install = [
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SimpleACL', 'simpleacl_debug', '1');",
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SimpleACL', 'acl_installed', '1');"
+];
 
 /* PERMISSIONS */
 
@@ -26,13 +28,16 @@ $simpleacl_database_install[] = "CREATE TABLE `" . DB_PREFIX . "permissions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . ";"
 ;
 
-$simpleacl_database_install [] = "ALTER TABLE `" . DB_PREFIX . "permissions` ADD PRIMARY KEY (`perm_id`), ADD UNIQUE KEY `perm_id` (`perm_id`),  ADD UNIQUE KEY `perm_name` (`perm_name`);";
-$simpleacl_database_install [] = "ALTER TABLE `" . DB_PREFIX . "permissions` MODIFY `perm_id` int(11) NOT NULL AUTO_INCREMENT;";
-
+$simpleacl_database_install = [
+    "ALTER TABLE `" . DB_PREFIX . "permissions` ADD PRIMARY KEY (`perm_id`), ADD UNIQUE KEY `perm_id` (`perm_id`),  ADD UNIQUE KEY `perm_name` (`perm_name`);",
+    "ALTER TABLE `" . DB_PREFIX . "permissions` MODIFY `perm_id` int(11) NOT NULL AUTO_INCREMENT;"
+];
 
 /* UNINSTALL */
 
 
-$simpleacl_database_uninstall [] = "DELETE FROM `" . DB_PREFIX . "config` WHERE plugin = 'SimpleACL'";
-$simpleacl_database_uninstall [] = "DELETE FROM `" . DB_PREFIX . "plugins` WHERE plugin_name = 'SimpleACL'";
-$simpleacl_database_uninstall [] = "DROP TABLE `" . DB_PREFIX . "permissions`";
+$simpleacl_database_uninstall = [
+    "DELETE FROM `" . DB_PREFIX . "config` WHERE plugin = 'SimpleACL'",
+    "DELETE FROM `" . DB_PREFIX . "plugins` WHERE plugin_name = 'SimpleACL'",
+    "DROP TABLE `" . DB_PREFIX . "permissions`"
+];

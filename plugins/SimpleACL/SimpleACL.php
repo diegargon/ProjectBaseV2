@@ -11,7 +11,6 @@
 !defined('IN_WEB') ? exit : true;
 
 function SimpleACL_init() {
-    die("ACL Broken");
     define('ACL', TRUE);
     global $acl_auth;
 
@@ -21,7 +20,7 @@ function SimpleACL_init() {
 function SimpleACL_install() {
     global $db;
 
-    require_once "db/SimpleACL.db.php";
+    require_once ('db/SimpleACL.db.php');
     foreach ($simpleacl_database_install as $query) {
         if (!$db->query($query)) {
             return false;
@@ -46,7 +45,7 @@ function SimpleACL_uninstall() {
     global $db;
 
     $db->silent(true);
-    require_once "db/SimpleACL.db.php";
+    require_once ('db/SimpleACL.db.php');
     foreach ($simpleacl_database_uninstall as $query) {
         if (!$db->query($query)) {
             return false;
