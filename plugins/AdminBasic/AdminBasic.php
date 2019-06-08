@@ -27,9 +27,9 @@ function AdminBasic_init() {
     define('ADMIN', TRUE);
 
     /* ACL its optional we check if acl its installed and admin acl not installe for install the permissions */
-    if ($cfg['acl_installed'] && !isset($cfg['adminbasic_acl_install'])) {
+    if (isset($cfg['acl_installed']) && !isset($cfg['adminbasic_acl_install'])) {
         global $db;
-        require_once "db/AdminBasic.db.php";
+        require_once ('db/AdminBasic.db.php');
         foreach ($adminbasic_acl_install as $query) {
             $db->query($query);
         }
@@ -39,7 +39,7 @@ function AdminBasic_init() {
     if ($user) {
         global $acl_auth;
         if (($user['isFounder']) || (defined('ACL') && $acl_auth->acl_ask("admin_all"))) {
-            register_action("header_menu_element", "AdminBasic_menu_opt");
+            register_action('header_menu_element', 'AdminBasic_menu_opt');
         }
     }
 
@@ -54,7 +54,7 @@ function AdminBasic_init() {
  */
 function AdminBasic_menu_opt() {
     global $tpl;
-    return $tpl->getTplFile("AdminBasic", "admin_menu_opt");
+    return $tpl->getTplFile('AdminBasic', 'admin_menu_opt');
 }
 
 /**
@@ -66,7 +66,7 @@ function AdminBasic_menu_opt() {
 function AdminBasic_Install() {
 
     global $db;
-    require_once "db/AdminBasic.db.php";
+    require_once ('db/AdminBasic.db.php');
     foreach ($adminbasic_database_install as $query) {
         if (!$db->query($query)) {
             return false;
