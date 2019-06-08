@@ -28,10 +28,8 @@ $simpleacl_database_install[] = "CREATE TABLE `" . DB_PREFIX . "permissions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . ";"
 ;
 
-$simpleacl_database_install = [
-    "ALTER TABLE `" . DB_PREFIX . "permissions` ADD PRIMARY KEY (`perm_id`), ADD UNIQUE KEY `perm_id` (`perm_id`),  ADD UNIQUE KEY `perm_name` (`perm_name`);",
-    "ALTER TABLE `" . DB_PREFIX . "permissions` MODIFY `perm_id` int(11) NOT NULL AUTO_INCREMENT;"
-];
+$simpleacl_database_install [] = "ALTER TABLE `" . DB_PREFIX . "permissions` ADD PRIMARY KEY (`perm_id`), ADD UNIQUE KEY `perm_id` (`perm_id`),  ADD UNIQUE KEY `perm_name` (`perm_name`);";
+$simpleacl_database_install [] = "ALTER TABLE `" . DB_PREFIX . "permissions` MODIFY `perm_id` int(11) NOT NULL AUTO_INCREMENT;";
 
 /* UNINSTALL */
 
