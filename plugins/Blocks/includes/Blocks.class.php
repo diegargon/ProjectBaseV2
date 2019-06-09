@@ -151,7 +151,7 @@ class Blocks {
         if (defined('SESSIONS')) {
             global $sm;
             $user = $sm->getSessionUSer();
-            if (!empty($user)) {
+            if (!empty($user) && $user['uid'] > 0) {
                 $users_id .= ',' . $user['uid'];
             }
         }
@@ -165,8 +165,8 @@ class Blocks {
 
         $q = $db->selectAll('blocks', $where_ary, 'ORDER BY section,weight', 'AND');
 
-        $cfg['user_can_disable_dflt_blocks'] = 1; //TO CFG
-        $user_cfg['user_disable_dflt_blocks'] = 0; //TO USER CFG
+        $cfg['user_can_disable_dflt_blocks'] = 1; //TODO: TO CFG
+        $user_cfg['user_disable_dflt_blocks'] = 0; //TODO: TO USER CFG
 
         while ($result = $db->fetch($q)) {
             if ($cfg['user_can_disable_dflt_blocks'] && $user_cfg['user_disable_dflt_blocks'] &&

@@ -50,7 +50,6 @@ function rating_rate($resource_id, $section, $rate) {
     }
 
     $user = $sm->getSessionUser();
-    $uid = $user['uid'];
 
     $ip = $filter->srvRemoteAddr();
     if ($ip == false) {
@@ -58,7 +57,7 @@ function rating_rate($resource_id, $section, $rate) {
     }
 
     $insert_ary = [
-        'uid' => $uid,
+        'uid' => $user['uid'],
         'ip' => $ip,
         'section' => $section,
         'resource_id' => $resource_id,
@@ -113,7 +112,7 @@ function ratings_get_content($section, $resource_id, $author_id, $lang_id, $rati
     $user = $sm->getSessionUser();
 
     $btn_disable = 0;
-    if ($author_id == $user['uid']) {
+    if ($author_id == $user['uid'] && $user['uid'] > 0) {
         $rate_data['show_pointer'] = 0;
         $btn_disable = 1;
     } else {
@@ -127,7 +126,7 @@ function ratings_get_content($section, $resource_id, $author_id, $lang_id, $rati
         if (($resource_id == $rating_row['resource_id'])) {
             $vote_counter++;
             $sum_votes = $sum_votes + $rating_row['vote_value'];
-            if (($rating_row['uid'] == $user['uid'])) {
+            if (($rating_row['uid'] == $user['uid'] && $user['uid'] > 0)) {
                 $btn_disable = 1;
                 $rate_data['show_pointer'] = 0;
             }

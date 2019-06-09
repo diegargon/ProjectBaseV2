@@ -1,22 +1,27 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  SMBasic register file
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage SMBasic
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)  
  */
 !defined('IN_WEB') ? exit : true;
 
-if (!($sm->getPerm("register_enable"))) {
-    $frontend->messageBox(['msg' => "L_E_REGISTER_DISABLE"]);
+if (!($sm->getPerm('register_enable'))) {
+    $frontend->messageBox(['msg' => 'L_E_REGISTER_DISABLE']);
     return;
 }
 
-require_once("includes/SMBasic.register.php");
+require_once('includes/SMBasic.register.php');
 
 $user = $sm->getSessionUser();
 
 //HEAD MOD
-$cfg['PAGE_TITLE'] = $cfg['WEB_NAME'] . ": " . $LNG['L_REGISTER'];
-$cfg['PAGE_DESC'] = $cfg['WEB_NAME'] . ": " . $LNG['L_REGISTER'];
+$cfg['PAGE_TITLE'] = $cfg['WEB_NAME'] . ': ' . $LNG['L_REGISTER'];
+$cfg['PAGE_DESC'] = $cfg['WEB_NAME'] . ': ' . $LNG['L_REGISTER'];
 //END HEAD MOD
 
 if ($user && $user['uid'] != 0) {

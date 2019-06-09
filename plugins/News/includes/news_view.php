@@ -219,7 +219,7 @@ function news_nav_options($news) {
 
     /* EDIT */
 
-    if ($user['uid'] == $news['author_id']) {
+    if ($user['uid'] != 0 && $user['uid'] == $news['author_id']) {
         if (news_perm_ask('w_news_edit_own||w_news_adm_all')) {
             $content .= "<li><a rel='nofollow' href='$edit_news_url&newsedit=1'>{$LNG['L_NEWS_EDIT']}</a></li>";
         }
@@ -231,13 +231,13 @@ function news_nav_options($news) {
 
     /* CREATE NEW PAGE */
 
-    if ($cfg['allow_multiple_pages'] && $user['uid'] == $news['author_id']) {
+    if ($cfg['allow_multiple_pages'] && $user['uid'] == $news['author_id'] && $user['uid'] != 0) {
         $content .= "<li><a rel='nofollow' href='$edit_news_url&newpage=1'>{$LNG['L_NEWS_NEW_PAGE']}</a></li>";
     }
 
     // TRANSLATE  TODO: ANON TRANSLATE?
 
-    if ($user['uid'] == $news['author_id']) {
+    if ($user['uid'] == $news['author_id'] && $user['uid'] != 0) {
         if (news_perm_ask('w_news_own_translate||w_news_translate||w_news_adm_all')) {
             $content .= "<li><a rel='nofollow' href='$edit_news_url&news_new_lang=1'>{$LNG['L_NEWS_NEWLANG']}</a></li>";
         }
@@ -248,7 +248,7 @@ function news_nav_options($news) {
     }
 
     /* DELETE NEWS (ALL) */
-    if ($user['uid'] == $news['author_id']) {
+    if ($user['uid'] == $news['author_id'] && $user['uid'] != 0) {
         if (news_perm_ask('w_news_delete_own||w_news_adm_all||w_news_delete')) {
             if ($news['page'] <= 1) {
                 $content .= "<li><a rel='nofollow' href='$view_news_url&news_delete=1' onclick=\"return confirm('{$LNG['L_NEWS_CONFIRM_DEL']}')\">{$LNG['L_NEWS_DELETE']}</a></li>";

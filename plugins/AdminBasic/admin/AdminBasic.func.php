@@ -24,7 +24,7 @@ function admin_auth($tokens) {
 
     $user = $sm->getSessionUser();
 
-    if ($user && ($user['isFounder'] == 1 || (defined('ACL') && $acl_auth->acl_ask($tokens)))
+    if ($user && ($user['isFounder'] == 1 || (defined('ACL') && $acl_auth->acl_ask($tokens)) || (!defined('ACL') && $user['isAdmin']))
     ) {
         return true;
     }

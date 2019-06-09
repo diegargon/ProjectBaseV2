@@ -1,8 +1,14 @@
 <?php
 
-/*
- *  Copyright @ 20016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  SMBasic database file
  * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage SMBasic
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)  
+ */
+/*
  *  default_session -> user php build in or not
  *  session_start -> start session_start, ignore in default session (start yes)
  *  check_user_agent -> give problems on movile device TODO

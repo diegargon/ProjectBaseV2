@@ -1,11 +1,16 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  SMBasic profile file
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage SMBasic
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)  
  */
 !defined('IN_WEB') ? exit : true;
 
-require_once("includes/SMBasic.profile.php");
+require_once('includes/SMBasic.profile.php');
 
 //HEAD MOD
 $cfg['PAGE_TITLE'] = $cfg['WEB_NAME'] . ": " . $LNG['L_PROFILE'];

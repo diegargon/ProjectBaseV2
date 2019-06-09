@@ -45,7 +45,7 @@ function news_noacl_ask($perms_demand) {
     foreach ($or_split as $or_split_perm) {
         $auth = false;
         if (!preg_match("/\&\&/", $or_split_perm)) {
-            if (empty($user)) {
+            if (empty($user) || $user['uid'] == 0) {
                 $auth = news_noacl_anon_check($or_split_perm);
             } else {
                 $auth = news_noacl_user_check($or_split_perm);
@@ -59,7 +59,7 @@ function news_noacl_ask($perms_demand) {
             $and_split = preg_split("/\&\&/", $or_split_perm);
 
             foreach ($and_split as $and_split_perm) {
-                if (empty($user)) {
+                if (empty($user) || $user['uid'] == 0) {
                     return news_noacl_anon_check($and_split_perm);
                 } else {
                     return news_noacl_user_check($and_split_perm);

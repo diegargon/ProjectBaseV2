@@ -1,7 +1,12 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2018Diego Garcia
+/**
+ *  News - News new page
+ *
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage News
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 
@@ -13,7 +18,7 @@ function news_new_page($news_nid, $news_lang_id, $news_page) {
     $editor = new Editor();
     $user = $sm->getSessionUser();
 
-    if (!($user = $sm->getSessionUser())) {
+    if (empty($user) || $user['uid'] == 0) {
         return $frontend->messageBox(['msg' => 'L_E_NOACCESS']);
     }
     $user['uid'] > 0 ? $form_data['tos_checked'] = 1 : false;
@@ -43,7 +48,8 @@ function news_new_page($news_nid, $news_lang_id, $news_page) {
 function news_newpage_form_process() {
     global $LNG, $cfg, $sm;
 
-    if (!($user = $sm->getSessionUser())) {
+    $user = $sm->getSessionUser();
+    if (empty($user) || $user['uid'] == 0) {
         return false;
     }
     $news_data = news_form_getPost();

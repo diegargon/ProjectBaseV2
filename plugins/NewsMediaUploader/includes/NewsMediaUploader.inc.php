@@ -1,7 +1,12 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  NewsmediaUploader - Main Include file
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage NewsMediaUploadeer
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)  
  */
 !defined('IN_WEB') ? exit : true;
 
@@ -10,7 +15,7 @@ function NMU_form_add($news) {
 
     $user = $sm->getSessionUser();
 
-    if ($cfg['upload_allow_anon'] == 0 && empty($user['uid'])) {
+    if ($cfg['upload_allow_anon'] == 0 && (empty($user) || $user['uid'] == 0)) {
         $tpl->addtoTplVar('NEWS_FORM_TOP_OPTION', NMU_disable_warn());
         return false;
     }
@@ -22,7 +27,7 @@ function NMU_form_add($news) {
     $tpl->getCssFile('NewsMediaUploader');
 
     $extra_content['UPLOAD_EXTRA'] = '';
-    ($user = $sm->getSessionUser()) ? $extra_content['UPLOAD_EXTRA'] = NMU_upload_list($user) : false;
+    (!empty($user) && $user['uid'] > 0) ? $extra_content['UPLOAD_EXTRA'] = NMU_upload_list($user) : false;
 
     $tpl->addScriptFile('standard', 'jquery', 'TOP', null);
     $tpl->addScriptFile('NewsMediaUploader', 'plupload.full.min', 'TOP', null);

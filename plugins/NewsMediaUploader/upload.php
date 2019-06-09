@@ -1,21 +1,27 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  NewsmediaUploader - Upload file
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage NewsMediaUploadeer
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)  
  */
 !defined('IN_WEB') ? exit : true;
 
 global $cfg, $db, $filter;
 
+$user = $sm->getSessionUser();
 
-if ((!$user = $sm->getSessionUser())) {
-    if ($cfg['upload_allow_anon']) {
-        $user['uid'] = 0;
-    } else {
-        die('{"jsonrpc" : "2.0", "error" : {"code": 105, "message": "' . $LNG['L_NMU_W_DISABLE'] . '"}, "id" : "id"}');
-        exit();
-    }
+if (empty($user)) {
+    $user['uid'] = 0;
 }
+if (!$cfg['upload_allow_anon']) {
+    die('{"jsonrpc" : "2.0", "error" : {"code": 105, "message": "' . $LNG['L_NMU_W_DISABLE'] . '"}, "id" : "id"}');
+    exit();
+}
+
 
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");

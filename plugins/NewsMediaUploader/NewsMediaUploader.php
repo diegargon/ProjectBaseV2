@@ -1,7 +1,12 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  NewsmediaUploader - Main file
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage NewsMediaUploadeer
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)  
  */
 !defined('IN_WEB') ? exit : true;
 
@@ -29,7 +34,7 @@ function NewsMediaUploader_init() {
 function NewsMediaUploader_install() {
     global $db;
     require_once ('db/NewsMediaUploader.db.php');
-    
+
     foreach ($newsMediaUploader_database_install as $query) {
         if (!$db->query($query)) {
             return false;

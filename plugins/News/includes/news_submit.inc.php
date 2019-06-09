@@ -33,7 +33,7 @@ function news_new_form() {
         $form_data['tos_checked'] = 0;
     }
 
-    if ($user && $user['uid'] > 0) {
+    if (!empty($user) && $user['uid'] > 0) {
         $form_data['author'] = $user['username'];
         $form_data['author_id'] = $user['uid'];
         $form_data['tos_checked'] = 1;

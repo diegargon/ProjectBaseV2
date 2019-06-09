@@ -1,7 +1,12 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  News - News new lang
+ *
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage News
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 
@@ -60,13 +65,12 @@ function news_form_newlang_process() {
     global $LNG, $cfg, $sm;
 
     $user = $sm->getSessionUser();
-    if (!$user && !$cfg['news_anon_translate']) {
+    if ((!$user || $user['uid'] == 0) && !$cfg['news_anon_translate']) {
         return false;
     }
 
     $news_data = news_form_getPost();
 
-    $news_perms = get_news_perms("news_new_lang", $news_data);
     if (!news_perm_ask('w_news_translate')) {
         die('[{"status": "4", "msg": "' . $LNG['L_E_NOEDITACCESS'] . '"}]');
     }

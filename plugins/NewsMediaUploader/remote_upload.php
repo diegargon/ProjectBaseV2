@@ -1,19 +1,25 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  NewsmediaUploader - Remote upload file
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage NewsMediaUploadeer
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)  
  */
 !defined('IN_WEB') ? exit : true;
 
 global $cfg, $db, $sm, $filter;
 
-if ((!$user = $sm->getSessionUser())) {
-    if ($cfg['upload_allow_anon']) {
-        $user['uid'] = 0;
-    } else {
-        die('{"status": "1", "msg": "' . $LNG['L_NMU_W_DISABLE'] . '"}');
-        exit();
-    }
+$user = $sm->getSessionUser();
+
+if (empty($user)) {
+    $user['uid'] = 0;
+}
+if ($user['uid'] == 0 && !$cfg['upload_allow_anon']) {
+    die('{"status": "1", "msg": "' . $LNG['L_NMU_W_DISABLE'] . '"}');
+    exit();
 }
 $url = $filter->postUrl('url', null, null, 1);
 
