@@ -161,10 +161,16 @@ class Groups {
     }
 
     private function setUserGroups() {
-        global $sm;
+        global $sm, $db;
 
-        if (!($user = $sm->getSessionUser())) {
-            return ($this->user_groups = false);
+        $user = $sm->getSessionUser();
+        if (!empty($user) || $user['uid'] == 0) {
+            $query = $db->select('groups', 'group_id', ['group_name' => 'L_ANONYMOUS'], 'LIMIT 1');
+            if ($db->numRows($query) > 0) {
+                return ($this->user_groups = $db->fetch($query));
+            } else {
+                return ($this->user_groups = false);
+            }
         }
 
         $this->user_groups = $this->getUserGroupsByUID($user['uid']);
