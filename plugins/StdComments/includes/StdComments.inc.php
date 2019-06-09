@@ -69,14 +69,18 @@ function stdFormatComments($comments, $comm_conf, $perm_cfg) {
     do_action('std_format_comments', $comments);
 
     /* First, retrieve all authors in one query) */
+    $uid_ary = [];
     foreach ($comments as $comment_row) {
         if (!empty($comment_row['author_id'])) {
-            !empty($uid_list) ? $uid_list = $comment_row['author_id'] : $uid_list .= $comment_row['author_id'];
+            $uid_ary[] = $comment_row['author_id'];
         }
         if (!empty($comment_row['translator_id'])) {
-            !empty($uid_list) ? $uid_list = $comment_row['translator_id'] : $uid_list .= $comment_row['translator_id'];
+            $uid_ary[] = $comment_row['translator_id'];
         }
     }
+    $uid_ary = array_unique($uid_ary);
+    $uid_list = implode(", ", $uid_ary);
+    
     !empty($uid_list) ? $sm->setUsersInCacheByIDs($uid_list) : null;
 
     foreach ($comments as $comment_row) {
