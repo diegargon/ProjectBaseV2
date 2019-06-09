@@ -1,12 +1,14 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
- * 
- * news_new_form
+/**
+ *  News - News submit include
+ *
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage News
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
-
-function news_new_form($news_perms) {
+function news_new_form() {
     global $LNG, $tpl, $sm, $frontend, $ml, $plugins;
 
     if (!($plugins->expressStartProvider('EDITOR')) || !($plugins->expressStartProvider('CATS'))) {
@@ -36,9 +38,16 @@ function news_new_form($news_perms) {
         $form_data['author_id'] = $user['uid'];
         $form_data['tos_checked'] = 1;
     }
-    $form_data['author_readonly'] = !$news_perms['news_can_change_author'];
-    $form_data['news_add_source'] = $news_perms['news_add_source'];
-    $form_data['news_add_related'] = $news_perms['news_add_related'];
+
+    if (defined('ACL')) {
+        $form_data['author_readonly'] = !news_perm_ask('w_news_change_author');
+        $form_data['news_add_source'] = news_perm_ask('w_news_add_source');
+        $form_data['news_add_related'] = news_perm_ask('w_news_add_related');
+    } else {
+        $form_data['author_readonly'] = !news_perm_ask('w_news_change_author');
+        $form_data['news_add_source'] = news_perm_ask('w_news_add_source');
+        $form_data['news_add_related'] = news_perm_ask('w_news_add_related');
+    }
 
     if (defined('MULTILANG') && ($site_langs = $ml->deprecated_getSiteLangsSelect('news_lang')) != false) {
         $form_data['select_langs'] = $site_langs;

@@ -23,15 +23,13 @@ function news_new_page($news_nid, $news_lang_id, $news_page) {
         return false;
     }
 
-    $news_perms = get_news_perms('new_page');
-
-    if (!$news_perms['news_create_new_page']) {
+    if (!news_perm_ask('w_news_create_new_page')) {
         return $frontend->messageBox(['msg' => 'L_E_NOEDITACCESS']);
     }
 
-    $form_data['author_readonly'] = !$news_perms['news_can_change_author'];
-    $form_data['news_add_source'] = $news_perms['news_add_source'];
-    $form_data['news_add_related'] = $news_perms['news_add_related'];
+    $form_data['author_readonly'] = !news_perm_ask('w_news_change_author');
+    $form_data['news_add_source'] = news_perm_ask('w_news_add_source');
+    $form_data['news_add_related'] = news_perm_ask('w_news_add_related');
     $form_data['news_form_title'] = $LNG['L_NEWS_CREATE_NEW_PAGE'];
     $form_data['author'] = $user['username'];
     $form_data['editor'] = $editor->getEditor();
@@ -50,9 +48,7 @@ function news_newpage_form_process() {
     }
     $news_data = news_form_getPost();
 
-    $news_perms = get_news_perms('new_page');
-
-    if (!$news_perms['news_edit']) {
+    if (!news_perm_ask('w_news_edit')) {
         die('[{"status": "4", "msg": "' . $LNG['L_E_NOEDITACCESS'] . '"}]');
     }
 

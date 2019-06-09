@@ -1,7 +1,12 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  News - News block template
+ *
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage News
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 

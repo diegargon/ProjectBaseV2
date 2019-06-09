@@ -1,9 +1,13 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  News - News database file
+ *
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage News
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
-
 $news_database_install[] = "
 CREATE TABLE `" . DB_PREFIX . "news` (
   `nid` int(10) UNSIGNED NOT NULL,
@@ -12,8 +16,7 @@ CREATE TABLE `" . DB_PREFIX . "news` (
   `title` varchar(255) NOT NULL,
   `lead` text,
   `text` longtext NOT NULL,
-  `num_pages` smallint(8) NOT NULL DEFAULT '1',
-  `acl` char(255) DEFAULT NULL,
+  `num_pages` smallint(8) NOT NULL DEFAULT '1',  
   `author_id` int(10) UNSIGNED NOT NULL,
   `category` int(10) UNSIGNED NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -25,7 +28,8 @@ CREATE TABLE `" . DB_PREFIX . "news` (
   `moderation` tinyint(1) NOT NULL DEFAULT '0',
   `visits` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `translator_id` int(10) UNSIGNED DEFAULT NULL,
-  `disabled` tinyint(1) NOT NULL DEFAULT '0'
+  `disabled` tinyint(1) NOT NULL DEFAULT '0',
+  `subscritor` tinytint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . ";
 ";
 
@@ -39,6 +43,28 @@ $news_database_install[] = "
     ALTER TABLE `" . DB_PREFIX . "users` ADD `news_lang` varchar(255) DEFAULT NULL;
 ";
 
+/* NEWS ACL  */
+$news_acl_install [] = "INSERT INTO `" . DB_PREFIX . "permissions` (`perm_name`, `perm_desc`, `plugin`) VALUES    
+('r_news_adm_all', 'L_PERM_R_NEWS_FULL_ACCESS','News'),
+('w_news_adm_all', 'L_PERM_W_NEWS_FULL_ACCESS','News'),
+('r_news_view', 'L_PERM_R_VIEW_NEWS','News'),
+('w_news_create', 'L_PERM_R_CREATE_NEWS','News'),
+('w_news_add_source', 'L_PERM_W_ADD_SOURCE','News'),
+('w_news_add_related', 'L_PERM_W_add_related','News'),
+('w_news_feature', 'L_PERM_W_FEATURE','News'),
+('w_news_edit', 'L_PERM_W_EDIT','News'),
+('w_news_edit_own', 'L_PERM_W_EDIT_OWN','News'),
+('w_news_translate', 'L_PERM_W_TRANSLATE','News'),
+('w_news_own_translate', 'L_PERM_W_OWN_TRANSLATE','News'),
+('w_news_change_author','L_PERM_W_CHANGE_AUTHOR','News'),
+('w_news_delete', 'L_PERM_W_DELETE','News'),
+('w_news_delete_own', 'L_PERM_W_DELETE_OWN','News'),
+('w_news_moderation', 'L_PERM_W_MODERATION','News'),
+('w_news_frontpage', 'L_PERM_W_FRONTPAGE','News')
+";
+$news_acl_install [] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_acl_install', '0.2');";
+
+$news_acl_uninstall [] = "DELETE FROM `" . DB_PREFIX . "config` WHERE cfg_key = 'news_acl_install'";
 /* EXAMPLE NEWS */
 $news_database_install[] = "
 INSERT INTO `pb_news` (`nid`, `lang_id`, `page`, `title`, `lead`, `text`, `acl`, `author_id`, `category`, `created`, `date`, `last_edited`, `frontpage`, `featured`, `featured_date`, `moderation`, `visits`, `translator_id`, `disabled`) VALUES
@@ -60,14 +86,13 @@ $news_database_inserts = [
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_title_max_length', '256');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_text_min_length', '20');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_text_max_length', '10000');",
-    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'display_news_related', '1');",
-    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'display_news_source', '1');",
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'add_news_related', '1');",
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'add_news_source', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_moderation', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'allow_multiple_pages', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_stats', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_adv_stats', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_meta_opengraph', '1');",
-    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_anon_translate', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_allow_submit_anon', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_allow_submit_users', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_allow_users_edit_own_news', '1');",
@@ -79,6 +104,7 @@ $news_database_inserts = [
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_translate', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_users_translate', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_translate_own_news', '1');",
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_anon_translate', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_pager_max', '8');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_side_news', '0');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_dflt_getnews_limit', '10');",
@@ -99,5 +125,6 @@ $news_database_uninstall = [
     "DROP TABLE `" . DB_PREFIX . "news`",
     "ALTER TABLE `" . DB_PREFIX . "users`  DROP `news_lang`;",
     "DELETE FROM `" . DB_PREFIX . "config` WHERE plugin = 'News'",
-    "DELETE FROM `" . DB_PREFIX . "plugins` WHERE plugin_name = 'News'"
+    "DELETE FROM `" . DB_PREFIX . "plugins` WHERE plugin_name = 'News'",
+    "DELETE FROM `" . DB_PREFIX . "permissions` WHERE plugin = 'News'"
 ];

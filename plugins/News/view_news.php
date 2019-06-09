@@ -1,7 +1,12 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)	
+/**
+ *  News - View news
+ *
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage News
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 
@@ -26,7 +31,7 @@ if ($plugins->checkEnabled('Multilang')) {
 
 if ($cfg['news_vote_disable_by_stress'] && is_server_stressed()) {
     
-} else {   
+} else {
     if (!$cfg['ITS_BOT'] && $cfg['news_vote_enable'] &&
             $plugins->checkEnabledProvider('RATINGS') &&
             $plugins->expressStartProvider('RATINGS')
@@ -37,7 +42,7 @@ if ($cfg['news_vote_disable_by_stress'] && is_server_stressed()) {
         if (($_SERVER['REQUEST_METHOD'] === 'POST') &&
                 ( ($filter->postStrictChars('rate_section')) == 'news_rate')
         ) {
- 
+
             if (rating_rate_getPost('news_rate')) {
                 die('[{"status": "6", "msg": "' . $LNG['L_VOTE_SUCCESS'] . '"}]');
             } else {

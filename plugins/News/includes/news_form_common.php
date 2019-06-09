@@ -65,7 +65,7 @@ function news_form_getPost() {
     $form_data['news_translator_id'] = $filter->postInt("news_translator_id");
 
     //Author Changes
-    if ($perms['news_can_change_author']) {
+    if (news_perm_ask('w_news_change_author')) {
         $author = $filter->postUsername("news_author", $cfg['smbasic_max_username'], $cfg['smbasic_min_username']);
         if ($author != false) {
             if (!empty($author) && !($author_data = $sm->getUserByUsername($author))) {
@@ -81,7 +81,7 @@ function news_form_getPost() {
     }
 
     //TRANSLATOR CHANGES
-    if ($perms['news_can_change_author']) {
+    if (news_perm_ask('w_news_change_author')) {
         $translator = $filter->postUsername("news_translator", $cfg['smbasic_max_username'], $cfg['smbasic_min_username']);
         if ($translator != false) {
             if (!empty($translator) && !($translator_data = $sm->getUserByUsername($translator))) {
@@ -194,15 +194,15 @@ function news_submit_edit_form_check($news_data) {
         die('[{"status": "10", "msg": "' . $LNG['L_NEWS_INTERNAL_ERROR'] . '"}]');
     }
     //Source check valid if input    
-    if (!empty($_POST['news_source']) && $news_data['news_source'] == false && $cfg['display_news_source']) {
+    if (!empty($_POST['news_source']) && $news_data['news_source'] == false && news_perm_ask('w_news_add_source')) {
         die('[{"status": "11", "msg": "' . $LNG['L_NEWS_E_SOURCE'] . '"}]');
     }
     //New related   check valid if input 
-    if (!empty($_POST['news_new_related']) && $news_data['news_new_related'] == false && $cfg['display_news_related']) {
+    if (!empty($_POST['news_new_related']) && $news_data['news_new_related'] == false && news_perm_ask('w_news_add_related')) {
         die('[{"status": "12", "msg": "' . $LNG['L_NEWS_E_RELATED'] . '"}]');
     }
     //Old related  if input
-    if (!empty($_POST['news_related']) && $news_data['news_related'] == false && $cfg['display_news_related']) {
+    if (!empty($_POST['news_related']) && $news_data['news_related'] == false && news_perm_ask('w_news_add_related')) {
         die('[{"status": "13", "msg": "' . $LNG['L_NEWS_E_RELATED'] . '"}]');
     }
     // Custom /Mod Validators 

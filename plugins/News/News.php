@@ -16,8 +16,15 @@ function News_init() {
 
     $plugins->expressStartProvider('SESSIONS');
 
-    $news_perms = get_news_perms('init');
-    if ($news_perms['news_submit_new']) {
+    if (isset($cfg['acl_installed']) && !isset($cfg['news_acl_install'])) {
+        global $db;
+        require_once ('db/News.db.php');
+        foreach ($news_acl_install as $query) {
+            $db->query($query);
+        }
+    }
+
+    if (news_perm_ask('w_news_create||w_news_adm_all')) {
         register_action('header_menu_element', 'submit_news_menu');
     }
 

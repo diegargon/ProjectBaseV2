@@ -35,8 +35,8 @@ $adminbasic_acl_install [] = "INSERT INTO `" . DB_PREFIX . "permissions` (`perm_
 ('w_plugin_cfg', 'L_PERM_W_PLUGIN_CFG','ADMIN')
 ";
 
-$adminbasic_acl_install [] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('AdminBasic', 'adminbasic_acl_install', '1');";
-
+$adminbasic_acl_install [] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('AdminBasic', 'adminbasic_acl_install', '0.2');";
+$adminbasic_acl_uninstall [] = "DELETE FROM `" . DB_PREFIX . "config` WHERE cfg_key = 'adminbasic_acl_install'";
 /*
  * UNINSTALL 
  */

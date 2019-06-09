@@ -1,8 +1,12 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
- *  EN
+/**
+ *  News - News Language file english
+ *
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage News
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 
@@ -93,3 +97,21 @@ $LNG['L_NEWS_SEC_EMPTY_TITLE'] = 'Oops';
 $LNG['L_NEWS_DELETE_PAGE'] = "Delete page";
 $LNG['L_NEWS_NOMULTILANG_SUPPORT'] = "No multilang support";
 $LNG['L_NEWS_SHOW_LANG'] = "Show news in";
+
+/* ACL */
+$LNG['L_PERM_R_NEWS_FULL_ACCESS'] = 'Full admin access to read';
+$LNG['L_PERM_W_NEWS_FULL_ACCESS'] = 'Full admin access to read/write';
+$LNG['L_PERM_R_VIEW_NEWS'] = 'View news';
+$LNG['L_PERM_R_CREATE_NEWS'] = 'Create news';
+$LNG['L_PERM_W_ADD_SOURCE'] = 'Add source to news';
+$LNG['L_PERM_W_add_related'] = 'Add relate to news';
+$LNG['L_PERM_W_FEATURE'] = 'Mark as feature';
+$LNG['L_PERM_W_EDIT'] = 'Edit news';
+$LNG['L_PERM_W_TRANSLATE'] = 'Translate news';
+$LNG['L_PERM_W_OWN_TRANSLATE'] = 'Translate own news';
+$LNG['L_PERM_W_CHANGE_AUTHOR'] = 'Change author';
+$LNG['L_PERM_W_DELETE'] = 'Delete news';
+$LNG['L_PERM_W_MODERATION'] = 'Aprobe news';
+$LNG['L_PERM_W_FRONTPAGE'] = 'Mark as frontpage';
+$LNG['L_PERM_W_EDIT_OWN'] = "Edit own pages";
+$LNG['L_PERM_W_DELETE_OWN'] = 'Delete own news';

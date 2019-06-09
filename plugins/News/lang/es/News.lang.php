@@ -1,8 +1,12 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
- *  ES
+/**
+ *  News - News language file - Spanish
+ *
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage News
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 
@@ -76,3 +80,21 @@ $LNG['L_NEWS_SEC_EMPTY_TITLE'] = 'Oops';
 $LNG['L_NEWS_DELETE_PAGE'] = "Borrar pagina";
 $LNG['L_NEWS_NOMULTILANG_SUPPORT'] = "No hay soporte multilang";
 $LNG['L_NEWS_SHOW_LANG'] = "Mostrar noticias en";
+
+/* ACL */
+$LNG['L_PERM_R_NEWS_FULL_ACCESS'] = 'Acceso administrador total de lectura';
+$LNG['L_PERM_W_NEWS_FULL_ACCESS'] = 'Acceso administrador total lectura/escritura';
+$LNG['L_PERM_R_VIEW_NEWS'] = 'ver noticias';
+$LNG['L_PERM_R_CREATE_NEWS'] = 'crear noticias';
+$LNG['L_PERM_W_ADD_SOURCE'] = 'añadir fuente';
+$LNG['L_PERM_W_add_related'] = 'añadir relacionada';
+$LNG['L_PERM_W_FEATURE'] = 'marcar como destacada';
+$LNG['L_PERM_W_EDIT'] = 'editar la noticia';
+$LNG['L_PERM_W_TRANSLATE'] = 'traducir la noticia';
+$LNG['L_PERM_W_OWN_TRANSLATE'] = 'Traducir su propia noticia';
+$LNG['L_PERM_W_CHANGE_AUTHOR'] = 'cambiar autor';
+$LNG['L_PERM_W_DELETE'] = 'borrar noticias';
+$LNG['L_PERM_W_MODERATION'] = 'Aprobar noticias';
+$LNG['L_PERM_W_FRONTPAGE'] = 'marcar como frontpage';
+$LNG['L_PERM_W_EDIT_OWN'] = "Editar pagians propias";
+$LNG['L_PERM_W_DELETE_OWN'] = 'borrar noticias propias';

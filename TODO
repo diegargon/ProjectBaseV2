@@ -1,30 +1,21 @@
 HIGH
 
 * clear css cache
+
 MED
 
-* ADMIN: Admin actualmente instala ACL si ACL esta activo, al instalar no esta activo y no hay opcion para instalar las opciones admin ACL
-que necesitan la tabla permissions
- - Solucion 1 despues de iniciado dar opcion para habilitar ACL en el plugin si el ACL esta activo despues y luego dar opcion para insertar lo necesario
- - Solucion 2, utilizar un register para permisos y no utilizar database. O mezcla de ambos, dar opcion a algunos plugins a registar los permisos y si ACL esta activado
-    en vez registarlos añadirlos a la DB
- - Solucion 3, en la instalacion presentar opcion para activar el ACL y activarlo antes (problema:probablemente necesitara tambien la S1 si se quiere poder activar despues),
-   (problema: ACL tambien necesita groups)
-
+* SMBasic deberia crear un usuario anonimo.
+* GROUPS : Opcion para añador automaticamente usuarios a los grupos por defecto (isFounder = ADMIN GRUPOS) (isAdmin = ADMIN_GROUPS)  (resto Usuarios registrados)
+* Plugins - Hacer funcion para obtener version del plugin instalado
 * Rating opcion de calcular en carga o mostrar total pre-calculado via cron
 
 LOW
 
 * filter strict chars , permitir configurar que caracteres permite
-
 * CORE: Config por grupos (añadidada la tambla pero sin usar) ver como agrupar y mostrar agrupados en admin
 para luego presentarlos por grupos, ej: L_NEWS_SUBMIT, L_NEWS_VIEW
-
 * CRON?: CRON Plugin y calcular opcionalmente ratio de user global "todas las section"
-
 * SMBasic?: Añadir opcion para que el usuario decida el formato de fecha
-
 * News: Si una noticia esta traducida mostrar opcion para que el usuario pueda cambiar de lenguaje
-
 * FRONTEND? : Mostrar fecha y hora actual
 
