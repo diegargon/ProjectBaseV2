@@ -278,7 +278,7 @@ function stdGetCommPerms($comm_author_id, $perm_cfg) {
 function stdCommReport($comm_id) {
     global $db;
 
-    $db->update('comments', ['reported' => 'reported +1'], ['cid' => $comm_id]);
+    $db->plusOne('comments', 'reported', ['cid' => $comm_id]);
 }
 
 /**
@@ -301,7 +301,7 @@ function stdCommDelete($comm_id) {
 function stdCommSofDelete($comm_id) {
     global $db;
 
-    $db->update('comments', ['soft_delete' => '!soft_delete'], ['cid' => $comm_id]);
+    $db->toggleField('comments', 'soft_delete', ['cid' => $comm_id]);
 }
 
 /**
@@ -313,5 +313,5 @@ function stdCommSofDelete($comm_id) {
 function stdCommShadowBan($comm_id) {
     global $db;
 
-    $db->update('comments', ['shadow_ban' => '!shadow_ban'], ['cid' => $comm_id]);
+    $db->toggleField('comments', 'shadow_ban', ['cid' => $comm_id]);
 }

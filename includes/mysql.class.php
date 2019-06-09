@@ -305,7 +305,7 @@ class Database {
      * 
      * @param string $table
      * @param string $field
-     * @return boolean
+     * @return int|boolean
      */
     function getNextNum($table, $field) {
 
@@ -334,7 +334,7 @@ class Database {
      * @param array $where
      * @param string $extra
      * @param string $logic
-     * @return boolean
+     * @return array|boolean
      */
     function selectAll($table, $where = null, $extra = null, $logic = 'AND') {
 
@@ -360,7 +360,7 @@ class Database {
      * @param array $where
      * @param string $extra
      * @param string $logic
-     * @return boolean
+     * @return array|boolean
      */
     function select($table, $what, $where = null, $extra = null, $logic = 'AND') {
         if (empty($table) || empty($what)) {
@@ -385,7 +385,7 @@ class Database {
      * @param string $searchText
      * @param array $where
      * @param string $extra
-     * @return boolean
+     * @return array|boolean
      */
     function search($table, $s_fields, $searchText, $where = null, $extra = null) {
 
@@ -432,15 +432,14 @@ class Database {
      * @param array $where
      * @param string $extra
      * @param string $logic
-     * @return boolean
+     * @return array|boolean
      */
     function update($table, $set, $where = null, $extra = null, $logic = 'AND') {
-
-        $query = 'UPDATE ' . $this->db_prefix . $table . ' SET ';
 
         if (empty($set) || empty($table)) {
             return false;
         }
+        $query = 'UPDATE ' . $this->db_prefix . $table . ' SET ';
         $query .= $this->setProcess($set);
 
         if (!empty($where)) {
@@ -451,12 +450,46 @@ class Database {
     }
 
     /**
+     * Sum field +1
+     * @param string $table
+     * @param string $field
+     * @param array $where
+     * @param string $logic
+     * @return array|boolean
+     */
+    function plusOne($table, $field, $where = null, $logic = 'AND') {
+
+        if (empty($field) || empty($table)) {
+            return false;
+        }
+        $query = 'UPDATE ' . $this->db_prefix . $table . ' SET ' . $field . ' = ' . $field . ' +1';
+        if (!empty($where)) {
+            $query .= ' WHERE ' . $this->whereProcess($where, $logic);
+        }
+
+        return $this->query($query);
+    }
+
+    function toggleField($table, $field, $where = null, $logic = 'AND') {
+
+        if (empty($field) || empty($table)) {
+            return false;
+        }
+        $query = 'UPDATE ' . $this->db_prefix . $table . ' SET ' . $field . ' = ' . '!' . $field;
+        if (!empty($where)) {
+            $query .= ' WHERE ' . $this->whereProcess($where, $logic);
+        }
+
+        return $this->query($query);
+    }
+
+    /**
      * Insert
      * 
      * @param string $table
      * @param array $insert_data
      * @param string $extra
-     * @return boolean
+     * @return arrray|boolean
      */
     function insert($table, $insert_data, $extra = null) {
 
@@ -476,7 +509,7 @@ class Database {
      * @param array $where
      * @param string $extra
      * @param string $logic
-     * @return boolean
+     * @return array|boolean
      */
     function delete($table, $where, $extra = null, $logic = 'AND') {
 

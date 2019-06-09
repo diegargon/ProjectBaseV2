@@ -3,9 +3,13 @@ HIGH
 
 MED
 
+* News: change db query news adm bar to plusOne & toggleField
 * GROUPS : Opcion para añador automaticamente usuarios a los grupos por defecto (isFounder = ADMIN GRUPOS) (isAdmin = ADMIN_GROUPS)  (resto Usuarios registrados)
 * Plugins - Hacer funcion para obtener version del plugin instalado
 * Rating opcion de calcular en carga o mostrar total pre-calculado via cron
+* go back rework: 
+<button onclick="history.go(-1);">Back </button>
+<a href="<?php echo $_SERVER['HTTP_REFERER'] ?>">Back</a>
 
 LOW
 
