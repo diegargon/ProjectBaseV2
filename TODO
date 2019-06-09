@@ -21,4 +21,4 @@ para luego presentarlos por grupos, ej: L_NEWS_SUBMIT, L_NEWS_VIEW
 * News: Si una noticia esta traducida mostrar opcion para que el usuario pueda cambiar de lenguaje
 * News: Subscrition access
 * FRONTEND? : Mostrar fecha y hora actual
-
+* SimpleACL Ordenar permisos en solapas por plugins

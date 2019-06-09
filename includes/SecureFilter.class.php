@@ -357,9 +357,20 @@ class SecureFilter {
     }
 
     /**
+     * 
+     * @return string|boolean|null
+     */
+    function srvReferer() {
+        if (empty($_SERVER['HTTP_REFERER'])) {
+            return false;
+        }
+        return filter_input(INPUT_SERVER, 'HTTP_REFERER', FILTER_SANITIZE_URL);
+    }
+
+    /**
      * get the request uri filtered
      * 
-     * @return boolean
+     * @return string|boolean|null
      */
     function srvRequestUri() {
         if (empty($_SERVER['REQUEST_URI'])) {
@@ -371,7 +382,7 @@ class SecureFilter {
     /**
      * get the user agent filtered
      * 
-     * @return boolean
+     * @return string|boolean|null
      */
     function srvUserAgent() {
         if (empty($_SERVER['HTTP_USER_AGENT'])) {
@@ -382,7 +393,7 @@ class SecureFilter {
 
     /**
      * get the remote addr filtered
-     * @return boolean
+     * @return string|boolean|null
      */
     function srvRemoteAddr() {
         if (empty($_SERVER['REMOTE_ADDR'])) {
@@ -395,7 +406,7 @@ class SecureFilter {
      * get the _SERVER
      * 
      * @param string $var
-     * @return boolean
+     * @return string|boolean|null
      */
     function srvUrl($var) {
         if (empty($_SERVER[$var])) {
@@ -407,7 +418,7 @@ class SecureFilter {
     /**
      * get the accept language
      * 
-     * @return type
+     * @return string|boolean|null
      */
     function srvAcceptLang() {
         return filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE', FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH);
@@ -419,7 +430,7 @@ class SecureFilter {
      * @param string $var
      * @param int $max_size
      * @param int $min_size
-     * @return boolean
+     * @return string|boolean
      */
     function varPassword($var, $max_size = null, $min_size = null) {
 

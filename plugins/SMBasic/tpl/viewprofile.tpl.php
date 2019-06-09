@@ -33,6 +33,6 @@
             </dl>
             <?= !empty($tpldata['SMB_VIEWPROFILE_FIELDS_BOTTOM']) ? $tpldata['SMB_VIEWPROFILE_FIELDS_BOTTOM'] : false; ?>            
         </div>
-        <p class='p_center_medium'><a href="<?= $cfg['BACKLINK'] ?>"><?= $LNG['L_BACK'] ?></a></p>
+        <p class='p_center_medium'><a href="<?= $data['BACKLINK'] ?>"><?= $LNG['L_BACK'] ?></a></p>
     </div>
 </div>

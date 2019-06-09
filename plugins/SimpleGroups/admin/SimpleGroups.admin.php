@@ -1,7 +1,12 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  SimpleGroups - Main admin file
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage SimpleGroups
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 
@@ -125,7 +130,7 @@ function SimpleGroups_UserGroups($msg) {
                     }
                 }
             } else {
-                $msg = $LNG['L_USER_NOGROUPS'];
+                $msg = $LNG['L_NO_GROUPS_FOUND'];
             }
             $groups = $groups->getGroups();
 

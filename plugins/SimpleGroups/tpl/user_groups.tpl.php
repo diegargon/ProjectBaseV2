@@ -1,6 +1,11 @@
 <?php
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  SimpleGroups - Adm user groups template
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage SimpleGroups
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 ?>
@@ -21,7 +26,6 @@
     </form>    
 <?php } else if (!empty($data['username'])) { ?>
     <p><?= $data['username'] ?></p>
-    <p><?= $LNG['L_NO_GROUPS_FOUND'] ?></p>
 <?php } ?>
 <?= isset($data['MSG']) ? "<p> {$data['MSG']} </p>" : false ?>
 <?php if (!empty($data['groups'])) { ?>

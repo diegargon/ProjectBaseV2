@@ -21,6 +21,7 @@ function SMBasic_ProfileView() {
     if ($v_user) {
         $v_user['regdate'] = $timeUtil->formatDbDate($v_user['regdate']);
         $v_user['last_login'] = $timeUtil->formatDbDate($v_user['last_login']);
+        $v_user['BACKLINK'] = $filter->srvReferer();
         $tpl->getCssFile('SMBasic');
         $tpl->getCssFile('SMBasic', 'SMBasic-mobile');
         $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('SMBasic', 'viewprofile', $v_user));

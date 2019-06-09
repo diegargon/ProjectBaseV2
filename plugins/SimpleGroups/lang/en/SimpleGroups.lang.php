@@ -1,8 +1,12 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
- *  EN
+/**
+ *  SimpleGroups - English language file
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage SimpleGroups
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 
@@ -33,3 +37,4 @@ $LNG['L_ADMINISTRATOR'] = 'Administrator';
 $LNG['L_ADMIN_LIMITED'] = 'Limited Administrator';
 $LNG['L_ANONYMOUS'] = 'Anonymous user group';
 $LNG['L_ADMIN_LIMIT_DESC'] = 'Administrator limited Group';
+$LNG['L_NO_GROUPS_FOUND'] = 'Groups not found';

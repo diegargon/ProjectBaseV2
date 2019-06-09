@@ -258,10 +258,10 @@ class SimpleFrontend {
      * @param array $box_data
      */
     function messageBox($box_data) {
-        global $tpl, $LNG;
+        global $tpl, $LNG, $filter;
 
         !empty($box_data['title']) ? $data['box_title'] = $LNG[$box_data['title']] : $data['box_title'] = $LNG['L_E_ERROR'];
-        !empty($box_data['backlink']) ? $data['box_backlink'] = $box_data['backlink'] : $data['box_backlink'] = "/";
+        !empty($box_data['backlink']) ? $data['box_backlink'] = $box_data['backlink'] : $data['box_backlink'] = $filter->srvReferer();
         !empty($box_data['backlink_title']) ? $data['box_backlink_title'] = $LNG[$box_data['backlink_title']] : $data['box_backlink_title'] = $LNG['L_BACK'];
         $data['box_msg'] = $LNG[$box_data['msg']];
         !empty($box_data['xtra_box_msg']) ? $data['box_msg'] .= $box_data['xtra_box_msg'] : false;

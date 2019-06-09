@@ -1,10 +1,13 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  SimpleGroups Install database
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage SimpleGroups
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
-
-
 /* CONFIG */
 $simplegroups_database_install [] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SimpleGroups', 'simplegroups_debug', '1');"
 ;

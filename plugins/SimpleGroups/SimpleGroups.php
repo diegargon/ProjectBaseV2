@@ -1,9 +1,15 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  SimpleGroups - Main init file
  * 
- *  TODO Añadir en hazmin el id y poder establecer el padre
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage SimpleGroups
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
+ */
+/*
+ *  TODO Añadir en admin el id y poder establecer el padre
  * 
  */
 !defined('IN_WEB') ? exit : true;
