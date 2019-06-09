@@ -9,14 +9,12 @@
  *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)  
  */
 
-/*
-    TODO: Setup anon user, uid 0, isAdmin/isFounder 0
- * 
-*/
 !defined('IN_WEB') ? exit : true;
 
 class SessionManager {
 
+    public $login_enable;
+    public $register_enable;
     private $user;
     private $users_cache_db = [];
     private $debug;
@@ -134,6 +132,7 @@ class SessionManager {
         $this->debug ? $debug->log('CheckSession called', 'SMBasic', 'Info') : null;
 
         if ($this->checkAnonSession()) {
+            $this->setAnonUser();
             $this->debug ? $debug->log('User: checkSession its setting to anonymous, stopping more checks', 'SMBasic', 'DEBUG') : null;
             return true;
         }
@@ -306,15 +305,25 @@ class SessionManager {
         header('Location: /');
     }
 
+    private function setAnonUser() {
+        global $LNG;
+
+        $user['uid'] = 0;
+        $user['isAdmin'] = 0;
+        $user['isFounder'] = 0;
+        $user['username'] = $LNG['L_ANONYMOUS'];
+        $this->user = $user;
+    }
+
     function setAnonSession() {
         global $debug;
 
         if ($this->session_type == 1) {
             $this->debug ? $debug->log('Setting session as anonymous', 'SMBasic', 'DEBUG') : null;
-
             $this->clearCookies();
             $this->destroyData();
             $this->setData('anonymous', 1);
+            $this->setAnonUser();
         } else {
             $this->debug ? $debug->log('Setting cookies as anonymous', 'SMBasic', 'DEBUG') : null;
             $this->clearCookies();
@@ -355,41 +364,13 @@ class SessionManager {
         }
     }
 
-    function setPerms($cfg) {
-
-        $this->perms['register_enable'] = $cfg['smbasic_register_enable'];
-        $this->perms['login_enable'] = $cfg['smbasic_login_enable'];
-        /*
-          if(defined('ACL')) {
-          $this->setACLPerms();
-          } else {
-          $this->setNoNACLPerms();
-          }
-         */
-    }
-
-    function setACLPerms() {
-        
-    }
-
-    function setNonACLPerms() {
-        
-    }
-
-    function getPerms() {
-        return $this->perms;
-    }
-
-    function getPerm($perm) {
-        return ($this->perms[$perm]) ? $this->perms[$perm] : false;
-    }
-
     private function setConfig() {
         global $cfg, $filter;
 
         (defined('DEBUG') && $cfg['smbasic_debug']) ? $this->debug = 1 : $this->debug = 0;
 
-        $this->setPerms($cfg);
+        $this->register_enable = $cfg['smbasic_register_enable'];
+        $this->login_enable = $cfg['smbasic_login_enable'];
 
         if ($cfg['FRIENDLY_URL']) {
             $this->file_path = '/' . $cfg['WEB_LANG'] . '/';

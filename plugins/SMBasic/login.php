@@ -1,7 +1,7 @@
 <?php
 
 /**
- *  SMBasic login file
+ *  SMBasic login page
  * 
  *  @author diego@envigo.net
  *  @package ProjectBase
@@ -10,7 +10,7 @@
  */
 !defined('IN_WEB') ? exit : true;
 
-if (!($sm->getPerm('login_enable'))) {
+if (!($sm->login_enable)) {
     $frontend->messageBox(['msg' => 'L_E_LOGGIN_DISABLE']);
     return;
 }

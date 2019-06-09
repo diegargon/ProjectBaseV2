@@ -15,7 +15,7 @@ function SMBasic_navLogReg() {
 
     $user = $sm->getSessionUser();
 
-    $elements = "";
+    $elements = '';
     if ($cfg['FRIENDLY_URL']) {
         $login_url = "/{$cfg['WEB_LANG']}/login";
         $register_url = "/{$cfg['WEB_LANG']}/register";
@@ -28,7 +28,7 @@ function SMBasic_navLogReg() {
         $logout_url = "/{$cfg['CON_FILE']}?module=SMBasic&page=logout&lang={$cfg['WEB_LANG']}";
     }
 
-    if ($user) {
+    if ($user && $user['uid'] > 0) {
         $elements .= "<li class='nav_right'><a href='$logout_url'>{$LNG['L_LOGOUT']}</a></li>\n";
         $elements .= "<li class='nav_right'><a href='$profile_url'>{$user['username']}</a></li>\n";
         if (!empty($user['avatar'])) {
@@ -44,46 +44,46 @@ function SMBasic_navLogReg() {
 function setSessionDebugDetails() {
     global $db, $sm, $debug, $timeUtil;
 
-    $debug->log("Session Details", "SMBasic", "DEBUG");
-    $debug->log("Time Now: " . $timeUtil->getTimeNow() . "", "SMBasic", "DEBUG");
-    $debug->log("Timezone: " . date_default_timezone_get() . "", "SMBasic", "DEBUG");
+    $debug->log('Session Details', 'SMBasic', 'DEBUG');
+    $debug->log('Time Now: ' . $timeUtil->getTimeNow(), 'SMBasic', 'DEBUG');
+    $debug->log('Timezone: ' . date_default_timezone_get(), 'SMBasic', 'DEBUG');
     if (!($user = $sm->getSessionUser())) {
-        $debug->log("Anonymous Session", "SMBasic", "DEBUG");
+        $debug->log('Anonymous Session', 'SMBasic', 'DEBUG');
         return false;
     }
 
     if (isset($_SESSION)) {
-        if (!empty($sm->getData("uid"))) {
-            $debug->log("Session VAR ID:" . $sm->getData("uid"), "SMBasic", "DEBUG");
+        if (!empty($sm->getData('uid'))) {
+            $debug->log('Session VAR ID:' . $sm->getData('uid'), 'SMBasic', 'DEBUG');
         }
     } else {
-        $debug->log("Session ins't set", "SMBasic", "DEBUG");
+        $debug->log('Session ins\'t set', 'SMBasic', 'DEBUG');
     }
 
-    $query = $db->selectAll("sessions", ["session_uid" => $user['uid']], "LIMIT 1");
+    $query = $db->selectAll('sessions', ['session_uid' => $user['uid']], 'LIMIT 1');
     $session = $db->fetch($query);
     if ($session) {
 
-        $debug->log("Session DB IP: {$session['session_ip']}", "SMBasic", "DEBUG");
-        $debug->log("Session DB Browser: {$session['session_browser']}", "SMBasic", "DEBUG");
-        $debug->log("Session DB Create: {$session['session_created']}", "SMBasic");
-        $debug->log("Session DB Expire:" . $timeUtil->timestampToDate("{$session['session_expire']}") . "", "SMBasic", "DEBUG");
+        $debug->log('Session DB IP: ' . $session['session_ip'], 'SMBasic', 'DEBUG');
+        $debug->log('Session DB Browser: ' . $session['session_browser'], 'SMBasic', 'DEBUG');
+        $debug->log('Session DB Create: ' . $session['session_created'], 'SMBasic', 'DEBUG');
+        $debug->log("Session DB Expire:" . $timeUtil->timestampToDate($session['session_expire']), 'SMBasic', 'DEBUG');
     }
-    $debug->log("PHP Session expire: " . ini_get('session.gc_maxlifetime'), "SMBasic", "DEBUG");
+    $debug->log('PHP Session expire: ' . ini_get('session.gc_maxlifetime'), 'SMBasic', 'DEBUG');
     if (isset($_COOKIE)) {
-        $debug->log("Cookie State is set", "SMBasic", "DEBUG");
+        $debug->log('Cookie State is set', 'SMBasic', 'DEBUG');
         foreach ($_COOKIE as $key => $val) {
-            $debug->log("Cookie array $key -> $val", "SMBasic", "DEBUG");
+            $debug->log("Cookie array $key -> $val", 'SMBasic', 'DEBUG');
         }
     } else {
-        $debug->log("Cookie not set", "SMBasic", "DEBUG");
+        $debug->log('Cookie not set', 'SMBasic', 'DEBUG');
     }
     $user = $sm->getSessionUSer();
     if ($user) {
-        $debug->log("User ID: {$user['uid']}", "SMBasic", "DEBUG");
-        $debug->log("Username: {$user['username']}", "SMBasic", "DEBUG");
-        $debug->log("isFounder: {$user['isFounder']}", "SMBasic", "DEBUG");
-        $debug->log("isAdmin: {$user['isAdmin']}", "SMBasic", "DEBUG");
+        $debug->log('User ID: ' . $user['uid'], 'SMBasic', 'DEBUG');
+        $debug->log('Username: ' . $user['username'], 'SMBasic', 'DEBUG');
+        $debug->log('isFounder: ' . $user['isFounder'], 'SMBasic', 'DEBUG');
+        $debug->log('isAdmin: ' . $user['isAdmin'], 'SMBasic', 'DEBUG');
     }
 }
 
@@ -96,14 +96,14 @@ function SMBasic_create_reg_mail($active) {
         } else {
             $URL = $cfg['CON_FILE'] . "?module=SMBasic&page=login&active=$active";
         }
-        $msg = $LNG['L_REG_EMAIL_MSG_ACTIVE'] . "\n" . "$URL";
+        $msg = $LNG['L_REG_EMAIL_MSG_ACTIVE'] . '\n' . $URL;
     } else {
         if ($cfg['FRIENDLY_URL']) {
-            $URL = $cfg['WEB_URL'] . $cfg['WEB_LANG'] . "/login";
+            $URL = $cfg['WEB_URL'] . $cfg['WEB_LANG'] . '/login';
         } else {
-            $URL = $cfg['CON_FILE'] . "?module=SMBasic&page=login";
+            $URL = $cfg['CON_FILE'] . '?module=SMBasic&page=login';
         }
-        $msg = $LNG['L_REG_EMAIL_MSG_WELCOME'] . "\n" . "$URL";
+        $msg = $LNG['L_REG_EMAIL_MSG_WELCOME'] . '\n' . $URL;
     }
     return $msg;
 }

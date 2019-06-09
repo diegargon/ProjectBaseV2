@@ -1,7 +1,7 @@
 <?php
 
 /**
- *  SMBasic register file
+ *  SMBasic register page
  * 
  *  @author diego@envigo.net
  *  @package ProjectBase
@@ -10,7 +10,7 @@
  */
 !defined('IN_WEB') ? exit : true;
 
-if (!($sm->getPerm('register_enable'))) {
+if (!($sm->register_enable)) {
     $frontend->messageBox(['msg' => 'L_E_REGISTER_DISABLE']);
     return;
 }
