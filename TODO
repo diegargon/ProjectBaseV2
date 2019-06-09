@@ -22,3 +22,4 @@ para luego presentarlos por grupos, ej: L_NEWS_SUBMIT, L_NEWS_VIEW
 * News: Subscrition access
 * FRONTEND? : Mostrar fecha y hora actual
 * SimpleACL Ordenar permisos en solapas por plugins
+* SimpleGroups/ACL grupos heredados
