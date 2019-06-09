@@ -21,13 +21,13 @@ function news_new_lang($news_nid, $news_lang_id, $news_page) {
     $author_data = $sm->getUserByID($news_data['author_id']);
     $news_data['author'] = $author_data['username'];
 
-    $news_perms = get_news_perms("news_new_lang", $news_data);
+    $news_perms = get_news_perms('news_new_lang', $news_data);
     $news_data['author_readonly'] = !news_perm_ask('w_news_change_author');
     $news_data['news_add_source'] = news_perm_ask('w_news_add_source');
     $news_data['news_add_related'] = news_perm_ask('w_news_add_related');
 
     if (!news_perm_ask('w_news_translate')) {
-        return $frontend->messageBox(["msg" => "L_E_NOEDITACCESS"]);
+        return $frontend->messageBox(['msg' => 'L_E_NOEDITACCESS']);
     }
 
     $news_data['news_form_title'] = $LNG['L_NEWS_NEWLANG'];
@@ -50,15 +50,15 @@ function news_new_lang($news_nid, $news_lang_id, $news_page) {
     if (($site_langs = news_get_missed_langs($news_data['nid'], $news_data['page'])) != false) {
         $news_data['select_langs'] = $site_langs;
     } else {
-        return $frontend->messageBox(['msg' => "L_NEWS_E_ALREADY_TRANSLATE_ALL"]);
+        return $frontend->messageBox(['msg' => 'L_NEWS_E_ALREADY_TRANSLATE_ALL']);
     }
     $editor = new Editor();
     $news_data['editor'] = $editor->getEditor(['text' => $news_data['text']]);
 
     //$news_data['terms_url'] = $cfg['TERMS_URL'];
-    do_action("news_newlang_form_add", $news_data);
+    do_action('news_newlang_form_add', $news_data);
 
-    $tpl->addtoTplVar("ADD_TO_BODY", $tpl->getTplFile("News", "news_form", $news_data));
+    $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('News', 'news_form', $news_data));
 }
 
 function news_form_newlang_process() {
@@ -95,7 +95,7 @@ function news_newlang_submit($news_data) {
         $new_lang_id = $ml->isoToID($news_data['news_lang']);
     }
 
-    $query = $db->selectAll("news", ["nid" => "{$news_data['nid']}", "lang_id" => "$new_lang_id", "page" => "{$news_data['page']}"]);
+    $query = $db->selectAll("news", ['nid' => $news_data['nid'], 'lang_id' => $new_lang_id, 'page' => $news_data['page']]);
     if ($db->numRows($query) > 0) { //already exist
         die('[{"status": "10", "msg": "' . $LNG['L_NEWS_ALREADY_EXIST'] . '"}]');
     }
@@ -103,24 +103,24 @@ function news_newlang_submit($news_data) {
     $orig_news_nid = $news_data['nid'];
     $orig_news_lang_id = $news_data['old_news_lang_id'];
 
-    $query = $db->selectAll("news", ["nid" => "$orig_news_nid", "lang_id" => "$orig_news_lang_id", "page" => 1], "LIMIT 1");
+    $query = $db->selectAll('news', ['nid' => $orig_news_nid, 'lang_id' => $orig_news_lang_id, 'page' => 1], 'LIMIT 1');
     $orig_news = $db->fetch($query);
     $moderation = $cfg['news_moderation'];
 
     $insert_ary = [
-        "nid" => $news_data['nid'],
-        "lang_id" => $new_lang_id,
-        "page" => $news_data['page'],
-        "translator_id" => $news_data['news_translator_id'],
-        "title" => $db->escapeStrip($news_data['title']),
-        "lead" => $db->escapeStrip($news_data['lead']),
-        "text" => $db->escapeStrip($news_data['editor_text']),
-        "author_id" => $orig_news['author_id'],
-        "category" => $orig_news['category'],
-        "lang_id" => $new_lang_id,
-        "moderation" => $moderation
+        'nid' => $news_data['nid'],
+        'lang_id' => $new_lang_id,
+        'page' => $news_data['page'],
+        'translator_id' => $news_data['news_translator_id'],
+        'title' => $db->escapeStrip($news_data['title']),
+        'lead' => $db->escapeStrip($news_data['lead']),
+        'text' => $db->escapeStrip($news_data['editor_text']),
+        'author_id' => $orig_news['author_id'],
+        'category' => $orig_news['category'],
+        'lang_id' => $new_lang_id,
+        'moderation' => $moderation
     ];
-    $db->insert("news", $insert_ary);
+    $db->insert('news', $insert_ary);
 
     return true;
 }

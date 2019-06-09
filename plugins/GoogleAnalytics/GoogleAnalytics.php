@@ -14,13 +14,13 @@ function GoogleAnalytics_init() {
     global $tpl;
 
     $tpl->setPrefetchURL('https://www.google-analytics.com');
-    $tpl->addtoTplVar("SCRIPTS_BOTTOM", $tpl->getTplFile("GoogleAnalytics"));
+    $tpl->addtoTplVar('SCRIPTS_BOTTOM', $tpl->getTplFile('GoogleAnalytics'));
 }
 
 function GoogleAnalytics_install() {
     global $db;
 
-    require_once "db/GoogleAnalytics.db.php";
+    require_once ('db/GoogleAnalytics.db.php');
     foreach ($google_analytics_db_install as $query) {
         if ($db->query($query) == false) {
             return false;
@@ -32,7 +32,7 @@ function GoogleAnalytics_install() {
 function GoogleAnalytics_uninstall() {
     global $db;
 
-    require_once "db/GoogleAnalytics.db.php";
+    require_once ('db/GoogleAnalytics.db.php');
     foreach ($google_analytics_db_uninstall as $query) {
         if ($db->query($query) == false) {
             return false;

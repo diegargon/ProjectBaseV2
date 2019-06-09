@@ -23,19 +23,19 @@ function SMBasic_Register() {
       }
      * 
      */
-    $tpl->getCssFile("SMBasic");
-    $tpl->getCssFile("SMBasic", "SMBasic-mobile");
-    $tpl->addScriptFile("standard", "jquery", "TOP");
-    $tpl->addScriptFile("SMBasic", "register", "BOTTOM");
+    $tpl->getCssFile('SMBasic');
+    $tpl->getCssFile('SMBasic', 'SMBasic-mobile');
+    $tpl->addScriptFile('standard', 'jquery', 'TOP');
+    $tpl->addScriptFile('SMBasic', 'register', 'BOTTOM');
 
-    $register_data['terms_url'] = $sm->getPage("terms");
-    $tpl->addtoTplVar("ADD_TO_BODY", $tpl->getTplFile("SMBasic", "register", $register_data));
+    $register_data['terms_url'] = $sm->getPage('terms');
+    $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('SMBasic', 'register', $register_data));
 }
 
 function SMBasic_RegisterSubmit() {
     global $cfg, $LNG, $db, $filter, $sm;
 
-    if (($email = $filter->postEmail("email")) == false) {
+    if (($email = $filter->postEmail('email')) == false) {
         die('[{"status": "1", "msg": "' . $LNG['L_E_EMAIL'] . '"}]');
     }
     if (($cfg['smbasic_need_username'] == 1) &&
@@ -57,13 +57,13 @@ function SMBasic_RegisterSubmit() {
         die('[{"status": "3", "msg": "' . $LNG['L_E_PASSWORD'] . '"}]');
     }
 
-    $query = $db->selectAll("users", ["username" => "$username"], "LIMIT 1");
+    $query = $db->selectAll('users', ['username' => $username], 'LIMIT 1');
 
     if (($db->numRows($query)) > 0) {
         die('[{"status": "2", "msg": "' . $LNG['L_E_USERNAME_EXISTS'] . '"}]');
     }
 
-    $query = $db->selectAll("users", ["email" => "$email"]);
+    $query = $db->selectAll('users', ['email' => $email]);
     if (($db->numRows($query)) > 0) {
         die('[{"status": "1", "msg": "' . $LNG['L_E_EMAIL_EXISTS'] . '"}]');
     }
@@ -80,12 +80,12 @@ function SMBasic_RegisterSubmit() {
     }
     $mail_msg = SMBasic_create_reg_mail($active);
     $user_what = [
-        "username" => $db->escapeStrip($username),
-        "password" => "$password",
-        "email" => $db->escapeStrip($email),
-        "active" => "$active"
+        'username' => $db->escapeStrip($username),
+        'password' => "$password",
+        'email' => $db->escapeStrip($email),
+        'active' => "$active"
     ];
-    $query = $db->insert("users", $user_what);
+    $query = $db->insert('users', $user_what);
 
     if ($query) {
         mail($email, $LNG['L_REG_EMAIL_SUBJECT'], $mail_msg, "From: {$cfg['smbasic_register_reply_email']} \r\n");

@@ -13,7 +13,7 @@
 function SMBasic_ProfileView() {
     global $tpl, $sm, $filter, $frontend, $timeUtil;
 
-    $uid = $filter->getInt("viewprofile");
+    $uid = $filter->getInt('viewprofile');
     if (empty($uid)) {
         $frontend->messageBox(['msg' => 'L_SM_E_USER_NOT_EXISTS']);
     }
@@ -21,9 +21,9 @@ function SMBasic_ProfileView() {
     if ($v_user) {
         $v_user['regdate'] = $timeUtil->formatDbDate($v_user['regdate']);
         $v_user['last_login'] = $timeUtil->formatDbDate($v_user['last_login']);
-        $tpl->getCssFile("SMBasic");
-        $tpl->getCssFile("SMBasic", "SMBasic-mobile");
-        $tpl->addtoTplVar("ADD_TO_BODY", $tpl->getTplFile("SMBasic", "viewprofile", $v_user));
+        $tpl->getCssFile('SMBasic');
+        $tpl->getCssFile('SMBasic', 'SMBasic-mobile');
+        $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('SMBasic', 'viewprofile', $v_user));
     } else {
         $frontend->messageBox(['msg' => 'L_SM_E_USER_NOT_EXISTS']);
     }
@@ -32,19 +32,19 @@ function SMBasic_ProfileView() {
 function SMBasic_ProfileEdit($user) {
     global $cfg, $tpl;
 
-    $tpl->getCssFile("SMBasic");
-    $tpl->getCssFile("SMBasic", "SMBasic-mobile");
-    $tpl->addScriptFile("standard", "jquery", "BOTTOM");
-    $tpl->addScriptFile("SMBasic", "profile", "BOTTOM");
-    $tpl->addScriptFile("SMBasic", "dropdown", "BOTTOM");
+    $tpl->getCssFile('SMBasic');
+    $tpl->getCssFile('SMBasic', 'SMBasic-mobile');
+    $tpl->addScriptFile('standard', 'jquery', 'BOTTOM');
+    $tpl->addScriptFile('SMBasic', 'profile', 'BOTTOM');
+    $tpl->addScriptFile('SMBasic', 'dropdown', 'BOTTOM');
 
     $form_data = [
-        "username" => $user['username'],
-        "email" => $user['email'],
+        'username' => $user['username'],
+        'email' => $user['email'],
     ];
     (empty($user['avatar'])) ? $form_data['avatar'] = $cfg['STATIC_SRV_URL'] . $cfg['smbasic_default_img_avatar'] : $form_data['avatar'] = $user['avatar'];
-    do_action("SMBasic_ProfileEdit", $form_data);
-    $tpl->addtoTplVar("ADD_TO_BODY", $tpl->getTplFile("SMBasic", "profile", $form_data));
+    do_action('SMBasic_ProfileEdit', $form_data);
+    $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('SMBasic', 'profile', $form_data));
 }
 
 function SMBasic_ProfileChange() {
@@ -147,9 +147,9 @@ function SMBasic_ProfileChange() {
         }
     }
 
-    do_action("SMBasic_ProfileChange", $q_set_ary);
+    do_action('SMBasic_ProfileChange', $q_set_ary);
 
-    !empty($q_set_ary) ? $db->update("users", $q_set_ary, ["uid" => $user['uid']], "LIMIT 1") : false;
+    !empty($q_set_ary) ? $db->update('users', $q_set_ary, ['uid' => $user['uid']], 'LIMIT 1') : false;
 
     die('[{"status": "ok", "msg": "' . $LNG['L_UPDATE_SUCCESSFUL'] . '", "url": "' . $filter->srvRequestUri() . '"}]');
 }

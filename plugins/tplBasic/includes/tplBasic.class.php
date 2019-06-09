@@ -451,7 +451,7 @@ class TPL {
             $this->addtoTplVar('LINK', '<link rel="stylesheet" href="/cache/css/' . $cssfile . '">');
         } else {
             $css_code = $this->parseFile('cache/css/' . $cssfile);
-            $this->addtoTplVar("LINK", '<style>' . $css_code . '</style>');
+            $this->addtoTplVar('LINK', '<style>' . $css_code . '</style>');
         }
 
         return true;
