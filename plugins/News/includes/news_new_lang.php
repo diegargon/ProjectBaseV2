@@ -20,8 +20,6 @@ function news_new_lang($news_nid, $news_lang_id, $news_page) {
 
     $author_data = $sm->getUserByID($news_data['author_id']);
     $news_data['author'] = $author_data['username'];
-
-    $news_perms = get_news_perms('news_new_lang', $news_data);
     $news_data['author_readonly'] = !news_perm_ask('w_news_change_author');
     $news_data['news_add_source'] = news_perm_ask('w_news_add_source');
     $news_data['news_add_related'] = news_perm_ask('w_news_add_related');

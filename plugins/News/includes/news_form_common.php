@@ -1,9 +1,13 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  News - Common form functions
+ *
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage News
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
-
 function news_getCatsSelect($news_data = null, $select_name = "news_category") {
     global $cfg, $ctgs, $ml;
 
@@ -44,8 +48,6 @@ function news_getCatsSelect($news_data = null, $select_name = "news_category") {
 
 function news_form_getPost() {
     global $db, $filter, $sm, $cfg, $LNG;
-
-    $perms = get_news_perms("news_get_post");
 
     //GET
     $form_data['nid'] = $filter->getInt("nid");
