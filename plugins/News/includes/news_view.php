@@ -240,7 +240,7 @@ function news_nav_options($news) {
 
     /* CREATE NEW PAGE */
 
-    if ($cfg['allow_multiple_pages'] && $user['uid'] == $news['author_id'] && $user['uid'] != 0) {
+    if ($cfg['allow_multiple_pages'] && (( $user['uid'] == $news['author_id'] && $user['uid'] != 0) || $user['isFounder'])) {
         $content .= "<li><a rel='nofollow' href='$edit_news_url&newpage=1'>{$LNG['L_NEWS_NEW_PAGE']}</a></li>";
     }
 
@@ -276,7 +276,7 @@ function news_nav_options($news) {
     }
 
     /* APPROVE */
-    if ($news['page'] == 1) {
+    if ($news['page'] == 1 && $news['moderation'] == 1) {
         if (news_perm_ask('w_news_moderation||w_news_adm_all')) {
             $content .= "<li><a rel='nofollow' href='$view_news_url&news_approved=1'>{$LNG['L_NEWS_APPROVED']}</a></li>";
         }
