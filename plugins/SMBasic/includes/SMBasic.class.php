@@ -8,9 +8,11 @@
  *  @subpackage SMBasic
  *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)  
  */
-
 !defined('IN_WEB') ? exit : true;
 
+/**
+ * SessionManager class
+ */
 class SessionManager {
 
     public $login_enable;

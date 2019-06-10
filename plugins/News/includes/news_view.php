@@ -140,12 +140,21 @@ function news_catch_admin_actions(&$news_data) {
     /* DELETE */
     if (!empty($_GET['news_delete']) && news_perm_ask('w_news_delete')) {
         news_delete($news_nid, $news_lang_id);
-        header('Location: /');
+        $srv_referer = $filter->srvReferer();
+        if (!empty($srv_referer)) {
+            header("Location: {$srv_referer}");
+        } else {
+            header('Location: /');
+        }
     }
     if (!empty($_GET['news_delete_page']) && news_perm_ask('w_news_delete')) {
         news_delete($news_nid, $news_lang_id, $news_page);
-        echo $_GET['news_delete_page'];
-        header('Location: /');
+        $srv_referer = $filter->srvReferer();
+        if (!empty($srv_referer)) {
+            header("Location: {$srv_referer}");
+        } else {
+            header('Location: /');
+        }
     }
     /* APPROVE */
     if (!empty($_GET['news_approved']) && news_perm_ask('w_news_moderation')) {
@@ -153,7 +162,7 @@ function news_catch_admin_actions(&$news_data) {
         $news_data['moderation'] = 0;
     }
     /* FEATURE */
-    if (isset($_GET['news_featured']) && news_perm_ask('w_news_moderation')) {
+    if (isset($_GET['news_featured']) && news_perm_ask('w_news_featured')) {
         empty($_GET['news_featured']) ? $news_featured = 0 : $news_featured = 1;
         news_featured($news_nid, $news_lang_id, $news_featured);
         $news_data['featured'] = $news_featured;
