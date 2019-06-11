@@ -3,12 +3,11 @@ HIGH
 
 MED
 
-* News: change db query news adm bar to plusOne & toggleField
 * GROUPS : Opcion para añador automaticamente usuarios a los grupos por defecto (isFounder = ADMIN GRUPOS) (isAdmin = ADMIN_GROUPS)  (resto Usuarios registrados)
 * Plugins - Hacer funcion para obtener version del plugin instalado
 * Rating opcion de calcular en carga o mostrar total pre-calculado via cron
-* Comprobar si se puede limitar "limit 1" a news_featured  y demas o necesita sin limitar por el numero de paginas
-* Comprobar en general si se puede mejorar news_feaured y demás en news_view.php
+* TODO deprecated_getSiteLangsSelect
+
 LOW
 
 * filter strict chars , permitir configurar que caracteres permite

@@ -21,36 +21,47 @@ class Multilang {
     private $active_langs;
     private $site_langs;
 
+    /**
+     * Ml constructor
+     * @global type $cfg
+     */
     function __construct() {
         global $cfg;
 
         $this->retrieveDbLangs();
         $this->set_to_visit_lang = $cfg['ml_set_to_visit_lang'];
-        register_action("header_menu_element", [$this, "getLangNav"], 6);
+        register_action('header_menu_element', [$this, 'getLangNav'], 6);
         $this->setLang();
         $this->web_lang = $cfg['WEB_LANG'];
         $this->web_lang_id = $this->isoToID($cfg['WEB_LANG']);
     }
 
+    /**
+     * Set Lang
+     * 
+     * 1 choosed lang
+     * 2 Cookie lang
+     * 3 visit_lang if exist (ACCEPT_LANGUAGE), 
+     * 4 URL lang 
+     * 5 default web lang 
+     *   
+     * @global SecureFilter $filter
+     * @global array $cfg
+     * @return boolean
+     */
     function setLang() {
         global $filter, $cfg;
-        /*
-         * 1 choosed lang
-         * 2 Cookie lang
-         * 3 visit_lang if exist (ACCEPT_LANGUAGE), 
-         * 4 URL lang 
-         * 5 default web lang  
-         */
-        if (isset($_POST['choose_lang']) && (($choosed_lang = $filter->postAZChar("choose_lang", 2, 2)) != false)) {
+
+        if (isset($_POST['choose_lang']) && (($choosed_lang = $filter->postAZChar('choose_lang', 2, 2)) != false)) {
             if ($this->checkExists($choosed_lang)) {
                 $cfg['WEB_LANG'] = $choosed_lang;
                 setcookie("WEB_LANG", $choosed_lang, 2147483647, '/');
-                return;
+                return true;
             }
         } else {
-            if (!empty(($cookie_lang = $filter->cookieAlphaNum("WEB_LANG", 255, 1))) && $cookie_lang != false) {
+            if (!empty(($cookie_lang = $filter->cookieAlphaNum('WEB_LANG', 255, 1))) && $cookie_lang != false) {
                 $cfg['WEB_LANG'] = $cookie_lang;
-                return;
+                return true;
             }
         }
 
@@ -62,31 +73,47 @@ class Multilang {
             }
             if ($this->checkExists($user_pref_lang)) {
                 $cfg['WEB_LANG'] = $user_pref_lang;
-                return;
+                return true;
             }
         }
 
 
-        $url_lang = $filter->getAZChar("lang", 2, 2);
+        $url_lang = $filter->getAZChar('lang', 2, 2);
 
         if (isset($url_lang) && $url_lang != false && $this->checkExists($url_lang)) {
             $cfg['WEB_LANG'] = $url_lang;
         }
-        return;
+        return true;
     }
 
+    /**
+     * return  web lang
+     * @return string
+     */
     function getWebLang() {
         return $this->web_lang;
     }
 
+    /**
+     * return web lang id
+     * 
+     * @return int
+     */
     function getWebLangID() {
         return $this->web_lang_id;
     }
 
+    /**
+     * Return the nav choose lang menu
+     * 
+     * @global TPL $tpl
+     * @global array $cfg
+     * @return string
+     */
     function getLangNav() {
         global $tpl, $cfg;
 
-        $content = "";
+        $content = '';
         $element = 1;
         $elements = count($this->getSiteLangs());
 
@@ -101,21 +128,26 @@ class Multilang {
             }
 
             if ($lang['iso_code'] == $cfg['WEB_LANG']) {
-                $data['selected'] = "selected";
+                $data['selected'] = 'selected';
             } else {
-                $data['selected'] = "";
+                $data['selected'] = '';
             }
 
             $element++;
 
             $data['iso_code'] = $lang['iso_code'];
             $data['lang_name'] = $lang['lang_name'];
-            $content .= $tpl->getTplFile("Multilang", "ml_menu_opt", $data);
+            $content .= $tpl->getTplFile('Multilang', 'ml_menu_opt', $data);
         }
 
         return $content;
     }
 
+    /**
+     * Check if language exists (iso code)
+     * @param string $lang (iso code)
+     * @return boolean
+     */
     function checkExists($lang) {
         foreach ($this->getSiteLangs() as $site_lang) {
             if ($site_lang['iso_code'] == $lang) {
@@ -125,6 +157,12 @@ class Multilang {
         return false;
     }
 
+    /**
+     * Get site langs
+     * 
+     * @param int $active
+     * @return array
+     */
     function getSiteLangs($active = 1) {
         if ($active) {
             return $this->active_langs;
@@ -133,6 +171,12 @@ class Multilang {
         }
     }
 
+    /**
+     * return session lang
+     * 
+     * @global array $cfg
+     * @return array
+     */
     function getSessionLang() {
         global $cfg;
 
@@ -140,6 +184,12 @@ class Multilang {
         return $this->active_langs[$lid];
     }
 
+    /**
+     * Return lang id from a iso code
+     * 
+     * @param string $isolang
+     * @return int|boolean
+     */
     function isoToID($isolang) {
         foreach ($this->getSiteLangs() as $lang) {
             if ($lang['iso_code'] == $isolang) {
@@ -149,6 +199,12 @@ class Multilang {
         return false;
     }
 
+    /**
+     * Return the iso code from id
+     * 
+     * @param int $lang_id
+     * @return string|boolean
+     */
     function idToIso($lang_id) {
         foreach ($this->getSiteLangs() as $lang) {
             if ($lang['lang_id'] == $lang_id) {
@@ -169,9 +225,9 @@ class Multilang {
             return false;
         }
 
-        $select = "<select name='$name' id='$name'>";
+        $select = '<select name="' . $name . '" id="' . $name . '">';
         if ($all) {
-            $select .= "<option value='0'>" . $LNG['L_ML_ALL'] . "</option>";
+            $select .= '<option value="0">' . $LNG['L_ML_ALL'] . '</option>';
         }
         foreach ($site_langs as $site_lang) {
             if ($site_lang['iso_code'] == $this->web_lang) {
@@ -180,11 +236,19 @@ class Multilang {
                 $select .= "<option value='{$site_lang['iso_code']}'>{$site_lang['lang_name']}</option>";
             }
         }
-        $select .= "</select>";
+        $select .= '</select>';
 
         return $select;
     }
 
+    /**
+     * Get menu select lang (html code)
+     * 
+     * @global array $LNG
+     * @param string $name
+     * @param int $all
+     * @return boolean|string
+     */
     function getSiteLangsSelect($name = 'lang', $all = 0) {
         /* La nueva pone IDs en vez de el iso code en el value */
 
@@ -196,9 +260,9 @@ class Multilang {
             return false;
         }
 
-        $select = "<select name='$name' id='$name'>";
+        $select = '<select name="' . $name . '" id="' . $name . '">';
         if ($all) {
-            $select .= "<option value='0'>" . $LNG['L_ML_ALL'] . "</option>";
+            $select .= '<option value="0">' . $LNG['L_ML_ALL'] . '</option>';
         }
         foreach ($site_langs as $site_lang) {
             if ($site_lang['iso_code'] == $this->web_lang) {
@@ -212,10 +276,15 @@ class Multilang {
         return $select;
     }
 
+    /**
+     * Retrieve DB langs
+     * 
+     * @global Database $db
+     */
     private function retrieveDbLangs() {
         global $db;
 
-        $query = $db->selectAll("lang");
+        $query = $db->selectAll('lang');
 
         while ($lang_row = $db->fetch($query)) {
             if ($lang_row['active'] == 1) {

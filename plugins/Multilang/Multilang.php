@@ -10,6 +10,10 @@
  */
 !defined('IN_WEB') ? exit : true;
 
+/**
+ * Init func
+ * @global Multilang $ml
+ */
 function Multilang_init() {
     global $ml;
 
@@ -19,9 +23,14 @@ function Multilang_init() {
     }
 }
 
+/**
+ * Install function
+ * @global db $db
+ * @return boolean
+ */
 function Multilang_install() {
     global $db;
-    require_once "db/Multilang.db.php";
+    require_once ('db/Multilang.db.php');
     foreach ($multilang_database as $query) {
         if (!$db->query($query)) {
             return false;
@@ -30,9 +39,14 @@ function Multilang_install() {
     return true;
 }
 
+/**
+ * Uninstall func
+ * @global db $db
+ * @return boolean
+ */
 function Multilang_uninstall() {
     global $db;
-    require_once "db/Multilang.db.php";
+    require_once ('db/Multilang.db.php');
     foreach ($multilang_database_uninstall as $query) {
         if (!$db->query($query)) {
             return false;
