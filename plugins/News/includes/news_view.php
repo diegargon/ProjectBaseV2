@@ -170,7 +170,7 @@ function news_catch_admin_actions(&$news_data) {
     /* FRONTPAGE */
     if (isset($_GET['news_frontpage']) && news_perm_ask('w_news_frontpage')) {
         empty($_GET['news_frontpage']) ? $news_frontpage = 0 : $news_frontpage = 1;
-        news_frontpage($news_nid, $news_lang_id, $news_frontpage);
+        news_frontpage($news_nid, $news_lang_id);
         $news_data['frontpage'] = $news_frontpage;
     }
 
@@ -408,25 +408,27 @@ function news_featured($nid, $lang_id, $featured) {
     }
     $update_ary = ['featured' => $featured];
     $featured == 1 ? $update_ary['featured_date'] = $time : false;
-    $db->update('news', $update_ary, ['nid' => $nid, 'lang_id' => $lang_id]);
+    $db->update('news', $update_ary, ['nid' => $nid, 'lang_id' => $lang_id], 'LIMIT 1');
 
     return true;
 }
 
-function news_frontpage($nid, $lang_id, $frontpage_state = 0) {
+function news_frontpage($nid, $lang_id) {
     global $db;
 
     if (empty($nid) || empty($lang_id) || $nid <= 0 && $lang_id <= 0) {
         return false;
     }
-    $db->update('news', ['frontpage' => $frontpage_state], ['nid' => $nid, 'lang_id' => $lang_id]);
 
+    $db->toggleField('news', 'frontpage', ['nid' => $nid, 'lang_id' => $lang_id]);
     return true;
 }
 
 function news_stats($nid, $lang, $page, $visits) {
     global $db, $cfg;
-    $db->update('news', ['visits' => ++$visits], ['nid' => $nid, 'lang' => $lang, 'page' => $page], 'LIMIT 1');
+
+    $db->plusOne('news', 'visits', ['nid' => $nid, 'lang' => $lang, 'page' => $page], 'LIMIT 1');
+
     $cfg['news_adv_stats'] ? news_adv_stats($nid, $lang) : false;
 }
 
@@ -448,8 +450,8 @@ function news_adv_stats($nid, $lang) {
 
     $query = $db->selectAll('adv_stats', $where_ary, 'LIMIT 1');
 
-    $user_agent = S_SERVER_USER_AGENT();
-    $referer = S_SERVER_URL('HTTP_REFERER');
+    $user_agent = $filter->srvUserAgent();
+    $referer = $filter->srvReferer();
 
     if ($db->numRows($query) > 0) {
         $user_adv_stats = $db->fetch($query);

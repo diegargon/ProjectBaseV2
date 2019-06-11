@@ -7,7 +7,6 @@ MED
 * GROUPS : Opcion para añador automaticamente usuarios a los grupos por defecto (isFounder = ADMIN GRUPOS) (isAdmin = ADMIN_GROUPS)  (resto Usuarios registrados)
 * Plugins - Hacer funcion para obtener version del plugin instalado
 * Rating opcion de calcular en carga o mostrar total pre-calculado via cron
-* Admin no puede añadir una pagina nueva a una noticia de otro usuario
 * Comprobar si se puede limitar "limit 1" a news_featured  y demas o necesita sin limitar por el numero de paginas
 * Comprobar en general si se puede mejorar news_feaured y demás en news_view.php
 LOW
