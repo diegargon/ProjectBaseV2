@@ -15,8 +15,8 @@
  * wait for plugin name and resource id in the $comm_conf array
  * for retrieve the comments relative to the plugin and id
  * 
- * @global db $db
- * @global filter $filter
+ * @global Database $db
+ * @global SecureFilter $filter
  * @param array $comm_conf
  * @return boolean
  */
@@ -46,8 +46,8 @@ function stdGetComments($comm_conf) {
  * 
  * retrieve list of messages with html format using the template "comments"
  * 
- * @global sm $sm
- * @global tpl $tpl
+ * @global SessionManager $sm
+ * @global TPL $tpl
  * @global array $cfg
  * @global array $LNG
  * @global timeUtil $timeUtil
@@ -80,7 +80,7 @@ function stdFormatComments($comments, $comm_conf, $perm_cfg) {
     }
     $uid_ary = array_unique($uid_ary);
     $uid_list = implode(", ", $uid_ary);
-    
+
     !empty($uid_list) ? $sm->setUsersInCacheByIDs($uid_list) : null;
 
     foreach ($comments as $comment_row) {
@@ -194,8 +194,8 @@ function stdNewComment() {
  * 
  * $comm_conf array must have 'plugin' name and 'resource_id' and the 'comment' text
  * 
- * @global db $db
- * @param array $comment
+ * @global Database $db
+ * @param array $comm_conf
  * @return string
  */
 function stdAddComment($comm_conf) {
@@ -210,7 +210,7 @@ function stdAddComment($comm_conf) {
 /**
  * Get the number of commentarys for a give 'plugin' & 'resource_id' on $conf 
  * 
- * @global db $db
+ * @global Database $db
  * @param array $conf
  * @return boolean
  */
@@ -228,7 +228,7 @@ function stdGetNumComm($conf) {
 /**
  * Determine admistrative bar permission
  * 
- * @global sm $sm
+ * @global SessionManager $sm
  * @param array $comm_author_id
  * @param array $perm_cfg
  * @return array
@@ -272,7 +272,7 @@ function stdGetCommPerms($comm_author_id, $perm_cfg) {
 /**
  * Report commentary
  * 
- * @global db $db
+ * @global Database $db
  * @param int $comm_id
  */
 function stdCommReport($comm_id) {
@@ -284,7 +284,7 @@ function stdCommReport($comm_id) {
 /**
  * Delete commentary
  * 
- * @global db $db
+ * @global Database $db
  * @param int $comm_id
  */
 function stdCommDelete($comm_id) {
@@ -295,7 +295,8 @@ function stdCommDelete($comm_id) {
 
 /**
  * Hide but not delete
- * @global db $db
+ * 
+ * @global Database $db
  * @param int $comm_id
  */
 function stdCommSofDelete($comm_id) {
@@ -307,7 +308,7 @@ function stdCommSofDelete($comm_id) {
 /**
  * Hide to all except comm author
  * 
- * @global db $db
+ * @global Database $db
  * @param int $comm_id
  */
 function stdCommShadowBan($comm_id) {

@@ -472,6 +472,15 @@ class Database {
         return $this->query($query);
     }
 
+    /**
+     * Toggle field 1/0
+     * 
+     * @param string $table
+     * @param string $field
+     * @param array $where
+     * @param string $logic
+     * @return array|boolean
+     */
     function toggleField($table, $field, $where = null, $logic = 'AND') {
 
         if (empty($field) || empty($table)) {

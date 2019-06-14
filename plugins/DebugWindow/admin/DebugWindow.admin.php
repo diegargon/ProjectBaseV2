@@ -10,11 +10,21 @@
  */
 !defined('IN_WEB') ? exit : true;
 
+/**
+ * DebugWindow main admin init
+ * @global type $plugins
+ */
 function DebugWindow_AdminInit() {
     global $plugins;
     $plugins->expressStart('DebugWindow') ? register_action('add_admin_menu', 'DebugWindow_AdminMenu', '5') : null;
 }
 
+/**
+ * Debug window admin menu
+ * @global Plugins $plugins
+ * @param array $params
+ * @return string #content
+ */
 function DebugWindow_AdminMenu($params) {
     global $plugins;
 
@@ -29,6 +39,13 @@ function DebugWindow_AdminMenu($params) {
     }
 }
 
+/**
+ * Debug window admin aside menu
+ * 
+ * @global array $LNG
+ * @param array $params
+ * @return string #content
+ */
 function DebugWindow_AdminAside($params) {
     global $LNG;
 
@@ -36,12 +53,19 @@ function DebugWindow_AdminAside($params) {
             "<li><a href='admin&admtab=" . $params['admtab'] . "&opt=4'>" . $LNG['L_PL_CONFIG'] . "</a></li>\n";
 }
 
+/**
+ * Debug window admin content
+ * 
+ * @global array $LNG
+ * @param array $params
+ * @return string #content
+ */
 function DebugWindow_admin_content($params) {
     global $LNG;
-    $page_data = "";
+    $page_data = '';
 
     if ($params['opt'] == 1 || $params['opt'] == false) {
-        $page_data = "<h1>" . $LNG['L_GENERAL'] . ": " . $LNG['L_PL_STATE'] . "</h1>";
+        $page_data = '<h1>' . $LNG['L_GENERAL'] . ': ' . $LNG['L_PL_STATE'] . '</h1>';
         $page_data .= Admin_GetPluginState('DebugWindow');
     } else if ($params['opt'] == 4) {
         $page_data .= AdminPluginConfig('DebugWindow');

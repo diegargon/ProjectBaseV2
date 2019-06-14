@@ -358,6 +358,7 @@ class SecureFilter {
     }
 
     /**
+     * Return the server http_referer
      * 
      * @return string|boolean|null
      */

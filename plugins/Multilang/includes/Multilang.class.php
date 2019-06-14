@@ -15,10 +15,32 @@
  */
 class Multilang {
 
+    /**
+     * The web lang ISO
+     * 
+     * @var string
+     */
     private $web_lang;
+
+    /**
+     * Web lang id
+     * 
+     * @var int 
+     */
     private $web_lang_id;
-    private $set_to_visit_lang;
+
+    /**
+     * Site active langs
+     * 
+     * @var array
+     */
     private $active_langs;
+
+    /**
+     * All langs
+     * 
+     * @var type 
+     */
     private $site_langs;
 
     /**
