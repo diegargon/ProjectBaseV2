@@ -77,7 +77,7 @@ function news_form_edit_process() {
         die('[{"status": "4", "msg": "' . $LNG[$news_orig] . '"}]');
     }
 
-    news_submit_edit_form_check($news_data);
+    news_submit_form_check($news_data);
     if (news_form_news_update($news_data)) {
         die('[{"status": "ok", "msg": "' . $LNG['L_NEWS_UPDATE_SUCCESSFUL'] . '", "url": "' . $cfg['WEB_URL'] . '"}]');
     } else {

@@ -8,6 +8,18 @@
  *  @subpackage News
  *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
+
+/**
+ * Build create new news form
+ * 
+ * @global aray $LNG
+ * @global TPL $tpl
+ * @global SessionManager $sm
+ * @global SimpleFrontend $frontend
+ * @global Multilang $ml
+ * @global Plugins $plugins
+ * @return string|boolean
+ */
 function news_new_form() {
     global $LNG, $tpl, $sm, $frontend, $ml, $plugins;
 
@@ -48,11 +60,9 @@ function news_new_form() {
         $form_data['news_add_source'] = news_perm_ask('w_news_add_source');
         $form_data['news_add_related'] = news_perm_ask('w_news_add_related');
     }
-
-    if (defined('MULTILANG') && ($site_langs = $ml->deprecated_getSiteLangsSelect('news_lang')) != false) {
+    if (defined('MULTILANG') && ($site_langs = $ml->getSiteLangsSelect('news_lang')) != false) {
         $form_data['select_langs'] = $site_langs;
     }
-
     $form_data['select_categories'] = news_getCatsSelect();
     if (empty($form_data['select_categories'])) {
         $frontend->messageBox(['msg' => 'L_NEWS_NOCATS']);
@@ -68,12 +78,20 @@ function news_new_form() {
     $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('News', 'news_form', $form_data));
 }
 
+/**
+ * insert new news 
+ * 
+ * @global array $cfg
+ * @global Database $db
+ * @param array $news_data
+ * @return boolean
+ */
 function news_create_new($news_data) {
-    global $cfg, $ml, $db;
+    global $cfg, $db;
 
     $news_data['nid'] = $db->getNextNum('news', 'nid');
 
-    defined('MULTILANG') ? $lang_id = $ml->isoToID($news_data['news_lang']) : $lang_id = 1;
+    defined('MULTILANG') ? $lang_id = $news_data['news_lang'] : $lang_id = 1;
 
     empty($news_data['featured']) ? $news_data['featured'] = 0 : null;
 
@@ -127,12 +145,16 @@ function news_create_new($news_data) {
     return true;
 }
 
+/**
+ * Send new news process
+ * 
+ * @global array $LNG
+ * @global array $cfg
+ */
 function news_submit_new_process() {
     global $LNG, $cfg;
 
     $news_data = news_form_getPost();
-
-    news_submit_edit_form_check($news_data);
 
     if (news_create_new($news_data)) {
         die('[{"status": "ok", "msg": "' . $LNG['L_NEWS_SUBMITED_SUCCESSFUL'] . '", "url": "' . $cfg['WEB_URL'] . '"}]');

@@ -8,27 +8,38 @@
  *  @subpackage News
  *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
-function news_getCatsSelect($news_data = null, $select_name = "news_category") {
+
+/**
+ * Get html select formated category selection
+ * 
+ * @global array $cfg
+ * @global Categories $ctgs
+ * @global Multilang $ml
+ * @param array $news_data
+ * @param string $select_name
+ * @return string|boolean #content
+ */
+function news_getCatsSelect($news_data = null, $select_name = 'news_category') {
     global $cfg, $ctgs, $ml;
 
     defined('MULTILANG') ? $lang_id = $ml->getWebLangID() : $lang_id = 1;
 
-    $select = "<select name='{$select_name}' id='news_category'>";
+    $select = '<select name="' . $select_name . '" id="news_category">';
     $fathers = [];
 
-    $cats = $ctgs->getCategories("News");
+    $cats = $ctgs->getCategories('News');
 
     if (!$cats) {
         return false;
     }
     foreach ($cats as $row) {
-        $fathers_name = "";
+        $fathers_name = '';
         $added_one = false;
 
         if (array_key_exists($row['father'], $fathers)) {
-            $fathers[$row['cid']] = $fathers[$row['father']] . $row['name'] . "->";
+            $fathers[$row['cid']] = $fathers[$row['father']] . $row['name'] . '->';
         } else {
-            $fathers[$row['cid']] = $row['name'] . "->";
+            $fathers[$row['cid']] = $row['name'] . '->';
         }
         $row['father'] ? $fathers_name = $fathers[$row['father']] : null;
 
@@ -42,33 +53,43 @@ function news_getCatsSelect($news_data = null, $select_name = "news_category") {
             }
         }
     }
-    $select .= "</select>";
+    $select .= '</select>';
     return $added_one ? $select : false;
 }
 
+/**
+ * Std Get POST form data
+ * 
+ * @global Database $db
+ * @global SecureFilter $filter
+ * @global SessionManager $sm
+ * @global array $cfg
+ * @global array $LNG
+ * @return array|boolean
+ */
 function news_form_getPost() {
     global $db, $filter, $sm, $cfg, $LNG;
 
     //GET
-    $form_data['nid'] = $filter->getInt("nid");
-    $form_data['old_news_lang_id'] = $filter->getInt("news_lang_id");
-    $form_data['news_lang_id'] = $filter->getInt("news_lang_id");
-    $form_data['page'] = $filter->getInt("npage");
+    $form_data['nid'] = $filter->getInt('nid');
+    $form_data['old_news_lang_id'] = $filter->getInt('news_lang_id');
+    $form_data['news_lang_id'] = $filter->getInt('news_lang_id');
+    $form_data['page'] = $filter->getInt('npage');
     //POST    
-    $form_data['author_id'] = $filter->postInt("news_author_id");
-    $form_data['title'] = $db->escapeStrip($filter->postUtf8Txt("news_title"));
-    $form_data['lead'] = $db->escapeStrip($filter->postUtf8Txt("news_lead"));
-    $form_data['editor_text'] = $db->escapeStrip($filter->postUtf8Txt("editor_text"));
-    $form_data['category'] = $filter->postInt("news_category");
-    $form_data['news_lang'] = $filter->postAZChar("news_lang", 2, 2);
-    $form_data['news_source'] = $filter->postUrl("news_source", 255, 1);
-    $form_data['news_new_related'] = $filter->postUrl("news_new_related", 255, 1);
-    $form_data['news_related'] = $filter->postUrl("news_related", 255, 1);
-    $form_data['news_translator_id'] = $filter->postInt("news_translator_id");
+    $form_data['author_id'] = $filter->postInt('news_author_id', 10, 1);
+    $form_data['title'] = $db->escapeStrip($filter->postUtf8Txt('news_title'));
+    $form_data['lead'] = $db->escapeStrip($filter->postUtf8Txt('news_lead'));
+    $form_data['editor_text'] = $db->escapeStrip($filter->postUtf8Txt('editor_text'));
+    $form_data['category'] = $filter->postInt('news_category');
+    $form_data['news_lang'] = $filter->postInt('news_lang', 8, 1);
+    $form_data['news_source'] = $filter->postUrl('news_source', 255, 1);
+    $form_data['news_new_related'] = $filter->postUrl('news_new_related', 255, 1);
+    $form_data['news_related'] = $filter->postUrl('news_related', 255, 1);
+    $form_data['news_translator_id'] = $filter->postInt('news_translator_id');
 
     //Author Changes
     if (news_perm_ask('w_news_change_author')) {
-        $author = $filter->postUsername("news_author", $cfg['smbasic_max_username'], $cfg['smbasic_min_username']);
+        $author = $filter->postUsername('news_author', $cfg['smbasic_max_username'], $cfg['smbasic_min_username']);
         if ($author != false) {
             if (!empty($author) && !($author_data = $sm->getUserByUsername($author))) {
                 $form_data['author_id'] = false;
@@ -84,7 +105,7 @@ function news_form_getPost() {
 
     //TRANSLATOR CHANGES
     if (news_perm_ask('w_news_change_author')) {
-        $translator = $filter->postUsername("news_translator", $cfg['smbasic_max_username'], $cfg['smbasic_min_username']);
+        $translator = $filter->postUsername('news_translator', $cfg['smbasic_max_username'], $cfg['smbasic_min_username']);
         if ($translator != false) {
             if (!empty($translator) && !($translator_data = $sm->getUserByUsername($translator))) {
                 $form_data['news_translator_id'] = false;
@@ -101,32 +122,50 @@ function news_form_getPost() {
     return $form_data;
 }
 
-//used when edit news, omit langs that already have this news translate
+/**
+ * used when edit news
+ * 
+ * omit langs that already have this news translate
+ * @global Multilang $ml
+ * @global Database $db
+ * @param array $news_data
+ * @return boolean|string
+ */
 function news_get_available_langs($news_data) {
-    global $cfg, $ml, $db;
+    global $ml, $db;
 
     $site_langs = $ml->getSiteLangs();
     if (empty($site_langs)) {
         return false;
     }
 
-    $select = "<select name='news_lang' id='news_lang'>";
+    $select = '<select name="news_lang" id="news_lang">';
     foreach ($site_langs as $site_lang) {
         if ($site_lang['lang_id'] == $news_data['lang_id']) {
             $select .= "<option selected value='{$site_lang['iso_code']}'>{$site_lang['lang_name']}</option>";
         } else {
-            $query = $db->selectAll("news", ["nid" => $news_data['nid'], "lang_id" => $site_lang['lang_id']], "LIMIT 1");
+            $query = $db->selectAll('news', ['nid' => $news_data['nid'], 'lang_id' => $site_lang['lang_id']], 'LIMIT 1');
             if ($db->numRows($query) <= 0) {
                 $select .= "<option value='{$site_lang['iso_code']}'>{$site_lang['lang_name']}</option>";
             }
         }
     }
-    $select .= "</select>";
+    $select .= '</select>';
 
     return $select;
 }
 
-//used when translate a news, omit all already translate langs, exclude original lang too. just show langs without the news translate
+/**
+ * used when translate a news
+ * 
+ * omit all already translate langs, exclude original lang too. just show langs without the news translate
+ * 
+ * @global type $ml
+ * @global type $db
+ * @param type $nid
+ * @param type $page
+ * @return boolean
+ */
 function news_get_missed_langs($nid, $page) {
     global $ml, $db;
 
@@ -137,26 +176,35 @@ function news_get_missed_langs($nid, $page) {
         return false;
     }
 
-    $select = "<select name='news_lang' id='news_lang'>";
+    $select = '<select name="news_lang" id="news_lang">';
     foreach ($site_langs as $site_lang) {
-        $query = $db->selectAll("news", ["nid" => $nid, "lang_id" => $site_lang['lang_id'], "page" => "$page"], "LIMIT 1");
+        $query = $db->selectAll('news', ["nid" => $nid, "lang_id" => $site_lang['lang_id'], "page" => "$page"], "LIMIT 1");
         if ($db->numRows($query) <= 0) {
             $select .= "<option value='{$site_lang['iso_code']}'>{$site_lang['lang_name']}</option>";
             $nolang = 0;
         }
     }
-    $select .= "</select>";
+    $select .= '</select>';
 
     return (!empty($nolang)) ? false : $select;
 }
 
-function news_submit_edit_form_check($news_data) {
+/**
+ * Used for submit and edit
+ * 
+ * @global array $LNG
+ * @global array $cfg
+ * @param array $news_data
+ * @return boolean
+ */
+function news_submit_form_check($news_data) {
     global $LNG, $cfg;
 
     //USERNAME/AUTHOR
     if ($news_data['author_id'] == false) {
         die('[{"status": "2", "msg": "' . $LNG['L_NEWS_ERROR_INCORRECT_AUTHOR'] . '"}]');
     }
+
     //TITLE
     if ($news_data['title'] == false) {
         die('[{"status": "3", "msg": "' . $LNG['L_NEWS_TITLE_ERROR'] . '"}]');
@@ -217,6 +265,15 @@ function news_submit_edit_form_check($news_data) {
     return true;
 }
 
+/**
+ * News form update
+ * 
+ * @global Database $db
+ * @global Multilang $ml
+ * @global SecureFilter $filter
+ * @param array $news_data
+ * @return boolean
+ */
 function news_form_news_update($news_data) {
     global $db, $ml, $filter;
 
@@ -226,71 +283,71 @@ function news_form_news_update($news_data) {
     defined('MULTILANG') ? $news_lang_id = $ml->getWebLangID() : $news_lang_id = 1;
 
     $set_ary = [
-        "title" => $db->escapeStrip($news_data['title']),
-        "lead" => $db->escapeStrip($news_data['lead']),
-        "text" => $db->escapeStrip($news_data['editor_text']),
-        "author_id" => $news_data['author_id'],
-        "category" => $news_data['category'],
+        'title' => $db->escapeStrip($news_data['title']),
+        'lead' => $db->escapeStrip($news_data['lead']),
+        'text' => $db->escapeStrip($news_data['editor_text']),
+        'author_id' => $news_data['author_id'],
+        'category' => $news_data['category'],
     ];
 
     if ($news_data['old_news_lang_id'] != $news_lang_id) {
-        $set_ary["lang_id"] = $news_lang_id;
+        $set_ary['lang_id'] = $news_lang_id;
     }
 
-    do_action("news_form_update_set", $set_ary);
+    do_action('news_form_update_set', $set_ary);
 
     $where_ary = [
-        "nid" => "{$news_data['nid']}", "lang_id" => "{$news_data['old_news_lang_id']}", "page" => "{$news_data['page']}"
+        'nid' => $news_data['nid'], 'lang_id' => $news_data['old_news_lang_id'], 'page' => $news_data['page']
     ];
 
-    $db->update("news", $set_ary, $where_ary);
+    $db->update('news', $set_ary, $where_ary);
 
-    do_action("news_form_update", $news_data); //MOD
+    do_action('news_form_update', $news_data);
     //
     //SOURCE LINK
     if (!empty($news_data['news_source'])) {
         $source_id = $news_data['nid'];
-        $plugin = "News";
-        $type = "source";
+        $plugin = 'News';
+        $type = 'source';
 
-        $query = $db->selectAll("links", ["source_id" => $source_id, "type" => $type, "plugin" => $plugin], "LIMIT 1");
+        $query = $db->selectAll('links', ['source_id' => $source_id, 'type' => $type, 'plugin' => $plugin], 'LIMIT 1');
         if ($db->numRows($query) > 0) {
 
-            $db->update("links", ["link" => $db->escapeStrip(urldecode($news_data['news_source']))], ["source_id" => $source_id, "type" => $type, "plugin" => $plugin]);
+            $db->update('links', ['link' => $db->escapeStrip(urldecode($news_data['news_source']))], ['source_id' => $source_id, 'type' => $type, 'plugin' => $plugin]);
         } else {
             $insert_ary = [
-                "source_id" => $source_id,
-                "plugin" => $plugin,
-                "type" => $type,
-                "link" => $db->escapeStrip(urldecode($news_data['news_source'])),
+                'source_id' => $source_id,
+                'plugin' => $plugin,
+                'type' => $type,
+                'link' => $db->escapeStrip(urldecode($news_data['news_source'])),
             ];
-            $db->insert("links", $insert_ary);
+            $db->insert('links', $insert_ary);
         }
     } else {
         $source_id = $news_data['nid'];
-        $plugin = "News";
-        $type = "source";
-        $db->delete("links", ["source_id" => $source_id, "type" => $type, "plugin" => $plugin], "LIMIT 1");
+        $plugin = 'News';
+        $type = 'source';
+        $db->delete('links', ['source_id' => $source_id, 'type' => $type, 'plugin' => $plugin], 'LIMIT 1');
     }
     //NEW RELATED
     if (!empty($news_data['news_new_related'])) {
         $source_id = $news_data['nid'];
-        $plugin = "News";
-        $type = "related";
+        $plugin = 'News';
+        $type = 'related';
         $insert_ary = [
-            "source_id" => $source_id, "plugin" => $plugin,
-            "type" => $type, "link" => $db->escapeStrip(urldecode($news_data['news_new_related'])),
+            'source_id' => $source_id, 'plugin' => $plugin,
+            'type' => $type, 'link' => $db->escapeStrip(urldecode($news_data['news_new_related'])),
         ];
-        $db->insert("links", $insert_ary);
+        $db->insert('links', $insert_ary);
     }
     //OLD RELATED
     if (!empty($news_data['news_related'])) {
         foreach ($news_data['news_related'] as $link_id => $value) {
             if ($filter->varInt($link_id)) { //value its checked on post $link_id no 
                 if (empty($value)) {
-                    $db->delete("links", ["link_id" => $link_id], "LIMIT 1");
+                    $db->delete('links', ['link_id' => $link_id], 'LIMIT 1');
                 } else {
-                    $db->update("links", ["link" => $db->escapeStrip(urldecode($value))], ["link_id" => $link_id], "LIMIT 1");
+                    $db->update('links', ['link' => $db->escapeStrip(urldecode($value))], ['link_id' => $link_id], 'LIMIT 1');
                 }
             }
         }

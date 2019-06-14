@@ -1,18 +1,20 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
- *  
- */
-
 /**
- *  SimpleCategories 
+ *  SimpleCategories - Main class file
+ *
  *  @author diego@envigo.net
  *  @package ProjectBase
- *  @subpackage SimpleCategories
+ *  @subpackage News
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
+
+
 !defined('IN_WEB') ? exit : true;
 
+/**
+ * Categories class
+ */
 class Categories {
 
     private $categories = [];

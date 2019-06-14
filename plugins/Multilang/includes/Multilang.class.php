@@ -214,33 +214,6 @@ class Multilang {
         return false;
     }
 
-    function deprecated_getSiteLangsSelect($name = 'lang', $all = 0) {
-        /* La nueva pone IDs en vez de el iso code en el value */
-
-        global $LNG;
-
-        $site_langs = $this->getSiteLangs();
-
-        if (empty($site_langs)) {
-            return false;
-        }
-
-        $select = '<select name="' . $name . '" id="' . $name . '">';
-        if ($all) {
-            $select .= '<option value="0">' . $LNG['L_ML_ALL'] . '</option>';
-        }
-        foreach ($site_langs as $site_lang) {
-            if ($site_lang['iso_code'] == $this->web_lang) {
-                $select .= "<option selected value='{$site_lang['iso_code']}'>{$site_lang['lang_name']}</option>";
-            } else {
-                $select .= "<option value='{$site_lang['iso_code']}'>{$site_lang['lang_name']}</option>";
-            }
-        }
-        $select .= '</select>';
-
-        return $select;
-    }
-
     /**
      * Get menu select lang (html code)
      * 
@@ -271,7 +244,7 @@ class Multilang {
                 $select .= "<option value='{$site_lang['lang_id']}'>{$site_lang['lang_name']}</option>";
             }
         }
-        $select .= "</select>";
+        $select .= '</select>';
 
         return $select;
     }

@@ -10,8 +10,20 @@
  */
 !defined('IN_WEB') ? exit : true;
 
+/**
+ * Create/Display new lang form
+ * 
+ * @global array $LNG
+ * @global TPL $tpl
+ * @global SessionManager $sm
+ * @global Frontend $frontend
+ * @param int $news_nid
+ * @param int $news_lang_id
+ * @param int $news_page  #Num Page
+ * @return string|boolean #content
+ */
 function news_new_lang($news_nid, $news_lang_id, $news_page) {
-    global $cfg, $LNG, $acl_auth, $tpl, $sm, $frontend, $filter, $sm;
+    global $LNG, $tpl, $sm, $frontend;
 
     if (!is_array($news_data = get_news_byId($news_nid, $news_lang_id, $news_page))) {
         $frontend->messageBox(['msg' => $news_data]);
@@ -59,6 +71,13 @@ function news_new_lang($news_nid, $news_lang_id, $news_page) {
     $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('News', 'news_form', $news_data));
 }
 
+/**
+ * Create news with new lang process
+ * @global array $LNG
+ * @global array $cfg
+ * @global SessionManager $sm
+ * @return boolean
+ */
 function news_form_newlang_process() {
     global $LNG, $cfg, $sm;
 
@@ -84,16 +103,23 @@ function news_form_newlang_process() {
     }
 }
 
+/**
+ * Insert the new lang news after submit
+ * 
+ * @global array $cfg
+ * @global Database $db
+ * @global array $LNG
+ * @param array $news_data
+ * @return boolean
+ */
 function news_newlang_submit($news_data) {
-    global $cfg, $db, $ml, $LNG;
+    global $cfg, $db, $LNG;
 
     if (!defined('MULTILANG')) {
         die('[{"status": "10", "msg": "' . $LNG['L_NEWS_NOMULTILANG_SUPPORT'] . '"}]');
-    } else {
-        $new_lang_id = $ml->isoToID($news_data['news_lang']);
     }
 
-    $query = $db->selectAll("news", ['nid' => $news_data['nid'], 'lang_id' => $new_lang_id, 'page' => $news_data['page']]);
+    $query = $db->selectAll('news', ['nid' => $news_data['nid'], 'lang_id' => $news_data['news_lang'], 'page' => $news_data['page']]);
     if ($db->numRows($query) > 0) { //already exist
         die('[{"status": "10", "msg": "' . $LNG['L_NEWS_ALREADY_EXIST'] . '"}]');
     }
@@ -107,7 +133,7 @@ function news_newlang_submit($news_data) {
 
     $insert_ary = [
         'nid' => $news_data['nid'],
-        'lang_id' => $new_lang_id,
+        'lang_id' => $news_data['news_lang'],
         'page' => $news_data['page'],
         'translator_id' => $news_data['news_translator_id'],
         'title' => $db->escapeStrip($news_data['title']),
@@ -115,7 +141,6 @@ function news_newlang_submit($news_data) {
         'text' => $db->escapeStrip($news_data['editor_text']),
         'author_id' => $orig_news['author_id'],
         'category' => $orig_news['category'],
-        'lang_id' => $new_lang_id,
         'moderation' => $moderation
     ];
     $db->insert('news', $insert_ary);
@@ -123,6 +148,13 @@ function news_newlang_submit($news_data) {
     return true;
 }
 
+/**
+ * Check news new lang  form process
+ * 
+ * @global array $LNG
+ * @global array $cfg
+ * @return boolean
+ */
 function news_newlang_form_process() {
     global $LNG, $cfg;
 
