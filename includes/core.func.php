@@ -13,7 +13,7 @@
 !defined('IN_WEB') ? exit : true;
 
 /**
- * Retrieve from the databse the confiog to populate $cfg
+ * Retrieve from the database the config to populate $cfg
  * @global db $db
  * @global array $cfg
  */
@@ -29,7 +29,10 @@ function core_set_config() {
         foreach ($config as $conf) {
             $cfg[$conf['cfg_key']] = $conf['cfg_value'];
         }
+        return true;
     }
+
+    return false;
 }
 
 /**
@@ -82,7 +85,7 @@ function core_check_install() {
 
         $plugins->scanDir();
         do_action('install_core');
-        require_once 'includes/install.inc.php';
+        require_once ('includes/install.inc.php');
         //$debug->$debug->log();
         exit();
     }

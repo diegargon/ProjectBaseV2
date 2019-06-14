@@ -1,5 +1,4 @@
 <?php
-
 /**
  *  New Install process
  * 
@@ -13,6 +12,8 @@
 /**
  * Install script
  */
+global $db;
+
 require_once ('install.db.php');
 
 $step = filter_input(INPUT_GET, 'step', FILTER_VALIDATE_INT);

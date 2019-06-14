@@ -169,6 +169,8 @@ class Database {
     /**
      * Query
      * 
+     * Std query wrap, add history and stats
+     * 
      * @param string $query
      * @return array
      */
@@ -184,7 +186,7 @@ class Database {
     }
 
     /**
-     * fetch
+     * fetch wrap
      * 
      * @param object $query
      * @return array
@@ -253,7 +255,7 @@ class Database {
      * @param string $query
      */
     private function dbdie($query) {
-        printf('\n<b>Error: Unable to retrieve information.</b>');
+        printf('<b>Error: Unable to retrieve information.</b>');
         printf("\n<br>%s", $query);
         printf("\n<br>reported: %s", $this->dblink->error);
         $this->close();
@@ -291,7 +293,7 @@ class Database {
      * @return boolean
      */
     function tableExists($table) {
-        $query = 'SHOW TABLES LIKE ' . $table;
+        $query = 'SHOW TABLES LIKE \'' . $table . '\'';
         $result = $this->query($query);
         if ($this->numRows($result) == 1) {
             return true;
