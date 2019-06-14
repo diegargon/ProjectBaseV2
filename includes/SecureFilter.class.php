@@ -270,8 +270,9 @@ class SecureFilter {
      * @return boolean
      */
     function postInt($var, $max_size = null, $min_size = null) {
-        if ((!isset($_POST[$var])) || !is_numeric($_POST[$var]) || (!empty($max_size) && ($_POST[$var] > $max_size) ) ||
-                (!empty($min_size) && ($_POST[$var] < $min_size))
+
+        if ((!isset($_POST[$var])) || !is_numeric($_POST[$var]) || (!empty($max_size) && (strlen($_POST[$var]) > $max_size) ) ||
+                (!empty($min_size) && (strlen($_POST[$var]) < $min_size))
         ) {
             return false;
         }
@@ -716,9 +717,11 @@ class SecureFilter {
 
         if ((empty($var) ) || (!empty($max_size) && (strlen($var) > $max_size) ) || (!empty($min_size) && (strlen($var) < $min_size))
         ) {
+            echo "Username FALSE\n";
             return false;
         }
         if (!preg_match($this->user_name_regex, $var)) {
+            echo "USERNAME pregmatch false" . $this->user_name_regex;
             return false;
         }
 
