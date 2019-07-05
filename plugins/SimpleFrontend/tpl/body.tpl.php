@@ -1,6 +1,13 @@
 <?php
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  SimpleFrontend template
+ *
+ *  Body Template
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage SimpleFrontend
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 ?>
@@ -45,7 +52,7 @@
                     ?>
                     <nav id="sections_nav">
                         <ul>
-    <?= $tpldata['SECTIONS_NAV'] ?>
+                            <?= $tpldata['SECTIONS_NAV'] ?>
                         </ul>
                     </nav>
                     <?php
@@ -54,11 +61,11 @@
                     ?>
                     <nav id="sections_submenu">
                         <ul>
-    <?= $tpldata['SECTIONS_NAV_SUBMENU'] ?>
+                            <?= $tpldata['SECTIONS_NAV_SUBMENU'] ?>
                         </ul>
                     </nav>
                 <?php } ?>
-<?= isset($tpldata['ADD_HEADER_END']) ? $tpldata['ADD_HEADER_END'] : null ?>
+                <?= isset($tpldata['ADD_HEADER_END']) ? $tpldata['ADD_HEADER_END'] : null ?>
 
             </header>
         </div> 

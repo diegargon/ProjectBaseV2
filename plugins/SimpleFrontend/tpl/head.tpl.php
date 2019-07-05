@@ -1,6 +1,13 @@
 <?php
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  SimpleFrontend template
+ *
+ *  Head Template
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage SimpleFrontend
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 ?>
@@ -9,9 +16,7 @@
     <head>
         <?= isset($cfg['CHARSET']) ? '<meta charset="' . $cfg['CHARSET'] . '" />' : null; ?>
         <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1" />
-        <title>
-            <?= isset($cfg['PAGE_TITLE']) ? $cfg['PAGE_TITLE'] : null ?>
-        </title>
+        <title><?= isset($cfg['PAGE_TITLE']) ? $cfg['PAGE_TITLE'] : $cfg['WEB_NAME'] ?></title>
         <meta name="robots" content="all" />
         <meta name="referrer" content="origin-when-crossorigin" />
         <meta name="distribution" content="global"  />

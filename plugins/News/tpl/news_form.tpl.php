@@ -38,7 +38,7 @@
                         <textarea required="required"  minlength="<?= $cfg['news_lead_min_length'] ?>" maxlength="<?= $cfg['news_lead_max_length'] ?>" id="news_lead" name="news_lead" ><?= isset($data['lead']) ? $data['lead'] : null ?></textarea>
                     </div>
                     <div class="submit_items">
-                        <label for="news_text"><?= $LNG['L_NEWS_TEXT'] ?> </label>
+                        <label for="editor_text"><?= $LNG['L_NEWS_TEXT'] ?> </label>
                         <?= isset($data['editor']) ? $data['editor'] : null; ?>
                     </div>
                     <?= !empty($tpldata['NEWS_FORM_MIDDLE_OPTION']) ? $tpldata['NEWS_FORM_MIDDLE_OPTION'] : null ?>

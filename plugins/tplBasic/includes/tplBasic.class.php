@@ -304,7 +304,7 @@ class TPL {
 
             if (array_key_exists($filename, $this->std_remote_scripts)) {
                 $script_url = $this->std_remote_scripts[$filename];
-                $script = '<script type="text/javascript" src="' . $script_url . '" charset="UTF-8" ' . $async . '></script>';
+                $script = '<script src="' . $script_url . '" ' . $async . '></script>';
                 $this->addtoTplVar('SCRIPTS_' . $place, $script);
 
                 $backtrace = debug_backtrace();
@@ -336,7 +336,7 @@ class TPL {
             $SCRIPT_PATH = $DEFAULT_PATH;
         }
         if (!empty($SCRIPT_PATH)) {
-            $script = '<script type="text/javascript" src="' . $this->static_url . $SCRIPT_PATH . '" charset="UTF-8" ' . $async . '></script>';
+            $script = '<script src="' . $this->static_url . $SCRIPT_PATH . '" ' . $async . '></script>';
         } else {
             $this->debug ? $this->debug->log("AddScriptFile called by-> $plugin for get a $filename but NOT FOUND IT", 'tplBasic', 'ERROR') : null;
             return false;
