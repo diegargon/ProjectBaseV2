@@ -97,7 +97,8 @@ $LNG['L_NEWS_SEC_EMPTY_TITLE'] = 'Oops';
 $LNG['L_NEWS_DELETE_PAGE'] = "Delete page";
 $LNG['L_NEWS_NOMULTILANG_SUPPORT'] = "No multilang support";
 $LNG['L_NEWS_SHOW_LANG'] = "Show news in";
-
+$LNG['L_NEWS_CREATE'] = "Create";
+$LNG['L_NEWS_UPDATE'] = "Update";
 /* ACL */
 $LNG['L_PERM_R_NEWS_FULL_ACCESS'] = 'Full admin access to read';
 $LNG['L_PERM_W_NEWS_FULL_ACCESS'] = 'Full admin access to read/write';

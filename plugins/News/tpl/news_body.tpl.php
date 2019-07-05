@@ -44,9 +44,11 @@
                     <?php } ?>
                     <?= !empty($tpldata['ADD_NEWS_INFO_POST_AVATAR']) ? $tpldata['ADD_NEWS_INFO_POST_AVATAR'] : null ?>
                     <div class="extra-small">
-                        <?= $data['date'] ?> <br/>
                         <a href='/<?= $cfg['WEB_LANG'] ?>/profile&viewprofile=<?= $data['author_uid'] ?>'><?= $data['author'] ?></a>
                         <?= !empty($data['translator']) ? " | " . $LNG['L_NEWS_TRANSLATE_BY'] . $data['translator'] : null ?>
+                        <br/>
+                        <?= $LNG['L_NEWS_CREATE'] . ':' . $data['date'] ?> <br/>
+                        <?= $LNG['L_NEWS_UPDATE'] . ':' . $data['last_edited'] ?> 
                         <?php if (!empty($data['news_sources'])) { ?>
                             | <span><?= $LNG['L_NEWS_SOURCE'] . ": " . $data['news_sources'] ?> </span>
                         <?php } ?>

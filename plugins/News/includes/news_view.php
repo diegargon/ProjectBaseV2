@@ -60,6 +60,7 @@ function news_show_page() {
     $news_data['lead'] = str_replace('\r\n', PHP_EOL, $news_data['lead']);
     $news_data['news_url'] = "view_news.php?nid={$news_data['nid']}";
     $news_data['date'] = $timeUtil->formatDbDate($news_data['date']);
+    $news_data['last_edited'] = $timeUtil->formatDbDate($news_data['last_edited']);
     $author_data = $sm->getUserByID($news_data['author_id']);
     $news_data['author'] = $author_data['username'];
     $news_data['author_uid'] = $news_data['author_id'];
@@ -67,7 +68,7 @@ function news_show_page() {
 
     if (!empty($news_data['translator_id'])) {
         $translator = $sm->getUserByID($news_data['translator_id']);
-        $news_data['translator'] = "<a rel='nofollow' href='/{$cfg['WEB_LANG']}/profile&viewprofile={$translator['uid']}'>{$translator['username']}</a>";
+        $news_data['translator'] = '<a rel="nofollow" href="/' . $cfg['WEB_LANG'] . '/profile&viewprofile=' . $translator['uid'] . '">' . $translator['username'] . '</a>';
     }
     $author = $sm->getUserByID($news_data['author_id']);
 
@@ -151,7 +152,7 @@ function news_catch_admin_actions(&$news_data) {
         news_delete($news_nid, $news_lang_id, $news_page);
         $srv_referer = $filter->srvReferer();
         if (!empty($srv_referer)) {
-            header("Location: {$srv_referer}");
+            header('Location: ' . $srv_referer);
         } else {
             header('Location: /');
         }
@@ -203,13 +204,13 @@ function news_nav_options($news) {
     if (news_perm_ask('w_news_feature||w_news_adm_all')) {
         if ($news['page'] == 1) {
             if ($news['featured'] == 1) {
-                $content .= "<li><a class='link_active' rel='nofollow' href='$view_news_url&news_featured=0&featured_value=0'>{$LNG['L_NEWS_FEATURED']}</a></li>";
+                $content .= '<li><a class="link_active" rel="nofollow" href="' . $view_news_url . '&news_featured=0&featured_value=0">' . $LNG['L_NEWS_FEATURED'] . '</a></li>';
             } else {
-                $content .= "<li><a rel='nofollow' href='$view_news_url&news_featured=1&featured_value=1'>{$LNG['L_NEWS_FEATURED']}</a></li>";
+                $content .= '<li><a rel="nofollow" href="' . $view_news_url . '&news_featured=1&featured_value=1">' . $LNG['L_NEWS_FEATURED'] . '</a></li>';
             }
         }
     } else if ($news['featured'] == 1 && $news['page'] == 1) {
-        $content .= "<li><a class='link_active' rel='nofollow' href=''>{$LNG['L_NEWS_FEATURED']}</a></li>";
+        $content .= '<li><a class="link_active" rel="nofollow" href="">' . $LNG['L_NEWS_FEATURED'] . '</a></li>';
     }
 
     /* FRONTPAGE */
@@ -217,31 +218,31 @@ function news_nav_options($news) {
     if (news_perm_ask('w_news_frontpage||w_news_adm_all')) {
         if ($news['page'] == 1) {
             if ($news['frontpage']) {
-                $content .= "<li><a class='link_active' rel='nofollow' href='$view_news_url&news_frontpage=0'>{$LNG['L_NEWS_FRONTPAGE']}</a></li>";
+                $content .= '<li><a class="link_active" rel="nofollow" href="' . $view_news_url . '&news_frontpage=0">' . $LNG['L_NEWS_FRONTPAGE'] . '</a></li>';
             } else {
-                $content .= "<li><a rel='nofollow' href='$view_news_url&news_frontpage=1'>{$LNG['L_NEWS_FRONTPAGE']}</a></li>";
+                $content .= '<li><a rel="nofollow" href="' . $view_news_url . '&news_frontpage=1">' . $LNG['L_NEWS_FRONTPAGE'] . '</a></li>';
             }
         }
     } else if ($news['frontpage'] && $news['page'] == 1) {
-        $content .= "<li><a class='link_active' rel='nofollow' href=''>{$LNG['L_NEWS_FRONTPAGE']}</a></li>";
+        $content .= '<li><a class="link_active" rel="nofollow" href="">' . $LNG['L_NEWS_FRONTPAGE'] . '</a></li>';
     }
 
     /* EDIT */
 
     if ($user['uid'] != 0 && $user['uid'] == $news['author_id']) {
         if (news_perm_ask('w_news_edit_own||w_news_adm_all')) {
-            $content .= "<li><a rel='nofollow' href='$edit_news_url&newsedit=1'>{$LNG['L_NEWS_EDIT']}</a></li>";
+            $content .= '<li><a rel="nofollow" href="' . $edit_news_url . '&newsedit=1">' . $LNG['L_NEWS_EDIT'] . '</a></li>';
         }
     } else {
         if (news_perm_ask('w_news_edit||w_news_adm_all')) {
-            $content .= "<li><a rel='nofollow' href='$edit_news_url&newsedit=1'>{$LNG['L_NEWS_EDIT']}</a></li>";
+            $content .= '<li><a rel="nofollow" href="' . $edit_news_url . '&newsedit=1">' . $LNG['L_NEWS_EDIT'] . '</a></li>';
         }
     }
 
     /* CREATE NEW PAGE */
 
     if ($cfg['allow_multiple_pages'] && (( $user['uid'] == $news['author_id'] && $user['uid'] != 0) || $user['isFounder'])) {
-        $content .= "<li><a rel='nofollow' href='$edit_news_url&newpage=1'>{$LNG['L_NEWS_NEW_PAGE']}</a></li>";
+        $content .= '<li><a rel="nofollow" href="' . $edit_news_url . '&newpage=1">' . $LNG['L_NEWS_NEW_PAGE'] . '</a></li>';
     }
 
     // TRANSLATE  TODO: ANON TRANSLATE?

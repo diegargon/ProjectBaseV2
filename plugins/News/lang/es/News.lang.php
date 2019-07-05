@@ -80,6 +80,8 @@ $LNG['L_NEWS_SEC_EMPTY_TITLE'] = 'Oops';
 $LNG['L_NEWS_DELETE_PAGE'] = "Borrar pagina";
 $LNG['L_NEWS_NOMULTILANG_SUPPORT'] = "No hay soporte multilang";
 $LNG['L_NEWS_SHOW_LANG'] = "Mostrar noticias en";
+$LNG['L_NEWS_CREATE'] = "Creada";
+$LNG['L_NEWS_UPDATE'] = "Actualizada";
 
 /* ACL */
 $LNG['L_PERM_R_NEWS_FULL_ACCESS'] = 'Acceso administrador total de lectura';
