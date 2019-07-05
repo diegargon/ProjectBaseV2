@@ -571,6 +571,9 @@
     float:left;
     width:22%;
 }
+.news_section_img img {
+    max-width: 100%;
+}
 .news_article_section_container {    
     float:right;
     width:76%;

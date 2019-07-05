@@ -275,7 +275,7 @@ function Blocks_addBlock($config_array) {
     $block_weight = $filter->postInt('block_weight', 127, 1);
     $canUserDisable = $filter->postAlphaNum('disable_by_user', 1, 1);
 
-    !empty($canUserDisable) ? $canUserDisable = 0 : $canUserDisable = 1;
+    !empty($canUserDisable) ? $canUserDisable = 1 : $canUserDisable = 0;
 
     if (!$block_page || !$block_section || !$blockname || !$block_weight || ( count($config_array) <= 0)) {
         !empty($blocks->debug) ? $blocks->debug->log('Add block failed', 'Blocks', 'WARNING') : null;

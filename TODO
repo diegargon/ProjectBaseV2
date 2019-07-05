@@ -3,9 +3,15 @@ HIGH
 MED
 
 * clear css cache
-
+* GoogleAnalytics, menu admin para cambiar el codigo de usuario
 LOW
 
+* Bloques: poder cambiar idioma, prioridad y demas
+* Smbasic admin: añadir usuario manualmente.
+* Smbasic admin: añadir admin y founder
+* Smbasic: crear email html, quizas optativo plain/html por configuracion.
+* SimpleCategories: cuando insertas unas url/img no valida o que no existe no presenta mensaje de error
+* DebugWindows: que solo aparezca con admin logged
 * filter strict chars , permitir configurar que caracteres permite
 * CORE: Config por grupos (añadidada la tambla pero sin usar) ver como agrupar y mostrar agrupados en admin
 para luego presentarlos por grupos, ej: L_NEWS_SUBMIT, L_NEWS_VIEW

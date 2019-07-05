@@ -10,6 +10,14 @@
  */
 !defined('IN_WEB') ? exit : true;
 
+/**
+ * Show options for login and register in the top navigation
+ * 
+ * @global array $cfg
+ * @global array $LNG
+ * @global SessionManager $sm
+ * @return string
+ */
 function SMBasic_navLogReg() {
     global $cfg, $LNG, $sm;
 
@@ -41,6 +49,14 @@ function SMBasic_navLogReg() {
     return $elements;
 }
 
+/**
+ * Print to debug session debug details
+ * @global Database $db
+ * @global SessionManager $sm
+ * @global array $debug
+ * @global TimeUtil $timeUtil
+ * @return boolean
+ */
 function setSessionDebugDetails() {
     global $db, $sm, $debug, $timeUtil;
 
@@ -87,23 +103,31 @@ function setSessionDebugDetails() {
     }
 }
 
+/**
+ * Creation a email for send after register or resend when not active
+ * 
+ * @global array $LNG
+ * @global array $cfg
+ * @param  int $active
+ * @return string
+ */
 function SMBasic_create_reg_mail($active) {
     global $LNG, $cfg;
 
     if ($active > 1) {
         if ($cfg['FRIENDLY_URL']) {
-            $URL = $cfg['WEB_URL'] . $cfg['WEB_LANG'] . "/login&active=$active";
+            $URL = $cfg['WEB_URL'] . $cfg['WEB_LANG'] . '/login&active=' . $active;
         } else {
-            $URL = $cfg['CON_FILE'] . "?module=SMBasic&page=login&active=$active";
+            $URL = $cfg['CON_FILE'] . '?module=SMBasic&page=login&active=' . $active;
         }
-        $msg = $LNG['L_REG_EMAIL_MSG_ACTIVE'] . '\n' . $URL;
+        $msg = $LNG['L_REG_EMAIL_MSG_ACTIVE'] . $URL;
     } else {
         if ($cfg['FRIENDLY_URL']) {
             $URL = $cfg['WEB_URL'] . $cfg['WEB_LANG'] . '/login';
         } else {
             $URL = $cfg['CON_FILE'] . '?module=SMBasic&page=login';
         }
-        $msg = $LNG['L_REG_EMAIL_MSG_WELCOME'] . '\n' . $URL;
+        $msg = $LNG['L_REG_EMAIL_MSG_WELCOME'] . $URL;
     }
     return $msg;
 }

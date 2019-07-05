@@ -446,7 +446,7 @@ class SecureFilter {
           No keywords requirements, since its more secure and easy remember
           something like this_is_my_long_password than $12#45ab
          */
-        if (!preg_match("/^(\S+)+$/", $var)) {
+        if (!preg_match('/^(\S+)+$/', $var)) {
             return false;
         }
         return $var;
@@ -487,7 +487,7 @@ class SecureFilter {
         ) {
             return false;
         }
-        if (preg_match("/[^A-Za-z]/", $var)) {
+        if (preg_match('/[^A-Za-z]/', $var)) {
             return false;
         }
 
@@ -529,7 +529,7 @@ class SecureFilter {
             return false;
         }
         if ((strpos($var, 'http://') !== 0) && (strpos($var, 'https://') !== 0)) {
-            $var = "http://" . $var;
+            $var = 'https://' . $var;
         }
         if ((!empty($max_size) && (strlen($var) > $max_size) ) || (!empty($min_size) && (strlen($var) < $min_size))
         ) {
@@ -541,7 +541,7 @@ class SecureFilter {
         if (empty($url)) {
             return false;
         }
-        if ($this->remote_checks && (!remote_check($url))) {
+        if ($this->remote_checks && !remote_check($url)) {
             return false;
         }
         return $url;
@@ -566,7 +566,7 @@ class SecureFilter {
             return false;
         }
 
-        if (!preg_match("/^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$/", $var)) {
+        if (!preg_match('/^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$/', $var)) {
             return false;
         }
 
@@ -587,7 +587,7 @@ class SecureFilter {
             return false;
         }
         // TODO check if work the regex
-        if (!preg_match("//u", $var)) {
+        if (!preg_match('//u', $var)) {
             return false;
         }
 
@@ -716,13 +716,10 @@ class SecureFilter {
      */
     function varUsername($var, $max_size = null, $min_size = null) {
 
-        if ((empty($var) ) || (!empty($max_size) && (strlen($var) > $max_size) ) || (!empty($min_size) && (strlen($var) < $min_size))
-        ) {
-            echo "Username FALSE\n";
+        if ((empty($var) ) || (!empty($max_size) && (strlen($var) > $max_size) ) || (!empty($min_size) && (strlen($var) < $min_size))) {
             return false;
         }
         if (!preg_match($this->user_name_regex, $var)) {
-            echo "USERNAME pregmatch false" . $this->user_name_regex;
             return false;
         }
 

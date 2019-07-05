@@ -21,6 +21,8 @@
 function botDetect($match_type = 0) {
     global $cfg, $filter;
 
+    $matches = [];
+
     if ($match_type == 1) {
         $botList = $cfg['BAD_BOTS'];
     } else if ($match_type == 2) {
@@ -89,7 +91,7 @@ function formatBytes($nbytes, $precision = 2) {
 function remote_check($url) {
 
     if ((strpos($url, 'http://') !== 0) && (strpos($url, 'https://') !== 0)) {
-        $url = "http://" . $url;
+        $url = 'https://' . $url;
     }
 
     if (strpos($url, 'https://') !== 0) {

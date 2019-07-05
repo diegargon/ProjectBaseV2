@@ -87,20 +87,22 @@ function news_dropdown_profile_edit(& $form_data) {
     global $LNG, $ml, $sm;
 
     $user = $sm->getSessionUser();
-    $form_data['dropdown_fields'] = '<dl><dt><label>' . $LNG['L_NEWS_SHOW_LANG'] . '</label></dt><dd>';
-    $user_langs = unserialize($user['news_lang']);
-    $langs = $ml->getSiteLangs();
+    $user_langs = @unserialize($user['news_lang']);
+    if ($user_langs !== false) {
+        $form_data['dropdown_fields'] = '<dl><dt><label>' . $LNG['L_NEWS_SHOW_LANG'] . '</label></dt><dd>';
+        $langs = $ml->getSiteLangs();
 
-    $checked = '';
-    foreach ($langs as $lang) {
-        if (!empty($user_langs) && in_array($lang['lang_id'], $user_langs)) {
-            $checked = 'checked';
-        }
-        $form_data['dropdown_fields'] .= '<label>' . $lang['lang_name'] . '</label>'
-                . '<input type="checkbox"  ' . $checked . ' name="langs[]" value="' . $lang['lang_id'] . '" />';
         $checked = '';
+        foreach ($langs as $lang) {
+            if (!empty($user_langs) && in_array($lang['lang_id'], $user_langs)) {
+                $checked = 'checked';
+            }
+            $form_data['dropdown_fields'] .= '<label>' . $lang['lang_name'] . '</label>'
+                    . '<input type="checkbox"  ' . $checked . ' name="langs[]" value="' . $lang['lang_id'] . '" />';
+            $checked = '';
+        }
+        $form_data['dropdown_fields'] .= '</dd></dl>';
     }
-    $form_data['dropdown_fields'] .= '</dd></dl>';
 }
 
 function news_dropdown_profile_change(& $q_data) {

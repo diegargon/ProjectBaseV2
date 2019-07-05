@@ -41,17 +41,30 @@ $q_where = ['category' => $category_id];
 
 $user = $sm->getSessionUser();
 if (!empty($user['news_lang'])) {
-    $news_langs = unserialize($user['news_lang']);
-    $w_langs_ids = '';
-    foreach ($news_langs as $langs) {
-        !empty($w_langs_ids) ? $w_langs_ids .= ',' : null;
-        $w_langs_ids .= $langs;
+    $news_langs = @unserialize($user['news_lang']);
+    if ($news_langs != false) {
+        $w_langs_ids = '';
+        foreach ($news_langs as $langs) {
+            if (is_numeric($langs)) {
+                !empty($w_langs_ids) ? $w_langs_ids .= ',' : null;
+                $w_langs_ids .= $langs;
+            }
+        }
+        $q_where['lang_id'] = ['value' => "({$w_langs_ids})", 'operator' => 'IN'];
     }
-    $q_where['lang_id'] = ['value' => "({$w_langs_ids})", 'operator' => 'IN'];
-} else if (!isset($user['news_lang'])) {
-    defined('MULTILANG') ? $lang_id = $ml->getWebLangID() : $lang_id = 1;
 }
 
+/* TODO:  si no tiene lang id y esta multilang mostrar todas o descomentar esto y mostrar
+ * solo el idioma del inteface
+ * el problema es que uno nuevo si visita en ingles y no hay noticias no vera nada
+ * /
+
+if ($q_where['lang_id']) {
+    if (defined('MULTILANG')) {
+        $q_where['lang_id'] = ['value' => "({$ml->getWebLangID()})", 'operator' => 'IN'];
+    }
+}
+*/
 $news_db = get_news_query($q_where, $q_opt);
 if (($num_news = count($news_db)) < 1) {
     return $frontend->messageBox(['title' => 'L_NEWS_SEC_EMPTY_TITLE', 'msg' => 'L_NEWS_SEC_EMPTY']);

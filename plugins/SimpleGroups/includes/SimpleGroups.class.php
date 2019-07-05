@@ -176,7 +176,7 @@ class Groups {
         }
 
         $this->user_groups = $this->getUserGroupsByUID($user['uid']);
-        if (!(count($this->user_groups) > 0)) {
+        if (empty($this->user_groups) || count($this->user_groups) <= 0) {
             return ($this->user_groups = false);
         }
 

@@ -47,7 +47,7 @@
                         <div class="submit_items">
                             <p> 
                                 <label for="news_source"><?= $LNG['L_NEWS_SOURCE'] ?> </label>
-                                <input  value="<?= isset($data['news_source']) ? $data['news_source'] : null ?>"  minlength="<?= $cfg['news_link_min_legth'] ?>" maxlength="<?= $cfg['news_link_max_legth'] ?>" id="news_source" class="news_link" name="news_source" type="text" placeholder="http://site.com"/>
+                                <input  value="<?= isset($data['news_source']) ? $data['news_source'] : null ?>"  minlength="<?= $cfg['news_link_min_length'] ?>" maxlength="<?= $cfg['news_link_max_length'] ?>" id="news_source" class="news_link" name="news_source" type="text" placeholder="http://site.com"/>
                             </p>
                         </div>
                     <?php } ?>
@@ -55,7 +55,7 @@
                         <div class="submit_items">
                             <p>
                                 <label for="news_new_related"><?= $LNG['L_NEWS_RELATED'] ?> </label>
-                                <input  value="<?= isset($data['news_new_related']) ? $data['news_new_related'] : null ?>"  minlength="<?= $cfg['news_link_min_legth'] ?>" maxlength="<?= $cfg['news_link_max_legth'] ?>" id="news_new_related" class="news_link" name="news_new_related" type="text" placeholder="http://site.com"/>
+                                <input  value="<?= isset($data['news_new_related']) ? $data['news_new_related'] : null ?>"  minlength="<?= $cfg['news_link_min_length'] ?>" maxlength="<?= $cfg['news_link_max_length'] ?>" id="news_new_related" class="news_link" name="news_new_related" type="text" placeholder="http://site.com"/>
                                 <?= isset($data['news_related']) ? $data['news_related'] : null ?>
                             </p>
                         </div>
