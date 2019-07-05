@@ -63,6 +63,9 @@ function news_section_nav_subelements() {
     $submenu_data = '';
 
     $cats_explode = explode($cfg['categories_separator'], $cat_path);
+    if (empty($cats_explode)) {
+        return false;
+    }
     if (count($cats_explode) > 1) { //Back button to the previus cat;
         array_pop($cats_explode);
         $f_cats = implode($cfg['categories_separator'], $cats_explode);

@@ -570,6 +570,7 @@
 .news_section_img {
     float:left;
     width:22%;
+    padding-left:5px;
 }
 .news_section_img img {
     max-width: 100%;
@@ -600,11 +601,35 @@
 pre {
     color: #fff;
     background-color: #000;
-    padding: 4px;
+    padding-left: 4px;
+    padding-top: 10px;
+    padding-bottom: 8px;
     border: 1px solid gray;
     box-shadow: 0 0 4px 2px #000;
     border-radius: 5px;
     word-wrap: break-word;
     white-space: pre-wrap;
     text-align: justify;
+    line-height:0.7;
+}
+ul {
+    list-style-type: square;
+}
+.btnRate {
+    border:0px solid black;
+    padding:13px 15px 10px 10px;
+    margin:0;
+    background-size: 20px 60px !important;
+}
+.show_pointer {
+    cursor: pointer;
+}
+.vFull {
+    background-position: 2px 0px !important;
+}
+.vHalf {
+    background-position: 2px -20px !important;
+}
+.vVoid {
+    background-position: 2px -40px !important;
 }

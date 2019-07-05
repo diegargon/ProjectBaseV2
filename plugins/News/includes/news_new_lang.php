@@ -65,7 +65,7 @@ function news_new_lang($news_nid, $news_lang_id, $news_page) {
     $editor = new Editor();
     $news_data['editor'] = $editor->getEditor(['text' => $news_data['text']]);
 
-    //$news_data['terms_url'] = $cfg['TERMS_URL'];
+    $news_data['terms_url'] = $sm->getPage('terms');
     do_action('news_newlang_form_add', $news_data);
 
     $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('News', 'news_form', $news_data));

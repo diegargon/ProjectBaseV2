@@ -8,6 +8,14 @@
  *  @subpackage CORE
  *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
+
+/**
+ * Report errors
+ */
+ini_set('display_errors', 0);
+ini_set('display_startup_errors', 0);
+/* error_reporting(E_ALL);*/
+
 /**
  * Debug messages true, comment to disable
  */

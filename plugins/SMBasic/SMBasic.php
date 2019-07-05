@@ -27,6 +27,7 @@ function SMBasic_Init() {
     $frontend->registerPage(['module' => 'SMBasic', 'page' => 'logout', 'type' => 'virtual', 'func' => [$sm, 'logout']]);
     $frontend->registerPage(['module' => 'SMBasic', 'page' => 'profile', 'type' => 'disk']);
     $frontend->registerPage(['module' => 'SMBasic', 'page' => 'register', 'type' => 'disk']);
+    $frontend->registerPage(['module' => 'SMBasic', 'page' => 'terms', 'type' => 'disk']);
 }
 
 function SMBasic_Install() {

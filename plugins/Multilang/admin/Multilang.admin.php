@@ -105,6 +105,9 @@ function Multilang_AdminLangs() {
     $content = '';
 
     $langs = $ml->getSiteLangs(0);
+    if(empty($langs)) {
+        return false;
+    }
     $counter = 1;
     $count = count($langs);
     foreach ($langs as $lang) {

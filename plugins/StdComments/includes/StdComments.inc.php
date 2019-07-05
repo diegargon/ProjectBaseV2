@@ -61,6 +61,9 @@ function stdFormatComments($comments, $comm_conf, $perm_cfg) {
 
     $counter = 0;
     $uid_list = $content = '';
+    if (empty($comments)) {
+        return false;
+    }
     $num_comments = count($comments);
 
     //ADM COMMENTS ACTIONS

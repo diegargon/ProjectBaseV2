@@ -51,9 +51,8 @@ class ACL {
         global $groups;
 
         $user_groups = $groups->getUserGroups();
-
         $user_perms = [];
-        if ($user_groups !== false && count($user_groups > 0)) {
+        if ($user_groups !== false && count($user_groups) > 0) {
             foreach ($user_groups as $user_group_id) { //Recorremos los grupos del usuario
                 foreach ($this->permissions as $this_perm) { //Recorremos los permisos
                     $perm_groups_id = explode(',', $this_perm['groups']); //Cogemos los grupos a los que afecta el permiso

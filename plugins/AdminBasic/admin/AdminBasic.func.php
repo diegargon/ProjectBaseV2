@@ -290,6 +290,10 @@ function plugins_ctrl_display($plugins_list) {
 
     $content = '';
     $counter = 1;
+    if (empty($plugins_list)) {
+        return false;
+    }
+
     $num_items = count($plugins_list);
 
     foreach ($plugins_list as $plugin) {

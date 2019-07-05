@@ -34,6 +34,8 @@ class Editor {
         '~\[h2\](.*?)\[/h2\]~si' => '<h2>$1</h2>',
         '~\[h3\](.*?)\[/h3\]~si' => '<h3>$1</h3>',
         '~\[h4\](.*?)\[/h4\]~si' => '<h4>$1</h4>',
+        '~\[h2 id=(.*?)\](.*?)\[/h2\]~si' => '<h2 id=$1>$2</h2>',
+        '~\[h3 id=(.*?)\](.*?)\[/h3\]~si' => '<h3 id=$1>$2</h3>',
         '~\[div class=((?:[a-zA-Z-_\s])+)\](.*?)\[/div\]~si' => '<div class="$1">$2</div>',
         '~\[blockquote\](.*?)\[/blockquote\]~si' => '<blockquote>$1</blockquote>',
         '~\[blockquote class=(.*?)\](.*?)\[/blockquote\]~si' => '<blockquote class="$1">$2</blockquote>',
@@ -59,6 +61,7 @@ class Editor {
         if ($cfg['minieditor_parser_allow_ext_url']) {
             $this->mark_codes['~\[url\]((?:ftps|https?)://.*?)\[/url\]~si'] = '<a rel="nofollow" target="_blank" href="$1">$1</a>';
             $this->mark_codes['~\[url=((?:ftps?|https?)://.*?)\](.*?)\[/url\]~si'] = '<a rel="nofollow" target="_blank" href="$1">$2</a>';
+            $this->mark_codes['~\[url=((?:#?).*?)\](.*?)\[/url\]~si'] = '<a rel="nofollow" target="_blank" href="$1">$2</a>';
         }
     }
 

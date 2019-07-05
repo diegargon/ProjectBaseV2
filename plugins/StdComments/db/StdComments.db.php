@@ -14,7 +14,7 @@ CREATE TABLE `" . DB_PREFIX . "comments` (
   `plugin` char(255) NOT NULL,
   `resource_id` int(10) UNSIGNED NOT NULL,
   `lang_id` tinyint(2) NOT NULL,
-  `comment` longtext NOT NULL,
+  `comment` text NOT NULL,
   `author_id` int(10) UNSIGNED NOT NULL,
   `soft_delete` tinyint(1) NOT NULL DEFAULT '0',
   `shadow_ban` tinyint(1) NOT NULL DEFAULT '0',

@@ -133,6 +133,9 @@ function getServerLoad() {
     // lines processor = num processors
     $matches = [];
     preg_match_all($pattern, file_get_contents('/proc/cpuinfo'), $matches);
+    if (!$matches) {
+        return false;
+    }
     $num_cpus = count($matches[0]);
 
     if (empty($load[0]) || empty($num_cpus)) {

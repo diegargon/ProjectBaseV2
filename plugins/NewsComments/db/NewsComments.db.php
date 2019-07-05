@@ -32,8 +32,9 @@ $newsComments_database_install[] = "INSERT INTO `" . DB_PREFIX . "config` (`plug
 $newsComments_database_install[] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('NewsComments', 'nc_allow_comm_report', '1');";
 
 /* UNINSTALL */
-$newsComments_database_uninstall = [
+$newsComments_database_uninstall = [    
     "ALTER TABLE `" . DB_PREFIX . "news` DROP `comments_disabled`;",
+    "ALTER TABLE `" . DB_PREFIX . "comments` DROP `rating_close`;",
     "DELETE FROM `" . DB_PREFIX . "plugins` WHERE plugin_name = 'NewsComments'",
     "DELETE FROM `" . DB_PREFIX . "config` WHERE plugin = 'NewsComments'"
 ];

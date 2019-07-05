@@ -67,9 +67,12 @@ function SimpleGroups_ShowGroups($msg) {
     global $LNG, $groups, $tpl;
 
     $groups = $groups->getGroups();
-    $counter = 1;
+    if(empty($groups)) {
+        return false;
+    }
+    $counter = 1;    
     $count = count($groups);
-    $content = "";
+    $content = '';
 
     foreach ($groups as $group) {
         $group['TPL_CTRL'] = $counter;

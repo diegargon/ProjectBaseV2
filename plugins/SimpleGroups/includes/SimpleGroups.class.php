@@ -103,7 +103,7 @@ class Groups {
         $new_groups = '';
         $first = 1;
 
-        if (count($actual_user_groups) > 0) {
+        if (!empty($actual_user_groups) && count($actual_user_groups) > 0) {
             foreach ($actual_user_groups as $actual_group_id) {
                 if ($actual_group_id != $group_id) {
                     if ($first) {
@@ -129,7 +129,7 @@ class Groups {
         $new_groups = '';
         $first = 1;
 
-        if (count($actual_user_groups) > 0) {
+        if (!empty($actual_user_groups) && count($actual_user_groups) > 0) {
             foreach ($actual_user_groups as $actual_group_id) {
                 if ($actual_group_id != $group_id) {
                     if ($first) {

@@ -66,7 +66,7 @@ if ($q_where['lang_id']) {
 }
 */
 $news_db = get_news_query($q_where, $q_opt);
-if (($num_news = count($news_db)) < 1) {
+if ( empty($news_db) || (($num_news = count($news_db)) < 1) )  {
     return $frontend->messageBox(['title' => 'L_NEWS_SEC_EMPTY_TITLE', 'msg' => 'L_NEWS_SEC_EMPTY']);
 }
 if ($tpl->checkTplFileExists('News', $cfg['news_section_tpl'] . "-" . $category_id)) {

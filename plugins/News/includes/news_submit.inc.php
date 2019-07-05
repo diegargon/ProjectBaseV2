@@ -68,7 +68,7 @@ function news_new_form() {
         $frontend->messageBox(['msg' => 'L_NEWS_NOCATS']);
         return false;
     }
-    $form_data['terms_url'] = ''; // $cfg['TERMS_URL'];    
+    $form_data['terms_url'] = $sm->getPage('terms'); 
     do_action('news_new_form_add', $form_data);
 
     /* EDITOR */

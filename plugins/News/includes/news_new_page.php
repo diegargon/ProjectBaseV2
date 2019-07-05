@@ -37,8 +37,9 @@ function news_new_page($news_nid, $news_lang_id, $news_page) {
     $form_data['news_add_related'] = news_perm_ask('w_news_add_related');
     $form_data['news_form_title'] = $LNG['L_NEWS_CREATE_NEW_PAGE'];
     $form_data['author'] = $user['username'];
+    $form_data['author_id'] = $user['uid'];
     $form_data['editor'] = $editor->getEditor();
-    //$form_data['terms_url'] = $cfg['TERMS_URL'];
+    $form_data['terms_url'] = $sm->getPage('terms');
 
     do_action('news_newpage_form_add');
 

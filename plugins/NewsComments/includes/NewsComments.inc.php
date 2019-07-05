@@ -25,7 +25,7 @@ function News_Comments($news) {
             $plugins->expressStartProvider('RATINGS')
     ) {
         $tpl->addScriptFile('StdRatings', 'rate', 'BOTTOM');
-        $tpl->getCssFile('NewsComments');
+        /* $tpl->getCssFile('NewsComments'); */
         register_action('std_format_comments', 'NewsComments_AddrateDisplay');
 
         if (($_SERVER['REQUEST_METHOD'] === 'POST') &&
@@ -87,11 +87,11 @@ function News_Comments($news) {
 
 function NewsComments_AddrateDisplay(& $comments) {
 
-    if (count($comments) < 1) {
+    $rating_r_ids = '';
+    
+    if (empty($comments) || count($comments) < 1) {
         return false;
     }
-
-    $rating_r_ids = '';
 
     foreach ($comments as $comment) {
         empty($rating_r_ids) ? $rating_r_ids = $comment['cid'] : $rating_r_ids .= ',' . $comment['cid'];
