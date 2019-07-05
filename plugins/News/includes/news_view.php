@@ -142,20 +142,12 @@ function news_catch_admin_actions(&$news_data) {
     if (!empty($_GET['news_delete']) && news_perm_ask('w_news_delete')) {
         news_delete($news_nid, $news_lang_id);
         $srv_referer = $filter->srvReferer();
-        if (!empty($srv_referer)) {
-            header("Location: {$srv_referer}");
-        } else {
-            header('Location: /');
-        }
+        header('Location: /');
     }
     if (!empty($_GET['news_delete_page']) && news_perm_ask('w_news_delete')) {
         news_delete($news_nid, $news_lang_id, $news_page);
         $srv_referer = $filter->srvReferer();
-        if (!empty($srv_referer)) {
-            header('Location: ' . $srv_referer);
-        } else {
-            header('Location: /');
-        }
+        header('Location: /');
     }
     /* APPROVE */
     if (!empty($_GET['news_approved']) && news_perm_ask('w_news_moderation')) {

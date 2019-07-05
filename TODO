@@ -7,7 +7,6 @@ MED
 LOW
 
 * Minieditor: Capturar tabs
-* News: despues de borrar una noticia va al referer no deberia por que no existe.
 * Categorias: no se puede eliminar el enlace de imagen categorias dejandolo vacio.
 https://stackoverflow.com/questions/6637341/use-tab-to-indent-in-textarea
 * Bloques: poder cambiar idioma, prioridad y demas
