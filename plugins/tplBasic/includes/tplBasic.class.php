@@ -368,6 +368,8 @@ class TPL {
             $this->css_std[] = $css_name;
             $css = '<link rel="stylesheet" href="' . $this->std_remote_css['' . $css_name . ''] . ' ">';
             $this->addtoTplVar('LINK', $css);
+            $parse_url = parse_url($this->std_remote_css[$css_name]);
+            $this->setPrefetchURL($parse_url['scheme'] . '://' . $parse_url['host']);
             $this->debug ? $this->debug->log("Get CSS STD called for get $css_name sucessfull", 'tplBasic', 'DEBUG') : null;
             return true;
         } else {
