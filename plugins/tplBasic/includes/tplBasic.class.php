@@ -90,6 +90,12 @@ class TPL {
     private $scripts = [];
 
     /**
+     * Hold list of css already called for use
+     * @var array
+     */
+    private $css_std = [];
+
+    /**
      * Hold list of domain list for create a html link to dns prefetch
      * @var type 
      */
@@ -101,8 +107,6 @@ class TPL {
      */
     private $std_remote_scripts = [//TODO LOAD LIST
         'jquery' => 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js',
-        'font-awesome' => 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
-        'bootstrap' => 'https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css',
         'angularjs' => 'https://code.angularjs.org/1.7.3/angular.min.js',
         'dojo' => 'https://ajax.googleapis.com/ajax/libs/dojo/1.13.0/dojo/dojo.js',
         'ext-core' => 'https://ajax.googleapis.com/ajax/libs/ext-core/3.1.0/ext-core.js',
@@ -114,6 +118,16 @@ class TPL {
         'swfobject' => 'https://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js',
         'three' => 'https://ajax.googleapis.com/ajax/libs/threejs/r84/three.min.js',
         'webfont' => 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js',
+    ];
+
+    /**
+     * Standard css files
+     * @var array
+     */
+    private $std_remote_css = [
+        'font-awesome' => 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
+        'bootstrap' => 'https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css',
+        'octicons' => 'https://cdnjs.cloudflare.com/ajax/libs/octicons/4.4.0/font/octicons.min.css',
     ];
 
     /**
@@ -342,6 +356,24 @@ class TPL {
             return false;
         }
         $this->addtoTplVar('SCRIPTS_' . $place, $script);
+    }
+
+    function addStdCSS($css_name) {
+
+        if (array_key_exists($css_name, $this->css_std)) {
+            $this->debug ? $this->debug->log("Get CSS STD called for get $css_name but not exists", 'tplBasic', 'WARNING') : null;
+            return false;
+        }
+        if (array_key_exists($css_name, $this->std_remote_css)) {
+            $this->css_std[] = $css_name;
+            $css = '<link rel="stylesheet" href="' . $this->std_remote_css['' . $css_name . ''] . ' ">';
+            $this->addtoTplVar('LINK', $css);
+            $this->debug ? $this->debug->log("Get CSS STD called for get $css_name sucessfull", 'tplBasic', 'DEBUG') : null;
+            return true;
+        } else {
+            $this->debug ? $this->debug->log("Get CSS STD called for get $css_name but not exists", 'tplBasic', 'WARNING') : null;
+            return false;
+        }
     }
 
     /**
