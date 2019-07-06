@@ -27,7 +27,7 @@ function NMU_form_add($news) {
     $tpl->getCssFile('NewsMediaUploader');
 
     $extra_content['UPLOAD_EXTRA'] = '';
-    (!empty($user) && $user['uid'] > 0) ? $extra_content['UPLOAD_EXTRA'] = NMU_upload_list($user) : false;
+    (!empty($user) && $user['uid'] > 0) ? $extra_content['UPLOAD_EXTRA'] = NMU_upload_list($user) : null;
 
     $tpl->addScriptFile('standard', 'jquery', 'TOP', null);
     $tpl->addScriptFile('NewsMediaUploader', 'plupload.full.min', 'TOP', null);

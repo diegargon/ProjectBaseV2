@@ -87,8 +87,8 @@ function stdFormatComments($comments, $comm_conf, $perm_cfg) {
     !empty($uid_list) ? $sm->setUsersInCacheByIDs($uid_list) : null;
 
     foreach ($comments as $comment_row) {
-        $counter == 0 ? $comment_row['TPL_FIRST'] = 1 : false;
-        $counter == ($num_comments - 1 ) ? $comment_row['TPL_LAST'] = 1 : false;
+        $counter == 0 ? $comment_row['TPL_FIRST'] = 1 : null;
+        $counter == ($num_comments - 1 ) ? $comment_row['TPL_LAST'] = 1 : null;
         $counter++;
 
         if (!$author_data = $sm->getUserByID($comment_row['author_id'])) {
@@ -207,7 +207,7 @@ function stdAddComment($comm_conf) {
     $comm_conf['comment'] = $db->escapeStrip($comm_conf['comment']);
     $r = $db->insert('comments', $comm_conf);
 
-    return $r ? true : false;
+    return $r ? true : null;
 }
 
 /**

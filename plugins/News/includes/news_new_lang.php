@@ -55,7 +55,7 @@ function news_new_lang($news_nid, $news_lang_id, $news_page) {
      */
     $news_data['translator'] = $translator['username'];
     $news_data['translator_id'] = $translator['uid'];
-    $translator['uid'] > 0 ? $news_data['tos_checked'] = 1 : false;
+    $translator['uid'] > 0 ? $news_data['tos_checked'] = 1 : null;
 
     if (($site_langs = news_get_missed_langs($news_data['nid'], $news_data['page'])) != false) {
         $news_data['select_langs'] = $site_langs;

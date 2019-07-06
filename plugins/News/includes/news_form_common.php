@@ -54,7 +54,7 @@ function news_getCatsSelect($news_data = null, $select_name = 'news_category', $
         }
     }
     $select .= '</select>';
-    return $added_one ? $select : false;
+    return $added_one ? $select : null;
 }
 
 /**
@@ -277,8 +277,8 @@ function news_submit_form_check($news_data) {
 function news_form_news_update($news_data) {
     global $db, $ml, $filter;
 
-    empty($news_data['featured']) ? $news_data['featured'] = 0 : false;
-    //!isset($news_data['news_translator']) ? $news_data['news_translator'] = "" : false;
+    empty($news_data['featured']) ? $news_data['featured'] = 0 : null;
+    //!isset($news_data['news_translator']) ? $news_data['news_translator'] = "" : null;
 
     defined('MULTILANG') ? $news_lang_id = $ml->getWebLangID() : $news_lang_id = 1;
 

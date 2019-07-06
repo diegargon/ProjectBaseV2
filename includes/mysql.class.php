@@ -245,7 +245,7 @@ class Database {
      *  Close dblink
      */
     function close() {
-        !$this->dblink ? die('Could not connect: ' . $this->dblink->error) : false;
+        !$this->dblink ? die('Could not connect: ' . $this->dblink->error) : null;
         $this->dblink->close();
     }
 
@@ -349,7 +349,7 @@ class Database {
             $query .= ' WHERE ';
             $query .= $this->whereProcess($where, $logic);
         }
-        !empty($extra) ? $query .= " $extra" : false;
+        !empty($extra) ? $query .= " $extra" : null;
 
         return $this->query($query);
     }
@@ -374,7 +374,7 @@ class Database {
             $query .= ' WHERE ';
             $query .= $this->whereProcess($where, $logic);
         }
-        !empty($extra) ? $query .= " $extra" : false;
+        !empty($extra) ? $query .= " $extra" : null;
 
         return $this->query($query);
     }
@@ -404,15 +404,15 @@ class Database {
         }
 
         foreach ($fields_ary as $field) {
-            !empty($where_s_fields) ? $where_s_fields .= ' OR ' : false;
+            !empty($where_s_fields) ? $where_s_fields .= ' OR ' : null;
 
             foreach ($s_words_ary as $s_word) {
                 if (mb_strlen($s_word, $this->charset) > $this->min_search_char) {
-                    !empty($where_s_tmp) ? $where_s_tmp .= ' AND ' : false;
+                    !empty($where_s_tmp) ? $where_s_tmp .= ' AND ' : null;
                     $where_s_tmp .= " $field LIKE '%$s_word%' ";
                 }
             }
-            !empty($where_s_tmp) ? $where_s_fields .= $where_s_tmp : false;
+            !empty($where_s_tmp) ? $where_s_fields .= $where_s_tmp : null;
             $where_s_tmp = "";
         }
 
@@ -421,7 +421,7 @@ class Database {
         } else {
             return false;
         }
-        !empty($extra) ? $query .= " $extra " : false;
+        !empty($extra) ? $query .= " $extra " : null;
 
         return $this->query($query);
     }
@@ -447,7 +447,7 @@ class Database {
         if (!empty($where)) {
             $query .= ' WHERE ' . $this->whereProcess($where, $logic);
         }
-        !empty($extra) ? $query .= " $extra" : false;
+        !empty($extra) ? $query .= " $extra" : null;
         return $this->query($query);
     }
 
@@ -469,7 +469,7 @@ class Database {
             $query .= ' WHERE ' . $this->whereProcess($where, $logic);
         }
 
-        !empty($extra) ? $query .= " $extra" : false;
+        !empty($extra) ? $query .= " $extra" : null;
         
         return $this->query($query);
     }
@@ -531,7 +531,7 @@ class Database {
         }
         $query = 'DELETE FROM ' . $this->db_prefix . $table . ' WHERE ';
         $query .= $this->whereProcess($where, $logic);
-        !empty($extra) ? $query .= " $extra" : false;
+        !empty($extra) ? $query .= " $extra" : null;
 
         return $this->query($query);
     }

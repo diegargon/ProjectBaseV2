@@ -31,7 +31,7 @@
                 <dt><label><?= $LNG['L_SM_LASTLOGIN'] ?> </label></dt>
                 <dd><span><?= $data['last_login'] ?> </span></dd>
             </dl>
-            <?= !empty($tpldata['SMB_VIEWPROFILE_FIELDS_BOTTOM']) ? $tpldata['SMB_VIEWPROFILE_FIELDS_BOTTOM'] : false; ?>            
+            <?= !empty($tpldata['SMB_VIEWPROFILE_FIELDS_BOTTOM']) ? $tpldata['SMB_VIEWPROFILE_FIELDS_BOTTOM'] : null; ?>            
         </div>
         <p class='p_center_medium'><a href="<?= $data['BACKLINK'] ?>"><?= $LNG['L_BACK'] ?></a></p>
     </div>

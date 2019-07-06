@@ -301,7 +301,7 @@ function Blocks_addBlock($config_array) {
 
     $ret = $db->insert('blocks', $insert_ary);
 
-    return $ret ? true : false;
+    return $ret ? true : null;
 }
 
 /**
@@ -320,5 +320,5 @@ function Blocks_updateBlock() {
     ];
 
     $ret = $db->update('blocks', $upd_ary, ['blocks_id' => $editblock_id]);
-    return $ret ? true : false;
+    return $ret ? true : null;
 }

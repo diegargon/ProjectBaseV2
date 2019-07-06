@@ -89,7 +89,7 @@
                     </dd>
                 </dl>
                 <a href="#" class="dropdown" onclick="dropdown('profile_dropdown'); return false">+</a>
-                <?= !empty($tpldata['SMB_PROFILE_FIELDS_BOTTOM']) ? $tpldata['SMB_PROFILE_FIELDS_BOTTOM'] : false; ?>           
+                <?= !empty($tpldata['SMB_PROFILE_FIELDS_BOTTOM']) ? $tpldata['SMB_PROFILE_FIELDS_BOTTOM'] : null; ?>           
                 <div id="profile_dropdown" style="display:none">                
                     <?= !empty($data['dropdown_fields']) ? $data['dropdown_fields'] : null ?>                
                 </div>

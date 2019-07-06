@@ -264,7 +264,7 @@ class SimpleFrontend {
         !empty($box_data['backlink']) ? $data['box_backlink'] = $box_data['backlink'] : $data['box_backlink'] = $filter->srvReferer();
         !empty($box_data['backlink_title']) ? $data['box_backlink_title'] = $LNG[$box_data['backlink_title']] : $data['box_backlink_title'] = $LNG['L_BACK'];
         $data['box_msg'] = $LNG[$box_data['msg']];
-        !empty($box_data['xtra_box_msg']) ? $data['box_msg'] .= $box_data['xtra_box_msg'] : false;
+        !empty($box_data['xtra_box_msg']) ? $data['box_msg'] .= $box_data['xtra_box_msg'] : null;
 
         $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('SimpleFrontend', 'msgbox', $data));
     }
@@ -304,7 +304,7 @@ class SimpleFrontend {
         $this->theme = $cfg['simplefrontend_theme'];
 
         $custom_lang = 'tpl/lang/' . $cfg['WEB_LANG'] . '/custom.lang.php';
-        file_exists($custom_lang) ? require_once($custom_lang) : false;
+        file_exists($custom_lang) ? require_once($custom_lang) : null;
 
         $tpl->getCssFile('SimpleFrontend', 'basic');
         $tpl->getCssFile('SimpleFrontend', 'basic-mobile');

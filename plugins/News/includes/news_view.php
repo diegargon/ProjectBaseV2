@@ -400,7 +400,7 @@ function news_featured($nid, $lang_id, $featured) {
         return false;
     }
     $update_ary = ['featured' => $featured];
-    $featured == 1 ? $update_ary['featured_date'] = $time : false;
+    $featured == 1 ? $update_ary['featured_date'] = $time : null;
     $db->update('news', $update_ary, ['nid' => $nid, 'lang_id' => $lang_id], 'LIMIT 1');
 
     return true;
@@ -422,14 +422,14 @@ function news_stats($nid, $lang_id, $page) {
 
     $db->plusOne('news', 'visits', ['nid' => $nid, 'lang_id' => $lang_id, 'page' => $page], 'LIMIT 1');
 
-    //$cfg['news_adv_stats'] ? news_adv_stats($nid, $lang) : false;
+    //$cfg['news_adv_stats'] ? news_adv_stats($nid, $lang) : null;
 }
 
 function news_adv_stats($nid, $lang_id) {
     global $db, $sm, $filter;
 
     $user = $sm->getSessionUser();
-    empty($user) ? $user['uid'] = 0 : false; //Anon        
+    empty($user) ? $user['uid'] = 0 : null; //Anon        
     $ip = $filter->srvRemoteAddr();
     $hostname = gethostbyaddr($ip);
     $where_ary = [
@@ -439,7 +439,7 @@ function news_adv_stats($nid, $lang_id) {
         'rid' => $nid,
         'uid' => $user['uid']
     ];
-    $user['uid'] == 0 ? $where_ary['ip'] = $ip : false;
+    $user['uid'] == 0 ? $where_ary['ip'] = $ip : null;
 
     $query = $db->selectAll('adv_stats', $where_ary, 'LIMIT 1');
 

@@ -78,7 +78,7 @@ function news_get_main_image($news) {
     $match = false;
     preg_match($match_regex, $news_body, $match);
 
-    return !empty($match[0]) ? $match[2] : false;
+    return !empty($match[0]) ? $match[2] : null;
 }
 
 function news_extract_bycat($news, $cat) {
@@ -93,7 +93,7 @@ function news_extract_bycat($news, $cat) {
 
 function get_news_byId($nid, $lang_id, $page = null) {
     global $db;
-    empty($page) ? $page = 1 : false;
+    empty($page) ? $page = 1 : null;
 
     $where_ary = ['nid' => $nid, 'lang_id' => $lang_id, 'page' => $page];
     $query = $db->selectAll('news', $where_ary, 'LIMIT 1');

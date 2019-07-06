@@ -17,7 +17,7 @@
 function SimpleGroups_init() {
     global $groups;
 
-    !isset($groups) ? $groups = new Groups() : false;
+    !isset($groups) ? $groups = new Groups() : null;
 }
 
 function SimpleGroups_install() {

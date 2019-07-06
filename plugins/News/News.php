@@ -82,7 +82,7 @@ function News_upgrade($version, $from_version) {
       foreach ($news_database_upgrade_002_to_003 as $query) {
       $r = $db->query($query);
       }
-      return ($r) ? true : false;
+      return ($r) ? true : null;
       }
 
      */

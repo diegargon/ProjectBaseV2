@@ -73,9 +73,9 @@ function Multilang_AdminContent($params) {
     } else if ($params['opt'] == 2) {
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            !empty($_POST['btnModifyLang']) ? $ml_error_message = Multilang_ModifyLang() : false;
-            !empty($_POST['btnCreateLang']) ? $ml_error_message = Multilang_CreateLang() : false;
-            !empty($_POST['btnDeleteLang']) ? $ml_error_message = Multilang_DeleteLang() : false;
+            !empty($_POST['btnModifyLang']) ? $ml_error_message = Multilang_ModifyLang() : null;
+            !empty($_POST['btnCreateLang']) ? $ml_error_message = Multilang_CreateLang() : null;
+            !empty($_POST['btnDeleteLang']) ? $ml_error_message = Multilang_DeleteLang() : null;
             if ($ml_error_message == false) {
                 header('Refresh:0');
             } else {
@@ -137,7 +137,7 @@ function Multilang_ModifyLang() {
     $lang_name = $filter->postUtf8Txt('lang_name', 255, 1);
     $iso_code = $filter->postAZChar('iso_code', 2, 2);
     $active = $filter->postInt('active', 1, 1);
-    empty($active) ? $active = 0 : false;
+    empty($active) ? $active = 0 : null;
 
     $modify_ary = [];
     $modify_ary['active'] = $active;
@@ -187,7 +187,7 @@ function Multilang_CreateLang() {
     $lang_name = $filter->postUtf8Txt('lang_name', 11, 2);
     $iso_code = $filter->postAZChar('iso_code', 2, 2);
     $active = $filter->postInt('active', 1, 1);
-    empty($active) ? $active = 0 : false;
+    empty($active) ? $active = 0 : null;
 
     if ($lang_name != false && $iso_code != false) {
 

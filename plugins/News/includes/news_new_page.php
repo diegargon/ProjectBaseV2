@@ -21,7 +21,7 @@ function news_new_page($news_nid, $news_lang_id, $news_page) {
     if (empty($user) || $user['uid'] == 0) {
         return $frontend->messageBox(['msg' => 'L_E_NOACCESS']);
     }
-    $user['uid'] > 0 ? $form_data['tos_checked'] = 1 : false;
+    $user['uid'] > 0 ? $form_data['tos_checked'] = 1 : null;
 
     if (!is_array($news_data = get_news_byId($news_nid, $news_lang_id, 1))) { //get first page
         $frontend->messageBox(['msg' => $news_data]);
@@ -118,7 +118,7 @@ function news_newpage_submit_new($news_data) {
         'moderation' => $cfg['news_moderation'],
         'page' => $page_num
     ];
-    !empty($news_data['lead']) ? $insert_ary['lead'] = $db->escapeStrip($news_data['lead']) : false;
+    !empty($news_data['lead']) ? $insert_ary['lead'] = $db->escapeStrip($news_data['lead']) : null;
     $db->insert("news", $insert_ary);
 
     $num_pages++;

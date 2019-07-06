@@ -50,9 +50,9 @@ function news_noacl_ask($perms_demand) {
             } else {
                 $auth = news_noacl_user_check($or_split_perm);
             }
-            defined('DEBUG') ? $debug->log("News NOACL 1 {$or_split_perm} result->{$auth} ", 'News', 'DEBUG') : false;
+            defined('DEBUG') ? $debug->log("News NOACL 1 {$or_split_perm} result->{$auth} ", 'News', 'DEBUG') : null;
             if ($auth) {
-                defined('DEBUG') ? $debug->log('News NOACL result OR ->true', 'News', 'NOTICE') : false;
+                defined('DEBUG') ? $debug->log('News NOACL result OR ->true', 'News', 'NOTICE') : null;
                 return true;
             } //first OR true, no need check the others
         } else { //&& check all except if any its false
@@ -64,19 +64,19 @@ function news_noacl_ask($perms_demand) {
                 } else {
                     return news_noacl_user_check($and_split_perm);
                 }
-                defined('DEBUG') ? $debug->log("News NOACL 3 -> \"$and_split_perm\" -> $auth  ", 'News', 'DEBUG') : false;
+                defined('DEBUG') ? $debug->log("News NOACL 3 -> \"$and_split_perm\" -> $auth  ", 'News', 'DEBUG') : null;
                 if ($auth == false) {
-                    defined('DEBUG') ? $debug->log("News NOACL 4 -> \"$and_split_perm\" -> Break", 'News', 'DEBUG') : false;
+                    defined('DEBUG') ? $debug->log("News NOACL 4 -> \"$and_split_perm\" -> Break", 'News', 'DEBUG') : null;
                     break; //if any && perm its false, not check the next perms are false
                 }
             }
         }
 
         if ($auth == true) {
-            defined('DEBUG') ? $debug->log('NEWS NOACL result AND->true ', 'News', 'NOTICE') : false;
+            defined('DEBUG') ? $debug->log('NEWS NOACL result AND->true ', 'News', 'NOTICE') : null;
             return true;
         } else {
-            defined('DEBUG') ? $debug->log('NEWS NOACL F result->false', 'News', 'DEBUG') : false;
+            defined('DEBUG') ? $debug->log('NEWS NOACL F result->false', 'News', 'DEBUG') : null;
         }
     }
 

@@ -82,7 +82,7 @@ function SMBasic_ProfileChange() {
                     die('[{"status": "6", "msg": "' . $LNG['L_SM_E_HTTPS'] . $avatar . '"}]');
                 }
             }
-            $user['avatar'] != $avatar ? $q_set_ary['avatar'] = $db->escapeStrip(urldecode($avatar)) : false;
+            $user['avatar'] != $avatar ? $q_set_ary['avatar'] = $db->escapeStrip(urldecode($avatar)) : null;
         }
     }
 
@@ -150,7 +150,7 @@ function SMBasic_ProfileChange() {
 
     do_action('SMBasic_ProfileChange', $q_set_ary);
 
-    !empty($q_set_ary) ? $db->update('users', $q_set_ary, ['uid' => $user['uid']], 'LIMIT 1') : false;
+    !empty($q_set_ary) ? $db->update('users', $q_set_ary, ['uid' => $user['uid']], 'LIMIT 1') : null;
 
     die('[{"status": "ok", "msg": "' . $LNG['L_UPDATE_SUCCESSFUL'] . '", "url": "' . $filter->srvRequestUri() . '"}]');
 }

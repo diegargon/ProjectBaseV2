@@ -66,7 +66,7 @@ function rating_rate($resource_id, $section, $rate) {
 
     $r = $db->insert('rating', $insert_ary);
 
-    return $r ? true : false;
+    return $r ? true : null;
 }
 
 /**
@@ -106,7 +106,7 @@ function ratings_get_content($section, $resource_id, $author_id, $lang_id, $rati
 
     //TODO: Manage anonymous rating
 
-    empty($image_vote) ? $img_vote = $cfg['dflt_vote_visuals_url'] : false;
+    empty($image_vote) ? $img_vote = $cfg['dflt_vote_visuals_url'] : null;
     $rate_data['BTN_EXTRA'] = ' style="background: url(' . $img_vote . ') no-repeat;" ';
 
     $user = $sm->getSessionUser();

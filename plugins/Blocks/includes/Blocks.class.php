@@ -133,7 +133,7 @@ class Blocks {
         $q = $db->selectAll('blocks');
         $admin_blocks = $db->fetchAll($q);
         
-        return (!empty($admin_blocks) && count($admin_blocks) > 0) ? $admin_blocks : false;
+        return (!empty($admin_blocks) && count($admin_blocks) > 0) ? $admin_blocks : null;
     }
 
     /**

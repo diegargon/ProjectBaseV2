@@ -20,14 +20,14 @@ function NS_basicSearchbox() {
 
 function NS_tag_add_form() {
     global $cfg, $tpl;
-    $cfg['ns_tag_support'] ? $tpl->addtoTplVar('NEWS_FORM_BOTTOM_OPTION', NS_tags_option()) : false;
+    $cfg['ns_tag_support'] ? $tpl->addtoTplVar('NEWS_FORM_BOTTOM_OPTION', NS_tags_option()) : null;
 }
 
 function NS_news_mod_insert(& $insert_ary) {
     global $db, $filter;
 
     $tags = $db->escapeStrip($filter->postUtf8Txt('news_tags'));
-    !empty($tags) ? $insert_ary['tags'] = $tags : false;
+    !empty($tags) ? $insert_ary['tags'] = $tags : null;
 }
 
 function NS_news_tag_show_page(& $news_row) {
@@ -63,7 +63,7 @@ function NS_news_edit_set_tag(& $set_ary) {
     global $db, $filter;
 
     $tags = $db->escapeStrip($filter->postUtf8Txt('news_tags'));
-    !empty($tags) ? $set_ary['tags'] = $tags : false;
+    !empty($tags) ? $set_ary['tags'] = $tags : null;
 }
 
 //IN

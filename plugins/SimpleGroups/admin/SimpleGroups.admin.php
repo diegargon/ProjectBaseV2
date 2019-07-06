@@ -49,8 +49,8 @@ function SimpleGroups_AdminContent($params) {
         $page_data = "<h1>" . $LNG['L_GENERAL'] . ": " . $LNG['L_PL_STATE'] . "</h1>";
         $page_data .= Admin_GetPluginState("SimpleGroups");
     } else if ($params['opt'] == 2) {
-        isset($_POST['btnNewGroup']) ? $msg = SimpleGroups_NewGroup() : false;
-        isset($_POST['btnDeleteGroup']) ? $msg = SimpleGroups_DeleteGroup() : false;
+        isset($_POST['btnNewGroup']) ? $msg = SimpleGroups_NewGroup() : null;
+        isset($_POST['btnDeleteGroup']) ? $msg = SimpleGroups_DeleteGroup() : null;
         $page_data = $LNG['L_GENERAL'] . ": " . $LNG['L_GROUPS'];
         $page_data .= SimpleGroups_ShowGroups($msg);
     } else if ($params['opt'] == 3) {
@@ -77,11 +77,11 @@ function SimpleGroups_ShowGroups($msg) {
     foreach ($groups as $group) {
         $group['TPL_CTRL'] = $counter;
         ($counter == $count) ? $group['TPL_FOOT'] = 1 : $group['TPL_FOOT'] = 0;
-        (!empty($msg) && $counter == 1) ? $group['ACL_MSG'] = $msg : false;
+        (!empty($msg) && $counter == 1) ? $group['ACL_MSG'] = $msg : null;
         $group['MSG'] = $msg;
 
-        (preg_match("/L_/", $group['group_name'])) ? $group['group_name'] = $LNG[$group['group_name']] : false;
-        (preg_match("/L_/", $group['group_desc'])) ? $group['group_desc'] = $LNG[$group['group_desc']] : false;
+        (preg_match("/L_/", $group['group_name'])) ? $group['group_name'] = $LNG[$group['group_name']] : null;
+        (preg_match("/L_/", $group['group_desc'])) ? $group['group_desc'] = $LNG[$group['group_desc']] : null;
 
         $content .= $tpl->getTplFile("SimpleGroups", "admin_groups", $group);
         $counter++;
@@ -115,8 +115,8 @@ function SimpleGroups_UserGroups($msg) {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!empty(($search_user = $sm->getUserByUsername($filter->postUsername("username", 255, 1))))) {
 
-            !empty($_POST['btnAddGroup']) && !empty($search_user) ? $msg = SimpleGroups_AddUserGroup($search_user) : false;
-            !empty($_POST['btnDeleteGroup']) && !empty($search_user) ? $msg = SimpleGroups_DeleteUserGroup($search_user) : false;
+            !empty($_POST['btnAddGroup']) && !empty($search_user) ? $msg = SimpleGroups_AddUserGroup($search_user) : null;
+            !empty($_POST['btnDeleteGroup']) && !empty($search_user) ? $msg = SimpleGroups_DeleteUserGroup($search_user) : null;
             $page_data = array_merge($page_data, $search_user);
             $user_groups = $groups->getUserGroupsByUID($search_user['uid']);
 
@@ -153,7 +153,7 @@ function SimpleGroups_UserGroups($msg) {
             $msg = $LNG['L_USER_NOTFOUND'];
         }
     }
-    !empty($msg) ? $page_data['MSG'] = $msg : false;
+    !empty($msg) ? $page_data['MSG'] = $msg : null;
     return $tpl->getTplFile("SimpleGroups", "user_groups", $page_data);
 }
 

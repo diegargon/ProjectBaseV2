@@ -29,7 +29,7 @@ class Groups {
     }
 
     function getGroups() {
-        (empty($this->groups)) ? $this->setGroups() : false;
+        (empty($this->groups)) ? $this->setGroups() : null;
 
         return $this->groups;
     }
@@ -86,7 +86,7 @@ class Groups {
     }
 
     function getGroupByGroupID($group_id) {
-        empty($this->groups) ? $this->getGroups() : false;
+        empty($this->groups) ? $this->getGroups() : null;
 
         foreach ($this->groups as $group) {
             if (($group['group_id'] == $group_id)) {

@@ -106,7 +106,7 @@ class Categories {
             }
         }
         //loop
-        !empty($cat_ids) ? $cat_ids .= $this->getCatChildsId($plugin, $cat_ids, $separator) : false;
+        !empty($cat_ids) ? $cat_ids .= $this->getCatChildsId($plugin, $cat_ids, $separator) : null;
 
         return $cat_ids;
     }
@@ -151,7 +151,7 @@ class Categories {
             }
         }
 
-        return !empty($cats) ? $cats : false;
+        return !empty($cats) ? $cats : null;
     }
 
     function sortCatsByWeight() {
@@ -192,7 +192,7 @@ class Categories {
                 }
             }
         }
-        return isset($father_id) ? $father_id : false;
+        return isset($father_id) ? $father_id : null;
     }
 
     function getCatsAllLangs($plugin = null) {
@@ -227,7 +227,7 @@ class Categories {
                 $plugin_categories[$category['cid']] = $category;
             }
         }
-        return !empty($plugin_categories) ? $plugin_categories : false;
+        return !empty($plugin_categories) ? $plugin_categories : null;
     }
 
     private function loadCategories() {

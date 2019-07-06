@@ -56,7 +56,7 @@ class SessionManager {
         $this->setConfig();
 
         $this->debug ? $debug->log('Starting SMBasic session management, type ' . $this->session_type, 'SMBasic', 'DEBUG') : null;
-        $this->session_start ? session_start() : false;
+        $this->session_start ? session_start() : null;
 
         if (!$this->checkSession()) {
             $this->debug ? $debug->log('Check session return false, setting session to anonymous', 'SMBasic', 'DEBUG') : null;
@@ -194,7 +194,7 @@ class SessionManager {
 
     function setData($key, $value) {
 
-        $this->session_type == 1 ? $_SESSION[$key] = $value : false;
+        $this->session_type == 1 ? $_SESSION[$key] = $value : null;
 
         if ($this->session_type == 2) {
             $this->s_data[$key] = $value;
@@ -222,7 +222,7 @@ class SessionManager {
     }
 
     function destroyData() {
-        $this->session_type == 1 ? $_SESSION = [] : false;
+        $this->session_type == 1 ? $_SESSION = [] : null;
 
         if ($this->session_type == 2) {
             $this->s_data = [];
@@ -298,7 +298,7 @@ class SessionManager {
         $this->user = false;
         $db->delete('sessions', ['session_uid' => $this->user['uid']]);
         $this->clearCookies();
-        isset($_SESSION) ? session_destroy() : false;
+        isset($_SESSION) ? session_destroy() : null;
         $this->destroyData();
     }
 
@@ -392,10 +392,10 @@ class SessionManager {
         $this->salt = $cfg['smbasic_session_salt'];
         $this->check_ip = $cfg['smbasic_check_ip'];
         $this->check_user_agent = $cfg['smbasic_check_user_agent'];
-        !empty($cfg['smbasic_session_expire']) ? $this->session_expire = $cfg['smbasic_session_expire'] : false;
-        !empty($cfg['smbasic_persistence']) ? $this->persistence = $cfg['smbasic_persistence'] : false;
-        !empty($cfg['smbasic_cookie_prefix']) ? $this->cookie_prefix = $cfg['smbasic_cookie_prefix'] : false;
-        !empty($cfg['smbasic_cookie_expire']) ? $this->cookie_prefix = $cfg['smbasic_cookie_expire'] : false;
+        !empty($cfg['smbasic_session_expire']) ? $this->session_expire = $cfg['smbasic_session_expire'] : null;
+        !empty($cfg['smbasic_persistence']) ? $this->persistence = $cfg['smbasic_persistence'] : null;
+        !empty($cfg['smbasic_cookie_prefix']) ? $this->cookie_prefix = $cfg['smbasic_cookie_prefix'] : null;
+        !empty($cfg['smbasic_cookie_expire']) ? $this->cookie_prefix = $cfg['smbasic_cookie_expire'] : null;
         if ($cfg['smbasic_allow_realnames']) {
             $filter->setNameRegex($cfg['smbasic_realname_regex']);
         } else {
@@ -435,7 +435,7 @@ class SessionManager {
         setcookie($cookie_name_sid, 0, time() - 3600, '/');
         setcookie($cookie_name_uid, 0, time() - 3600, '/');
         setcookie($cookie_name_anon, 0, time() - 3600, '/');
-        $this->session_type == 1 ? setcookie('phpsessid', 0, time() - 3600) : false;
+        $this->session_type == 1 ? setcookie('phpsessid', 0, time() - 3600) : null;
     }
 
     private function setCookies($sid, $uid) {
@@ -458,13 +458,13 @@ class SessionManager {
 
         $this->debug ? $debug->log('IP check ' . $ip . ' == ' . $session_ip, 'SMBasic', 'DEBUG') : null;
 
-        return ($ip == $session_ip) ? true : false;
+        return ($ip == $session_ip) ? true : null;
     }
 
     private function check_user_agent() {
         $session_user_agent = $this->getData('session_user_agent');
         $user_agent = srvUserAgent();
-        return ($user_agent == $session_user_agent) ? true : false;
+        return ($user_agent == $session_user_agent) ? true : null;
     }
 
     //TODO... do better later 
@@ -473,11 +473,11 @@ class SessionManager {
 
         if ($this->session_type == 1) {
             $this->debug ? $debug->log('Checking if is anonymous (buildin)', 'SMBasic', 'DEBUG') : null;
-            return isset($_SESSION['anonymous']) ? true : false;
+            return isset($_SESSION['anonymous']) ? true : null;
         } else {
             $this->debug ? $debug->log('Cheking anon (custom/cookies)', 'SMBasic', 'DEBUG') : null;
             $cookie_name_anon = $this->cookie_prefix . 'anonymous';
-            return isset($_COOKIE[$cookie_name_anon]) ? true : false;
+            return isset($_COOKIE[$cookie_name_anon]) ? true : null;
         }
     }
 

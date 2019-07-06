@@ -48,8 +48,8 @@ function SimpleACL_AdminContent($params) {
         $page_data = '<h1>' . $LNG['L_GENERAL'] . ': ' . $LNG['L_PL_STATE'] . '</h1>';
         $page_data .= Admin_GetPluginState('SimpleACL');
     } else if ($params['opt'] == 2) {
-        isset($_POST['btnDelPerm']) ? $msg = SimpleACL_DelPerm() : false;
-        isset($_POST['btnNewPerm']) ? $msg = SimpleACL_AddPerm() : false;
+        isset($_POST['btnDelPerm']) ? $msg = SimpleACL_DelPerm() : null;
+        isset($_POST['btnNewPerm']) ? $msg = SimpleACL_AddPerm() : null;
         $page_data = $LNG['L_GENERAL'] . ': ' . $LNG['L_ACL_PERM_GROUPS'];
         $page_data .= SimpleACL_ShowPermGroups($msg);
     } else if ($params['opt'] == 4) {
@@ -66,7 +66,7 @@ function SimpleACL_ShowPermGroups($msg) {
 
 
     $db_groups = $groups->getGroups();
-    empty($group_selected) ? $group_selected = $db_groups[0]['group_id'] : false;
+    empty($group_selected) ? $group_selected = $db_groups[0]['group_id'] : null;
 
     $content = '';
     $select_groups = '';
@@ -74,8 +74,8 @@ function SimpleACL_ShowPermGroups($msg) {
     $select_perms = '';
 
     foreach ($db_groups as $db_group) {
-        (preg_match('/L_/', $db_group['group_name'])) ? $db_group['group_name'] = $LNG[$db_group['group_name']] : false;
-        (preg_match('/L_/', $db_group['group_desc'])) ? $db_group['group_desc'] = $LNG[$db_group['group_desc']] : false;
+        (preg_match('/L_/', $db_group['group_name'])) ? $db_group['group_name'] = $LNG[$db_group['group_name']] : null;
+        (preg_match('/L_/', $db_group['group_desc'])) ? $db_group['group_desc'] = $LNG[$db_group['group_desc']] : null;
         ($db_group['group_id'] == $group_selected) ? $selected = 'selected' : $selected = '';
         $select_groups .= "<option $selected value='{$db_group['group_id']}'>{$db_group['group_name']} - {$db_group['group_desc']}</option>";
     }
@@ -83,7 +83,7 @@ function SimpleACL_ShowPermGroups($msg) {
     $group_perms = $acl_auth->getGroupPerms($group_selected);
     if (!empty($group_perms)) {
         foreach ($group_perms as $group_perm) {
-            (preg_match('/L_/', $group_perm['perm_desc'])) ? $group_perm['perm_desc'] = $LNG[$group_perm['perm_desc']] : false;
+            (preg_match('/L_/', $group_perm['perm_desc'])) ? $group_perm['perm_desc'] = $LNG[$group_perm['perm_desc']] : null;
             $select_group_perms .= "<option value='{$group_perm['perm_id']}'>{$group_perm['perm_desc']} - ({$group_perm['perm_name']})</option>";
         }
     }
@@ -98,7 +98,7 @@ function SimpleACL_ShowPermGroups($msg) {
             }
         }
         if (!$coincidence) {
-            (preg_match('/L_/', $perm['perm_desc'])) ? $perm['perm_desc'] = $LNG[$perm['perm_desc']] : false;
+            (preg_match('/L_/', $perm['perm_desc'])) ? $perm['perm_desc'] = $LNG[$perm['perm_desc']] : null;
             $select_perms .= "<option value='{$perm['perm_id']}'>{$perm['perm_desc']} - {$perm['perm_name']}</option>";
         }
     }

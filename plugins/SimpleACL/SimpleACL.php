@@ -16,7 +16,7 @@ function SimpleACL_init() {
 
     $plugins->expressStartProvider('GROUPS');
 
-    empty($acl_auth) ? $acl_auth = new ACL : false;
+    empty($acl_auth) ? $acl_auth = new ACL : null;
 }
 
 function SimpleACL_install() {

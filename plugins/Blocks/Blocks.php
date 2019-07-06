@@ -17,7 +17,7 @@
 function Blocks_init() {
     global $blocks;
 
-    !defined('BLOCKS') ? $blocks = new Blocks : false;
+    !defined('BLOCKS') ? $blocks = new Blocks : null;
 
     define('BLOCKS', true);
 }

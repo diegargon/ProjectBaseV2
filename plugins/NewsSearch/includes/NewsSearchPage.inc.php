@@ -12,8 +12,8 @@ function NS_build_result_page(& $query) {
     if ($query && ($num_rows = $db->numRows($query)) > 0) {
         $counter = 0;
         while ($result = $db->fetch($query)) {
-            $counter == 0 ? $result['TPL_FIRST'] = 1 : false;
-            $counter == ($num_rows - 1 ) ? $result['TPL_LAST'] = 1 : false;
+            $counter == 0 ? $result['TPL_FIRST'] = 1 : null;
+            $counter == ($num_rows - 1 ) ? $result['TPL_LAST'] = 1 : null;
             $counter++;
             if ($cfg['FRIENDLY_URL']) {
                 $friendly_title = news_friendly_title($result['title']);
