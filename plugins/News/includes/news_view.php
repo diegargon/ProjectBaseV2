@@ -59,7 +59,7 @@ function news_show_page() {
     $news_data['title'] = str_replace('\r\n', '', $news_data['title']);
     $news_data['lead'] = str_replace('\r\n', PHP_EOL, $news_data['lead']);
     $news_data['news_url'] = "view_news.php?nid={$news_data['nid']}";
-    $news_data['date'] = $timeUtil->formatDbDate($news_data['date']);
+    $news_data['date'] = $timeUtil->formatDbDate($news_data['created']);
     $news_data['last_edited'] = $timeUtil->formatDbDate($news_data['last_edited']);
     $author_data = $sm->getUserByID($news_data['author_id']);
     $news_data['author'] = $author_data['username'];
