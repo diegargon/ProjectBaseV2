@@ -49,8 +49,9 @@ function NMU_upload_list($user) {
     $query = $db->selectAll('links', $select_ary, 'ORDER BY `date` DESC LIMIT ' . $cfg['upload_max_list_files']);
     while ($link = $db->fetch($query)) {
         $link_thumb = str_replace('[S]', '/thumbs/', $link['link']);
-        $textToadd = '[localimg]' . $link['link'] . '[/localimg]';
-        $content .= "<a href=\"#news_text\" onclick=\"addtext('$textToadd'); return false\"><img src='$link_thumb' alt='' /></a>";
+        $alt = str_replace('/media[S]', '', $link['link']);        
+        $textToadd = '[localimg]' . $link['link'] . '[/localimg]';                
+        $content .= '<a href="#news_text" onclick="addtext(\''. $textToadd .'\'); return false"><img src="'. $link_thumb.'" alt="'. $alt.'" /></a>';
     }
     $content .= '</div>';
     return $content;

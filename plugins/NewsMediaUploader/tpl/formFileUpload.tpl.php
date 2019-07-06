@@ -1,7 +1,13 @@
 <?php
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  NewsmediaUploader - formfileupload
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage NewsMediaUploadeer
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)  
  */
+
 !defined('IN_WEB') ? exit : true;
 ?>
 <label><?= $LNG['L_NMU_UPLOAD_FILES'] ?><span class="text_small"><?= $LNG['L_NMU_MAX'] . $cfg['upload_max_filesize'] ?></span></label>
@@ -73,7 +79,10 @@
 
     function addtext(text) {
         var textarea = document.getElementById('editor_text');
-        textarea.value += text;
+        var cursor = textarea.selectionStart;        
+        var left_text = textarea.value.substring(0, cursor);
+        var right_text = textarea.value.substring(cursor, textarea.size);        
+        textarea.value = left_text + text + right_text;
     }
 
 </script>
