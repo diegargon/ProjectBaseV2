@@ -84,7 +84,7 @@ function news_block_conf($blocks_data = null) {
 
         if (defined('MULTILANG')) {
             global $ml;
-            $langs = $ml->getSiteLangs('lang', 1);
+            $langs = $ml->getSiteLangs();
             if (!empty($langs) && count($langs) > 0) {
                 $form_data['lang_select'] = '<select name="block_conf[news_lang]" id="news_lang">';
                 foreach ($langs as $lang) {
