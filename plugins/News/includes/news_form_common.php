@@ -19,7 +19,7 @@
  * @param string $select_name
  * @return string|boolean #content
  */
-function news_getCatsSelect($news_data = null, $select_name = 'news_category') {
+function news_getCatsSelect($news_data = null, $select_name = 'news_category', $display_main_cat = 0) {
     global $cfg, $ctgs, $ml;
 
     defined('MULTILANG') ? $lang_id = $ml->getWebLangID() : $lang_id = 1;
@@ -43,7 +43,7 @@ function news_getCatsSelect($news_data = null, $select_name = 'news_category') {
         }
         $row['father'] ? $fathers_name = $fathers[$row['father']] : null;
 
-        if (($cfg['news_allow_submit_main_cats'] && $row['father'] == 0) || $row['father'] != 0) {
+        if (($cfg['news_allow_submit_main_cats'] && $row['father'] == 0) || $row['father'] != 0 || $display_main_cat) {
             if (($news_data != null) && ($row['cid'] == $news_data['category'])) {
                 $select .= "<option selected value='{$row['cid']}'>$fathers_name{$row['name']}</option>";
                 $added_one = true;

@@ -286,6 +286,7 @@ h1,h2,h3,h4,h5,h6{
     font-size: 1em;
     padding: 1px;
 }
+/*
 .cols:first-of-type {
     border-right: 1px solid black;
     padding-right: 8px;
@@ -294,6 +295,7 @@ h1,h2,h3,h4,h5,h6{
     border-left: 1px solid black;
     padding-left: 8px;
 }
+*/
 .cols h2 {
     font-family: 'Georgia';
     float:left;

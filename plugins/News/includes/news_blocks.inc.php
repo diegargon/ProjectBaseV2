@@ -80,7 +80,7 @@ function news_block_conf($blocks_data = null) {
             $form_data['full_sel'] = 1;
         }
 
-        $form_data['categories_select'] = news_getCatsSelect($news_data, 'block_conf[news_cat]');
+        $form_data['categories_select'] = news_getCatsSelect($news_data, 'block_conf[news_cat]', 1);
 
         if (defined('MULTILANG')) {
             global $ml;
@@ -111,7 +111,7 @@ function news_block_conf($blocks_data = null) {
         $block_conf = $filter->postArray('block_conf', 255, 1);
         $block_conf['admin_block'] = 0;
 
-        $form_data['categories_select'] = news_getCatsSelect(null, 'block_conf[news_cat]');
+        $form_data['categories_select'] = news_getCatsSelect(null, 'block_conf[news_cat]', 1);
 
         if (defined('MULTILANG')) {
             global $ml;
