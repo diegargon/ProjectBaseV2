@@ -28,9 +28,11 @@ function ExampleTemplate_init() {
 function ExampleTemplate_install() {
     global $db;
     require_once ('db/ExampleTemplate.db.php');
-    foreach ($exampleTemplate_database_install as $query) {
-        if (!$db->query($query)) {
-            return false;
+    if (!empty($exampleTemplate_database_install)) {
+        foreach ($exampleTemplate_database_install as $query) {
+            if (!$db->query($query)) {
+                return false;
+            }
         }
     }
     return true;
@@ -66,9 +68,11 @@ function ExampleTemplate_upgrade($version, $from_version) {
     global $db;
     require_once ('db/ExampleTemplate.db.php');
     if ($version == 0.3 && $from_version == 0.2) {
-        foreach ($exampleTemplate_database_upgrade_002_to_003 as $query) {
-            if (!$db->query($query)) {
-                return false;
+        if (!empty($exampleTemplate_database_upgrade_002_to_003)) {
+            foreach ($exampleTemplate_database_upgrade_002_to_003 as $query) {
+                if (!$db->query($query)) {
+                    return false;
+                }
             }
         }
         return true;
@@ -84,9 +88,11 @@ function ExampleTemplate_upgrade($version, $from_version) {
 function ExampleTemplate_uninstall() {
     global $db;
     require_once ('db/ExampleTemplate.db.php');
-    foreach ($exampleTemplate_database_uninstall as $query) {
-        if (!$db->query($query)) {
-            return false;
+    if (!empty($exampleTemplate_database_uninstall)) {
+        foreach ($exampleTemplate_database_uninstall as $query) {
+            if (!$db->query($query)) {
+                return false;
+            }
         }
     }
     return true;
