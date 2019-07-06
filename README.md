@@ -53,7 +53,8 @@ Author
 
 Lastest relevant add/changes 
 ================================
-* add vote to news
+* added personal gist plugin (need curl)
+* added vote to news
 * blocks lang support
 * add support for user select show news in others langs
 * rewrite section

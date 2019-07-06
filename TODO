@@ -2,6 +2,7 @@ HIGH
 
 MED
 * NewsMediaUpload - Forma de borrar imagenes subidas
+* tplBasic/frontend - buscar forma de poder ordenar por prioridad los elementos del menu, donde esta categorias, git,etc
 LOW
 * Minieditor: Capturar tabulaciones
 * Categorias: no se puede eliminar el enlace de imagen categorias dejandolo vacio.
@@ -32,3 +33,5 @@ para luego presentarlos por grupos, ej: L_NEWS_SUBMIT, L_NEWS_VIEW
 * GoogleAnalytics, menu admin para cambiar el codigo de usuario
 * News: Moderacion de paginas, si hay varias a la espera y aprobamos una se aprueban el resto
 * News: Fix news_adv_stats
+* PersonalGist: Buscar manera de mostrar la pantallad de carga "loading" con la nueva web.
+* PersonalGist/GENERAL: ver como tratar las dependencias del sistema, por ejemplo curl en el caso de personalgist

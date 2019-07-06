@@ -1,0 +1,150 @@
+
+/**
+ *  PersonalGit css file
+ *  
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage PersonalGit
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)  
+ */
+#loading {
+    display: none;
+    position:fixed;
+    height:100%;
+    width:100%;
+    overflow:hidden;
+    top:0; left:0;
+    background: rgba( 255, 255, 255, .8 ) 
+        url('/plugins/PersonalGit/tpl/img/loading.gif') 
+        50% 50% 
+        no-repeat;
+}
+.github_repo {
+    border: 1px solid #eee;
+    border-radius: 5px;
+    border-color: #eee #ddd #bbb;
+    box-shadow: rgba(0,0,0,.14) 0 1px 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    /* margin: auto;
+    width:50%; */
+    float:left;
+    margin-right: 20px;
+    /*    margin-left: 10px; */
+
+    width:50%;
+}
+.github_user {
+    border: 1px solid #eee;
+    border-radius: 5px;
+    border-color: #eee #ddd #bbb;
+    box-shadow: rgba(0,0,0,.14) 0 1px 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    /* margin: auto;
+    width:50%; */
+    float:left;
+    margin-right: 20px; 
+    /*    margin-left: 10px; */
+    /* max-width: 30%; */
+    width: 225px;
+}
+.github_user span {
+    color: #F00;
+}
+.github_user_top{
+    float:left;
+    border: 0px solid red;
+    width:100%;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+.github_user_top_avatar{
+    line-height: 0;
+    border:1px solid blue;
+    float:left;
+    margin-left:5px;
+    overflow:hidden; 
+    border-radius: 6px !important;
+}
+.github_user_top_avatar img{
+    width: 80px;
+    height: 85px;
+}
+.github_user_top_name {
+    border:0px solid black;
+    float:left;
+    margin-left:5px;
+    margin-top:15px;
+}
+.github_user_top_name a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #000;
+
+}
+.github_user_middle_details {
+    float:left;
+    border:0px solid yellow;
+    border-top: 1px solid #e5e5e5;
+    width:100%;
+}
+.github_user_middle_details ul {
+    padding-left:0;
+}
+.github_user_middle_details li {
+    list-style:none;
+
+}
+.github_user_bottom_details {
+    float:left;
+    border: 0px solid blue; 
+    border-top: 1px solid #e5e5e5;
+    text-align:center;
+    width:100%;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.github_user_bottom_details a {
+    float:left;
+    width:33%;
+    text-align:center;  
+    text-decoration: none;
+
+}
+.github_user_bottom_details strong {
+    display:block !important;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 1;
+    font-family: sans-serif;
+}
+.github_user_bottom_details span {
+
+    font-family: sans-serif;
+    color: #767676;
+}
+.github_readme {
+    font-size:12px;
+    border-top: 1px solid #9f9f9f;
+    border-bottom:  1px solid #9f9f9f;
+
+}
+.github_readme p {
+    font-weight: bold;
+    font-size:13px;
+}
+@media only screen and (max-width: 800px) {
+    .github_repo {
+        max-width: 90%;
+        min-width: 50%;
+        width: 100%;
+    }
+    .github_user {
+        width:90%;
+    }
+}
