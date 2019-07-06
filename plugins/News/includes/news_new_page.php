@@ -102,7 +102,10 @@ function news_newpage_submit_new($news_data) {
         return false;
     }
 
+
     $news_father = $db->fetch($query);
+    $num_pages = $news_father['num_pages'];
+    $page_num = $num_pages + 1;
 
     $insert_ary = [
         'nid' => $news_father['nid'],
@@ -113,12 +116,11 @@ function news_newpage_submit_new($news_data) {
         'author_id' => $news_father['author_id'],
         'category' => $news_father['category'],
         'moderation' => $cfg['news_moderation'],
-        'page' => ++$num_pages
+        'page' => $page_num
     ];
     !empty($news_data['lead']) ? $insert_ary['lead'] = $db->escapeStrip($news_data['lead']) : false;
     $db->insert("news", $insert_ary);
 
-    $num_pages = $news_father['num_pages'];
     $num_pages++;
     $db->update('news', ['num_pages' => $num_pages], ['nid' => $news_father['nid'], 'lang_id' => $news_father['lang_id']], 'LIMIT ' . $num_pages);
 
