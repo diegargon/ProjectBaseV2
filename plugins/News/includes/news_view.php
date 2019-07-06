@@ -87,9 +87,9 @@ function news_show_page() {
 
     do_action('news_show_page', $news_data);
 
-    ($cfg['ITS_BOT'] && $cfg['INCLUDE_MICRODATA']) ? $news_data['ITEM_OL'] = 1 : null;
+    ($cfg['ITS_BOT'] && $cfg['news_microdata']) ? $news_data['ITEM_OL'] = 1 : null;
 
-    if ($cfg['ITS_BOT'] && $cfg['INCLUDE_DATA_STRUCTURE']) {
+    if ($cfg['ITS_BOT'] && $cfg['news_data_structure']) {
         $matchs = [];
         preg_match('/src=\"(.*?)\"/i', $news_data['text'], $matchs);
         $news_data['ITEM_MAINIMAGE'] = $matchs[1];
@@ -523,7 +523,7 @@ function getNewsCatBreadcrumb($news_data) {
         $cat_path = '';
         $list_counter = 1;
         foreach ($cat_ary as $cat) {
-            if ($cfg['ITS_BOT'] && $cfg['INCLUDE_MICRODATA']) {
+            if ($cfg['ITS_BOT'] && $cfg['news_microdata']) {
                 $ITEM_LI = 'itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"';
                 $ITEM_HREF = "itemscope itemtype=\"http://schema.org/Thing\" itemprop=\"item\"";
                 $ITEM_NAME = 'itemprop="name"';
