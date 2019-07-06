@@ -83,7 +83,7 @@ class Editor {
 
     function parseText($text) {
         $text = preg_replace(array_keys($this->mark_codes), array_values($this->mark_codes), $text);
-        $text = nl2br($text);
+        //$text = nl2br($text);
         $text = preg_replace('/><br \/>(\s*)(<br \/>)?/si', '>', $text);
         $text = preg_replace('/{STATIC_SRV_URL}/si', $this->srv_url, $text);
         $text = preg_replace('/\[S\]/si', DIRECTORY_SEPARATOR . $this->img_platform . DIRECTORY_SEPARATOR, $text);

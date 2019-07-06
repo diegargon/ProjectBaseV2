@@ -31,15 +31,16 @@ TODO
 REQUIREMENTS
 ============
 TODO
-/cache: (if CSS_OPTIMIZE)
-
-chown www-data:www-data ???? && chmod 755 ????
+/cache must be writeble (need if CSS_OPTIMIZE 1) 
+/media if NewsMediaUpload enabled
+    chmod 755 /media -R
+    chown www-data /media -R  (www-data if it's your apache2 group)
 
 INSTALLATION
 ============
 1º copy files
 2º rename /config/config.inc_ex.php to config.inc.php
-3º Edit config.inc.php
+3º Edit /config/config.inc.php
 4º Open web in browser and follow the steps
 
 DEVELOPEMENT
@@ -50,7 +51,7 @@ Author
 
 * Diego Garcia <diego@envigo.net>
 
-Lastest add/changes exclude, minor/fixes first latest
+Lastest relevant add/changes 
 ================================
 * add vote to news
 * blocks lang support

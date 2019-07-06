@@ -1,7 +1,9 @@
 HIGH
 
 MED
-
+* NewsMediaUpload - Forma de borrar imagenes subidas
+* Newsmediaupload - Sobre la imagen mostrar nombre
+* Editor: cuando pinchas en una imagen que tenga en cuenta el cursor ahora la pone al final
 * clear css cache
 * GoogleAnalytics, menu admin para cambiar el codigo de usuario
 LOW
