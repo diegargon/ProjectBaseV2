@@ -18,6 +18,14 @@ $tpl->addStdCSS('octicons');
 
 $curl_token = 'Authorization: token ' . $cfg['git_token'];
 $user_info = get_user($cfg['git_user'], $curl_token);
+
+if (isset($user_info->message)) {
+    $LNG['GIT_ERROR'] = $user_info->message; //TODO: posibilidad de mandar mensaje directo al msgbox sin ser a traves de LNG
+    $msgbox['msg'] = 'GIT_ERROR';
+    $frontend->messageBox($msgbox);
+    return false;
+}
+
 $response = get_repos($cfg['git_user'], $curl_token);
 $repo_data = '';
 
@@ -55,4 +63,3 @@ $git_data = [
 ];
 
 $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('PersonalGit', 'git', $git_data));
-
