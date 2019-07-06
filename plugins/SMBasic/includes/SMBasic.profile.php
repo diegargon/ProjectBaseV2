@@ -1,7 +1,7 @@
 <?php
 
 /**
- *  SMBasic profile file
+ *  SMBasic profile view include file
  * 
  *  @author diego@envigo.net
  *  @package ProjectBase
