@@ -54,7 +54,7 @@ function news_show_page() {
     }
 
     $news_data['news_admin_nav'] = news_nav_options($news_data);
-    $cfg['allow_multiple_pages'] ? $news_data['pager'] = news_pager($news_data) : false;
+    $cfg['allow_multiple_pages'] ? $news_data['pager'] = news_pager($news_data) : null;
 
     $news_data['title'] = str_replace('\r\n', '', $news_data['title']);
     $news_data['lead'] = str_replace('\r\n', PHP_EOL, $news_data['lead']);
@@ -72,10 +72,10 @@ function news_show_page() {
     }
     $author = $sm->getUserByID($news_data['author_id']);
 
-    //HEAD MOD
-    //$cfg['news_stats'] ? news_stats($nid, $lang, $page, $news_data['visits']) : false;
+    //HEAD MOD    
+    $cfg['news_stats'] ? news_stats($nid, $news_data['lang_id'], $news_data['page']) : null;
     $cfg['PAGE_TITLE'] = $news_data['title'];
-    $cfg['news_meta_opengraph'] ? news_add_social_meta($news_data) : false;
+    $cfg['news_meta_opengraph'] ? news_add_social_meta($news_data) : null;
     $cfg['PAGE_DESC'] = $news_data['title'] . ":" . $news_data['lead'];
     $cfg['PAGE_AUTHOR'] = $author['username'];
     //END HEAD MOD
@@ -83,7 +83,7 @@ function news_show_page() {
 
     get_news_links($news_data);
 
-    $cfg['news_breadcrum'] ? $news_data['news_breadcrum'] = getNewsCatBreadcrumb($news_data) : false;
+    $cfg['news_breadcrum'] ? $news_data['news_breadcrum'] = getNewsCatBreadcrumb($news_data) : null;
 
     do_action('news_show_page', $news_data);
 
@@ -417,15 +417,15 @@ function news_frontpage($nid, $lang_id) {
     return true;
 }
 
-function news_stats($nid, $lang, $page, $visits) {
-    global $db, $cfg;
+function news_stats($nid, $lang_id, $page) {
+    global $db;
 
-    $db->plusOne('news', 'visits', ['nid' => $nid, 'lang' => $lang, 'page' => $page], 'LIMIT 1');
+    $db->plusOne('news', 'visits', ['nid' => $nid, 'lang_id' => $lang_id, 'page' => $page], 'LIMIT 1');
 
-    $cfg['news_adv_stats'] ? news_adv_stats($nid, $lang) : false;
+    //$cfg['news_adv_stats'] ? news_adv_stats($nid, $lang) : false;
 }
 
-function news_adv_stats($nid, $lang) {
+function news_adv_stats($nid, $lang_id) {
     global $db, $sm, $filter;
 
     $user = $sm->getSessionUser();
@@ -435,7 +435,7 @@ function news_adv_stats($nid, $lang) {
     $where_ary = [
         'type' => 'user_visits_page',
         'plugin' => 'News',
-        'lang' => $lang,
+        'lang' => $lang_id,
         'rid' => $nid,
         'uid' => $user['uid']
     ];

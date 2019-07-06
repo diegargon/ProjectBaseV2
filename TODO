@@ -31,3 +31,4 @@ para luego presentarlos por grupos, ej: L_NEWS_SUBMIT, L_NEWS_VIEW
 * clear css cache
 * GoogleAnalytics, menu admin para cambiar el codigo de usuario
 * News: Moderacion de paginas, si hay varias a la espera y aprobamos una se aprueban el resto
+* News: Fix news_adv_stats

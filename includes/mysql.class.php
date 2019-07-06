@@ -459,7 +459,7 @@ class Database {
      * @param string $logic
      * @return array|boolean
      */
-    function plusOne($table, $field, $where = null, $logic = 'AND') {
+    function plusOne($table, $field, $where = null, $extra = null, $logic = 'AND') {
 
         if (empty($field) || empty($table)) {
             return false;
@@ -469,6 +469,8 @@ class Database {
             $query .= ' WHERE ' . $this->whereProcess($where, $logic);
         }
 
+        !empty($extra) ? $query .= " $extra" : false;
+        
         return $this->query($query);
     }
 

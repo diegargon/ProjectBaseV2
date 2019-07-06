@@ -281,7 +281,7 @@ function stdGetCommPerms($comm_author_id, $perm_cfg) {
 function stdCommReport($comm_id) {
     global $db;
 
-    $db->plusOne('comments', 'reported', ['cid' => $comm_id]);
+    $db->plusOne('comments', 'reported', ['cid' => $comm_id], 'LIMIT 1');
 }
 
 /**
