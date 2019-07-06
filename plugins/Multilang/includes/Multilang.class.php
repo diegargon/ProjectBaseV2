@@ -245,8 +245,6 @@ class Multilang {
      * @return boolean|string
      */
     function getSiteLangsSelect($name = 'lang', $all = 0) {
-        /* La nueva pone IDs en vez de el iso code en el value */
-
         global $LNG;
 
         $site_langs = $this->getSiteLangs();
