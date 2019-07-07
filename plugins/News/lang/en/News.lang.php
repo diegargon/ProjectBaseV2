@@ -11,7 +11,7 @@
 !defined('IN_WEB') ? exit : true;
 
 /* ADMIN */
-
+$LNG['L_NEWS_NONEWS_MOD'] = 'No news for moderation';
 $LNG['L_NEWS_WARN_NOLANG'] = 'Warning: No version of this page in your language';
 $LNG['L_NEWS_NOT_EXIST'] = 'News not exists';
 $LNG['L_CREATE_NEWS'] = 'Create news';

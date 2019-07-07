@@ -142,11 +142,11 @@ function news_get_available_langs($news_data) {
     $select = '<select name="news_lang" id="news_lang">';
     foreach ($site_langs as $site_lang) {
         if ($site_lang['lang_id'] == $news_data['lang_id']) {
-            $select .= "<option selected value='{$site_lang['iso_code']}'>{$site_lang['lang_name']}</option>";
+            $select .= "<option selected value='{$site_lang['lang_id']}'>{$site_lang['lang_name']}</option>";
         } else {
             $query = $db->selectAll('news', ['nid' => $news_data['nid'], 'lang_id' => $site_lang['lang_id']], 'LIMIT 1');
             if ($db->numRows($query) <= 0) {
-                $select .= "<option value='{$site_lang['iso_code']}'>{$site_lang['lang_name']}</option>";
+                $select .= "<option value='{$site_lang['lang_id']}'>{$site_lang['lang_name']}</option>";
             }
         }
     }
@@ -180,7 +180,7 @@ function news_get_missed_langs($nid, $page) {
     foreach ($site_langs as $site_lang) {
         $query = $db->selectAll('news', ["nid" => $nid, "lang_id" => $site_lang['lang_id'], "page" => "$page"], "LIMIT 1");
         if ($db->numRows($query) <= 0) {
-            $select .= "<option value='{$site_lang['iso_code']}'>{$site_lang['lang_name']}</option>";
+            $select .= "<option value='{$site_lang['lang_id']}'>{$site_lang['lang_name']}</option>";
             $nolang = 0;
         }
     }
@@ -269,18 +269,17 @@ function news_submit_form_check($news_data) {
  * News form update
  * 
  * @global Database $db
- * @global Multilang $ml
  * @global SecureFilter $filter
  * @param array $news_data
  * @return boolean
  */
 function news_form_news_update($news_data) {
-    global $db, $ml, $filter;
+    global $db, $filter;
 
     empty($news_data['featured']) ? $news_data['featured'] = 0 : null;
     //!isset($news_data['news_translator']) ? $news_data['news_translator'] = "" : null;
 
-    defined('MULTILANG') ? $news_lang_id = $ml->getWebLangID() : $news_lang_id = 1;
+    !defined('MULTILANG') ? $news_data['news_lang'] = 1 : null;
 
     $set_ary = [
         'title' => $db->escapeStrip($news_data['title']),
@@ -289,9 +288,9 @@ function news_form_news_update($news_data) {
         'author_id' => $news_data['author_id'],
         'category' => $news_data['category'],
     ];
-
-    if ($news_data['old_news_lang_id'] != $news_lang_id) {
-        $set_ary['lang_id'] = $news_lang_id;
+ 
+    if ($news_data['old_news_lang_id'] != $news_data['news_lang']) {
+        $set_ary['lang_id'] = $news_data['news_lang'];
     }
 
     do_action('news_form_update_set', $set_ary);

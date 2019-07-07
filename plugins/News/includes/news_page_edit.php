@@ -82,7 +82,7 @@ function news_form_edit_process() {
 
         if ($cfg['FRIENDLY_URL']) {
             $friendly_title = news_friendly_title($news_data['title']);
-            $back_url = '/' . $cfg['WEB_LANG'] . "/news/{$news_data['nid']}/{$news_data['page']}/{$news_data['news_lang_id']}/$friendly_title";
+            $back_url = '/' . $cfg['WEB_LANG'] . "/news/{$news_data['nid']}/{$news_data['page']}/{$news_data['news_lang']}/$friendly_title";
         } else {
             $back_url = "/{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_data['nid']}&lang=" . $cfg['WEB_LANG'] . "&npage={$news_data['page']}&news_lang_id={$news_data['lang_id']}";
         }

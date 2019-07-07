@@ -11,7 +11,7 @@
 !defined('IN_WEB') ? exit : true;
 
 function get_news_query($where, $q_conf = null, $order = null) {
-    global $cfg, $db, $ml, $ctgs;
+    global $cfg, $db, $ctgs;
 
     empty($q_conf['limit']) ? $limit = ' LIMIT ' . $cfg['news_dflt_getnews_limit'] : $limit = ' LIMIT ' . $q_conf['limit'];
     empty($order) ? $order = 'ORDER BY created DESC' : $order = 'ORDER BY ' . $order;
@@ -91,11 +91,11 @@ function news_extract_bycat($news, $cat) {
     return $r_news;
 }
 
-function get_news_byId($nid, $lang_id, $page = null) {
+function get_news_byId($nid, $news_lang, $page = null) {
     global $db;
     empty($page) ? $page = 1 : null;
 
-    $where_ary = ['nid' => $nid, 'lang_id' => $lang_id, 'page' => $page];
+    $where_ary = ['nid' => $nid, 'lang_id' => $news_lang, 'page' => $page];
     $query = $db->selectAll('news', $where_ary, 'LIMIT 1');
 
     //TODO ONE SELECT ALL LANG AND THEN CHOOSE IF EXISTS OR NOT EXIST
