@@ -58,6 +58,7 @@ CREATE TABLE `pb_links` (
   `source_id` int(10) UNSIGNED NOT NULL,
   `type` char(64) NOT NULL,
   `link` varchar(255) NOT NULL,
+  `extra` varchar(255) DEFAULT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . ";  
 ";
