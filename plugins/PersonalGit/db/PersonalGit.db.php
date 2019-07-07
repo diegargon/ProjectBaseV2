@@ -13,6 +13,7 @@
 $personalGit_database_install = [
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('PersonalGit', 'git_token', '0');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('PersonalGit', 'git_user', 'none');",
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('PersonalGit', 'git_menu_text', 'Git');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('PersonalGit', 'max_readme_chars', '200');"
 ];
 

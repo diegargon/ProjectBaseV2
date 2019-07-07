@@ -11,7 +11,7 @@
 !defined('IN_WEB') ? exit : true;
 
 function git_section_nav_elements() {
-    return '<li><a href="/index.php?module=PersonalGit&page=git">GIT</a></li>';
+    return '<li><a href="/index.php?module=PersonalGit&page=git">' . $cfg['git_menu_text'] . '</a></li>';
 }
 
 function get_user($user, $curl_token) {
