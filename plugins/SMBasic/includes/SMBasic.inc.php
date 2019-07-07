@@ -37,14 +37,14 @@ function SMBasic_navLogReg() {
     }
 
     if ($user && $user['uid'] > 0) {
-        $elements .= "<li class='nav_right'><a href='$logout_url'>{$LNG['L_LOGOUT']}</a></li>\n";
-        $elements .= "<li class='nav_right'><a href='$profile_url'>{$user['username']}</a></li>\n";
+        $elements .= "<li class='nav_right'><a href='$logout_url' rel='nofollow'>{$LNG['L_LOGOUT']}</a></li>\n";
+        $elements .= "<li class='nav_right'><a href='$profile_url' rel='nofollow'>{$user['username']}</a></li>\n";
         if (!empty($user['avatar'])) {
-            $elements .= "<li class='nav_right zero'><a href='$profile_url'><img src='{$user['avatar']}'/></a></li>";
+            $elements .= "<li class='nav_right zero'><a href='$profile_url' rel='nofollow'><img src='{$user['avatar']}'/></a></li>";
         }
     } else {
-        $elements .= "<li class='nav_right'><a href='$login_url'>{$LNG['L_LOGIN']}</a></li>\n";
-        $elements .= "<li class='nav_right'><a href='$register_url'>{$LNG['L_REGISTER']}</a></li>\n";
+        $elements .= "<li class='nav_right'><a href='$login_url' rel='nofollow'>{$LNG['L_LOGIN']}</a></li>\n";
+        $elements .= "<li class='nav_right'><a href='$register_url' rel='nofollow'>{$LNG['L_REGISTER']}</a></li>\n";
     }
     return $elements;
 }
