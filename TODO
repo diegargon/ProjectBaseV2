@@ -36,3 +36,4 @@ para luego presentarlos por grupos, ej: L_NEWS_SUBMIT, L_NEWS_VIEW
 * PersonalGist: Buscar manera de mostrar la pantallad de carga "loading" con la nueva web.
 * PersonalGist/GENERAL: ver como tratar las dependencias del sistema, por ejemplo curl en el caso de personalgist
 * Al rescanear no actualiza bien, hay que recargar la pagina
+* En seccion no aparece la opcion de cambiar lenguage interface

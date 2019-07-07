@@ -92,7 +92,9 @@ function news_show_page() {
     if ($cfg['ITS_BOT'] && $cfg['news_data_structure']) {
         $matchs = [];
         preg_match('/src=\"(.*?)\"/i', $news_data['text'], $matchs);
-        $news_data['ITEM_MAINIMAGE'] = $matchs[1];
+        if (isset($matchs) && !empty($matchs[1])) {
+            $news_data['ITEM_MAINIMAGE'] = $matchs[1];
+        }
         $news_data['ITEM_CREATED'] = preg_replace('/ /', 'T', $news_data['created']) . 'Z';
         $news_data['ITEM_MODIFIED'] = preg_replace('/ /', 'T', $news_data['last_edited']) . 'Z';
         $cats = explode(' ', trim(strip_tags($news_data['news_breadcrum'])));
@@ -455,7 +457,7 @@ function news_adv_stats($nid, $lang_id) {
             'plugin' => 'News',
             'type' => 'user_visits_page',
             'rid' => $nid,
-            'lang' => $lang,
+            'lang' => $lang_id,
             'uid' => $user['uid'],
             'ip' => $ip,
             'hostname' => $hostname,
