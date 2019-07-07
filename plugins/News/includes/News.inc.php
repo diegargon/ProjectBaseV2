@@ -12,6 +12,12 @@
 
 require_once ('News_perms.inc.php');
 
+/**
+ * Put send news on top menu
+ * @global array $LNG
+ * @global array $cfg
+ * @return string
+ */
 function submit_news_menu() {
     global $LNG, $cfg;
 
@@ -28,6 +34,11 @@ function submit_news_menu() {
     return $data;
 }
 
+/**
+ * Clean news title for friendly links
+ * @param string $title
+ * @return string
+ */
 function news_friendly_title($title) {
     //FIX: better way for clean all those character?
     $friendly_filter = ['"', '\'', '?', '$', ',', '.', '‘', '’', ':', ';', '[', ']', '{', '}', '*', '!', '¡', '¿', '+', '<', '>', '#', '@', '|', '~', '%', '&', '(', ')', '=', '`', '´', '/', 'º', 'ª', '\\'];
@@ -37,6 +48,12 @@ function news_friendly_title($title) {
     return $friendly;
 }
 
+/**
+ * Put nav element (news categories)
+ * @global Categories $ctgs
+ * @global array $cfg
+ * @return string
+ */
 function news_section_nav_elements() {
     global $ctgs, $cfg;
     $ctgs->sortCatsByWeight();
@@ -53,6 +70,14 @@ function news_section_nav_elements() {
     return $menu_data;
 }
 
+/**
+ * Put subnav categories elements
+ * 
+ * @global array $cfg
+ * @global Categories $ctgs
+ * @global SecureFilter $filter
+ * @return boolean
+ */
 function news_section_nav_subelements() {
     global $cfg, $ctgs, $filter;
 
@@ -86,6 +111,13 @@ function news_section_nav_subelements() {
     return $submenu_data;
 }
 
+/**
+ * Edit the dropdown field
+ * @global array $LNG
+ * @global MultiLang $ml
+ * @global SessionMananger $sm
+ * @param string $form_data
+ */
 function news_dropdown_profile_edit(& $form_data) {
     global $LNG, $ml, $sm;
 
@@ -108,6 +140,10 @@ function news_dropdown_profile_edit(& $form_data) {
     }
 }
 
+/**
+ * Dropdown change 
+ * @param array $q_data
+ */
 function news_dropdown_profile_change(& $q_data) {
     $sanity_fail = 0;
     $langs = $_POST['langs'];
