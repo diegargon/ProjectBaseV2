@@ -23,7 +23,7 @@
  * @return boolean
  */
 function news_show_page() {
-    global $cfg, $tpl, $sm, $ml, $filter, $frontend, $timeUtil;
+    global $cfg, $tpl, $sm, $filter, $frontend, $timeUtil;
 
     $news_data = [];
     $editor = new Editor();
@@ -34,7 +34,7 @@ function news_show_page() {
     if (!empty($_GET['news_lang_id'])) {
         $news_lang_id = $filter->getInt('news_lang_id');
     } else {
-        (defined('MULTILANG')) ? $news_lang_id = $ml->getWebLangID() : $news_lang_id = 1;
+        $news_lang_id = 1;
     }
 
     ($cfg['allow_multiple_pages'] && !empty($_GET['npage'])) ? $page = $filter->getInt('npage') : $page = 1;
