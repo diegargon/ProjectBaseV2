@@ -27,9 +27,9 @@
         </div>
 
         <div class="github_user_bottom_details">
-            <a  href="https://github.com/<?= $data['name'] ?>" target=_blank><strong><?= $data['public_repos'] ?></strong><span>Repos</span></a>
-            <a  href="https://gist.github.com/<?= $data['name'] ?>" target=_blank><strong><?= $data['public_gists'] ?></strong><span>Gist</span></a>
-            <a  href="https://github.com/<?= $data['name'] ?>/following" target=_blank><strong><?= $data['followers'] ?></strong><span>Followers</span></a>
+            <a  href="https://github.com/<?= $data['login'] ?>" target=_blank><strong><?= $data['public_repos'] ?></strong><span>Repos</span></a>
+            <a  href="https://gist.github.com/<?= $data['login'] ?>" target=_blank><strong><?= $data['public_gists'] ?></strong><span>Gist</span></a>
+            <a  href="https://github.com/<?= $data['login'] ?>/following" target=_blank><strong><?= $data['followers'] ?></strong><span>Followers</span></a>
         </div>
 
     </div>
