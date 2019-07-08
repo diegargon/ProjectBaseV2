@@ -1,9 +1,19 @@
 <?php
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  News - Body template
+ *
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage News
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
-?>
+
+if ($cfg['news_side_scroll']) {
+    ?>
+    <a href="javascript:" id="scrollup"></a>
+    <a href="javascript:" id="scrolldown"></a>
+<?php } ?>
 
 <div id="news_container" class="newsrow">
     <div  class="clear bodysize page">

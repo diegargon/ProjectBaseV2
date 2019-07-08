@@ -55,6 +55,10 @@ if ($cfg['news_vote_disable_by_stress'] && is_server_stressed()) {
 $tpl->getCssFile('News');
 $tpl->getCssFile('News', 'News-mobile');
 
+if ($cfg['news_side_scroll']) {
+    $tpl->addScriptFile('standard', 'jquery', 'BOTTOM', ''); //Async mode fail sometimes since news_scroll need it
+    $tpl->addScriptFile('News', 'news_scroll', 'BOTTOM');
+}
 do_action('begin_newsshow');
 
 news_show_page();
