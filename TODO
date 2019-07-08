@@ -1,6 +1,5 @@
 HIGH
-* check etag support
-* https://ready.mobi/
+
 MED
 * NewsMediaUpload - Forma de borrar imagenes subidas
 * tplBasic/frontend - buscar forma de poder ordenar por prioridad los elementos del menu, donde esta categorias, git,etc
