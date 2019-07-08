@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  MiniEditor main
  * 
@@ -9,10 +10,18 @@
  */
 !defined('IN_WEB') ? exit : true;
 
+/**
+ * ME init func
+ */
 function MiniEditor_init() {
     
 }
 
+/**
+ * Me install func
+ * @global Database $db
+ * @return boolean
+ */
 function MiniEditor_install() {
     global $db;
     require_once "db/MiniEditor.db.php";
@@ -24,18 +33,36 @@ function MiniEditor_install() {
     return true;
 }
 
+/**
+ * ME preInstall
+ * @return boolean
+ */
 function MiniEditor_preInstall() {
     return true;
 }
 
+/**
+ * ME preInstall info
+ * @return boolean
+ */
 function MiniEditor_preInstall_info() {
     return true;
 }
 
+/**
+ * Me upgrade func
+ * @param float $version
+ * @param float $from_version
+ */
 function MiniEditor_upgrade($version, $from_version) {
     
 }
 
+/**
+ * ME uninstall func
+ * @global Database $db
+ * @return boolean
+ */
 function MiniEditor_uninstall() {
     global $db;
     require_once "db/MiniEditor.db.php";

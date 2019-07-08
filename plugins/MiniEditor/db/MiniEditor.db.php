@@ -14,6 +14,8 @@ $minieditor_database_install = [
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('MiniEditor', 'minieditor_parser_allow_ext_url', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('MiniEditor', 'minieditor_min_length', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('MiniEditor', 'minieditor_max_length', '65530');",
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('MiniEditor', 'minieditor_nlbr', '0');",
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('MiniEditor', 'minieditor_keylinks', '1');",
 ];
 /* UNINSTALL */
 

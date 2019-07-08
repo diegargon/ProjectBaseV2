@@ -53,6 +53,7 @@ Author
 
 Lastest relevant add/changes 
 ================================
+* Add to editor internal links tag and a bd links database
 * added personal gist plugin (need curl)
 * added vote to news
 * blocks lang support

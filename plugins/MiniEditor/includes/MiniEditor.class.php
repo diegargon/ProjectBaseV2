@@ -44,6 +44,8 @@ class Editor {
         '~\[br\]~si' => '<br/>',
         '~\[youtube\]https:\/\/www.youtube.com\/watch\?v=(.*?)\[\/youtube\]~si' => '<div><iframe src="https://www.youtube.com/embed/$1" allowfullscreen></iframe></div>',
         '~\[youtube w=((?:[1-9][0-9]?[0-9]?)) h=((?:[1-9][0-9]?[0-9]?))\]https:\/\/www.youtube.com\/watch\?v=(.*?)\[\/youtube\]~si' => '<div><iframe width="$1" height="$2" src="https:\/\/www.youtube.com\/embed\/$3" frameborder="0" allowfullscreen></iframe></div>',
+        '~\[iurl=#(.*?)\](.*?)\[/iurl\]~si' => '<a href="#$1">$2</a>',
+        '~\[iurl=/(.*?)\](.*?)\[/iurl\]~si' => '<a href="/$1">$2</a>',
     ];
     private $srv_url;
     private $img_platform;
@@ -61,7 +63,6 @@ class Editor {
         if ($cfg['minieditor_parser_allow_ext_url']) {
             $this->mark_codes['~\[url\]((?:ftps|https?)://.*?)\[/url\]~si'] = '<a rel="nofollow" target="_blank" href="$1">$1</a>';
             $this->mark_codes['~\[url=((?:ftps?|https?)://.*?)\](.*?)\[/url\]~si'] = '<a rel="nofollow" target="_blank" href="$1">$2</a>';
-            $this->mark_codes['~\[url=((?:#?).*?)\](.*?)\[/url\]~si'] = '<a rel="nofollow" target="_blank" href="$1">$2</a>';
         }
     }
 
@@ -82,12 +83,39 @@ class Editor {
     }
 
     function parseText($text) {
+        global $cfg;
+
         $text = preg_replace(array_keys($this->mark_codes), array_values($this->mark_codes), $text);
-        //$text = nl2br($text);
+        $cfg['minieditor_nlbr'] ? $text = nl2br($text) : null;
         $text = preg_replace('/><br \/>(\s*)(<br \/>)?/si', '>', $text);
         $text = preg_replace('/{STATIC_SRV_URL}/si', $this->srv_url, $text);
         $text = preg_replace('/\[S\]/si', DIRECTORY_SEPARATOR . $this->img_platform . DIRECTORY_SEPARATOR, $text);
+        if ($cfg['minieditor_keylinks']) {
+            $this->parseKeyLinks($text);
+        }
         return $text;
+    }
+
+    private function parseKeyLinks(&$text) {
+        global $db;
+
+        $query = $db->select('links', 'extra, link', ['plugin' => 'MiniEditor']);
+        if($db->numRows($query) < 1) {
+            return  false;
+        }
+        $keylinks = $db->fetchAll($query);
+        
+        foreach ($keylinks as $keylink) {
+            $keylink_search = '!' . $keylink['extra'];
+            $search[] = $keylink_search;
+            if ($keylink['link'][0] == '/') {
+                $keylink_replace = ' <a href="' . $keylink['link'] . '"' . $keylink['extra'] . '</a> ';
+            } else {
+                $keylink_replace = ' <a rel="nofollow" href="' . $keylink['link'] . '" target=_blank>' . $keylink['extra'] . '</a> ';
+            }
+            $replace[] = $keylink_replace;
+        }
+        $text = str_ireplace($search, $replace, $text);
     }
 
 }

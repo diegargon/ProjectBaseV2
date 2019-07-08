@@ -4,6 +4,7 @@ MED
 * NewsMediaUpload - Forma de borrar imagenes subidas
 * tplBasic/frontend - buscar forma de poder ordenar por prioridad los elementos del menu, donde esta categorias, git,etc
 * News: Las paginas no principales(1) no deberian de dejar cambiar el idioma al editarla, si no se pierden en el limbo
+
 LOW
 * Minieditor: Capturar tabulaciones
 * Categorias: no se puede eliminar el enlace de imagen categorias dejandolo vacio.
