@@ -21,7 +21,6 @@ https://stackoverflow.com/questions/6637341/use-tab-to-indent-in-textarea
 para luego presentarlos por grupos, ej: L_NEWS_SUBMIT, L_NEWS_VIEW
 * CRON?: CRON Plugin y calcular opcionalmente ratio de user global "todas las section"
 * SMBasic?: Añadir opcion para que el usuario decida el formato de fecha
-* News: Si una noticia esta traducida mostrar opcion para que el usuario pueda cambiar de lenguaje
 * News: Subscrition access
 * FRONTEND? : Mostrar fecha y hora actual
 * SimpleACL Ordenar permisos en solapas por plugins
@@ -37,5 +36,5 @@ para luego presentarlos por grupos, ej: L_NEWS_SUBMIT, L_NEWS_VIEW
 * News: Fix news_adv_stats
 * PersonalGist: Buscar manera de mostrar la pantallad de carga "loading" con la nueva web.
 * PersonalGist/GENERAL: ver como tratar las dependencias del sistema, por ejemplo curl en el caso de personalgist
-* Al rescanear no actualiza bien, hay que recargar la pagina
-* En seccion no aparece la opcion de cambiar lenguage interface
+* Plugins:Al rescanear no actualiza bien, hay que recargar la pagina
+* News: En seccion no aparece la opcion de cambiar lenguage interface
