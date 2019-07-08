@@ -109,7 +109,7 @@ class Editor {
             $keylink_search = '!' . $keylink['extra'];
             $search[] = $keylink_search;
             if ($keylink['link'][0] == '/') {
-                $keylink_replace = ' <a href="' . $keylink['link'] . '"' . $keylink['extra'] . '</a> ';
+                $keylink_replace = ' <a href="' . $keylink['link'] . '">' . $keylink['extra'] . '</a> ';
             } else {
                 $keylink_replace = ' <a rel="nofollow" href="' . $keylink['link'] . '" target=_blank>' . $keylink['extra'] . '</a> ';
             }
