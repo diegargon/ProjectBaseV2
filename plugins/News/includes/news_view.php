@@ -23,7 +23,7 @@
  * @return boolean
  */
 function news_show_page() {
-    global $cfg, $tpl, $sm, $filter, $frontend, $timeUtil;
+    global $cfg, $tpl, $ml, $sm, $filter, $frontend, $timeUtil, $LNG;
 
     $news_data = [];
     $editor = new Editor();
@@ -58,7 +58,6 @@ function news_show_page() {
 
     $news_data['title'] = str_replace('\r\n', '', $news_data['title']);
     $news_data['lead'] = str_replace('\r\n', PHP_EOL, $news_data['lead']);
-    $news_data['news_url'] = "view_news.php?nid={$news_data['nid']}";
     $news_data['date'] = $timeUtil->formatDbDate($news_data['created']);
     $news_data['last_edited'] = $timeUtil->formatDbDate($news_data['last_edited']);
     $author_data = $sm->getUserByID($news_data['author_id']);
@@ -66,6 +65,19 @@ function news_show_page() {
     $news_data['author_uid'] = $news_data['author_id'];
     $news_data['text'] = $editor->parseText(stripcslashes($news_data['text']));
 
+    if (isset($news_data['other_langs'])) {
+        $other_langs = $news_data['other_langs'];
+        $news_data['sel_other_langs'] = '<div class="other_langs">';
+        foreach ($other_langs as $o_lang_id) {
+            if ($cfg['FRIENDLY_URL']) {
+                $o_lang_url = "/{$ml->getWebLang()}/news/{$news_data['nid']}/{$news_data['page']}/{$o_lang_id}/";
+            } else {
+                $o_lang_url = "/index.php?module=News&page=view_news.php?nid={$news_data['nid']}&npage={$news_data['page']}&news_lang={$o_lang_id}";
+            }
+            $news_data['sel_other_langs'] .= '<a href="' . $o_lang_url . '">' . $ml->idToName($o_lang_id) . '</a>';
+        }
+        $news_data['sel_other_langs'] .= '</div>';
+    }
     if (!empty($news_data['translator_id'])) {
         $translator = $sm->getUserByID($news_data['translator_id']);
         $news_data['translator'] = '<a rel="nofollow" href="/' . $cfg['WEB_LANG'] . '/profile&viewprofile=' . $translator['uid'] . '">' . $translator['username'] . '</a>';

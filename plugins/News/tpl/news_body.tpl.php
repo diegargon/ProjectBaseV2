@@ -34,12 +34,12 @@ if ($cfg['news_side_scroll']) {
             <?php
         }
         ?>
-        <div class="sections_wrapper">
+        <div class="sections_wrapper">            
             <section class="article_body">
                 <h1>
                     <?= !empty($data['title']) ? $data['title'] : null ?>
                 </h1>
-
+                <?= isset($data['sel_other_langs']) ? $data['sel_other_langs'] : null ?>
                 <?php if (!empty($data['news_admin_nav'])) { ?>
                     <nav id='adm_nav'>
                         <ul>
@@ -53,7 +53,7 @@ if ($cfg['news_side_scroll']) {
                         <div class='avatar'><img width='50' src='<?= $data['author_avatar']; ?>' alt='' /></div>                        
                     <?php } ?>
                     <?= !empty($tpldata['ADD_NEWS_INFO_POST_AVATAR']) ? $tpldata['ADD_NEWS_INFO_POST_AVATAR'] : null ?>
-                    <div class="extra-small">
+                    <div id="author_details" class="extra-small">
                         <a href='/<?= $cfg['WEB_LANG'] ?>/profile&viewprofile=<?= $data['author_uid'] ?>'><?= $data['author'] ?></a>
                         <?= !empty($data['translator']) ? " | " . $LNG['L_NEWS_TRANSLATE_BY'] . $data['translator'] : null ?>
                         <br/>

@@ -92,6 +92,45 @@ function news_extract_bycat($news, $cat) {
 }
 
 function get_news_byId($nid, $news_lang, $page = null) {
+    global $db, $ml;
+    empty($page) ? $page = 1 : null;
+
+    $where_ary = ['nid' => $nid, 'page' => $page];
+    if (defined('MULTILANG')) {
+        $query = $db->selectAll('news', $where_ary, 'LIMIT ' . count($ml->getSiteLangs()));
+    } else {
+        $query = $db->selectAll('news', $where_ary, 'LIMIT 1');
+    }
+    if ($db->numRows($query) < 1) {
+        return 'L_NEWS_DELETE_NOEXISTS';
+    }
+
+    if ($db->numRows($query) == 1) {
+        $news_row = $db->fetch($query);
+        $db->free($query);
+        return $news_row;
+    }
+
+    while ($news_row = $db->fetch($query)) {
+        if ($news_row['lang_id'] == $news_lang) {
+            $news_exact_row = $news_row;
+        } else {
+            $nlangs[] = $news_row['lang_id'];
+        }
+    }
+
+    if (!isset($news_exact_row)) {
+        return 'L_NEWS_NOLANG';
+    }
+
+    isset($nlangs) ? $news_exact_row['other_langs'] = $nlangs : null;
+
+    return $news_exact_row;
+}
+
+/* TODO REMOVE */
+
+function _get_news_byId($nid, $news_lang, $page = null) {
     global $db;
     empty($page) ? $page = 1 : null;
 
