@@ -40,7 +40,7 @@
                 if (!empty($cfg['WEB_NAME'])) {
                     ?>
                     <div id="brand">                        
-                        <a href="/<?= $cfg['FRIENDLY_URL'] ? $cfg['WEB_LANG'] : "?lang={$cfg['WEB_LANG']}"; ?>"><?= $cfg['WEB_NAME'] ?></a><br/>
+                        <a href="/<?= $cfg['FRIENDLY_URL'] ? $cfg['WEB_LANG'] . '/' : "?lang={$cfg['WEB_LANG']}"; ?>"><?= $cfg['WEB_NAME'] ?></a><br/>
                         <span>
                             <?= !empty($cfg['WEB_DESC']) ? $cfg['WEB_DESC'] : null; ?>
                         </span>
