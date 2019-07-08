@@ -220,6 +220,19 @@ class Multilang {
         }
         return false;
     }
+    /**
+     * Return lang name from lang id
+     * @param int $lang_id
+     * @return boolean|string
+     */
+    function idToName($lang_id) {
+        foreach ($this->getSiteLangs() as $lang) {
+            if ($lang['lang_id'] == $lang_id) {
+                return $lang['lang_name'];
+            }
+        }
+        return false;
+    }
 
     /**
      * Return the iso code from id
