@@ -1,0 +1,14 @@
+{
+ "short_name": "appname",
+ "name": "appname",
+ "start_url": ".",
+ "icons": [       
+  {
+   "src": "\/apple-touch-icon.png",
+   "sizes": "57x57",
+   "type": "image\/png",
+   "density": "0.75"
+  }
+ ]
+}
+
