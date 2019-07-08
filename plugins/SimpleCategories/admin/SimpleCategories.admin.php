@@ -1,7 +1,12 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  SimpleCategories main admin file 
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage SimpleCategories
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)  
  */
 !defined('IN_WEB') ? exit : true;
 
@@ -182,7 +187,7 @@ function SimpleCats_NewCategory($plugin) {
                 'father' => $posted_father
             ];
             !empty($posted_image) ? $new_cat_ary['image'] = $posted_image : null;
-            empty($posted_weight) ? $new_cat_ary['weight'] = 0 : $new_cat_ary['posted_weight'];
+            empty($posted_weight) ? $new_cat_ary['weight'] = 0 : $new_cat_ary['weight'] = $posted_weight;
 
             $db->insert('categories', $new_cat_ary);
         }
