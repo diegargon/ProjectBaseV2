@@ -100,11 +100,11 @@ class Editor {
         global $db;
 
         $query = $db->select('links', 'extra, link', ['plugin' => 'MiniEditor']);
-        if($db->numRows($query) < 1) {
-            return  false;
+        if ($db->numRows($query) < 1) {
+            return false;
         }
         $keylinks = $db->fetchAll($query);
-        
+
         foreach ($keylinks as $keylink) {
             $keylink_search = '!' . $keylink['extra'];
             $search[] = $keylink_search;
