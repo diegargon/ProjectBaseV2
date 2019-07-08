@@ -64,7 +64,7 @@ $timeUtil->configTime();
 
 if (mobileDetect()) {
     $cfg['ITS_MOBIL'] = 1;
-    $cfg['img_selector'] = 'mobil';
+    $cfg['img_selector'] = 'mobile';
 } else {
     $cfg['ITS_MOBIL'] = 0;
     $cfg['img_selector'] = 'desktop';
