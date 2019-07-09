@@ -31,6 +31,8 @@ function NewsSearch_init() {
         register_action('news_edit_form_add', 'NS_tags_edit_form_add');
         register_action('news_form_update_set', 'NS_news_edit_set_tag');
     }
+
+    return true;
 }
 
 function NewsSearch_install() {

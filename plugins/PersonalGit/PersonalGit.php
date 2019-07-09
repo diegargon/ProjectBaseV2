@@ -18,6 +18,8 @@ function PersonalGit_init() {
     global $frontend;
     $frontend->registerPage(['module' => 'PersonalGit', 'page' => 'git', 'type' => 'disk']);
     register_action('section_nav_element', 'git_section_nav_elements');
+
+    return true;
 }
 
 /**

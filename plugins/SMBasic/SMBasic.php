@@ -28,6 +28,8 @@ function SMBasic_Init() {
     $frontend->registerPage(['module' => 'SMBasic', 'page' => 'profile', 'type' => 'disk']);
     $frontend->registerPage(['module' => 'SMBasic', 'page' => 'register', 'type' => 'disk']);
     $frontend->registerPage(['module' => 'SMBasic', 'page' => 'terms', 'type' => 'disk']);
+    
+    return true;
 }
 
 function SMBasic_Install() {

@@ -30,6 +30,8 @@ function tplBasic_init() {
     } else {
         $tpl = new TPL($cfg);
     }
+
+    return true;
 }
 
 /**

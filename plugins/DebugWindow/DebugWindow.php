@@ -15,6 +15,8 @@
  */
 function DebugWindow_init() {
     register_action('add_to_footer', 'debug_window');
+
+    return true;
 }
 
 /**

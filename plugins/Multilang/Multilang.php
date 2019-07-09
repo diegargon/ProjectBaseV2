@@ -21,6 +21,8 @@ function Multilang_init() {
         define('MULTILANG', TRUE);
         $ml = new Multilang();
     }
+
+    return true;
 }
 
 /**

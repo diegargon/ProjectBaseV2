@@ -14,7 +14,7 @@
  * Init function
  */
 function StdRatings_init() {
-    
+    return true;    
 }
 
 /**

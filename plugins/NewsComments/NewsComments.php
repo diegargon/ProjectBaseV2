@@ -17,6 +17,8 @@ function NewsComments_init() {
         return false;
     }
     register_action('news_show_page', 'News_Comments');
+    
+    return true;
 }
 
 function NewsComments_install() {

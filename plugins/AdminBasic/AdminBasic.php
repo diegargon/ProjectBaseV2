@@ -47,6 +47,8 @@ function AdminBasic_init() {
     }
 
     $frontend->registerPage(['module' => 'AdminBasic', 'page' => 'adm', 'type' => 'disk']);
+
+    return true;
 }
 
 /**

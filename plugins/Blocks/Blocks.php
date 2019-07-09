@@ -20,6 +20,8 @@ function Blocks_init() {
     !defined('BLOCKS') ? $blocks = new Blocks : null;
 
     define('BLOCKS', true);
+
+    return true;
 }
 
 /**

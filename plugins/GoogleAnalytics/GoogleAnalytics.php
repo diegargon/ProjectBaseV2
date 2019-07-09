@@ -15,6 +15,8 @@ function GoogleAnalytics_init() {
 
     $tpl->setPrefetchURL('https://www.google-analytics.com');
     $tpl->addtoTplVar('SCRIPTS_BOTTOM', $tpl->getTplFile('GoogleAnalytics'));
+
+    return true;
 }
 
 function GoogleAnalytics_install() {

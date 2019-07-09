@@ -53,6 +53,8 @@ function News_init() {
         register_action('SMBasic_ProfileEdit', 'news_dropdown_profile_edit');
         register_action('SMBasic_ProfileChange', 'news_dropdown_profile_change');
     }
+
+    return true;
 }
 
 function News_install() {

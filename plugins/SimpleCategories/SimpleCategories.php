@@ -16,6 +16,8 @@ function SimpleCats_init() {
     define('CATS', TRUE);
 
     !isset($ctgs) ? $ctgs = new Categories() : null;
+
+    return true;
 }
 
 function SimpleCats_install() {

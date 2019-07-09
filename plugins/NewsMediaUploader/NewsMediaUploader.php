@@ -29,6 +29,8 @@ function NewsMediaUploader_init() {
     register_action('news_edit_form_add', 'NMU_form_add');
     register_action('news_newlang_form_add', 'NMU_form_add');
     register_action('news_newpage_form_add', 'NMU_form_add');
+    
+    return true;
 }
 
 function NewsMediaUploader_install() {

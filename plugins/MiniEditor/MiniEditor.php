@@ -14,7 +14,7 @@
  * ME init func
  */
 function MiniEditor_init() {
-    
+    return true;
 }
 
 /**

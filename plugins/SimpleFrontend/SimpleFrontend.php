@@ -22,6 +22,8 @@ function SimpleFrontend_init() {
 
     !defined('FRONTEND') ? $frontend = new SimpleFrontend() : null;
     define('FRONTEND', true);
+
+    return true;
 }
 
 /**
