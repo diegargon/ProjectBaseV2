@@ -16,6 +16,7 @@ function SMBasic_ProfileView() {
     $uid = $filter->getInt('viewprofile');
     if (empty($uid)) {
         $frontend->messageBox(['msg' => 'L_SM_E_USER_NOT_EXISTS']);
+        return false;
     }
     $v_user = $sm->getUserByID($uid);
     if ($v_user) {
@@ -27,6 +28,7 @@ function SMBasic_ProfileView() {
         $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('SMBasic', 'viewprofile', $v_user));
     } else {
         $frontend->messageBox(['msg' => 'L_SM_E_USER_NOT_EXISTS']);
+        return false;
     }
 }
 
@@ -46,6 +48,8 @@ function SMBasic_ProfileEdit($user) {
     (empty($user['avatar'])) ? $form_data['avatar'] = $cfg['STATIC_SRV_URL'] . $cfg['smbasic_default_img_avatar'] : $form_data['avatar'] = $user['avatar'];
     do_action('SMBasic_ProfileEdit', $form_data);
     $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('SMBasic', 'profile', $form_data));
+
+    return true;
 }
 
 function SMBasic_ProfileChange() {

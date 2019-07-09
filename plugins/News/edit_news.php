@@ -58,25 +58,28 @@ if (!empty($_GET['newsedit'])) {
     do_action('begin_newsedit');
     require_once ('includes/news_page_edit.php');
 
-    !empty($_POST['submitForm']) ? news_form_edit_process() : news_edit($news_nid, $news_lang_id, $news_page);
-
-    return;
-}
-
-if (defined('MULTILANG') && !empty($_GET['news_new_lang'])) {
+    if (!empty($_POST['submitForm'])) {
+        news_form_edit_process();
+    } else {
+        news_edit($news_nid, $news_lang_id, $news_page);
+    }
+} else if (defined('MULTILANG') && !empty($_GET['news_new_lang'])) {
     do_action('begin_news_new_lang');
     require_once ('includes/news_new_lang.php');
 
-    !empty($_POST['submitForm']) ? news_form_newlang_process() : news_new_lang($news_nid, $news_lang_id, $news_page);
-
-    return;
-}
-
-if (!empty($_GET['newpage'])) {
+    if (!empty($_POST['submitForm'])) {
+        news_form_newlang_process();
+    } else {
+        news_new_lang($news_nid, $news_lang_id, $news_page);
+    }
+} else if (!empty($_GET['newpage'])) {
     do_action('begin_news_new_page');
     require_once ('includes/news_new_page.php');
 
-    !empty($_POST['submitForm']) ? news_newpage_form_process() : news_new_page($news_nid, $news_lang_id, $news_page);
+    if (!empty($_POST['submitForm'])) {
+        news_newpage_form_process();
+    } else {
+        news_new_page($news_nid, $news_lang_id, $news_page);
+    }
+}
 
-    return;
-} 

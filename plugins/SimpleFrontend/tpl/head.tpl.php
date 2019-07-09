@@ -42,3 +42,4 @@
         isset($tpldata['SCRIPTS_TOP']) ? print $tpldata['SCRIPTS_TOP'] : null;
         ?>
     </head>
+    <body id="Top">    

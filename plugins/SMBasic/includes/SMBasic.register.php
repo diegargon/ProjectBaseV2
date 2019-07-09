@@ -30,6 +30,8 @@ function SMBasic_Register() {
 
     $register_data['terms_url'] = $sm->getPage('terms');
     $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('SMBasic', 'register', $register_data));
+    
+    return true;
 }
 
 function SMBasic_RegisterSubmit() {

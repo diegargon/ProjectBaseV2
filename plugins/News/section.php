@@ -23,11 +23,13 @@ if (!($plugins->expressStartProvider('CATS'))) {
 }
 
 if (empty($category_list = $filter->getUtf8Txt('section')) || preg_match("/\s+/", $category_list)) {
-    return $frontend->messageBox(['msg' => 'L_NEWS_E_SEC_NOEXISTS']);
+    $frontend->messageBox(['msg' => 'L_NEWS_E_SEC_NOEXISTS']);
+    return false;
 }
 
 if (!$category_id = $ctgs->getCatIdByNamePath('News', $category_list)) {
-    return $frontend->messageBox(['msg' => 'L_NEWS_E_SEC_NOEXISTS']);
+    $frontend->messageBox(['msg' => 'L_NEWS_E_SEC_NOEXISTS']);
+    return false;
 }
 
 //HEAD MOD
@@ -59,15 +61,16 @@ if (!empty($user['news_lang'])) {
  * el problema es que uno nuevo si visita en ingles y no hay noticias no vera nada
  * /
 
-if ($q_where['lang_id']) {
-    if (defined('MULTILANG')) {
-        $q_where['lang_id'] = ['value' => "({$ml->getWebLangID()})", 'operator' => 'IN'];
-    }
-}
-*/
+  if ($q_where['lang_id']) {
+  if (defined('MULTILANG')) {
+  $q_where['lang_id'] = ['value' => "({$ml->getWebLangID()})", 'operator' => 'IN'];
+  }
+  }
+ */
 $news_db = get_news_query($q_where, $q_opt);
-if ( empty($news_db) || (($num_news = count($news_db)) < 1) )  {
-    return $frontend->messageBox(['title' => 'L_NEWS_SEC_EMPTY_TITLE', 'msg' => 'L_NEWS_SEC_EMPTY']);
+if (empty($news_db) || (($num_news = count($news_db)) < 1)) {
+    $frontend->messageBox(['title' => 'L_NEWS_SEC_EMPTY_TITLE', 'msg' => 'L_NEWS_SEC_EMPTY']);
+    return false;
 }
 if ($tpl->checkTplFileExists('News', $cfg['news_section_tpl'] . "-" . $category_id)) {
     $lnews = layout_news($cfg['news_section_tpl'] . "-" . $category_id, $news_db);

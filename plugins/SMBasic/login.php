@@ -12,7 +12,7 @@
 
 if (!($sm->login_enable)) {
     $frontend->messageBox(['msg' => 'L_E_LOGGIN_DISABLE']);
-    return;
+    return false;
 }
 
 $user = $sm->getSessionUser();
@@ -24,7 +24,7 @@ $cfg['PAGE_DESC'] = $cfg['WEB_NAME'] . ': ' . $LNG['L_LOGIN'];
 
 if ($user && $user['uid'] > 0) {
     $frontend->messageBox(['msg' => 'L_E_ALREADY_LOGGED']);
-    return;
+    return false;
 }
 
 require_once('includes/SMBasic.login.php');
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         }
         $msgbox['backlink'] = $cfg['WEB_URL'];
         $frontend->messageBox($msgbox);
-        return;
+        return false;
     }
 
     if (isset($_GET['reset'])) {
@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         }
         $msgbox['backlink'] = $cfg['WEB_URL'];
         $frontend->messageBox($msgbox);
-        return;
+        return false;
     }
 }
 
@@ -84,7 +84,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
      */
     $tpl->getCssFile('SMBasic');
     $tpl->getCssFile('SMBasic', 'SMBasic-mobile');
-    SMBasic_LoginScripts();
+    $tpl->addScriptFile('standard', 'jquery', 'TOP');
+    $tpl->addScriptFile('SMBasic', 'login', 'BOTTOM');
+
     if ($cfg['FRIENDLY_URL']) {
         $login_data['register_url'] = "/{$cfg['WEB_LANG']}/register";
     } else {

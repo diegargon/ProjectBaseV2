@@ -62,4 +62,3 @@ if ($cfg['news_side_scroll']) {
 do_action('begin_newsshow');
 
 news_show_page();
-

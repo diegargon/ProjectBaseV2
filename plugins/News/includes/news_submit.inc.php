@@ -68,7 +68,7 @@ function news_new_form() {
         $frontend->messageBox(['msg' => 'L_NEWS_NOCATS']);
         return false;
     }
-    $form_data['terms_url'] = $sm->getPage('terms'); 
+    $form_data['terms_url'] = $sm->getPage('terms');
     do_action('news_new_form_add', $form_data);
 
     /* EDITOR */
@@ -76,6 +76,8 @@ function news_new_form() {
     $form_data['editor'] = $editor->getEditor();
 
     $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('News', 'news_form', $form_data));
+
+    return true;
 }
 
 /**

@@ -11,7 +11,6 @@
  */
 !defined('IN_WEB') ? exit : true;
 ?>
-<body id="Top">
     <div class="container">
         <div class="row1">
             <header id="header" class="clear">

@@ -146,7 +146,8 @@ function _get_news_byId($nid, $news_lang, $page = null) {
 
     /*
       if ('ACL' && !empty($news_row['acl']) && !$acl_auth->acl_ask($news_row['acl'])) {
-      return $frontend->messageBox(['msg' => "L_E_NOACCESS"]);
+      $frontend->messageBox(['msg' => "L_E_NOACCESS"]);
+      return false;
       }
      */
     $db->free($query);

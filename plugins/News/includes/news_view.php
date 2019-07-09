@@ -29,7 +29,8 @@ function news_show_page() {
     $editor = new Editor();
 
     if ((empty($_GET['nid'])) || ($nid = $filter->getInt('nid')) == false) {
-        return $frontend->messageBox(['msg' => 'L_NEWS_NOT_EXIST']);
+        $frontend->messageBox(['msg' => 'L_NEWS_NOT_EXIST']);
+        return false;
     }
     if (!empty($_GET['news_lang_id'])) {
         $news_lang_id = $filter->getInt('news_lang_id');
@@ -45,12 +46,14 @@ function news_show_page() {
     }
 
     if (!news_perm_ask('r_news_view||w_news_adm_all||w_news_moderation')) {
-        return $frontend->messageBox(['msg' => 'L_E_NOVIEWACCESS']);
+        $frontend->messageBox(['msg' => 'L_E_NOVIEWACCESS']);
+        return false;
     }
 
     news_catch_admin_actions($news_data);
     if ($cfg['news_moderation'] && $news_data['moderation'] && !news_perm_ask('w_news_moderation')) {
-        return $frontend->messageBox(['msg' => 'L_NEWS_ERROR_WAITINGMOD']);
+        $frontend->messageBox(['msg' => 'L_NEWS_ERROR_WAITINGMOD']);
+        return false;
     }
 
     $news_data['news_admin_nav'] = news_nav_options($news_data);
@@ -132,6 +135,8 @@ function news_show_page() {
      */
 
     $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('News', 'news_body', $news_data));
+
+    return true;
 }
 
 /**

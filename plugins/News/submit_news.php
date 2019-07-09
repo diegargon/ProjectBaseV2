@@ -15,7 +15,6 @@ require_once 'includes/news_submit.inc.php';
 
 
 if (!news_perm_ask('w_news_create||w_news_adm_all')) {
-
     $frontend->messageBox(["msg" => "L_E_NOACCESS"]);
     return false;
 }

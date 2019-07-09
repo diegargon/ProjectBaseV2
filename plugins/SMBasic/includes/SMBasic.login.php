@@ -8,7 +8,6 @@
  *  @subpackage SMBasic
  *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)  
  */
-
 !defined('IN_WEB') ? exit : true;
 
 function SMBasic_Login($email, $password, $rememberme) {
@@ -64,11 +63,9 @@ function SMBasic_RequestResetOrActivation() {
 
     if (($email = $filter->postEmail('email')) == false) {
         die('[{"status": "1", "msg": "' . $LNG['L_E_EMAIL'] . '"}]');
-        return false;
     }
     if (strlen($email) > $cfg['smbasic_max_email']) {
         die('[{"status": "1", "msg": "' . $LNG['L_EMAIL_LONG'] . '"}]');
-        return false;
     }
     $query = $db->selectAll('users', ['email' => $email], 'LIMIT 1');
     if ($db->numRows($query) <= 0) {
@@ -110,7 +107,7 @@ function SMBasic_user_reset_password() {
         $msg = $LNG['L_RESET_SEND_NEWMAIL_MSG'] . '\n' . "$password\n" . $URL;
         mail($email, $LNG['L_RESET_SEND_NEWMAIL_SUBJECT'], $msg, "From: {$cfg['smbasic_register_reply_email']} \r\n");
         $frontend->messageBox(['msg' => 'L_RESET_PASSWORD_SUCCESS']);
-        return true;
+        return false;
     } else {
         return false;
     }
@@ -126,11 +123,4 @@ function SMBasic_randomPassword() {
     }
 
     return implode($pass);
-}
-
-function SMBasic_LoginScripts() {
-    global $tpl;
-
-    $tpl->addScriptFile('standard', 'jquery', 'TOP');
-    $tpl->addScriptFile('SMBasic', 'login', 'BOTTOM');
 }

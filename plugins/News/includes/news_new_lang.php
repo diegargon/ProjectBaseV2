@@ -37,7 +37,8 @@ function news_new_lang($news_nid, $news_lang_id, $news_page) {
     $news_data['news_add_related'] = news_perm_ask('w_news_add_related');
 
     if (!news_perm_ask('w_news_translate')) {
-        return $frontend->messageBox(['msg' => 'L_E_NOEDITACCESS']);
+        $frontend->messageBox(['msg' => 'L_E_NOEDITACCESS']);
+        return false;
     }
 
     $news_data['news_form_title'] = $LNG['L_NEWS_NEWLANG'];
@@ -49,7 +50,8 @@ function news_new_lang($news_nid, $news_lang_id, $news_page) {
       $translator['username'] = $LNG['L_NEWS_ANONYMOUS'];
       $translator['uid'] = 0;
       } else if (empty($translator)) {
-      return $frontend->messageBox(['msg' => "L_NEWS_NO_EDIT_PERMISS"]);
+      $frontend->messageBox(['msg' => "L_NEWS_NO_EDIT_PERMISS"]);
+      return false;
       }
 
      */
@@ -60,7 +62,8 @@ function news_new_lang($news_nid, $news_lang_id, $news_page) {
     if (($site_langs = news_get_missed_langs($news_data['nid'], $news_data['page'])) != false) {
         $news_data['select_langs'] = $site_langs;
     } else {
-        return $frontend->messageBox(['msg' => 'L_NEWS_E_ALREADY_TRANSLATE_ALL']);
+        $frontend->messageBox(['msg' => 'L_NEWS_E_ALREADY_TRANSLATE_ALL']);
+        return false;
     }
     $editor = new Editor();
     $news_data['editor'] = $editor->getEditor(['text' => $news_data['text']]);
@@ -69,6 +72,8 @@ function news_new_lang($news_nid, $news_lang_id, $news_page) {
     do_action('news_newlang_form_add', $news_data);
 
     $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('News', 'news_form', $news_data));
+
+    return true;
 }
 
 /**

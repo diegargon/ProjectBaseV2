@@ -116,7 +116,7 @@ class SimpleFrontend {
     function getPage($request_module, $request_page) {
         if (empty($this->pages)) {
             $this->messageBox(['msg' => 'L_E_PLUGPAGE_NOEXISTS']);
-            return;
+            return false;
         }
         foreach ($this->pages as $page) {
             if ($page['module'] == $request_module && $page['page'] == $request_page) {
@@ -207,18 +207,27 @@ class SimpleFrontend {
      * @global tpl $tpl
      */
     function sendPage() {
-        global $tpl;
+        $this->sendHeaders();
+        $this->sendBody();
+        $this->sendFooter();
 
-        // BEGIN HEAD
+        return true;
+    }
+
+    function sendHeaders() {
+        global $tpl;
+        $tpl->addScriptFile('standard', 'jquery', 'TOP', null);
         $tpl->addPrefetchLinks();
         $tpl->cssCache();
 
         $web_head = $tpl->getTplFile('SimpleFrontend', 'head');
 
         echo $web_head;
-        //END HEAD
-        //BEGIN BODY
-        //we use do_action for select order
+    }
+
+    function sendBody() {
+        global $tpl;
+
         $this->nav_menu ? $this->addNavMenu() : null;
         $this->display_section_menu ? $this->addSectionNav() : null;
 
@@ -226,8 +235,11 @@ class SimpleFrontend {
         $web_body = $tpl->getTplFile('SimpleFrontend', 'body');
 
         echo $web_body;
-        //END BODY
-        //BEGIN FOOTER
+    }
+
+    function sendFooter() {
+        global $tpl;
+
         if (defined('SQL') && $this->db != null && $this->show_stats_query) {
             $tpl->addtoTplVar('ADD_TO_FOOTER', '<p class="db_querys">Querys(' . $this->db->numQuerys() . ')</p>');
         }
@@ -246,8 +258,6 @@ class SimpleFrontend {
         $web_footer = $tpl->getTplFile('SimpleFrontend', 'footer');
         //END FOOTER
         echo $web_footer;
-
-        //print $web_head . $web_body . $web_footer;
     }
 
     /**

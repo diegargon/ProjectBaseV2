@@ -89,7 +89,7 @@ if (!empty($module) && !empty($page)) {
         $frontend->messageBox(['msg' => 'L_E_PL_CANTEXPRESS']);
     } else {
         if (!($request_page = $frontend->getPage($module, $page))) {
-            $frontend->messageBox(['msg' => 'L_E_PLUGPAGE_NOEXISTS']);
+            $frontend->messageBox(['msg' => 'L_E_PLUGPAGE_NOEXISTS']);            
         } else if ($request_page['type'] == 'virtual') {
             $frontend->vPage($request_page);
         } else if ($request_page['type'] == 'disk') {

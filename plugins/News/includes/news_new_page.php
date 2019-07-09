@@ -19,7 +19,8 @@ function news_new_page($news_nid, $news_lang_id, $news_page) {
     $user = $sm->getSessionUser();
 
     if (empty($user) || $user['uid'] == 0) {
-        return $frontend->messageBox(['msg' => 'L_E_NOACCESS']);
+        $frontend->messageBox(['msg' => 'L_E_NOACCESS']);
+        return false;
     }
     $user['uid'] > 0 ? $form_data['tos_checked'] = 1 : null;
 
@@ -29,7 +30,8 @@ function news_new_page($news_nid, $news_lang_id, $news_page) {
     }
 
     if (!news_perm_ask('w_news_create_new_page')) {
-        return $frontend->messageBox(['msg' => 'L_E_NOEDITACCESS']);
+        $frontend->messageBox(['msg' => 'L_E_NOEDITACCESS']);
+        return false;
     }
 
     $form_data['author_readonly'] = !news_perm_ask('w_news_change_author');
@@ -44,6 +46,8 @@ function news_new_page($news_nid, $news_lang_id, $news_page) {
     do_action('news_newpage_form_add');
 
     $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('News', 'news_form', $form_data));
+
+    return true;
 }
 
 function news_newpage_form_process() {

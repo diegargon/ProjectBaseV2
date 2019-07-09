@@ -28,7 +28,8 @@ function news_edit($news_nid, $news_lang_id, $news_page) {
 
 
     if (!news_perm_ask('w_news_edit')) {
-        return $frontend->messageBox(['msg' => 'L_E_NOEDITACCESS']);
+        $frontend->messageBox(['msg' => 'L_E_NOEDITACCESS']);
+        return false;
     }
 
     $news_data['news_form_title'] = $LNG['L_NEWS_EDIT_NEWS'];
@@ -58,6 +59,8 @@ function news_edit($news_nid, $news_lang_id, $news_page) {
     do_action('news_edit_form_add', $news_data);
 
     $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('News', 'news_form', $news_data));
+
+    return true;
 }
 
 function news_form_edit_process() {
