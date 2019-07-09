@@ -17,6 +17,8 @@
 function ExampleTemplate_init() {
     global $example_template;
     !isset($example_template) ? $example_template = new ExampleTemplate() : null;
+    
+    return true;
 }
 
 /**
