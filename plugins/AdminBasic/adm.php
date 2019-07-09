@@ -39,27 +39,17 @@ if ($cfg['FRIENDLY_URL']) {
     $params['url'] = "/{$cfg['CON_FILE']}?lang={$cfg['WEB_LANG']}&module=AdminBasic&page=adm";
 }
 
-$tpl->addtoTplVar('ADMIN_TAB_ACTIVE', $params);
-$tpl->addtoTplVar('ADD_ADMIN_MENU', do_action('add_admin_menu', $params));
-$tpl->addtoTplVar('ADD_TOP_MENU', do_action('add_top_menu'));
-$tpl->addtoTplVar('ADD_BOTTOM_MENU', do_action('add_bottom_menu'));
 
-if ($params['admtab'] == $admin_id) {
-    $general_content = admin_general_content($params);
-    if ($general_content !== false) {
-        $tpl->addtoTplVar('ADM_ASIDE_MENU_OPT', admin_general_aside($params));
-        $tpl->addtoTplVar('ADM_SECTION_CONTENT', $general_content);
-    } else {
-        return false;
-    }
+$tpl->addtoTplVar('ADD_ADMIN_MENU', do_action('add_admin_menu', $params));
+$tpl->addtoTplVar('ADD_ADMIN_TOP', do_action('add_admin_top'));
+$tpl->addtoTplVar('ADD_ADMIN_BOTTOM', do_action('add_admin_bottom'));
+
+$section_content = do_action('admin_get_section_content', $params);
+if ($section_content !== false) {
+    $tpl->addtoTplVar('ADM_ASIDE_MENU_OPT', do_action('admin_get_aside_menu', $params));
+    $tpl->addtoTplVar('ADM_SECTION_CONTENT', $section_content);
 } else {
-    $section_content = do_action('admin_get_section_content', $params);
-    if ($section_content !== false) {
-        $tpl->addtoTplVar('ADM_ASIDE_MENU_OPT', do_action('admin_get_aside_menu', $params));
-        $tpl->addtoTplVar('ADM_SECTION_CONTENT', $section_content);
-    } else {
-        return false;
-    }
+    return false;
 }
 
 $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('AdminBasic', 'admin_main_body', $params));

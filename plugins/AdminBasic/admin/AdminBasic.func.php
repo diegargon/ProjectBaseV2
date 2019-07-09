@@ -53,7 +53,7 @@ function admin_load_plugin_files() {
 
     foreach ($plugins->getPluginsDB() as $plugin) {
         if ($plugin['enabled']) {
-            (defined('DEBUG') && $cfg['adminbasic_debug']) ? $debug->log('Admin processing ' . $plugin['plugin_name'], 'AdminBasic', 'DEBUG') : null;
+            (defined('DEBUG') && $cfg['adminbasic_debug']) ? $debug_msg = 'ADMIN: processing ' . $plugin['plugin_name'] : null;
             if (!empty($plugin['function_admin_init'])) {
                 $admin_file = 'plugins/' . $plugin['plugin_name'] . '/admin/' . $plugin['plugin_name'] . '.admin.php';
                 if (file_exists($admin_file)) {
@@ -61,14 +61,15 @@ function admin_load_plugin_files() {
                     if (function_exists($plugin['function_admin_init'])) {
                         $init_function = $plugin['function_admin_init'];
                         $init_function();
+                        (defined('DEBUG') && $cfg['adminbasic_debug']) ? $debug->log("{$debug_msg} -> Init sucessfull ", 'AdminBasic', 'Debug') : null;
                     } else {
-                        (defined('DEBUG') && $cfg['adminbasic_debug']) ? $debug->log("ADMIN: Function {$plugin['function_admin_init']} not exist", 'AdminBasic', 'DEBUG') : null;
+                        (defined('DEBUG') && $cfg['adminbasic_debug']) ? $debug->log("{$debug_msg} -> Function {$plugin['function_admin_init']} not exist", 'AdminBasic', 'WARNING') : null;
                     }
                 } else {
-                    (defined('DEBUG') && $cfg['adminbasic_debug']) ? $debug->log("ADMIN: File $admin_file not exist", 'AdminBasic', 'DEBUG') : null;
+                    (defined('DEBUG') && $cfg['adminbasic_debug']) ? $debug->log("{$debug_msg} -> File $admin_file not exist", 'AdminBasic', 'WARNING') : null;
                 }
             } else {
-                (defined('DEBUG') && $cfg['adminbasic_debug']) ? $debug->log("ADMIN: Plugin {$plugin['plugin_name']} haven't the function admin_init declared in his json file", 'AdminBasic', 'DEBUG') : null;
+                (defined('DEBUG') && $cfg['adminbasic_debug']) ? $debug->log("{$debug_msg} -> Plugin haven't the function admin_init declared in his json file", 'AdminBasic', 'WARNING') : null;
             }
         }
     }
@@ -115,165 +116,6 @@ function AdminBasic_unserialize_forPrint($data, $htmlseparator = '<br/>') {
         $result .= $data->name . ' ' . $data->min_version . '/' . $data->max_version . $htmlseparator;
     }
     return $result;
-}
-
-/**
- * Get Config
- * 
- * @global db $db
- * @param string $plugin
- * @return string
- */
-function AdminBasic_GetConfig($plugin) {
-    global $db;
-
-    $query = $db->select('config', 'cfg_key,cfg_value', ['plugin' => $plugin]);
-    return $db->fetchAll($query);
-}
-
-/**
- * Aside Panel
- * 
- * @global array $LNG
- * @param array $params
- * @return string
- */
-function admin_general_aside($params) {
-    global $LNG;
-
-    $general = "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=1'>" . $LNG['L_PL_STATE'] . '</a></li>'
-            . "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=2'>" . $LNG['L_PL_PLUGINS'] . '</a></li>'
-            . "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=3'>" . $LNG['L_PL_ADMIN_DEBUG'] . '</a></li>'
-            . "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=4'>" . $LNG['L_PL_CONFIG'] . '</a></li>'
-            . "<li><a href='{$params['url']}&admtab=" . $params['admtab'] . "&opt=10'>Php Info</a></li>";
-
-    $general .= do_action('ADD_ADM_GENERAL_OPT');
-    return $general;
-}
-
-/**
- * Show general content 
- * 
- * @global db $db
- * @global plugins $plugins
- * @global filter $filter
- * @global array $LNG
- * @param array $params
- * @return boolean|string
- */
-function admin_general_content($params) {
-    global $db, $plugins, $filter, $LNG;
-
-    $content = '';
-
-    if (($_SERVER['REQUEST_METHOD'] === 'POST') && ($plugin_id = $filter->postInt('plugin_id')) != false) {
-        if (!admin_auth("w_plugin_cfg")) {
-            return false;
-        }
-        if (isset($_POST['btnInstall'])) {
-            if ($plugins->install($plugin_id) == false) {
-                die("Plugin $plugin_id install failed");
-            }
-        }
-        if (isset($_POST['btnUninstall'])) {
-            if ($plugins->uninstall($plugin_id) == false) {
-                die("Plugin $plugin_id uninstall failed");
-            }
-        }
-        if (isset($_POST['btnCleanFailed'])) {
-            $db->silent(true);
-            $plugins->uninstall($plugin_id, 1);
-            $db->silent(false);
-        }
-        if (isset($_POST['btnEnable'])) {
-            $plugins->setEnable($plugin_id, 1);
-        }
-        if (isset($_POST['btnDisable'])) {
-            $plugins->setEnable($plugin_id, 0);
-        }
-        if (isset($_POST['btnAutostartOn'])) {
-            $plugins->setAutostart($plugin_id, 1);
-        }
-        if (isset($_POST['btnAutostartOff'])) {
-            $plugins->setAutostart($plugin_id, 0);
-        }
-        if (isset($_POST['btnDeleteMissing'])) {
-            $db->delete('plugins', ['plugin_id' => $plugin_id], 'LIMIT 1');
-        }
-        if (isset($_POST['btnUpgrade'])) {
-            $plugins->upgrade($plugin_id);
-        }
-    }
-
-    if (($_SERVER['REQUEST_METHOD'] === 'POST') && $plugin_id == false) {
-
-        if (isset($_POST['btnReScan'])) {
-            if (!admin_auth('w_plugin_cfg')) {
-                return false;
-            }
-            $plugins->reScanToDB();
-        }
-
-        if (isset($_POST['btnDebugChange'])) {
-            if (!admin_auth('w_plugin_cfg')) {
-                return false;
-            }
-
-            $q = $db->search('config', 'cfg_key', '_debug');
-            while ($result = $db->fetch($q)) {
-                $checked_value = 0;
-                if (isset($_POST['debug_list'])) { //avoid warning if uncheck all
-                    foreach ($_POST['debug_list'] as $checked) {
-                        if ($result['cfg_id'] == $checked) {
-                            $checked_value = 1;
-                        }
-                    }
-                }
-                $db->update('config', ['cfg_value' => $checked_value], ['cfg_id' => $result['cfg_id']]);
-            }
-        }
-    }
-
-    if ($params['opt'] == 1) {
-        $content = '<h1>' . $LNG['L_PL_STATE'] . '</h1>';
-        $content .= Admin_GetPluginState('AdminBasic');
-    } else if ($params['opt'] == 2) {
-        if (!admin_auth('r_plugin_cfg')) {
-            return false;
-        }
-
-        ($_SERVER['REQUEST_METHOD'] === 'POST') ? $force_reload = 1 : $force_reload = 0;
-
-        $plugins_list = $plugins->getPluginsDB();
-        $content .= plugins_ctrl_display($plugins_list);
-    } else if ($params['opt'] == 3) {
-        $content .= '<form method="post" action="">';
-
-        $q = $db->search('config', 'cfg_key', '_debug');
-        while ($result = $db->fetch($q)) {
-            $content .= "<p>{$result['cfg_key']}";
-
-            if ($result['cfg_value'] == 1) {
-                $content .= "<input type='checkbox' name='debug_list[]' value='{$result['cfg_id']}' checked>";
-            } else if ($result['cfg_value'] == 0) {
-                $content .= "<input type='checkbox' name='debug_list[]' value='{$result['cfg_id']}'>";
-            }
-            $content .= '</p>';
-        }
-        $content .= '<input type="submit" name="btnDebugChange"/>';
-        $content .= '</form>';
-    } else if ($params['opt'] == 4) {
-        if (!admin_auth('r_general_cfg')) {
-            return false;
-        }
-        $content .= AdminPluginConfig('CORE');
-    } else if ($params['opt'] == 10) {
-        if (!admin_auth('r_phpinfo')) {
-            return false;
-        }
-        $content .= '<div style="width:100%">' . get_phpinfo() . '</div>';
-    }
-    return $content;
 }
 
 /**
