@@ -15,7 +15,7 @@ https://stackoverflow.com/questions/6637341/use-tab-to-indent-in-textarea
 * Smbasic: crear email html, quizas optativo plain/html por configuracion.
 * SimpleCategories: cuando insertas unas url/img no valida o que no existe no presenta mensaje de error
 * SimpleCategories: Opcion en creacion de categorias de poner el plugin.?
-* DebugWindows: rewrite? que solo aparezca con admin logged?, log to syslog?, 
+* Debug log to syslog?, 
 * filter strict chars , permitir configurar que caracteres permite
 * CORE: Config por grupos (añadidada la tabla pero sin usar) ver como agrupar y mostrar agrupados en admin
 para luego presentarlos por grupos, ej: L_NEWS_SUBMIT, L_NEWS_VIEW

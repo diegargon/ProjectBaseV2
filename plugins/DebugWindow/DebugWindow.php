@@ -14,35 +14,17 @@
  * Init function
  */
 function DebugWindow_init() {
-    register_action('add_to_footer', 'debug_window');
+    global $cfg, $sm;
+
+    if (defined('SESSIONS') && defined('DEBUG')) {
+        $user = $sm->getSessionUser();
+
+        if ($cfg['debugwindow_only_root'] && $user['isAdmin']) {
+            register_action('add_to_footer', 'debug_window');
+        }
+    }
 
     return true;
-}
-
-/**
- * return html a debug window
- * @global type $cfg
- * @global type $db
- * @global type $debug
- * @return boolean|string
- */
-function debug_window() {
-    global $cfg, $db, $debug;
-
-    if (defined('DEBUG')) {
-
-        ($cfg['smbasic_debug']) ? setSessionDebugDetails() : null;
-
-        $q_history = $db->getQueryHistory();
-        foreach ($q_history as $value) {
-            $debug->log($value, 'MYSQL');
-        }
-        $debug_data = '<div style="height:250px;width:100%;border:1px solid #ccc;;overflow:auto;">';
-        $debug_data .= $debug->printDebug();
-        $debug_data .= '</div>';
-        return $debug_data;
-    }
-    return false;
 }
 
 /**
@@ -50,6 +32,16 @@ function debug_window() {
  * @return boolean
  */
 function DebugWindow_install() {
+    global $db;
+    require_once ('db/DebugWindow.db.php');
+    if (!empty($debugWindow_database_install)) {
+        foreach ($debugWindow_database_install as $query) {
+            if (!$db->query($query)) {
+                return false;
+            }
+        }
+    }
+
     return true;
 }
 
@@ -80,5 +72,14 @@ function DebugWindow_upgrade($version, $from_version) {
 }
 
 function DebugWindow_uninstall() {
+    global $db;
+    require_once ('db/DebugWindow.db.php');
+    if (!empty($debugWindow_database_uninstall)) {
+        foreach ($debugWindow_database_uninstall as $query) {
+            if (!$db->query($query)) {
+                return false;
+            }
+        }
+    }
     return true;
 }

@@ -20,7 +20,7 @@ function DebugWindow_AdminInit() {
 }
 
 /**
- * Debug window admin menu
+ * DebugWindow admin menu
  * @global Plugins $plugins
  * @param array $params
  * @return string #content
@@ -33,14 +33,14 @@ function DebugWindow_AdminMenu($params) {
         register_uniq_action('admin_get_aside_menu', 'DebugWindow_AdminAside', $params);
         register_uniq_action('admin_get_section_content', 'DebugWindow_admin_content', $params);
 
-        return "<li class='tab_active'><a href='{$params['url']}&admtab=$tab_num'>DebugWindow</a></li>";
+        return '<li class="tab_active"><a href="' . $params['url'] . '&admtab=' . $tab_num . '">DebugWindow</a></li>';
     } else {
-        return "<li><a href='{$params['url']}&admtab=$tab_num'>DebugWindow</a></li>";
+        return '<li><a href="' . $params['url'] . '&admtab=' . $tab_num . '">DebugWindow</a></li>';
     }
 }
 
 /**
- * Debug window admin aside menu
+ * DebugWindow admin aside menu
  * 
  * @global array $LNG
  * @param array $params
@@ -54,7 +54,7 @@ function DebugWindow_AdminAside($params) {
 }
 
 /**
- * Debug window admin content
+ * DebugWindow admin content
  * 
  * @global array $LNG
  * @param array $params
