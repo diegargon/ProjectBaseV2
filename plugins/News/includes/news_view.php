@@ -432,9 +432,12 @@ function news_frontpage($nid, $lang_id) {
 }
 
 function news_stats($nid, $lang_id, $page) {
-    global $db;
+    global $db, $user;
 
-    $db->plusOne('news', 'visits', ['nid' => $nid, 'lang_id' => $lang_id, 'page' => $page], 'LIMIT 1');
+    $user->getSessionUser();
+    if (!$user['isAdmin']) {
+        $db->plusOne('news', 'visits', ['nid' => $nid, 'lang_id' => $lang_id, 'page' => $page], 'LIMIT 1');
+    }
 
     //$cfg['news_adv_stats'] ? news_adv_stats($nid, $lang) : null;
 }
