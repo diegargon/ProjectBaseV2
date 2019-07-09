@@ -10,12 +10,13 @@
  */
 !defined('IN_WEB') ? exit : true;
 
-$exampleTemplate_database_install[] = "
-CREATE TABLE `" . DB_PREFIX . "example_template` (
-  `example_id` int(32) NOT NULL,
-  `example_field` varchar(32) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . ";
-";
+$exampleTemplate_database_install = [
+    "CREATE TABLE `" . DB_PREFIX . "example_template` (
+    `example_id` int(32) NOT NULL,
+    `example_field` varchar(32) NOT NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . ";",
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('ExampleTemplate', 'exampletemplate_debug', '1');"
+];
 
 /* UNINSTALL */
 
