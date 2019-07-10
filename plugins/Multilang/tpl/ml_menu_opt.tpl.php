@@ -8,26 +8,24 @@
  *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)  
  */
 /*
-  <li class="nav_left">
+  <span class="nav_top">
   <a rel="nofollow" href="/<?= $cfg['FRIENDLY_URL'] ? $cfg['WEB_LANG'] . "/admin" : $cfg['CON_FILE'] . "?module=AdminBasic&page=adm&lang={$cfg['WEB_LANG']}";?>">Admin</a>
-  </li>
+  </span>
  */
 
 if (!empty($data['TPL_FIRST'])) {
     ?>    
-    <li class="nav_right">
+    <div class="nav_top">
         <form action="#" method="post">
             <select name="choose_lang" id='choose_lang' onchange="this.form.submit()">
-                <?php
-            }
-            ?>
+            <?php } ?>
             <option <?= $data['selected'] ?> value="<?= $data['iso_code'] ?>"><?= $data['lang_name'] ?></option>
             <?php
             if (!empty($data['TPL_LAST'])) {
                 ?>
             </select>
         </form>
-    </li>   
+    </div>   
     <?php
 }
 ?>

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *  SimpleFrontend
+ *  SimpleFrontend class file
  * 
  *  @author diego@envigo.net
  *  @package ProjectBase
@@ -67,6 +67,24 @@ class SimpleFrontend {
      * @var array
      */
     private $layouts = [];
+
+    /**
+     * Keep menu elements code/weight
+     * @var array
+     */
+    private $top_menu_elements = [];
+
+    /**
+     * Keep drop menu elements code/weight
+     * @var array
+     */
+    private $top_menu_drop_elements = [];
+
+    /**
+     * Keep caption elemento
+     * @var string
+     */
+    private $top_menu_drop_caption = false;
 
     /**
      * Class contructor, iniacilice blocks and set the config
@@ -226,13 +244,21 @@ class SimpleFrontend {
     }
 
     function sendBody() {
-        global $tpl;
+        global $tpl, $cfg;
+
+        $body_data = [];
 
         $this->nav_menu ? $this->addNavMenu() : null;
         $this->display_section_menu ? $this->addSectionNav() : null;
 
+        if ($cfg['tplbasic_nav_menu']) {
+            $menu_data['header_menu_elements'] = $this->getTopMenu();
+            $menu_data['header_drop_menu_elements'] = $this->getDropMenu();
+            $menu_data['drop_menu_caption'] = $this->top_menu_drop_caption;
+            $body_data['header_menu'] = $tpl->getTplFile('SimpleFrontend', 'header_menu', $menu_data);
+        }
         $tpl->addtoTplVar('ADD_TO_BODY', do_action('add_to_body'));
-        $web_body = $tpl->getTplFile('SimpleFrontend', 'body');
+        $web_body = $tpl->getTplFile('SimpleFrontend', 'body', $body_data);
 
         echo $web_body;
     }
@@ -277,6 +303,72 @@ class SimpleFrontend {
         !empty($box_data['xtra_box_msg']) ? $data['box_msg'] .= $box_data['xtra_box_msg'] : null;
 
         $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('SimpleFrontend', 'msgbox', $data));
+    }
+
+    function getTopMenu() {
+        global $cfg, $LNG;
+
+        $menu = false;
+
+        if ($cfg['tplbasic_header_menu_home']) {
+            $cfg['FRIENDLY_URL'] ? $url = $cfg['WEB_LANG'] : $url = "?lang={$cfg['WEB_LANG']}";
+            $code = '<div class="nav_top">';
+            $code .= '<a class="header-menu-link"  href="/' . $url . '">';
+            $code .= '<img width="20" height="20" src="' . $cfg['tplbasic_img_home'] . '" alt="' . $LNG['L_HOME'] . '"/>';
+            $code .= '</a></div>';
+
+            $this->addTopMenu($code, 1);
+        }
+
+        if (empty($this->top_menu_elements)) {
+            return false;
+        }
+        usort($this->top_menu_elements, function($a, $b) {
+            return $a['weight'] - $b['weight'];
+        });
+
+        foreach ($this->top_menu_elements as $element) {
+            $menu .= $element['code'];
+        }
+
+        return $menu;
+    }
+
+    function addTopMenu($code, $weight) {
+        $this->top_menu_elements[] = [
+            'code' => $code,
+            'weight' => $weight
+        ];
+    }
+
+    function getDropMenu() {
+
+        $drop_menu = '';
+
+        if (empty($this->top_menu_drop_elements)) {
+            return false;
+        }
+
+        usort($this->top_menu_drop_elements, function($a, $b) {
+            return $a['weight'] - $b['weight'];
+        });
+
+        foreach ($this->top_menu_drop_elements as $key => $element) {
+            $drop_menu .= $element['code'];
+        }
+
+        return $drop_menu;
+    }
+
+    function setDropMenuCaption($code) {
+        $this->top_menu_drop_caption = $code;
+    }
+
+    function addTopDropMenu($code, $weight) {
+        $this->top_menu_drop_elements[] = [
+            'code' => $code,
+            'weight' => $weight
+        ];
     }
 
     /**

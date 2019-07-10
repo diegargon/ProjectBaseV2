@@ -11,7 +11,7 @@
 !defined('IN_WEB') ? exit : true;
 ?>
 
-<div  class="clear bodysize page">
+<div  class="bodysize page">
 <p>Fecha de la última revisión: 30 de enero de 2018</p>
 
 <p>Registrarse o usar de cualquier modo esta web implica aceptar las siguientes condiciones de uso<p/>

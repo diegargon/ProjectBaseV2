@@ -6,7 +6,7 @@
 
 if (!empty($data['TPL_FIRST'])) {
     ?>
-    <div  class="clear bodysize page">
+    <div  class="bodysize page">
         <div id="searchResult">
             <section>
                 <table class="searchTable">

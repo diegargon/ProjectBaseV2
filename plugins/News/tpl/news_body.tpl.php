@@ -16,7 +16,7 @@ if ($cfg['news_side_scroll']) {
 <?php } ?>
 
 <div id="news_container" class="newsrow">
-    <div  class="clear bodysize page">
+    <div  class="bodysize page">
         <?php
         if (!empty($data['news_msg']) && !empty($data['news_msg'])) {
             ?>

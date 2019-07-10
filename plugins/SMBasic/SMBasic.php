@@ -21,14 +21,14 @@ function SMBasic_Init() {
     !isset($sm) ? $sm = new SessionManager : null;
     $sm->start();
 
-    register_action('header_menu_element', 'SMBasic_navLogReg');
+    SMBasic_SetTopNavUserMenu();
 
     $frontend->registerPage(['module' => 'SMBasic', 'page' => 'login', 'type' => 'disk']);
     $frontend->registerPage(['module' => 'SMBasic', 'page' => 'logout', 'type' => 'virtual', 'func' => [$sm, 'logout']]);
     $frontend->registerPage(['module' => 'SMBasic', 'page' => 'profile', 'type' => 'disk']);
     $frontend->registerPage(['module' => 'SMBasic', 'page' => 'register', 'type' => 'disk']);
     $frontend->registerPage(['module' => 'SMBasic', 'page' => 'terms', 'type' => 'disk']);
-    
+
     return true;
 }
 

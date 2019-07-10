@@ -10,7 +10,7 @@
 !defined('IN_WEB') ? exit : true;
 ?>
 <div id="loading"></div> 
-<div  class="clear bodysize page">
+<div  class="bodysize page">
     <div class="github_user">
         <div class="github_user_top">
             <div class="github_user_top_avatar"><img src="<?= $data['avatar_url'] ?>" alt="avatar"></div>

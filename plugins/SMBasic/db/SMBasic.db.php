@@ -111,7 +111,7 @@ $smbasic_insert_database = [
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', 'smbasic_register_reply_email', 'noreply@envigo.net');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', 'smbasic_realname_regex', '/^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$/');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', 'smbasic_username_regex', '/^[A-Za-z][A-Za-z0-9]{5,31}$/');",
-    // "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', '', '')",
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', 'smbasic_set_drop_caption', '1')",
     // "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SMBasic', '', '')",
     /* DEFAULT ADMIN USER , PASSWORD adminadmin */
     "INSERT INTO `" . DB_PREFIX . "users` (`username`, `password`, `email`, `isFounder`, `isAdmin`, `active`) VALUES ('admin', 'cfecaf3d2dd296bf3accb3d2a62346d37afc99e7f8df52fdbc9de7ec1b33451efbfde53ba6c69cbb657ef9a7d9498ceb9e67fd64820a8b6c05ee671d53f28d1e', 'admin@localhost.local', '1', '1', '1')"

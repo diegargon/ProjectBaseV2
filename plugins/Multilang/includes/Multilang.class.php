@@ -52,8 +52,8 @@ class Multilang {
 
         $this->retrieveDbLangs();
         $this->set_to_visit_lang = $cfg['ml_set_to_visit_lang'];
-        register_action('header_menu_element', [$this, 'getLangNav'], 6);
         $this->setLang();
+        $this->setNavLangMenu();
         $this->web_lang = $cfg['WEB_LANG'];
         $this->web_lang_id = $this->isoToID($cfg['WEB_LANG']);
     }
@@ -132,8 +132,8 @@ class Multilang {
      * @global array $cfg
      * @return string
      */
-    function getLangNav() {
-        global $tpl, $cfg;
+    function setNavLangMenu() {
+        global $tpl, $cfg, $frontend;
 
         $content = '';
         $element = 1;
@@ -162,7 +162,7 @@ class Multilang {
             $content .= $tpl->getTplFile('Multilang', 'ml_menu_opt', $data);
         }
 
-        return $content;
+        $frontend->addTopMenu($content, 7);
     }
 
     /**
@@ -220,6 +220,7 @@ class Multilang {
         }
         return false;
     }
+
     /**
      * Return lang name from lang id
      * @param int $lang_id

@@ -4,8 +4,8 @@
  */
 !defined('IN_WEB') ? exit : true;
 ?>
-<li class="nav_right">
+<div class="nav_top">
     <form id="search" action="<?= $data['searchUrl'] ?>" method="get">
         <input id="searchTextInput" type="text" name="q" value="" />
     </form>
-</li>
+</div>

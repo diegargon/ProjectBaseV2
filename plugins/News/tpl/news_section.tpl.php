@@ -4,7 +4,7 @@
  */
 !defined('IN_WEB') ? exit : true;
 ?>
-<div  class="clear bodysize page">
+<div  class="bodysize page">
     <?php
     isset($tpldata['ADD_TOP_SECTION']) ? print $tpldata['ADD_TOP_SECTION'] : null;
     ?>

@@ -9,6 +9,6 @@
  */
 !defined('IN_WEB') ? exit : true;
 ?>
-<li class="nav_left">
-    <a rel="nofollow" href="/<?= $cfg['FRIENDLY_URL'] ? $cfg['WEB_LANG'] . "/admin" : $cfg['CON_FILE'] . "?module=AdminBasic&page=adm&lang={$cfg['WEB_LANG']}"; ?>">Admin</a>
-</li>
+<div class="nav_top">
+    <a class="header-menu-link"  rel="nofollow" href="/<?= $cfg['FRIENDLY_URL'] ? $cfg['WEB_LANG'] . "/admin" : $cfg['CON_FILE'] . "?module=AdminBasic&page=adm&lang={$cfg['WEB_LANG']}"; ?>">Admin</a>
+</div>

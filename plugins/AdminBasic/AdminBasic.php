@@ -42,7 +42,7 @@ function AdminBasic_init() {
     if ($user) {
         global $acl_auth;
         if (($user['isFounder']) || (defined('ACL') && $acl_auth->acl_ask('w_admin_all||r_admin_all||r_adminmain_access')) || (!defined('ACL') && $user['isAdmin'])) {
-            register_action('header_menu_element', 'AdminBasic_menu_opt');
+            setTopNavAdminMenu();
         }
     }
 
@@ -57,9 +57,12 @@ function AdminBasic_init() {
  * @global tpl $tpl
  * @return string
  */
-function AdminBasic_menu_opt() {
-    global $tpl;
-    return $tpl->getTplFile('AdminBasic', 'admin_menu_opt');
+function SetTopNavAdminMenu() {
+    global $tpl, $frontend;
+    
+    $frontend->addTopMenu($tpl->getTplFile('AdminBasic', 'admin_menu_opt'), 2);
+            
+    return true;
 }
 
 /**

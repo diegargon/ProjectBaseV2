@@ -1,6 +1,11 @@
-/*
- Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
-*/
+/**
+ *  SimpleFrontend basic css mobile file
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage SimpleFrontend
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
+ */
 
 @media only screen and (max-width: 1300px) {
     .container {
@@ -26,23 +31,6 @@
     }    
 }
 @media only screen and (max-width: 640px) {
-    #header-menu li:not(:first-child) {
-        display: none; 
-        float:none;
-    }
-    .responsive li {
-        display: block !important;
-        float:none;
-    }
-    .lihome {
-        display: inline-block !important;
-
-    }
-    .resp-icon {
-        display: inline-block !important;
-        float:right !important;
-        margin-right: 10px;
-    }
     .standard_box h1 {
         font-size: 18px;
     }

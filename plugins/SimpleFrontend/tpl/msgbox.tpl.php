@@ -12,7 +12,7 @@
 !defined('IN_WEB') ? exit : true;
 ?>
 <!-- MSG BOX -->
-<div  class="clear bodysize page">   
+<div  class="bodysize page">   
     <div class="standard_box">
         <h1><?= $data['box_title'] ?></h1> 
         <p class="p_center_big"><?= $data['box_msg'] ?></p>

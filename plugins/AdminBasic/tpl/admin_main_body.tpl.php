@@ -9,7 +9,7 @@
  */
 !defined('IN_WEB') ? exit : true;
 ?>
-<div  class="clear bodysize page">   
+<div  class="bodysize page">   
     <?= !empty($tpldata['ADD_ADMIN_TOP']) ? $tpldata['ADD_ADMIN_TOP'] : false ?>		
     <div id="admin_container">
         <div id="admin_tabs">

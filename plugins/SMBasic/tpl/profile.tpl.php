@@ -9,7 +9,7 @@
  */
 !defined('IN_WEB') ? exit : true;
 ?>
-<div  class="clear bodysize page">
+<div  class="bodysize page">
     <div class="profile_box">
         <form id="profile_form" action="" autocomplete="off" method="post">
             <h1><?= $LNG['L_PROFILE'] ?></h1>

@@ -6,16 +6,17 @@
 !defined('IN_WEB') ? exit : true;
 
 //DIRECT
-function NS_basicSearchbox() {
-    global $tpl, $cfg;
+function NS_setTopNavSearchbox() {
+    global $tpl, $cfg, $frontend;
 
     if ($cfg['FRIENDLY_URL']) {
         $sbox_data['searchUrl'] = "/{$cfg['WEB_LANG']}/search/";
     } else {
         $sbox_data['searchUrl'] = "/{$cfg['CON_FILE']}?module=NewsSearch&page=search&lang={$cfg['WEB_LANG']}";
     }
+    $frontend->addTopMenu($tpl->getTplFile('NewsSearch', 'NewsSearchBarbox', $sbox_data), 7);
 
-    return $search_box = $tpl->getTplFile('NewsSearch', 'NewsSearchBarbox', $sbox_data);
+    return true;
 }
 
 function NS_tag_add_form() {
@@ -71,6 +72,6 @@ function NS_tags_option($tags = null) {
     global $LNG, $cfg;
 
     $content = '<label for="news_tags">' . $LNG['L_NS_TAGS'] . '</label>';
-    $content .= '<input  value="'. $tags.'" maxlength="' . $cfg['ns_tag_size_limit'] . '" id="news_tags" class="news_tags" name="news_tags" type="text" placeholder="' . $LNG['L_NS_TAGS_PLACEHOLDER'] . '" />';
+    $content .= '<input  value="' . $tags . '" maxlength="' . $cfg['ns_tag_size_limit'] . '" id="news_tags" class="news_tags" name="news_tags" type="text" placeholder="' . $LNG['L_NS_TAGS_PLACEHOLDER'] . '" />';
     return $content;
 }

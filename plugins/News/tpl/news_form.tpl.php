@@ -4,7 +4,7 @@
  */
 !defined('IN_WEB') ? exit : true;
 ?>
-<div  class="clear bodysize page">
+<div  class="bodysize page">
     <div class="standard_box submit_box">
         <form  id="form_news" action="#" autocomplete="on" method="post">
             <section>

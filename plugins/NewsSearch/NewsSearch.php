@@ -20,7 +20,7 @@ function NewsSearch_init() {
     }
 
     $tpl->getCssFile('NewsSearch');
-    register_action('header_menu_element', 'NS_basicSearchbox', 5);
+    NS_setTopNavSearchbox();
 
     $frontend->registerPage(['module' => 'NewsSearch', 'page' => 'search', 'type' => 'disk']);
     /* TAGS */

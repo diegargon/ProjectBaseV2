@@ -9,7 +9,7 @@
  */
 !defined('IN_WEB') ? exit : true;
 ?>
-<div  class="clear bodysize page">
+<div  class="bodysize page">
     <div class="register_box">
         <form  id="register_form" action="#" method="post">
             <h1><?= $LNG['L_REGISTER'] ?></h1>

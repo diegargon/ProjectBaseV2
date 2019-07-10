@@ -12,7 +12,7 @@
 !defined('IN_WEB') ? exit : true;
 ?>
 
-<div  class="clear bodysize page">
+<div  class="bodysize page">
     <?= isset($tpldata['ADD_TOP_INDEX']) ? $tpldata['ADD_TOP_INDEX'] : null; ?>    
     <div class="cols col3">
         <?= isset($data['section_' . "1"]) ? $data['section_' . "1"] : null ?>

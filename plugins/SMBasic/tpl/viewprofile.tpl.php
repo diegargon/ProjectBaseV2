@@ -9,7 +9,7 @@
  */
 !defined('IN_WEB') ? exit : true;
 ?>
-<div  class="clear bodysize page">
+<div  class="bodysize page">
     <div class="profile_box">
         <h1><?= $LNG['L_VIEWPROFILE'] ?></h1>
         <div id="avatar">

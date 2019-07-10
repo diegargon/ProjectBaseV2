@@ -9,7 +9,7 @@
  */
 !defined('IN_WEB') ? exit : true;
 ?>
-<div  class="clear bodysize page">
+<div  class="bodysize page">
     <?php if (!empty($data['oAuth_data'])) { ?>
         <div class="register_oauth_box">
             <?= ($data['oAuth_data']) ?>

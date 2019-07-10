@@ -15,15 +15,15 @@
  * 
  * @global array $cfg
  * @global array $LNG
+ * @global SimpleFrontend $frontend 
  * @global SessionManager $sm
  * @return string
  */
-function SMBasic_navLogReg() {
-    global $cfg, $LNG, $sm;
+function SMBasic_SetTopNavUserMenu() {
+    global $cfg, $LNG, $sm, $frontend;
 
     $user = $sm->getSessionUser();
 
-    $elements = '';
     if ($cfg['FRIENDLY_URL']) {
         $login_url = "/{$cfg['WEB_LANG']}/login";
         $register_url = "/{$cfg['WEB_LANG']}/register";
@@ -37,16 +37,25 @@ function SMBasic_navLogReg() {
     }
 
     if ($user && $user['uid'] > 0) {
-        $elements .= "<li class='nav_right'><a href='$logout_url' rel='nofollow'>{$LNG['L_LOGOUT']}</a></li>\n";
-        $elements .= "<li class='nav_right'><a href='$profile_url' rel='nofollow'>{$user['username']}</a></li>\n";
-        if (!empty($user['avatar'])) {
-            $elements .= "<li class='nav_right zero'><a href='$profile_url' rel='nofollow'><img src='{$user['avatar']}'/></a></li>";
-        }
+        $logout = "<div class='drop_nav_top'><a class='header-menu-link' href='$logout_url' rel='nofollow'>{$LNG['L_LOGOUT']}</a></div>";
+        $profile = "<div class='drop_nav_top'><a class='header-menu-link' href='$profile_url' rel='nofollow'>{$LNG['L_PROFILE']}</a></div>";
+
+        $frontend->addTopDropMenu($logout, 10);
+        $frontend->addTopDropMenu($profile, 9);
     } else {
-        $elements .= "<li class='nav_right'><a href='$login_url' rel='nofollow'>{$LNG['L_LOGIN']}</a></li>\n";
-        $elements .= "<li class='nav_right'><a href='$register_url' rel='nofollow'>{$LNG['L_REGISTER']}</a></li>\n";
+        $login = "<div class='nav_top'><a class='header-menu-link' href='$login_url' rel='nofollow'>{$LNG['L_LOGIN']}</a></div>";
+        $register = "<div class='nav_top'><a class='header-menu-link' href='$register_url' rel='nofollow'>{$LNG['L_REGISTER']}</a></div>";
+        $frontend->addTopMenu($login, 2);
+        $frontend->addTopMenu($register, 2);
     }
-    return $elements;
+
+    if ($cfg['smbasic_set_drop_caption']) {
+        !empty($user['avatar']) ? $avatar = $user['avatar'] : $avatar = $cfg['smbasic_default_img_avatar'];
+        $caption = '<div class="drop_nav_top"><img src="' . $avatar . '"/><span class="drop_btn_caption">' . $user['username'] . '</span></div>';
+        $frontend->setDropMenuCaption($caption);
+    }
+
+    return true;
 }
 
 /**
