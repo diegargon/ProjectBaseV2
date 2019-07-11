@@ -20,7 +20,7 @@
  * @return string
  */
 function SMBasic_SetTopNavUserMenu() {
-    global $cfg, $LNG, $sm, $frontend;
+    global $cfg, $sm, $frontend, $tpl;
 
     $user = $sm->getSessionUser();
 
@@ -37,22 +37,18 @@ function SMBasic_SetTopNavUserMenu() {
     }
 
     if ($user && $user['uid'] > 0) {
-        $logout = "<div class='drop_nav_top'><a class='header-menu-link' href='$logout_url' rel='nofollow'>{$LNG['L_LOGOUT']}</a></div>";
-        $profile = "<div class='drop_nav_top'><a class='header-menu-link' href='$profile_url' rel='nofollow'>{$LNG['L_PROFILE']}</a></div>";
-
-        $frontend->addTopDropMenu($logout, 10);
-        $frontend->addTopDropMenu($profile, 9);
+        $frontend->addTopDropMenu($tpl->getTPLFile('SMBasic', 'sm_menu_opt', ['profile_menu' => 1, 'profile_url' => $profile_url]), 8);
+        $frontend->addTopDropMenu($tpl->getTPLFile('SMBasic', 'sm_menu_opt', ['logout_menu' => 1, 'logout_url' => $logout_url]), 9);
     } else {
-        $login = "<div class='nav_top'><a class='header-menu-link' href='$login_url' rel='nofollow'>{$LNG['L_LOGIN']}</a></div>";
-        $register = "<div class='nav_top'><a class='header-menu-link' href='$register_url' rel='nofollow'>{$LNG['L_REGISTER']}</a></div>";
-        $frontend->addTopMenu($login, 2);
-        $frontend->addTopMenu($register, 2);
+        $frontend->addTopMenu($tpl->getTPLFile('SMBasic', 'sm_menu_opt', ['login_menu' => 1, 'login_url' => $login_url]), 1, 8);
+        $frontend->addTopMenu($tpl->getTPLFile('SMBasic', 'sm_menu_opt', ['register_menu' => 1, 'register_url' => $register_url]), 1, 8);
     }
 
     if ($cfg['smbasic_set_drop_caption']) {
-        !empty($user['avatar']) ? $avatar = $user['avatar'] : $avatar = $cfg['smbasic_default_img_avatar'];
-        $caption = '<div class="drop_nav_top"><img src="' . $avatar . '"/><span class="drop_btn_caption">' . $user['username'] . '</span></div>';
-        $frontend->setDropMenuCaption($caption);
+        !empty($user['avatar']) ? $menu_data['avatar'] = $user['avatar'] : $menu_data['avatar'] = $cfg['smbasic_default_img_avatar'];
+        $menu_data['drop_menu_caption'] = 1;
+        $menu_data['username'] = $user['username'];
+        $frontend->setDropMenuCaption($tpl->getTPLFile('SMBasic', 'sm_menu_opt', $menu_data));
     }
 
     return true;

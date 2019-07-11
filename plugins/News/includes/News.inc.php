@@ -18,20 +18,15 @@ require_once ('News_perms.inc.php');
  * @global array $cfg
  * @return string
  */
-function add_submit_news_menu() {
-    global $LNG, $cfg, $frontend;
+function add_menu_submit_news() {
+    global $cfg, $frontend, $tpl;
 
-    $data = '<div class="nav_top">';
-    $data .= '<a rel="nofollow"  class="header-menu-link" href="/';
     if ($cfg['FRIENDLY_URL']) {
-        $data .= $cfg['WEB_LANG'] . '/submit_news';
+        $menu_data['submit_url'] = $cfg['WEB_LANG'] . '/submit_news';
     } else {
-        $data .= "{$cfg['CON_FILE']}?module=News&page=submit_news&lang={$cfg['WEB_LANG']}";
+        $menu_data['submit_url'] .= "{$cfg['CON_FILE']}?module=News&page=submit_news&lang={$cfg['WEB_LANG']}";
     }
-    $data .= '">' . $LNG['L_SUBMIT_NEWS'] . '</a>';
-    $data .= '</div>';
-
-    $frontend->addTopMenu($data, 2);
+    $frontend->addTopMenu($tpl->getTPLFile('News', 'news_menu_opt', $menu_data), 0, 2);
     return true;
 }
 

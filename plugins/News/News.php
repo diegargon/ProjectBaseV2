@@ -24,7 +24,7 @@ function News_init() {
         }
     }
 
-    (news_perm_ask('w_news_create||w_news_adm_all')) ? add_submit_news_menu() : null;
+    (news_perm_ask('w_news_create||w_news_adm_all')) ? add_menu_submit_news() : null;
 
     $pages_array = [
         ['module' => 'News', 'page' => 'section', 'type' => 'disk'],

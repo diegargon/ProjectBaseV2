@@ -59,9 +59,9 @@ function AdminBasic_init() {
  */
 function SetTopNavAdminMenu() {
     global $tpl, $frontend;
-    
-    $frontend->addTopMenu($tpl->getTplFile('AdminBasic', 'admin_menu_opt'), 2);
-            
+
+    $frontend->addTopMenu($tpl->getTplFile('AdminBasic', 'admin_menu_opt'), 1);
+
     return true;
 }
 

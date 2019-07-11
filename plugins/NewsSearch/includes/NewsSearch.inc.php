@@ -1,7 +1,12 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  NewsSearch include file
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage NewsSearch
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 
@@ -14,7 +19,7 @@ function NS_setTopNavSearchbox() {
     } else {
         $sbox_data['searchUrl'] = "/{$cfg['CON_FILE']}?module=NewsSearch&page=search&lang={$cfg['WEB_LANG']}";
     }
-    $frontend->addTopMenu($tpl->getTplFile('NewsSearch', 'NewsSearchBarbox', $sbox_data), 7);
+    $frontend->addTopMenu($tpl->getTplFile('NewsSearch', 'NewsSearchBarbox', $sbox_data), 1, 4);
 
     return true;
 }

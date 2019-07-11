@@ -1,9 +1,9 @@
 /**
- *  SimpleFrontend css mobile file
+ *  NewsSearch css  file
  * 
  *  @author diego@envigo.net
  *  @package ProjectBase
- *  @subpackage SimpleFrontend
+ *  @subpackage NewsSearch
  *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 
@@ -36,8 +36,26 @@
     margin-bottom: 4px;
 }
 #searchTextInput {
-    margin-top:3px;
-    /* border: 0px;*/
+    padding: 4px;
+    border: 1px solid #bfbfbf;
+    font-size: 1.0em;
+    width: 250px;
+}
+.searchContainer {
+    display:flex;
+    margin-left: 5px;
+    margin-right: 5px;    
+}
+.searchContainer button {
+    float: right;
+    padding: 2px 6px;  
+    margin-right: 16px;
+    background: #ddd;
+    font-size: 17px;
+    border-left: none;
+    border-top: none;
+    border-bottom: none;
+    cursor: pointer;    
 }
 .s_news_title {
     font-weight: bold;
@@ -67,4 +85,9 @@
     border: 1px solid #b3b283;
     padding:8px;
     text-decoration: none;
+}
+@media only screen and (max-width: 700px) {
+    #searchTextInput {
+        display:none;
+    }
 }

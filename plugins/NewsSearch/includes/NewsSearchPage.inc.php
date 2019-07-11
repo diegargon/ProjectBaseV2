@@ -1,7 +1,12 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  NewsSearch search include file
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage NewsSearch
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 
@@ -28,6 +33,6 @@ function NS_build_result_page(& $query) {
         $frontend->messageBox(['title' => 'L_NS_SEARCH', 'msg' => 'L_NS_NORESULT']);
         return false;
     }
-    
+
     return true;
 }

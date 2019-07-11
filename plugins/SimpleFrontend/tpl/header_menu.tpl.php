@@ -12,9 +12,10 @@
 
 <div id="header-menu">
     <div class="header-menu-left">
-        <?= isset($data['header_menu_elements']) ? $data['header_menu_elements'] : null; ?>
+        <?= isset($data['header_menu_elements_left']) ? $data['header_menu_elements_left'] : null; ?>
     </div>
     <div class="header-menu-right">
+        <?= isset($data['header_menu_elements_right']) ? $data['header_menu_elements_right'] : null; ?>
         <!-- Drop down menu element -->
         <div class="nav_top">
             <div class="drop_down">

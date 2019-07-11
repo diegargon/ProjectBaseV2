@@ -8,6 +8,7 @@
  *  @subpackage SimpleFrontend
  *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
+!defined('IN_WEB') ? exit : true;
 
 /**
  * SimpleFrontend class
@@ -252,7 +253,8 @@ class SimpleFrontend {
         $this->display_section_menu ? $this->addSectionNav() : null;
 
         if ($cfg['tplbasic_nav_menu']) {
-            $menu_data['header_menu_elements'] = $this->getTopMenu();
+            $menu_data['header_menu_elements_left'] = $this->getTopMenu();
+            $menu_data['header_menu_elements_right'] = $this->getTopMenu(1);
             $menu_data['header_drop_menu_elements'] = $this->getDropMenu();
             $menu_data['drop_menu_caption'] = $this->top_menu_drop_caption;
             $body_data['header_menu'] = $tpl->getTplFile('SimpleFrontend', 'header_menu', $menu_data);
@@ -305,19 +307,14 @@ class SimpleFrontend {
         $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('SimpleFrontend', 'msgbox', $data));
     }
 
-    function getTopMenu() {
-        global $cfg, $LNG;
+    function getTopMenu($right = 0) {
+        global $cfg, $tpl;
 
         $menu = false;
 
         if ($cfg['tplbasic_header_menu_home']) {
-            $cfg['FRIENDLY_URL'] ? $url = $cfg['WEB_LANG'] : $url = "?lang={$cfg['WEB_LANG']}";
-            $code = '<div class="nav_top">';
-            $code .= '<a class="header-menu-link"  href="/' . $url . '">';
-            $code .= '<img width="20" height="20" src="' . $cfg['tplbasic_img_home'] . '" alt="' . $LNG['L_HOME'] . '"/>';
-            $code .= '</a></div>';
-
-            $this->addTopMenu($code, 1);
+            $cfg['FRIENDLY_URL'] ? $home_link['home_url'] = $cfg['WEB_LANG'] : $home_link['home_url'] = "?lang={$cfg['WEB_LANG']}";
+            $this->addTopMenu($tpl->getTplFile('SimpleFrontend', 'home_menu_opt', $home_link), 0, 1);
         }
 
         if (empty($this->top_menu_elements)) {
@@ -328,15 +325,18 @@ class SimpleFrontend {
         });
 
         foreach ($this->top_menu_elements as $element) {
-            $menu .= $element['code'];
+            if (($right && $element['right']) || (!$right && !$element['right'])) {
+                $menu .= $element['code'];
+            }
         }
 
         return $menu;
     }
 
-    function addTopMenu($code, $weight) {
+    function addTopMenu($code, $right, $weight = 5) {
         $this->top_menu_elements[] = [
             'code' => $code,
+            'right' => $right,
             'weight' => $weight
         ];
     }
@@ -364,7 +364,7 @@ class SimpleFrontend {
         $this->top_menu_drop_caption = $code;
     }
 
-    function addTopDropMenu($code, $weight) {
+    function addTopDropMenu($code, $weight = 5) {
         $this->top_menu_drop_elements[] = [
             'code' => $code,
             'weight' => $weight
