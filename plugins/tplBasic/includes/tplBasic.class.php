@@ -126,7 +126,7 @@ class TPL {
      */
     private $std_remote_css = [
         'font-awesome' => 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/fontawesome.min.css',
-        'bootstrap' => 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js',        
+        'bootstrap' => 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js',
         'octicons' => 'https://cdnjs.cloudflare.com/ajax/libs/octicons/4.4.0/font/octicons.min.css',
     ];
 
@@ -565,6 +565,19 @@ class TPL {
     function addPrefetchLinks() {
         foreach ($this->dns_prefetch as $dns_prefetch) {
             $this->addtoTplVar('LINK', '<link rel="dns-prefetch" href="' . $dns_prefetch . '">' . "\n");
+        }
+    }
+
+    function deleteCache() {
+        $files_cache_css = glob('cache/css/*');
+        $files_cache = glob('cache/*');
+        $files = array_merge($files_cache, $files_cache_css);
+        if ($files !== false) {
+            foreach ($files as $file) {
+                if (is_file($file) && $file != 'cache/css/index.html' && $file != 'cache/index.html') {
+                    unlink($file);
+                }
+            }
         }
     }
 

@@ -32,7 +32,7 @@ if ($data['TPL_CTRL'] == 1) {
                 <input readonly class="cat_plugin" type="text"  size="<?= strlen($data['plugin']) ?>" name="plugin" value="<?= $data['plugin'] ?>" />
             </label>
             <input type="submit" name="ModCatSubmit" value="<?= $LNG['L_MODIFY'] ?>" />
-            <input type="submit" name="DelCatSubmit" value="<?= $LNG['L_DELETE'] ?>" onclick="return confirm('<?= $LNG['L_CATS_SURE'] ?>')" />
+            <input type="submit" name="DelCatSubmit" value="<?= $LNG['L_DELETE'] ?>" onclick="return confirm('<?= $LNG['L_SURE'] ?>')" />
             <br/><label><?= $LNG['L_CATS_CATIMAGE'] ?>
                 <input class="cat_image" type="text" maxlength="255" size="97" name="cat_image" value="<?= $data['image'] ?>" />
             </label>

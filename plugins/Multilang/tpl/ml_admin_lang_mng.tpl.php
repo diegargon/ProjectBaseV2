@@ -26,7 +26,7 @@
         <input maxlength='2' type='text' name='iso_code' id='iso_code' value='<?= $data['iso_code'] ?>' />
         <input type='hidden' name='lang_id' value='<?= $data['lang_id'] ?>' />
         <input type='submit' id='btnModifyLang' name='btnModifyLang' value='<?= $LNG['L_ML_MODIFY'] ?>' />
-        <input type='submit' id='btnDeleteLang' name='btnDeleteLang' value='<?= $LNG['L_ML_DELETE'] ?>' onclick="return confirm('<?= $LNG['L_ML_SURE'] ?>')" />
+        <input type='submit' id='btnDeleteLang' name='btnDeleteLang' value='<?= $LNG['L_ML_DELETE'] ?>' onclick="return confirm('<?= $LNG['L_SURE'] ?>')" />
     </form>
     <?php if ($data['TPL_FOOT'] == 1) { ?>    
     </section>

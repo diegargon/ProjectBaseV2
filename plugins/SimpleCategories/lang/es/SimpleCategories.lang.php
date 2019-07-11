@@ -15,5 +15,4 @@ $LNG['L_CATS_FATHER'] = 'Padre';
 $LNG['L_CATS_WEIGHT'] = 'Peso';
 $LNG['L_CATS_MODIFY_CATS'] = 'Modificar categoria';
 $LNG['L_CATS_CATIMAGE'] = 'Imagen Categoria';
-$LNG['L_CATS_SURE'] = "¿Seguro?";
 //$LNG[''] = '';

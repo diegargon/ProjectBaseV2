@@ -20,7 +20,6 @@ $LNG['L_ML_ISOCODE'] = 'Codigo Iso';
 $LNG['L_ML_MODIFY'] = 'Modificar';
 $LNG['L_ML_CREATE'] = 'Crear';
 $LNG['L_ML_DELETE'] = 'Eliminar';
-$LNG['L_ML_SURE'] = '¿Estas seguro?';
 $LNG['L_ML_E_FIELDS'] = 'Los campos estan vacios o tienen caracteres incorrectos';
 $LNG['L_ML_E_INTERNAL_ID'] = 'Error interno, lang ID';
 $LNG['L_ML_E_FIELDS_EXISTS'] = 'Error: Nombre o codigo iso coincide con otro ya creado';
