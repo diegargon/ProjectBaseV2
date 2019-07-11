@@ -32,9 +32,13 @@ REQUIREMENTS
 ============
 TODO
 /cache must be writeble (need if CSS_OPTIMIZE 1) 
+    chmod 755 /cache -R
+    chown www-data /cache -R
 /media if NewsMediaUpload enabled
     chmod 755 /media -R
-    chown www-data /media -R  (www-data if it's your apache2 group)
+    chown www-data /media -R  
+
+(www-data if it's your apache2 group)
 
 INSTALLATION
 ============
