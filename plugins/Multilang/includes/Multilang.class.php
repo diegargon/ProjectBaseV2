@@ -162,7 +162,7 @@ class Multilang {
             $content .= $tpl->getTplFile('Multilang', 'ml_menu_opt', $data);
         }
 
-        $frontend->addTopMenu($content, 1, 5);
+        $frontend->addMenuItem('top_menu_right', $content);
     }
 
     /**

@@ -26,7 +26,7 @@ function add_menu_submit_news() {
     } else {
         $menu_data['submit_url'] .= "{$cfg['CON_FILE']}?module=News&page=submit_news&lang={$cfg['WEB_LANG']}";
     }
-    $frontend->addTopMenu($tpl->getTPLFile('News', 'news_menu_opt', $menu_data), 0, 2);
+    $frontend->addMenuItem('top_menu_left', $tpl->getTPLFile('News', 'news_menu_opt', $menu_data), 2);
     return true;
 }
 

@@ -19,7 +19,7 @@ function NS_setTopNavSearchbox() {
     } else {
         $sbox_data['searchUrl'] = "/{$cfg['CON_FILE']}?module=NewsSearch&page=search&lang={$cfg['WEB_LANG']}";
     }
-    $frontend->addTopMenu($tpl->getTplFile('NewsSearch', 'NewsSearchBarbox', $sbox_data), 1, 4);
+    $frontend->addMenuItem('top_menu_right', $tpl->getTplFile('NewsSearch', 'NewsSearchBarbox', $sbox_data), 4);
 
     return true;
 }

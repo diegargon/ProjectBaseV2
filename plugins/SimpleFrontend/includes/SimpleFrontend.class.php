@@ -70,22 +70,10 @@ class SimpleFrontend {
     private $layouts = [];
 
     /**
-     * Keep menu elements code/weight
-     * @var array
+     * Kep menu element $name_menu, $code, $weight
+     * @var type 
      */
-    private $top_menu_elements = [];
-
-    /**
-     * Keep drop menu elements code/weight
-     * @var array
-     */
-    private $top_menu_drop_elements = [];
-
-    /**
-     * Keep caption elemento
-     * @var string
-     */
-    private $top_menu_drop_caption = false;
+    private $menu_elements = [];
 
     /**
      * Class contructor, iniacilice blocks and set the config
@@ -253,10 +241,10 @@ class SimpleFrontend {
         $this->display_section_menu ? $this->addSectionNav() : null;
 
         if ($cfg['tplbasic_nav_menu']) {
-            $menu_data['header_menu_elements_left'] = $this->getTopMenu();
-            $menu_data['header_menu_elements_right'] = $this->getTopMenu(1);
-            $menu_data['header_drop_menu_elements'] = $this->getDropMenu();
-            $menu_data['drop_menu_caption'] = $this->top_menu_drop_caption;
+            $menu_data['header_menu_elements_left'] = $this->getMenuItems('top_menu_left');
+            $menu_data['header_menu_elements_right'] = $this->getMenuItems('top_menu_right');
+            $menu_data['header_drop_menu_elements'] = $this->getMenuItems('dropdown_menu');
+            $menu_data['drop_menu_caption'] = $this->getMenuItems('dropdown_menu_caption');
             $body_data['header_menu'] = $tpl->getTplFile('SimpleFrontend', 'header_menu', $menu_data);
         }
         $tpl->addtoTplVar('ADD_TO_BODY', do_action('add_to_body'));
@@ -307,65 +295,41 @@ class SimpleFrontend {
         $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('SimpleFrontend', 'msgbox', $data));
     }
 
-    function getTopMenu($right = 0) {
+    function getMenuItems($menu_name) {
         global $cfg, $tpl;
 
         $menu = false;
 
         if ($cfg['tplbasic_header_menu_home']) {
             $cfg['FRIENDLY_URL'] ? $home_link['home_url'] = $cfg['WEB_LANG'] : $home_link['home_url'] = "?lang={$cfg['WEB_LANG']}";
-            $this->addTopMenu($tpl->getTplFile('SimpleFrontend', 'home_menu_opt', $home_link), 0, 1);
+            $this->addMenuItem('top_menu_left', $tpl->getTplFile('SimpleFrontend', 'home_menu_opt', $home_link), 1);
         }
 
-        if (empty($this->top_menu_elements)) {
+        if (count($this->menu_elements) < 1) {
             return false;
         }
-        usort($this->top_menu_elements, function($a, $b) {
+        foreach ($this->menu_elements as $menu_item) {
+            if ($menu_item['menu_name'] == $menu_name) {
+                $this_menu[] = $menu_item;
+            }
+        }
+        if (!isset($this_menu) || count($this_menu) < 1) {
+            return false;
+        }
+        usort($this_menu, function($a, $b) {
             return $a['weight'] - $b['weight'];
         });
 
-        foreach ($this->top_menu_elements as $element) {
-            if (($right && $element['right']) || (!$right && !$element['right'])) {
-                $menu .= $element['code'];
-            }
+        foreach ($this_menu as $element) {
+            $menu .= $element['code'];
         }
 
         return $menu;
     }
 
-    function addTopMenu($code, $right, $weight = 5) {
-        $this->top_menu_elements[] = [
-            'code' => $code,
-            'right' => $right,
-            'weight' => $weight
-        ];
-    }
-
-    function getDropMenu() {
-
-        $drop_menu = '';
-
-        if (empty($this->top_menu_drop_elements)) {
-            return false;
-        }
-
-        usort($this->top_menu_drop_elements, function($a, $b) {
-            return $a['weight'] - $b['weight'];
-        });
-
-        foreach ($this->top_menu_drop_elements as $key => $element) {
-            $drop_menu .= $element['code'];
-        }
-
-        return $drop_menu;
-    }
-
-    function setDropMenuCaption($code) {
-        $this->top_menu_drop_caption = $code;
-    }
-
-    function addTopDropMenu($code, $weight = 5) {
-        $this->top_menu_drop_elements[] = [
+    function addMenuItem($menu_name, $code, $weight = 5) {
+        $this->menu_elements[] = [
+            'menu_name' => $menu_name,
             'code' => $code,
             'weight' => $weight
         ];

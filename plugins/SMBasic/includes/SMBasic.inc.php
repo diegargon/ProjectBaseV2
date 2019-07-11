@@ -37,18 +37,18 @@ function SMBasic_SetTopNavUserMenu() {
     }
 
     if ($user && $user['uid'] > 0) {
-        $frontend->addTopDropMenu($tpl->getTPLFile('SMBasic', 'sm_menu_opt', ['profile_menu' => 1, 'profile_url' => $profile_url]), 8);
-        $frontend->addTopDropMenu($tpl->getTPLFile('SMBasic', 'sm_menu_opt', ['logout_menu' => 1, 'logout_url' => $logout_url]), 9);
+        $frontend->addMenuItem('dropdown_menu', $tpl->getTPLFile('SMBasic', 'sm_menu_opt', ['profile_menu' => 1, 'profile_url' => $profile_url]), 8);
+        $frontend->addMenuItem('dropdown_menu', $tpl->getTPLFile('SMBasic', 'sm_menu_opt', ['logout_menu' => 1, 'logout_url' => $logout_url]), 9);
     } else {
-        $frontend->addTopMenu($tpl->getTPLFile('SMBasic', 'sm_menu_opt', ['login_menu' => 1, 'login_url' => $login_url]), 1, 8);
-        $frontend->addTopMenu($tpl->getTPLFile('SMBasic', 'sm_menu_opt', ['register_menu' => 1, 'register_url' => $register_url]), 1, 8);
+        $frontend->addMenuItem('top_menu_right', $tpl->getTPLFile('SMBasic', 'sm_menu_opt', ['login_menu' => 1, 'login_url' => $login_url]), 8);
+        $frontend->addMenuItem('top_menu_right', $tpl->getTPLFile('SMBasic', 'sm_menu_opt', ['register_menu' => 1, 'register_url' => $register_url]), 8);
     }
 
     if ($cfg['smbasic_set_drop_caption']) {
         !empty($user['avatar']) ? $menu_data['avatar'] = $user['avatar'] : $menu_data['avatar'] = $cfg['smbasic_default_img_avatar'];
         $menu_data['drop_menu_caption'] = 1;
         $menu_data['username'] = $user['username'];
-        $frontend->setDropMenuCaption($tpl->getTPLFile('SMBasic', 'sm_menu_opt', $menu_data));
+        $frontend->addMenuItem('dropdown_menu_caption', $tpl->getTPLFile('SMBasic', 'sm_menu_opt', $menu_data));
     }
 
     return true;
