@@ -1,6 +1,7 @@
 HIGH
 
 MED
+* Modulo Curriculum
 * NewsMediaUpload - Forma de borrar imagenes subidas
 * tplBasic/frontend - buscar forma de poder ordenar por prioridad los elementos del menu, donde esta categorias, git,etc
 * News: Las paginas no principales(1) no deberian de dejar cambiar el idioma al editarla, si no se pierden en el limbo
@@ -40,3 +41,4 @@ para luego presentarlos por grupos, ej: L_NEWS_SUBMIT, L_NEWS_VIEW
 * News: Guardar como borrador
 * NewsMedia: subir imagenes arrastrando.
 * NewsSearch, al pulsar boton vacio desviar a una pagina de busquedas.
+* Private Mensaje system

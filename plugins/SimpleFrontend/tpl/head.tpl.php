@@ -35,8 +35,7 @@
         <link rel="dns-prefetch" href="<?= $cfg['STATIC_SRV_URL'] ?>" />
         <?php isset($tpldata['LINK']) ? print $tpldata['LINK'] : null; ?>
         <link rel="icon" type="image/png" href="<?= $cfg['STATIC_SRV_URL'] ?>favicon-32x32.png" sizes="32x32" />
-        <link rel="icon" type="image/png" href="<?= $cfg['STATIC_SRV_URL'] ?>favicon-16x16.png" sizes="16x16" />
-        <link rel="manifest" href="<?= $cfg['STATIC_SRV_URL'] ?>manifest.json" />        
+        <link rel="icon" type="image/png" href="<?= $cfg['STATIC_SRV_URL'] ?>favicon-16x16.png" sizes="16x16" />                
         <link rel="icon" href="<?= $cfg['STATIC_SRV_URL'] ?>favicon.ico" type='image/x-icon' />   
         <?php
         isset($tpldata['SCRIPTS_TOP']) ? print $tpldata['SCRIPTS_TOP'] : null;
