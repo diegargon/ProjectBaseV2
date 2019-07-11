@@ -18,11 +18,15 @@
  * @global SimpleFrontend $frontend
  */
 function SimpleFrontend_init() {
-    global $frontend;
+    global $frontend, $tpl, $cfg;
 
     !defined('FRONTEND') ? $frontend = new SimpleFrontend() : null;
     define('FRONTEND', true);
 
+    if ($cfg['tplbasic_header_menu_home']) {
+        $cfg['FRIENDLY_URL'] ? $home_link['home_url'] = $cfg['WEB_LANG'] : $home_link['home_url'] = "?lang={$cfg['WEB_LANG']}";
+        $frontend->addMenuItem('top_menu_left', $tpl->getTplFile('SimpleFrontend', 'home_menu_opt', $home_link), 1);
+    }
     return true;
 }
 

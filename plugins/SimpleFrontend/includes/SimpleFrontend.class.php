@@ -237,15 +237,23 @@ class SimpleFrontend {
 
         $body_data = [];
 
-        $this->nav_menu ? $this->addNavMenu() : null;
-        $this->display_section_menu ? $this->addSectionNav() : null;
-
         if ($cfg['tplbasic_nav_menu']) {
             $menu_data['header_menu_elements_left'] = $this->getMenuItems('top_menu_left');
             $menu_data['header_menu_elements_right'] = $this->getMenuItems('top_menu_right');
             $menu_data['header_drop_menu_elements'] = $this->getMenuItems('dropdown_menu');
             $menu_data['drop_menu_caption'] = $this->getMenuItems('dropdown_menu_caption');
             $body_data['header_menu'] = $tpl->getTplFile('SimpleFrontend', 'header_menu', $menu_data);
+        }
+
+        if ($this->display_section_menu) {
+            $sections_menu = $this->getMenuItems('sections_menu');
+            ($sections_menu !== false) ? $sections_data['sections_menu'] = $sections_menu : null;
+            $sections_sub_menu = $this->getMenuItems('sections_sub_menu');
+            ($sections_sub_menu !== false) ? $sections_data['sections_sub_menu'] = $sections_sub_menu : null;
+
+            if ($sections_menu !== false || $sections_sub_menu !== false) {
+                $body_data['sections_menu'] = $tpl->getTplFile('SimpleFrontend', 'sections_menu', $sections_data);
+            }
         }
         $tpl->addtoTplVar('ADD_TO_BODY', do_action('add_to_body'));
         $web_body = $tpl->getTplFile('SimpleFrontend', 'body', $body_data);
@@ -296,14 +304,7 @@ class SimpleFrontend {
     }
 
     function getMenuItems($menu_name) {
-        global $cfg, $tpl;
-
         $menu = false;
-
-        if ($cfg['tplbasic_header_menu_home']) {
-            $cfg['FRIENDLY_URL'] ? $home_link['home_url'] = $cfg['WEB_LANG'] : $home_link['home_url'] = "?lang={$cfg['WEB_LANG']}";
-            $this->addMenuItem('top_menu_left', $tpl->getTplFile('SimpleFrontend', 'home_menu_opt', $home_link), 1);
-        }
 
         if (count($this->menu_elements) < 1) {
             return false;
@@ -374,30 +375,6 @@ class SimpleFrontend {
 
         $tpl->getCssFile('SimpleFrontend', 'basic');
         $tpl->getCssFile('SimpleFrontend', 'basic-mobile');
-    }
-
-    /**
-     * add element (do action/header_menu_element) to top menu
-     * 
-     * @global tpl $tpl
-     */
-    private function addNavMenu() {
-        global $tpl;
-
-        $tpl->addtoTplVar('HEADER_MENU_ELEMENT', do_action('header_menu_element'));
-    }
-
-    /**
-     * add element (do action section_nav_element/sub_element) to the section
-     * navigator menu and sub menu
-     * 
-     * @global tpl $tpl
-     */
-    private function addSectionNav() {
-        global $tpl;
-
-        $tpl->addtoTplVar('SECTIONS_NAV', do_action('section_nav_element'));
-        $tpl->addtoTplVar('SECTIONS_NAV_SUBMENU', do_action('section_nav_subelement'));
     }
 
 }

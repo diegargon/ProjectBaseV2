@@ -45,12 +45,12 @@ function news_friendly_title($title) {
 }
 
 /**
- * Put nav element (news categories)
+ * Put section menu element (news categories)
  * @global Categories $ctgs
  * @global array $cfg
  * @return string
  */
-function news_section_nav_elements() {
+function news_section_menu_elements() {
     global $ctgs, $cfg;
     $ctgs->sortCatsByWeight();
     $menu_cats = $ctgs->getRootCats('News');
@@ -67,14 +67,14 @@ function news_section_nav_elements() {
 }
 
 /**
- * Put subnav categories elements
+ * Put section sub menu categories elements
  * 
  * @global array $cfg
  * @global Categories $ctgs
  * @global SecureFilter $filter
  * @return boolean
  */
-function news_section_nav_subelements() {
+function news_section_menu_subelements() {
     global $cfg, $ctgs, $filter;
 
     if (empty($cat_path = $filter->getUtf8Txt('section'))) {

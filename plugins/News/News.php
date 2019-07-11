@@ -44,8 +44,8 @@ function News_init() {
     }
     if ($cfg['display_section_menu']) {
         $plugins->expressStartProvider('CATS');
-        register_action('section_nav_element', 'news_section_nav_elements');
-        register_action('section_nav_subelement', 'news_section_nav_subelements');
+        $frontend->addMenuItem('sections_menu', news_section_menu_elements());
+        $frontend->addMenuItem('sections_sub_menu', news_section_menu_subelements());
     }
     if (defined('MULTILANG')) {
         register_action('SMBasic_ProfileEdit', 'news_dropdown_profile_edit');

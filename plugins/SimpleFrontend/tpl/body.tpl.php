@@ -44,23 +44,8 @@
 
                 <?php
             }
-            if (!empty($tpldata['SECTIONS_NAV'])) {
-                ?>
-                <nav id="sections_nav">
-                    <ul>
-                        <?= $tpldata['SECTIONS_NAV'] ?>
-                    </ul>
-                </nav>
-                <?php
-            }
-            if (!empty($tpldata['SECTIONS_NAV_SUBMENU'])) {
-                ?>
-                <nav id="sections_submenu">
-                    <ul>
-                        <?= $tpldata['SECTIONS_NAV_SUBMENU'] ?>
-                    </ul>
-                </nav>
-            <?php } ?>
+            ?>
+            <?= isset($data['sections_menu']) ? $data['sections_menu'] : null; ?>
             <?= isset($tpldata['ADD_HEADER_END']) ? $tpldata['ADD_HEADER_END'] : null ?>
 
         </header>
