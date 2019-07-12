@@ -77,11 +77,11 @@ $LNG['L_NEWS_BLOCK_TITLE'] = 'Titulo del bloque';
 $LNG['L_NEWS_E_SEC_NOEXISTS'] = 'Seccion no existe';
 $LNG['L_NEWS_SEC_EMPTY'] = 'Seccion vacia';
 $LNG['L_NEWS_SEC_EMPTY_TITLE'] = 'Oops';
-$LNG['L_NEWS_DELETE_PAGE'] = "Borrar pagina";
-$LNG['L_NEWS_NOMULTILANG_SUPPORT'] = "No hay soporte multilang";
-$LNG['L_NEWS_SHOW_LANG'] = "Mostrar noticias en";
-$LNG['L_NEWS_CREATE'] = "Creada";
-$LNG['L_NEWS_UPDATE'] = "Actualizada";
+$LNG['L_NEWS_DELETE_PAGE'] = 'Borrar pagina';
+$LNG['L_NEWS_NOMULTILANG_SUPPORT'] = 'No hay soporte multilang';
+$LNG['L_NEWS_SHOW_LANG'] = 'Mostrar noticias en';
+$LNG['L_NEWS_CREATE'] = 'Creada';
+$LNG['L_NEWS_UPDATE'] = 'Actualizada';
 
 /* ACL */
 $LNG['L_PERM_R_NEWS_FULL_ACCESS'] = 'Acceso administrador total de lectura';
@@ -98,5 +98,6 @@ $LNG['L_PERM_W_CHANGE_AUTHOR'] = 'cambiar autor';
 $LNG['L_PERM_W_DELETE'] = 'borrar noticias';
 $LNG['L_PERM_W_MODERATION'] = 'Aprobar noticias';
 $LNG['L_PERM_W_FRONTPAGE'] = 'marcar como frontpage';
-$LNG['L_PERM_W_EDIT_OWN'] = "Editar pagians propias";
+$LNG['L_PERM_W_EDIT_OWN'] = 'Editar paginas propias';
 $LNG['L_PERM_W_DELETE_OWN'] = 'borrar noticias propias';
+$LNG['L_PERM_W_ADD_PAGES'] = 'Añadir paginas a sus noticias';

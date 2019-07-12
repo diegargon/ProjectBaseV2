@@ -28,12 +28,12 @@ function news_new_page($news_nid, $news_lang_id, $news_page) {
         $frontend->messageBox(['msg' => $news_data]);
         return false;
     }
-
-    if (!news_perm_ask('w_news_create_new_page')) {
-        $frontend->messageBox(['msg' => 'L_E_NOEDITACCESS']);
-        return false;
+    if ((!($user['uid'] == $news_data['author_id']) && news_perm_ask('w_news_create_new_page'))) {
+        if (!$user['isAdmin'] || !$user['isFounder']) {
+            $frontend->messageBox(['msg' => 'L_E_NOEDITACCESS']);
+            return false;
+        }
     }
-
     $form_data['author_readonly'] = !news_perm_ask('w_news_change_author');
     $form_data['news_add_source'] = news_perm_ask('w_news_add_source');
     $form_data['news_add_related'] = news_perm_ask('w_news_add_related');

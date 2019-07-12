@@ -8,6 +8,8 @@
 function news_edit($news_nid, $news_lang_id, $news_page) {
     global $LNG, $tpl, $frontend, $sm, $plugins;
 
+    $user = $sm->getSessionUser();
+
     $plugins->expressStartProvider('NEWSMEDIAUPLOAD');
 
     if (!is_array($news_data = get_news_byId($news_nid, $news_lang_id, $news_page))) {
@@ -28,8 +30,11 @@ function news_edit($news_nid, $news_lang_id, $news_page) {
 
 
     if (!news_perm_ask('w_news_edit')) {
-        $frontend->messageBox(['msg' => 'L_E_NOEDITACCESS']);
-        return false;
+        if (!($user['uid'] == $news_data['author_id']) && news_perm_ask('w_news_edit_own')
+        ) {
+            $frontend->messageBox(['msg' => 'L_E_NOEDITACCESS']);
+            return false;
+        }
     }
 
     $news_data['news_form_title'] = $LNG['L_NEWS_EDIT_NEWS'];
@@ -69,10 +74,18 @@ function news_edit($news_nid, $news_lang_id, $news_page) {
 }
 
 function news_form_edit_process() {
-    global $LNG, $cfg;
+    global $LNG, $cfg, $sm;
 
+    $user = $sm->getSessionUser();
     $news_data = news_form_getPost();
 
+    if (!news_perm_ask('w_news_edit')) {
+        if (!($user['uid'] == $news_data['author_id']) && news_perm_ask('w_news_edit_own')
+        ) {
+
+            die('[{"status": "4", "msg": "' . $LNG['L_E_NOEDITACCESS'] . '"}]');
+        }
+    }
     if (!news_perm_ask('w_news_edit')) {
         die('[{"status": "4", "msg": "' . $LNG['L_E_NOEDITACCESS'] . '"}]');
     }

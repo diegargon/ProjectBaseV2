@@ -41,7 +41,6 @@ function news_noacl_ask($perms_demand) {
         $or_split[] = $perms_demand;
     }
 
-
     foreach ($or_split as $or_split_perm) {
         $auth = false;
         if (!preg_match("/\&\&/", $or_split_perm)) {
@@ -103,8 +102,7 @@ function news_noacl_user_check($perm) {
     if ($perm == 'w_news_edit_own' && $cfg['news_allow_users_edit_own_news']) {
         return true;
     }
-
-    if ($perm == 'w_news_delete' && $cfg['news_allow_users_delete']) {
+    if ($cfg['allow_multiples_pages'] && $perm == 'w_news_add_pages') {
         return true;
     }
     if ($perm == 'w_news_delete_own' && $cfg['news_allow_users_delete_own_news']) {

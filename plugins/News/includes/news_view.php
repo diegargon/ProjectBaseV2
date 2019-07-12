@@ -253,7 +253,9 @@ function news_nav_options($news) {
     /* CREATE NEW PAGE */
 
     if ($cfg['allow_multiple_pages'] && (( $user['uid'] == $news['author_id'] && $user['uid'] != 0) || $user['isFounder'])) {
-        $content .= '<li><a rel="nofollow" href="' . $edit_news_url . '&newpage=1">' . $LNG['L_NEWS_NEW_PAGE'] . '</a></li>';
+        if (news_perm_ask('w_news_add_pages')) {
+            $content .= '<li><a rel="nofollow" href="' . $edit_news_url . '&newpage=1">' . $LNG['L_NEWS_NEW_PAGE'] . '</a></li>';
+        }
     }
 
     // TRANSLATE  TODO: ANON TRANSLATE?

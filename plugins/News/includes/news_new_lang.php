@@ -36,14 +36,14 @@ function news_new_lang($news_nid, $news_lang_id, $news_page) {
     $news_data['news_add_source'] = news_perm_ask('w_news_add_source');
     $news_data['news_add_related'] = news_perm_ask('w_news_add_related');
 
-    if (!news_perm_ask('w_news_translate')) {
+    $translator = $sm->getSessionUser();
+
+    if (!(news_perm_ask('w_news_translate') || ( ( $translator['uid'] == $news_data['author_id']) && news_perm_ask('w_news_own_translate')) )) {
         $frontend->messageBox(['msg' => 'L_E_NOEDITACCESS']);
         return false;
     }
 
     $news_data['news_form_title'] = $LNG['L_NEWS_NEWLANG'];
-
-    $translator = $sm->getSessionUser();
 
     /*
       if (empty($translator) && $cfg['news_anon_translate']) {
