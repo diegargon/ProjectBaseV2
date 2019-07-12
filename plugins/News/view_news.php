@@ -56,7 +56,7 @@ $tpl->getCssFile('News');
 $tpl->getCssFile('News', 'News-mobile');
 
 if ($cfg['news_side_scroll']) {
-    $tpl->addScriptFile('standard', 'jquery', 'BOTTOM', ''); //Async mode fail sometimes since news_scroll need it
+    $tpl->addScriptFile('standard', 'jquery', 'BOTTOM', 0); //Async mode fail sometimes since news_scroll need it
     $tpl->addScriptFile('News', 'news_scroll', 'BOTTOM');
 }
 do_action('begin_newsshow');

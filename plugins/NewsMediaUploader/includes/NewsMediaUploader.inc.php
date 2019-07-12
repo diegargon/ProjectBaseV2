@@ -29,8 +29,8 @@ function NMU_form_add($news) {
     $extra_content['UPLOAD_EXTRA'] = '';
     (!empty($user) && $user['uid'] > 0) ? $extra_content['UPLOAD_EXTRA'] = NMU_upload_list($user) : null;
 
-    $tpl->addScriptFile('standard', 'jquery', 'TOP', null);
-    $tpl->addScriptFile('NewsMediaUploader', 'plupload.full.min', 'TOP', null);
+    $tpl->addScriptFile('standard', 'jquery', 'TOP', 0);
+    $tpl->addScriptFile('NewsMediaUploader', 'plupload.full.min', 'TOP', 0);
     if ($cfg['allow_remote_file_upload']) {
         $tpl->addtoTplVar('NEWS_FORM_MIDDLE_OPTION', $tpl->getTplFile('NewsMediaUploader', 'remoteFileUpload', $extra_content));
     }

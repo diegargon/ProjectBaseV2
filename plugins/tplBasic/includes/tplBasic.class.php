@@ -304,7 +304,7 @@ class TPL {
      * @param string $async default: async 
      * @return boolean
      */
-    function addScriptFile($plugin, $filename = null, $place = 'TOP', $async = 'async') {
+    function addScriptFile($plugin, $filename = null, $place = 'TOP', $async = 1) {
 
         $this->debug ? $this->debug->log('AddScriptFile request ->' . $plugin . 'for get a ' . $filename, 'tplBasic', 'DEBUG') : null;
         if ($this->checkScript($filename)) {
@@ -318,7 +318,9 @@ class TPL {
 
             if (array_key_exists($filename, $this->std_remote_scripts)) {
                 $script_url = $this->std_remote_scripts[$filename];
-                $script = '<script src="' . $script_url . '" ' . $async . '></script>';
+                $script = '<script src="' . $script_url . '" ';
+                $script .= $async ? 'async' : null;
+                $script .= ' ></script>';
                 $this->addtoTplVar('SCRIPTS_' . $place, $script);
 
                 $backtrace = debug_backtrace();
@@ -350,7 +352,9 @@ class TPL {
             $SCRIPT_PATH = $DEFAULT_PATH;
         }
         if (!empty($SCRIPT_PATH)) {
-            $script = '<script src="' . $this->static_url . $SCRIPT_PATH . '" ' . $async . '></script>';
+            $script = '<script src="' . $this->static_url . $SCRIPT_PATH . '" ';
+            $script .= $async ? 'async' : null;
+            $script .= ' ></script>';
         } else {
             $this->debug ? $this->debug->log("AddScriptFile called by-> $plugin for get a $filename but NOT FOUND IT", 'tplBasic', 'ERROR') : null;
             return false;

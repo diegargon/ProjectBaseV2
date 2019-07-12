@@ -49,7 +49,7 @@ if (!isset($_POST['submitForm'])) {
     $tpl->getCssFile('News');
     $tpl->getCssFile('MiniEditor');
     $tpl->getCssFile('News', 'News-mobile');
-    $tpl->addScriptFile('standard', 'jquery', 'TOP', null);
+    $tpl->addScriptFile('standard', 'jquery', 'TOP', 0);
     $tpl->addScriptFile('MiniEditor', 'editor');
     $tpl->addScriptFile('News', 'newsform');
 }

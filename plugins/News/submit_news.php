@@ -28,7 +28,7 @@ if (!empty($_POST['submitForm'])) {
     $tpl->getCssFile("News");
     $tpl->getCssFile("News", "News-mobile");
     $tpl->getCssFile("MiniEditor");
-    $tpl->addScriptFile("standard", "jquery", "TOP", null);
+    $tpl->addScriptFile("standard", "jquery", "TOP", 0);
     $tpl->addScriptFile("MiniEditor", "editor");
     $tpl->addScriptFile("News", "newsform");
     news_new_form();

@@ -4,7 +4,7 @@ MED
 * News: Guardar como borrador, y menu consultar borradores
 * Modulo Curriculum
 * NewsMediaUpload - Forma de borrar imagenes subidas
-* tplBasic addScriptFile, cambiar la forma de especificar async
+
 LOW
 * Minieditor: Capturar tabulaciones https://stackoverflow.com/questions/6637341/use-tab-to-indent-in-textarea
 * Categorias: no se puede eliminar el enlace de imagen categorias dejandolo vacio.
