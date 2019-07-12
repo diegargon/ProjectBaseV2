@@ -50,7 +50,12 @@ function news_edit($news_nid, $news_lang_id, $news_page) {
         }
     }
     if (defined('MULTILANG') && ($site_langs = news_get_available_langs($news_data)) != false) {
-        $news_data['select_langs'] = $site_langs;
+        if ($news_data['page'] == 1) {
+            $news_data['select_langs'] = $site_langs;
+            $news_data['current_lang_id'] = '<input type="hidden" name="current_lang_id" value="' . $news_data['lang_id'] . '"/>';
+        } else {
+            $news_data['current_lang_id'] = '<input type="hidden" name="current_lang_id" value="' . $news_data['lang_id'] . '"/>';
+        }
     }
 
     $editor = new Editor();
@@ -72,19 +77,20 @@ function news_form_edit_process() {
         die('[{"status": "4", "msg": "' . $LNG['L_E_NOEDITACCESS'] . '"}]');
     }
 
-    if (empty($news_data['nid']) || empty($news_data['old_news_lang_id']) || empty($news_data['page'])) {
+    if (empty($news_data['nid']) || empty($news_data['current_lang_id']) || empty($news_data['page'])) {
         die('[{"status": "4", "msg": "' . $LNG['L_NEWS_NOT_EXIST'] . '"}]');
     }
 
-    if (!is_array($news_orig = get_news_byId($news_data['nid'], $news_data['old_news_lang_id'], $news_data['page']))) {
+    if (!is_array($news_orig = get_news_byId($news_data['nid'], $news_data['current_lang_id'], $news_data['page']))) {
         die('[{"status": "4", "msg": "' . $LNG[$news_orig] . '"}]');
     }
 
     news_submit_form_check($news_data);
     if (news_form_news_update($news_data)) {
-
+        empty($news_data['news_lang']) ? $news_data['news_lang'] = $news_data['current_lang_id'] : null; // add lang id if edit a non one npage
         if ($cfg['FRIENDLY_URL']) {
             $friendly_title = news_friendly_title($news_data['title']);
+
             $back_url = '/' . $cfg['WEB_LANG'] . "/news/{$news_data['nid']}/{$news_data['page']}/{$news_data['news_lang']}/$friendly_title";
         } else {
             $back_url = "/{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_data['nid']}&lang=" . $cfg['WEB_LANG'] . "&npage={$news_data['page']}&news_lang_id={$news_data['lang_id']}";

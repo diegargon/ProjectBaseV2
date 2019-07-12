@@ -1,6 +1,11 @@
 <?php
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  News - Form Template
+ *
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage News
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 ?>
@@ -72,6 +77,7 @@
                                 <span  class="lang_label"><?= $LNG['L_NEWS_LANG'] ?></span>
                                 <?= $data['select_langs'] ?>
                             <?php } ?>
+                            <?= (defined('MULTILANG') && !empty($data['current_lang_id'])) ? $data['current_lang_id'] : null ?>                                                             
                             <?php if (!empty($data['select_acl'])) { ?>
                                 <span  class="acl_label"><?= $LNG['L_ACL'] ?></span>
                                 <?= $data['select_acl'] ?>

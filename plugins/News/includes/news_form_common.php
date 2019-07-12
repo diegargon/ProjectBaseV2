@@ -94,7 +94,7 @@ function news_form_getPost() {
     $form_data['news_new_related'] = $filter->postUrl('news_new_related', 255, 1);
     $form_data['news_related'] = $filter->postUrl('news_related', 255, 1);
     $form_data['news_translator_id'] = $filter->postInt('news_translator_id');
-
+    $form_data['current_lang_id'] = $filter->postInt('current_lang_id', 255, 1);
     //Author Changes
     if (news_perm_ask('w_news_change_author')) {
         $author = $filter->postUsername('news_author', $cfg['smbasic_max_username'], $cfg['smbasic_min_username']);
@@ -296,18 +296,24 @@ function news_form_news_update($news_data) {
         'category' => $news_data['category'],
     ];
 
-    if ($news_data['old_news_lang_id'] != $news_data['news_lang']) {
+
+    if (!empty($news_data['news_lang']) && ($news_data['current_lang_id'] != $news_data['news_lang'])) {
         $set_ary['lang_id'] = $news_data['news_lang'];
     }
 
+    empty($news_data['news_lang']) ? $news_data['news_lang'] = $news_data['current_lang_id'] : null; // add lang id if edit a non one npage
     do_action('news_form_update_set', $set_ary);
 
     $where_ary = [
-        'nid' => $news_data['nid'], 'lang_id' => $news_data['old_news_lang_id'], 'page' => $news_data['page']
+        'nid' => $news_data['nid'], 'lang_id' => $news_data['current_lang_id'], 'page' => $news_data['page']
     ];
 
     $db->update('news', $set_ary, $where_ary);
 
+    //if lang change on main change on childs to ovoid orphan pages
+    if (!empty($news_data['news_lang']) && ($news_data['current_lang_id'] != $news_data['news_lang'])) {
+        $db->update('news', ['lang_id' => $news_data['news_lang']], ['nid' => $news_data['nid'], 'lang_id' => $news_data['news_lang']]);
+    }
     do_action('news_form_update', $news_data);
     //
     //SOURCE LINK
