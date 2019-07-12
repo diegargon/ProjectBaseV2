@@ -80,7 +80,6 @@ function news_form_getPost() {
 
     //GET
     $form_data['nid'] = $filter->getInt('nid');
-    $form_data['old_news_lang_id'] = $filter->getInt('news_lang_id');
     $form_data['news_lang_id'] = $filter->getInt('news_lang_id');
     $form_data['page'] = $filter->getInt('npage');
     //POST    

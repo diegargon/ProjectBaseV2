@@ -61,6 +61,7 @@ function news_new_lang($news_nid, $news_lang_id, $news_page) {
 
     if (($site_langs = news_get_missed_langs($news_data['nid'], $news_data['page'])) != false) {
         $news_data['select_langs'] = $site_langs;
+        $news_data['select_langs'] .= '<input type="hidden" name="current_lang_id" value="' . $news_data['lang_id'] . '"/>';
     } else {
         $frontend->messageBox(['msg' => 'L_NEWS_E_ALREADY_TRANSLATE_ALL']);
         return false;
@@ -102,7 +103,15 @@ function news_form_newlang_process() {
     }
 
     if (news_newlang_submit($news_data)) {
-        die('[{"status": "ok", "msg": "' . $LNG['L_NEWS_TRANSLATE_SUCCESSFUL'] . '", "url": "' . $cfg['WEB_URL'] . '"}]');
+        empty($news_data['news_lang']) ? $news_data['news_lang'] = $news_data['current_lang_id'] : null; // add lang id if edit a non one npage
+        if ($cfg['FRIENDLY_URL']) {
+            $friendly_title = news_friendly_title($news_data['title']);
+
+            $back_url = '/' . $cfg['WEB_LANG'] . "/news/{$news_data['nid']}/{$news_data['page']}/{$news_data['news_lang']}/$friendly_title";
+        } else {
+            $back_url = "/{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_data['nid']}&lang=" . $cfg['WEB_LANG'] . "&npage={$news_data['page']}&news_lang_id={$news_data['lang_id']}";
+        }
+        die('[{"status": "ok", "msg": "' . $LNG['L_NEWS_UPDATE_SUCCESSFUL'] . '", "url": "' . $back_url . '"}]');
     } else {
         die('[{"status": "1", "msg": "' . $LNG['L_NEWS_INTERNAL_ERROR'] . '"}]');
     }
@@ -130,7 +139,7 @@ function news_newlang_submit($news_data) {
     }
     //GET original main news (page 1) for copy values
     $orig_news_nid = $news_data['nid'];
-    $orig_news_lang_id = $news_data['old_news_lang_id'];
+    $orig_news_lang_id = $news_data['current_lang_id'];
 
     $query = $db->selectAll('news', ['nid' => $orig_news_nid, 'lang_id' => $orig_news_lang_id, 'page' => 1], 'LIMIT 1');
     $orig_news = $db->fetch($query);
