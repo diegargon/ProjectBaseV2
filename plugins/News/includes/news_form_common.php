@@ -12,6 +12,11 @@
 /**
  * Get html select formated category selection
  * 
+ * TODO: Hay un posible error, si se muevo una subcategoria de padre, y el ID del padre es menor
+ * el loop que crea a la lista no encuentra al padre por que aun no esta añadido, se añade antes al
+ * hijo que al padre pero no encuentra al padre. Se solvento (supongo igual da otro) temporalmente
+ *  ordenando por 'father'
+ * 
  * @global array $cfg
  * @global Categories $ctgs
  * @global Multilang $ml
@@ -29,6 +34,9 @@ function news_getCatsSelect($news_data = null, $select_name = 'news_category', $
 
     $cats = $ctgs->getCategories('News');
 
+    usort($cats, function($a, $b) {
+        return $a['father'] - $b['father'];
+    });
     if (!$cats) {
         return false;
     }
@@ -278,7 +286,6 @@ function news_form_news_update($news_data) {
 
     empty($news_data['featured']) ? $news_data['featured'] = 0 : null;
     //!isset($news_data['news_translator']) ? $news_data['news_translator'] = "" : null;
-
     !defined('MULTILANG') ? $news_data['news_lang'] = 1 : null;
 
     $set_ary = [
@@ -288,7 +295,7 @@ function news_form_news_update($news_data) {
         'author_id' => $news_data['author_id'],
         'category' => $news_data['category'],
     ];
- 
+
     if ($news_data['old_news_lang_id'] != $news_data['news_lang']) {
         $set_ary['lang_id'] = $news_data['news_lang'];
     }
