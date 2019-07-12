@@ -35,7 +35,7 @@
     margin-left:4px;
     margin-bottom: 4px;
 }
-#searchTextInput {
+#searchTextInput, #searchTextInputPage {
     padding: 4px;
     border: 1px solid #bfbfbf;
     font-size: 1.0em;
@@ -90,4 +90,14 @@
     #searchTextInput {
         display:none;
     }
+}
+.searchPage {
+    text-align: center;
+    width: 350px;
+    margin:0 auto;
+}
+.search_msg {
+    text-align:center;
+    font-weight: bold;
+    font-size:1.2em;
 }

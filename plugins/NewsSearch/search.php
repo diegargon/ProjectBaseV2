@@ -18,18 +18,14 @@ if (!empty($_GET['q'])) {
     $q = $filter->getUtf8Txt('q', $cfg['ns_max_s_text'], $cfg['ns_min_s_text']);
 
     if (empty($q)) {
-        $frontend->messageBox(['title' => 'L_NS_SEARCH', 'msg' => 'L_NS_SEARCH_ERROR']);
+        NS_build_search_page($q, $LNG['L_NS_SEARCH_ERROR']);
         return false;
     }
     $q = $db->escapeStrip($q);
-
     (defined('MULTILANG')) ? $where_ary['lang_id'] = $ml->getWebLangID() : $where_ary['lang_id'] = 1;
-
     $cfg['news_moderation'] ? $where_ary['moderation'] = 0 : null;
-
     $query = $db->search('news', 'title lead text', $q, $where_ary, " LIMIT {$cfg['ns_result_limit']} ");
-
-    NS_build_result_page($query);
+    NS_build_result_page($query, $q);
 } else if (!empty($_GET['searchTag'])) {
     $searchTag = $filter->getUtf8Txt('searchTag', $cfg['ns_tag_size_limit'], $cfg['ns_min_s_text']);
 
@@ -49,6 +45,5 @@ if (!empty($_GET['q'])) {
         return false;
     }
 } else {
-    $frontend->messageBox(['title' => 'L_NS_SEARCH', 'msg' => 'L_NS_SEARCH_ERROR']);
-    return false;
+    NS_build_search_page();
 }

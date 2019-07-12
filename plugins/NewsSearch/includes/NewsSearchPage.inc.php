@@ -10,8 +10,8 @@
  */
 !defined('IN_WEB') ? exit : true;
 
-function NS_build_result_page(& $query) {
-    global $db, $cfg, $tpl, $frontend;
+function NS_build_result_page(& $query, $q = false) {
+    global $db, $cfg, $tpl, $frontend, $LNG;
     $content = '';
 
     if ($query && ($num_rows = $db->numRows($query)) > 0) {
@@ -30,9 +30,16 @@ function NS_build_result_page(& $query) {
         }
         $tpl->addtoTplVar('ADD_TO_BODY', $content);
     } else {
-        $frontend->messageBox(['title' => 'L_NS_SEARCH', 'msg' => 'L_NS_NORESULT']);
-        return false;
+        NS_build_search_page($q, $LNG['L_NS_NORESULT']);
     }
 
     return true;
+}
+
+function NS_build_search_page($q = false, $msg = false) {
+    global $tpl;
+    $q_data = [];
+    (!empty($q)) ? $q_data['q'] = $q : null;
+    (!empty($msg)) ? $q_data['msg'] = $msg : null;
+    $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('NewsSearch', 'NewsSearch-page', $q_data));
 }

@@ -24,7 +24,7 @@
         padding: 5px 0;
     }
     .bodysize {
-        min-height: 300px;
+        /* min-height: 300px; */
     }
     .col1, .col2, .col3 {
         width:96%;
