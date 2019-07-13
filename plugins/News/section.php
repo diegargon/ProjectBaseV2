@@ -68,7 +68,7 @@ if (!empty($user['news_lang'])) {
   }
  */
 $news_db = get_news_query($q_where, $q_opt);
-echo count($news_db);
+
 if (empty($news_db) || (($num_news = count($news_db)) < 1)) {
     $frontend->messageBox(['title' => 'L_NEWS_SEC_EMPTY_TITLE', 'msg' => 'L_NEWS_SEC_EMPTY']);
     return false;

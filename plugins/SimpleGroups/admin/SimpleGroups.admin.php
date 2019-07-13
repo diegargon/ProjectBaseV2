@@ -97,7 +97,6 @@ function SimpleGroups_NewGroup() {
     $group['group_desc'] = $filter->postUtf8Txt("group_desc", 255, 1);
     $group['plugin'] = "USER";
 
-    echo $group['group_desc'];
     return $groups->newGroup($group);
 }
 
