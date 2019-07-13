@@ -52,7 +52,7 @@ class Plugins {
         (defined('DEBUG') && $cfg['plugins_debug']) ? $this->debug = 1 : $this->debug = 0;
         $this->debug ? $debug->log('Plugin INIT called', 'PLUGINS', 'DEBUG') : null;
         $this->setPluginsDB();
-        
+
         //We use &reference because setStarted add field in the loop and foreach copy the array
         foreach ($this->plugins_db as &$plugin) {
             if ($plugin['autostart'] && $plugin['enabled']) {
@@ -63,8 +63,10 @@ class Plugins {
                         $plugin['fail'] = 1;
                     }
                 } else {
+                    
                 }
             } else {
+                
             }
         }
     }
@@ -132,6 +134,21 @@ class Plugins {
         foreach ($this->plugins_db as $plugin) {
             if ($plugin['plugin_name'] == $plugin_name && $plugin['enabled'] == 1) {
                 return $plugin['plugin_id'];
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Return plugin version
+     * 
+     * @param type $plugin_name
+     * @return boolean|float
+     */
+    function getPluginVersion($plugin_name) {
+        foreach ($this->plugins_db as $plugin) {
+            if ($plugin['plugin_name'] == $plugin_name) {
+                return $plugin['version'];
             }
         }
         return false;
@@ -468,11 +485,11 @@ class Plugins {
         $class_file = '';
         $inc_file = '';
 
-        $this->debug ? $debug_msg = 'Loading standard files: ': null; 
-        
+        $this->debug ? $debug_msg = 'Loading standard files: ' : null;
+
         $lang_file = "plugins/$plugin/lang/{$cfg['WEB_LANG']}/$plugin.lang.php";
-        if (file_exists($lang_file)) {            
-            $this->debug ? $debug_msg .= 'Lang file ('. $lang_file .') ': null; 
+        if (file_exists($lang_file)) {
+            $this->debug ? $debug_msg .= 'Lang file (' . $lang_file . ') ' : null;
             include_once($lang_file); // Need global $LNG
         }
 
@@ -488,11 +505,11 @@ class Plugins {
         if ($this->debug) {
             if (!empty($inc_file) && file_exists($inc_file)) {
                 include_once($inc_file);
-                $this->debug ? $debug_msg .= 'Include file ('. $inc_file .') ': null; 
+                $this->debug ? $debug_msg .= 'Include file (' . $inc_file . ') ' : null;
             }
             if (!empty($inc_file) && file_exists($class_file)) {
                 include_once($class_file);
-                $this->debug ? $debug_msg .= 'Class file ('. $class_file .') ': null; 
+                $this->debug ? $debug_msg .= 'Class file (' . $class_file . ') ' : null;
             }
         }
         $debug->log($debug_msg, 'PLUGINS', 'INFO');
@@ -587,10 +604,10 @@ class Plugins {
      */
     private function resolvePluginDepends($plugin) {
         global $debug;
-  
-        $this->debug ? $debug->log('Resolving ' .$plugin['plugin_name'], 'PLUGINS', 'DEBUG') : null;
-        
-        if (empty($plugin['depends'])) {            
+
+        $this->debug ? $debug->log('Resolving ' . $plugin['plugin_name'], 'PLUGINS', 'DEBUG') : null;
+
+        if (empty($plugin['depends'])) {
             $this->debug ? $debug->log('Resolving depends... ' . $plugin['plugin_name'] . ':[Empty depends]', 'PLUGINS', 'INFO') : null;
             return true;
         } else {
@@ -599,11 +616,11 @@ class Plugins {
 
         $this->debug ? $debug_msg = 'Depends check for plugin ' . $plugin['plugin_name'] . ' -> ' : null;
         foreach ($depends as $depend) {
-            $this->debug ? $debug_msg .= ' '. $depend->name .' ' : null;
-            
+            $this->debug ? $debug_msg .= ' ' . $depend->name . ' ' : null;
+
             $result = $this->checkIfDepsStarted($depend->name, $depend->min_version, $depend->max_version);
 
-            if (!$result) {                
+            if (!$result) {
                 if ($this->findDepsAndStart($depend->name, $depend->min_version, $depend->max_version)) {
                     $this->debug ? $debug_msg .= '[Found]' : null;
                 } else {
@@ -701,15 +718,15 @@ class Plugins {
         global $debug;
 
         foreach ($this->plugins_db as $plugin) {
-            if ($plugin['enabled']) {                
+            if ($plugin['enabled']) {
                 $allprovide = preg_split('/\s+/', $plugin['provide']);
-                foreach ($allprovide as $provide) {                    
+                foreach ($allprovide as $provide) {
                     if (($provide == $depend_name) && ($plugin['version'] >= $min_version) && ($plugin['version'] <= $max_version)
                     ) {
-                        $this->debug ? $debug->log('Need resolve ' . $depend_name . ' for '. $plugin['plugin_name'] .' before', 'PLUGINS', 'INFO') : null;
+                        $this->debug ? $debug->log('Need resolve ' . $depend_name . ' for ' . $plugin['plugin_name'] . ' before', 'PLUGINS', 'INFO') : null;
                         if ($this->resolvePluginDepends($plugin)) {//resolv de dependes of the depends
                             if ($plugin['autostart']) {
-                                $this->debug ? $debug->log('Starting ' . $plugin['plugin_name'] . ' as a '. $depend_name . ' depend ' , 'PLUGINS', 'INFO') : null;
+                                $this->debug ? $debug->log('Starting ' . $plugin['plugin_name'] . ' as a ' . $depend_name . ' depend ', 'PLUGINS', 'INFO') : null;
                                 $this->startPlugin($plugin);
                             } else {
                                 $this->debug ? $debug->log('NOT Starting  as depend ' . $depend_name . ' because autostart its off, express start need', 'PLUGINS', 'INFO') : null;

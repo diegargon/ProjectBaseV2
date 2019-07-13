@@ -12,7 +12,6 @@ LOW
 * Smbasic admin: poder añadir admin y founder
 * SMBasic?: Añadir opcion para que el usuario decida el formato de fecha
 * FRONTEND? : Mostrar fecha y hora actual
-* Plugins - Hacer funcion para obtener version del plugin instalado ¿para que lo necesitaba?
 * News: Moderacion de paginas, si hay varias a la espera y aprobamos una se aprueban el resto
 * Plugins:Al rescanear no actualiza bien, hay que recargar la pagina
 
