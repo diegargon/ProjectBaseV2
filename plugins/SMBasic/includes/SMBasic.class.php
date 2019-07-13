@@ -129,6 +129,10 @@ class SessionManager {
         return $this->user;
     }
 
+    function getSessionUserID() {
+        return $this->user['uid'];
+    }
+
     function checkSession() {
         global $debug;
         $this->debug ? $debug->log('CheckSession called', 'SMBasic', 'Info') : null;
