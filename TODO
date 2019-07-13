@@ -7,16 +7,12 @@ MED
 
 LOW
 * Minieditor: Capturar tabulaciones https://stackoverflow.com/questions/6637341/use-tab-to-indent-in-textarea
-* Categorias: no se puede eliminar el enlace de imagen categorias dejandolo vacio.
 * Bloques: poder cambiar idioma, prioridad y demas
 * Smbasic admin: poder añadir usuario manualmente.
 * Smbasic admin: poder añadir admin y founder
-* SimpleCategories: cuando insertas unas url/img no valida o que no existe no presenta mensaje de error
-* SimpleCategories: Opcion en creacion de categorias de poner el plugin.?
 * SMBasic?: Añadir opcion para que el usuario decida el formato de fecha
 * FRONTEND? : Mostrar fecha y hora actual
 * Plugins - Hacer funcion para obtener version del plugin instalado ¿para que lo necesitaba?
-* Rating opcion de calcular en el momento o mostrar total pre-calculado via cron y recalcular via cron
 * News: Moderacion de paginas, si hay varias a la espera y aprobamos una se aprueban el resto
 * Plugins:Al rescanear no actualiza bien, hay que recargar la pagina
 
@@ -39,3 +35,5 @@ para luego presentarlos por grupos, ej: L_NEWS_SUBMIT, L_NEWS_VIEW
 * News: Fix news_adv_stats
 * PersonalGist: Buscar manera de mostrar la pantallad de carga "loading" con la nueva web.
 * PersonalGist/GENERAL: ver como tratar las dependencias del sistema, por ejemplo curl en el caso de personalgist
+* SimpleCategories: Opcion en creacion de categorias de poner el plugin.?
+* Rating opcion de calcular en el momento o mostrar total pre-calculado via cron y recalcular via cron

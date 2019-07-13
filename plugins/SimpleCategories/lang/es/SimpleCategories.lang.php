@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  SimpleCategories lang spanish
  * 
@@ -15,4 +16,7 @@ $LNG['L_CATS_FATHER'] = 'Padre';
 $LNG['L_CATS_WEIGHT'] = 'Peso';
 $LNG['L_CATS_MODIFY_CATS'] = 'Modificar categoria';
 $LNG['L_CATS_CATIMAGE'] = 'Imagen Categoria';
+$LNG['L_CATS_IMAGE_NOVALID'] = 'Url de la imagen no valida o no existe';
+$LNG['L_CATS_MODINT_ERROR'] = 'Error interno al modificar la categoria';
+$LNG['L_CATS_MOD_SUCCESS'] = 'Modificación satisfactoria';
 //$LNG[''] = '';

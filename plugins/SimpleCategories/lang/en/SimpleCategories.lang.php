@@ -16,3 +16,6 @@ $LNG['L_CATS_FATHER'] = 'Father';
 $LNG['L_CATS_WEIGHT'] = 'Weight';
 $LNG['L_CATS_MODIFY_CATS'] = 'Modify category';
 $LNG['L_CATS_CATIMAGE'] = 'Category image';
+$LNG['L_CATS_IMAGE_NOVALID'] = 'Image url no valid or not exists';
+$LNG['L_CATS_MODINT_ERROR'] = 'Modify category internal error';
+$LNG['L_CATS_MOD_SUCCESS'] = 'Successful modifyied';

@@ -9,7 +9,7 @@
  */
 !defined('IN_WEB') ? exit : true;
 ?>
-
+<p><?= isset($data['msg']) ? $data['msg'] : null ?></p>
 <div class="catlist">
     <p><?= $LNG['L_CATS_CREATE_CAT'] ?></p>
     <form id="cat_new" method="post" action="">
