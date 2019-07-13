@@ -329,6 +329,9 @@ class SimpleFrontend {
     }
 
     function addMenuItem($menu_name, $code, $weight = 5) {
+        if (empty($menu_name) || empty($code)) {
+            return false;
+        }
         $this->menu_elements[] = [
             'menu_name' => $menu_name,
             'code' => $code,
