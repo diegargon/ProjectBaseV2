@@ -94,7 +94,7 @@ function news_form_getPost() {
     $form_data['news_related'] = $filter->postUrl('news_related', 255, 1);
     $form_data['news_translator_id'] = $filter->postInt('news_translator_id');
     $form_data['current_lang_id'] = $filter->postInt('current_lang_id', 255, 1);
-    if ($cfg['news_allow_user_draft']) {
+    if ($cfg['news_allow_user_drafts']) {
         $form_data['as_draft'] = $filter->postInt('as_draft', 1, 1);
     } else {
         $form_data['as_draft'] = 0;
