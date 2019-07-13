@@ -3,6 +3,9 @@ HIGH
 MED
 * Plugins:Al rescanear no actualiza bien, hay que recargar la pagina
 * News: Moderacion de paginas, si hay varias a la espera y aprobamos una se aprueban el resto
+* editor ver de utilizar de nuevo nl2br o de cambiar \n desde un \n a otro \n añadiendo [p] automaticamente
+* editor tag advertencia letras con fondo rojo.
+* News/frontend dar la posibilidad de no mostrar una categoria en la cabecera, solo news ya que las demás son explicitas.
 LOW
 
 * Minieditor: Capturar tabulaciones, https://stackoverflow.com/questions/6637341/use-tab-to-indent-in-textarea

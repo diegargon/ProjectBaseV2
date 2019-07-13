@@ -342,13 +342,13 @@ h1,h2,h3,h4,h5,h6{
     display: inline;
 }
 #sections_nav li a, #sections_submenu li a{
-    display: inline-block;
+    display: inline-table;
     text-align: center;
     text-decoration: none;
-    padding: 1px;
+    padding: 6px;
     margin-right: 5%;
     transition: .3s;
-    font-size: 1em;
+    font-size: 1.2em;
     border: none;
     color: inherit;
     background-color: transparent;
