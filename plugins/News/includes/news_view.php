@@ -165,7 +165,7 @@ function news_catch_admin_actions(&$news_data) {
     }
     /* APPROVE */
     if (!empty($_GET['news_approved']) && news_perm_ask('w_news_moderation')) {
-        news_approved($news_nid, $news_lang_id);
+        news_approved($news_nid, $news_lang_id, $news_page);
         $news_data['moderation'] = 0;
     }
     /* FEATURE */
@@ -396,13 +396,13 @@ function news_delete($nid, $lang_id, $page = null) {
     return true;
 }
 
-function news_approved($nid, $lang_id) {
+function news_approved($nid, $lang_id, $news_page) {
     global $db;
 
-    if (empty($nid) || empty($lang_id)) {
+    if (empty($nid) || empty($lang_id) || $news_page) {
         return false;
     }
-    $db->update('news', ['moderation' => 0], ['nid' => $nid, 'lang_id' => $lang_id]);
+    $db->update('news', ['moderation' => 0], ['nid' => $nid, 'lang_id' => $lang_id, 'page' => $news_page], 'LIMIT 1');
 
     return true;
 }
