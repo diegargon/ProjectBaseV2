@@ -94,6 +94,11 @@ function news_form_getPost() {
     $form_data['news_related'] = $filter->postUrl('news_related', 255, 1);
     $form_data['news_translator_id'] = $filter->postInt('news_translator_id');
     $form_data['current_lang_id'] = $filter->postInt('current_lang_id', 255, 1);
+    if ($cfg['news_allow_user_draft']) {
+        $form_data['as_draft'] = $filter->postInt('as_draft', 1, 1);
+    } else {
+        $form_data['as_draft'] = 0;
+    }
     //Author Changes
     if (news_perm_ask('w_news_change_author')) {
         $author = $filter->postUsername('news_author', $cfg['smbasic_max_username'], $cfg['smbasic_min_username']);
@@ -293,8 +298,15 @@ function news_form_news_update($news_data) {
         'text' => $db->escapeStrip($news_data['editor_text']),
         'author_id' => $news_data['author_id'],
         'category' => $news_data['category'],
+        'as_draft' => $news_data['as_draft'] ? $news_data['as_draft'] : 0,
     ];
 
+    //if parent as draft force as draft
+    if (($news_data['page'] > 1) && (!isset($news_data['as_draft']) || $news_data['as_draft'] == 0 )) {
+        $previous_page = $news_data['page'] - 1;
+        $news_parent = get_news_byId($news_data['nid'], $news_data['current_lang_id'], $previous_page);
+        ($news_parent['as_draft']) ? $set_ary['as_draft'] = 1 : null;
+    }
 
     if (!empty($news_data['news_lang']) && ($news_data['current_lang_id'] != $news_data['news_lang'])) {
         $set_ary['lang_id'] = $news_data['news_lang'];

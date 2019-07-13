@@ -57,6 +57,7 @@ Author
 
 Lastest relevant add/changes 
 ================================
+* add save news as drafts
 * rewrite top menu design/logic
 * Add to editor internal links tag and a bd links database
 * added personal gist plugin (need curl)

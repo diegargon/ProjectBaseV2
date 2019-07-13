@@ -1,7 +1,14 @@
 <?php
 
-/*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+/**
+ *  News - news_page_edit
+ * 
+ *  show & edit funcition for page edit
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage News
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
 
@@ -63,6 +70,7 @@ function news_edit($news_nid, $news_lang_id, $news_page) {
         }
     }
 
+    $news_data['as_draft_check'] = $news_data['as_draft'];
     $editor = new Editor();
     $news_data['editor'] = $editor->getEditor(['text' => $news_data['text']]);
     $news_data['terms_url'] = $sm->getPage('terms');

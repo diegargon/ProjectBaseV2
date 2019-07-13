@@ -21,7 +21,7 @@
  * @return string|boolean
  */
 function news_new_form() {
-    global $LNG, $tpl, $sm, $frontend, $ml, $plugins;
+    global $LNG, $tpl, $sm, $frontend, $ml, $plugins, $cfg;
 
     if (!($plugins->expressStartProvider('EDITOR')) || !($plugins->expressStartProvider('CATS'))) {
         $frontend->messageBox(['msg' => 'L_E_PL_CANTEXPRESS']);
@@ -68,6 +68,8 @@ function news_new_form() {
         $frontend->messageBox(['msg' => 'L_NEWS_NOCATS']);
         return false;
     }
+    ($cfg['news_allow_user_drafts']) ? $form_data['as_draft'] = 1 : null;
+
     $form_data['terms_url'] = $sm->getPage('terms');
     do_action('news_new_form_add', $form_data);
 
@@ -115,6 +117,7 @@ function news_create_new($news_data) {
         'featured' => $news_data['featured'],
         'author_id' => $news_data['author_id'],
         'category' => $news_data['category'],
+        'as_draft' => empty($news_data['as_draft']) ? 0 : 1,
         'moderation' => $moderation
     ];
 

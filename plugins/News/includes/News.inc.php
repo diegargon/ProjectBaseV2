@@ -21,6 +21,7 @@ require_once ('News_perms.inc.php');
 function add_menu_submit_news() {
     global $cfg, $frontend, $tpl;
 
+    $menu_data['submit_opt'] = 1;
     if ($cfg['FRIENDLY_URL']) {
         $menu_data['submit_url'] = $cfg['WEB_LANG'] . '/submit_news';
     } else {
@@ -147,4 +148,50 @@ function news_dropdown_profile_change(& $q_data) {
         !is_numeric($lang) ? $sanity_fail = 1 : null;
     }
     !$sanity_fail ? $q_data['news_lang'] = serialize($langs) : null;
+}
+
+function news_dropdown_items() {
+    global $cfg, $frontend, $tpl;
+
+    $menu_data['drafts_opt'] = 1;
+    if ($cfg['FRIENDLY_URL']) {
+        $menu_data['drafts_url'] = $cfg['WEB_LANG'] . '/drafts';
+    } else {
+        $menu_data['drafts_url'] = "{$cfg['CON_FILE']}?module=News&page=drafts&lang={$cfg['WEB_LANG']}";
+    }
+    $frontend->addMenuItem('dropdown_menu', $tpl->getTPLFile('News', 'news_menu_opt', $menu_data), 5);
+}
+
+function drafts_page() {
+    global $tpl, $db, $cfg, $frontend, $sm;
+
+    if (!$cfg['news_allow_user_drafts']) {
+        $frontend->messageBox(['msg' => 'L_NEWS_E_CANT_ACCESS']);
+        return false;
+    }
+    $content_data = [];
+    $user_id = $sm->getSessionUserId();
+
+    $query = $db->selectAll('news', ['author_id' => $user_id, 'as_draft' => '1']);
+
+    if ($db->numRows($query) <= 0) {
+        $frontend->messageBox(['msg' => 'L_NEWS_E_NODRAFTS']);
+        return false;
+    }
+    $drafts = $db->fetchAll($query);
+    $counter = 1;
+    $num_items = (count($drafts));
+
+    foreach ($drafts as $draft) {
+        $content_data['TPL_CTRL'] = $counter;
+        ($counter == $num_items) ? $content_data['TPL_FOOT'] = 1 : $content_data['TPL_FOOT'] = 0;
+        if ($cfg['FRIENDLY_URL']) {
+            $content_data['draft_url'] = "/{$cfg['WEB_LANG']}/news/{$draft['nid']}/{$draft['page']}/{$draft['lang_id']}/";
+        } else {
+            $content_data['draft_url'] = "/{$cfg['CON_FILE']}?module=News&page=view_news&nid={$draft['nid']}&news_lang_id={$draft['lang_id']}&npage={$draft['page']}/";
+        }
+        $content_data = array_merge($content_data, $draft);
+        $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('News', 'news_drafts', $content_data));
+        $counter++;
+    }
 }

@@ -99,6 +99,13 @@ $LNG['L_NEWS_NOMULTILANG_SUPPORT'] = 'No multilang support';
 $LNG['L_NEWS_SHOW_LANG'] = 'Show news in';
 $LNG['L_NEWS_CREATE'] = 'Create';
 $LNG['L_NEWS_UPDATE'] = 'Update';
+$LNG['L_NEWS_ASDRAFT'] = 'Save as a draft';
+$LNG['L_NEWS_E_VIEW_DRAFT'] = 'You can\'t view this draft';
+$LNG['L_NEWS_WARNING_DRAFT'] = 'Warning: this news as a draft';
+$LNG['L_NEWS_E_CANT_ACCESS'] = 'No access';
+$LNG['L_NEWS_E_NODRAFTS'] = 'You havent drafts';
+$LNG['L_NEWS_DRAFTS'] = 'Drafts';
+
 /* ACL */
 $LNG['L_PERM_R_NEWS_FULL_ACCESS'] = 'Full admin access to read';
 $LNG['L_PERM_W_NEWS_FULL_ACCESS'] = 'Full admin access to read/write';

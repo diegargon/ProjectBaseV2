@@ -39,6 +39,7 @@ if ($cfg['news_side_scroll']) {
                 <h1>
                     <?= !empty($data['title']) ? $data['title'] : null ?>
                 </h1>
+                <?= $data['as_draft'] ? '<h2 style="background-color:red;">' . $LNG['L_NEWS_WARNING_DRAFT'] . '</h2>' : null ?>                
                 <?= isset($data['sel_other_langs']) ? $data['sel_other_langs'] : null ?>
                 <?php if (!empty($data['news_admin_nav'])) { ?>
                     <nav id='adm_nav'>

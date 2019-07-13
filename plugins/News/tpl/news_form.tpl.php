@@ -86,10 +86,12 @@
                             <?php } ?>
                         </p>
                         <?= !empty($tpldata['NEWS_FORM_BOTTOM_OTHER_OPTION']) ? $tpldata['NEWS_FORM_BOTTOM_OTHER_OPTION'] : null ?>
-                        <p>
-                            <a href="<?= $data['terms_url'] ?>" target="_blank"><?= $LNG['L_TOS'] ?></a>
-                            <input <?= !empty($data['tos_checked']) ? "checked" : null ?> id="tos" name="tos" required="required" type="checkbox"/>
-                        </p>
+                        <?php if (!empty($data['as_draft'])) {
+                            ?><span class="as_draft"><?= $LNG['L_NEWS_ASDRAFT'] ?></span><input type="checkbox" value="1" name="as_draft"  <?= !empty($data['as_draft_check']) ? 'checked' : null ?> /><?php
+                        }
+                        ?>                        
+                        <a href="<?= $data['terms_url'] ?>" target="_blank"><?= $LNG['L_TOS'] ?></a>
+                        <input <?= !empty($data['tos_checked']) ? "checked" : null ?> id="tos" name="tos" required="required" type="checkbox"/>                        
                     </div>
                     <div class="submit_buttom">
                         <p>

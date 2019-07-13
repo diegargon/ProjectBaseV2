@@ -24,13 +24,12 @@ function News_init() {
         }
     }
 
-    (news_perm_ask('w_news_create||w_news_adm_all')) ? add_menu_submit_news() : null;
-
     $pages_array = [
         ['module' => 'News', 'page' => 'section', 'type' => 'disk'],
         ['module' => 'News', 'page' => 'view_news', 'type' => 'disk'],
         ['module' => 'News', 'page' => 'submit_news', 'type' => 'disk'],
-        ['module' => 'News', 'page' => 'edit_news', 'type' => 'disk']
+        ['module' => 'News', 'page' => 'edit_news', 'type' => 'disk'],
+        ['module' => 'News', 'page' => 'drafts', 'type' => 'virtual', 'func' => 'drafts_page'],
     ];
     if (!$frontend->registerPageArray($pages_array)) {
         die('Register pages fail on News module');
@@ -42,10 +41,15 @@ function News_init() {
 
         $blocks->registerBlock('news_block', '', 'news_block', 'news_block_conf', null, 0);
     }
+    (news_perm_ask('w_news_create||w_news_adm_all')) ? add_menu_submit_news() : null;
+
     if ($cfg['display_section_menu']) {
         $plugins->expressStartProvider('CATS');
         $frontend->addMenuItem('sections_menu', news_section_menu_elements());
         $frontend->addMenuItem('sections_sub_menu', news_section_menu_subelements());
+    }
+    if ($cfg['news_allow_user_drafts']) {
+        $frontend->addMenuItem('dropdown_menu', news_dropdown_items());
     }
     if (defined('MULTILANG')) {
         register_action('SMBasic_ProfileEdit', 'news_dropdown_profile_edit');

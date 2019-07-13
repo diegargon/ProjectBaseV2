@@ -29,6 +29,7 @@ CREATE TABLE `" . DB_PREFIX . "news` (
   `translator_id` int(10) UNSIGNED DEFAULT NULL,
   `disabled` tinyint(1) NOT NULL DEFAULT '0',
   `subscritor` tinyint(1) NOT NULL DEFAULT '0'
+  `as_draft` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . ";
 ";
 
@@ -119,7 +120,8 @@ $news_database_inserts = [
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_vote_enable', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_microdata', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_data_structure', '1');",
-    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_side_scroll', '1');"
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_side_scroll', '1');",
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('News', 'news_allow_user_drafts', '1');"
 ];
 
 $news_database_install = array_merge($news_database_install, $news_database_inserts);

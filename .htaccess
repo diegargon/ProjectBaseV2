@@ -15,6 +15,7 @@ RewriteRule  ^([a-zA-z]{2})\/search/?(.*)   index.php?$2&module=NewsSearch&page=
 RewriteRule  ^([a-zA-Z]{2})\/news/([0-9]+)\/([0-9]+)\/([0-9]+)\/(.*)$   index.php?module=News&page=view_news&lang=$1&nid=$2&npage=$3&news_lang_id=$4 [NC]
 RewriteRule  ^([a-zA-z]{2})\/submit_news$   index.php?module=News&page=submit_news&lang=$1 [NC]
 RewriteRule  ^([a-zA-z]{2})\/section/(.*)$   index.php?module=News&page=section&lang=$1&section=$2 [NC]
+RewriteRule  ^([a-zA-z]{2})\/drafts(.*)$   index.php?module=News&page=drafts&lang=$1 [NC]
 
 #SMBasic
 RewriteRule  ^([a-zA-z]{2})\/login?(.*)$   index.php?$2&module=SMBasic&page=login&lang=$1 [QSA]
@@ -23,11 +24,6 @@ RewriteRule  ^([a-zA-z]{2})\/profile(.*)$   index.php?module=SMBasic&page=profil
 RewriteRule  ^([a-zA-z]{2})\/register?(.*)   index.php?$2&module=SMBasic&page=register&lang=$1 [QSA]
 #RewriteRule  ^([a-zA-z]{2})\/terms?(.*)   index.php?$2&module=SMBasic&page=termslang=$1 [QSA]
 RewriteRule  ^([a-zA-z]{2})\/terms$   index.php?module=SMBasic&page=terms&lang=$1
-#WebInfo
-RewriteRule  ^([a-zA-z]{2})\/AboutUs$   index.php?module=WebInfo&page=AboutUs&lang=$1
-RewriteRule  ^([a-zA-z]{2})\/Contact$   index.php?module=WebInfo&page=Contact&lang=$1
-RewriteRule  ^([a-zA-z]{2})\/Advertise$   index.php?module=WebInfo&page=Advertise&lang=$1
-
 
 RewriteRule ^(es|en)/$  $2?lang=$1 [QSA]
 RewriteRule  ^([a-zA-z]{2})$ $1/ [L,R=301]

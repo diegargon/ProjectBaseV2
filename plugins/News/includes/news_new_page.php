@@ -11,7 +11,7 @@
 !defined('IN_WEB') ? exit : true;
 
 function news_new_page($news_nid, $news_lang_id, $news_page) {
-    global $sm, $tpl, $LNG, $frontend, $plugins, $sm;
+    global $sm, $tpl, $LNG, $frontend, $plugins, $sm, $cfg;
 
     $plugins->expressStartProvider('NEWSMEDIAUPLOAD');
 
@@ -24,16 +24,37 @@ function news_new_page($news_nid, $news_lang_id, $news_page) {
     }
     $user['uid'] > 0 ? $form_data['tos_checked'] = 1 : null;
 
-    if (!is_array($news_data = get_news_byId($news_nid, $news_lang_id, 1))) { //get first page
-        $frontend->messageBox(['msg' => $news_data]);
+    if (!is_array($father_data = get_news_byId($news_nid, $news_lang_id, 1))) { //get first page
+        $frontend->messageBox(['msg' => $father_data]);
         return false;
     }
-    if ((!($user['uid'] == $news_data['author_id']) && news_perm_ask('w_news_create_new_page'))) {
+    $num_pages = $father_data['num_pages'];
+
+    if ((!($user['uid'] == $father_data['author_id']) && news_perm_ask('w_news_create_new_page'))) {
         if (!$user['isAdmin'] || !$user['isFounder']) {
             $frontend->messageBox(['msg' => 'L_E_NOEDITACCESS']);
             return false;
         }
     }
+
+    /* GET last page for view as draft value, if last page it draft new must be draft */
+
+    $as_draft_check = 0;
+    if ($cfg['news_allow_user_drafts']) {
+        if ($num_pages > 1) {
+            $last_page = get_news_byId($news_nid, $news_lang_id, $num_pages);
+            $parent_as_draft_value = $last_page['as_draft'];
+        } else {
+            $parent_as_draft_value = $father_data['as_draft'];
+        }
+
+        if ($parent_as_draft_value == 1) {
+            $as_draft_check = 1;
+        } else {
+            empty($father_data['as_draft']) ? $as_draft_check = 0 : $as_draft_check = 1;
+        }
+    }
+
     $form_data['author_readonly'] = !news_perm_ask('w_news_change_author');
     $form_data['news_add_source'] = news_perm_ask('w_news_add_source');
     $form_data['news_add_related'] = news_perm_ask('w_news_add_related');
@@ -42,6 +63,8 @@ function news_new_page($news_nid, $news_lang_id, $news_page) {
     $form_data['author_id'] = $user['uid'];
     $form_data['editor'] = $editor->getEditor();
     $form_data['terms_url'] = $sm->getPage('terms');
+    $form_data['as_draft'] = $cfg['news_allow_user_drafts'];
+    $form_data['as_draft_check'] = $as_draft_check;
 
     do_action('news_newpage_form_add');
 
@@ -111,6 +134,21 @@ function news_newpage_submit_new($news_data) {
     $num_pages = $news_father['num_pages'];
     $page_num = $num_pages + 1;
 
+    /*
+     * Check last page if have as draft 1, and force new page if have.
+     * We can't allow have page 2 as a draft and publish page 3
+     */
+
+    if ($num_pages > 1) {
+        $query = $db->selectAll('news', ['nid' => $news_data['nid'], 'lang_id' => $news_data['news_lang_id'], 'page' => $num_pages], 'LIMIT 1');
+        $last_page = $db->fetch($query);
+        $parent_asdraft_value = $last_page['as_draft'];
+    } else {
+        $parent_asdraft_value = $news_father['as_draft'];
+    }
+
+    $parent_asdraft_value == 1 ? $as_draft_check = 1 : null;
+
     $insert_ary = [
         'nid' => $news_father['nid'],
         'lang_id' => $news_father['lang_id'],
@@ -120,7 +158,9 @@ function news_newpage_submit_new($news_data) {
         'author_id' => $news_father['author_id'],
         'category' => $news_father['category'],
         'moderation' => $cfg['news_moderation'],
-        'page' => $page_num
+        'page' => $page_num,
+        'as_draft' => $cfg['news_allow_user_drafts'],
+        'as_draft_check' => empty($as_draft_check) ? 0 : 1,
     ];
     !empty($news_data['lead']) ? $insert_ary['lead'] = $db->escapeStrip($news_data['lead']) : null;
     $db->insert("news", $insert_ary);

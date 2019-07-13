@@ -82,6 +82,12 @@ $LNG['L_NEWS_NOMULTILANG_SUPPORT'] = 'No hay soporte multilang';
 $LNG['L_NEWS_SHOW_LANG'] = 'Mostrar noticias en';
 $LNG['L_NEWS_CREATE'] = 'Creada';
 $LNG['L_NEWS_UPDATE'] = 'Actualizada';
+$LNG['L_NEWS_ASDRAFT'] = 'Guardar como borrador';
+$LNG['L_NEWS_E_VIEW_DRAFT'] = 'No puede ver este borrador';
+$LNG['L_NEWS_WARNING_DRAFT'] = 'Atención: esta noticia esta como borrador';
+$LNG['L_NEWS_E_CANT_ACCESS'] = 'Sin accesso';
+$LNG['L_NEWS_E_NODRAFTS'] = 'No tiene borradores';
+$LNG['L_NEWS_DRAFTS'] = 'Borradores';
 
 /* ACL */
 $LNG['L_PERM_R_NEWS_FULL_ACCESS'] = 'Acceso administrador total de lectura';

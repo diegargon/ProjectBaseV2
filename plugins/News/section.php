@@ -78,7 +78,7 @@ if ($tpl->checkTplFileExists('News', $cfg['news_section_tpl'] . "-" . $category_
 } else {
     $lnews = layout_news($cfg['news_section_tpl'], $news_db);
 }
-$content = '';
+
 $cats = [];
 
 foreach ($lnews as $lnews_row) {
@@ -106,6 +106,4 @@ foreach ($cats as $cat) {
     $news_data['news'] .= '</div>';
 }
 
-$content .= $tpl->getTplFile('News', 'news_section', $news_data);
-
-$tpl->addtoTplVar('ADD_TO_BODY', $content);
+$tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('News', 'news_section', $news_data));

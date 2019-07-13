@@ -57,12 +57,13 @@ function News_admin_content($params) {
 }
 
 /* FUNCTIONS */
+/* TODO: Pasar a template */
 
 function News_AdminModeration() {
     global $cfg, $LNG, $db;
 
     $content = '<div>';
-    $query = $db->selectAll('news', ['moderation' => '1'], 'LIMIT ' . $cfg['news_list_moderation_limits']);
+    $query = $db->selectAll('news', ['moderation' => '1', 'as_draft' => '0'], 'LIMIT ' . $cfg['news_list_moderation_limits']);
 
     if ($db->numRows($query) <= 0) {
 

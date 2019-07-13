@@ -26,7 +26,6 @@ function news_show_page() {
     global $cfg, $tpl, $ml, $sm, $filter, $frontend, $timeUtil, $LNG;
 
     $news_data = [];
-    $editor = new Editor();
 
     if ((empty($_GET['nid'])) || ($nid = $filter->getInt('nid')) == false) {
         $frontend->messageBox(['msg' => 'L_NEWS_NOT_EXIST']);
@@ -51,10 +50,18 @@ function news_show_page() {
     }
 
     news_catch_admin_actions($news_data);
+
+    if ($news_data['as_draft'] && ($sm->getSessionUserId() != $news_data['author_id'])) {
+        $frontend->messageBox(['msg' => 'L_NEWS_E_VIEW_DRAFT']);
+        return false;
+    }
+
     if ($cfg['news_moderation'] && $news_data['moderation'] && !news_perm_ask('w_news_moderation')) {
         $frontend->messageBox(['msg' => 'L_NEWS_ERROR_WAITINGMOD']);
         return false;
     }
+
+    $editor = new Editor();
 
     $news_data['news_admin_nav'] = news_nav_options($news_data);
     $cfg['allow_multiple_pages'] ? $news_data['pager'] = news_pager($news_data) : null;
@@ -121,18 +128,6 @@ function news_show_page() {
         }
         $tpl->addtoTplVar('POST_ACTION_ADD_TO_BODY', $tpl->getTplFile('News', 'news_body_struct', $news_data));
     }
-
-    /* OLD REPLACE
-      if ($cfg['news_page_sidenews']) {
-      //require_once("news_portal.php");
-      $getnews_config['category'] = 0;
-      $getnews_config['fontpage'] = 1;
-      $getnews_config['cathead'] = 1;
-      $getnews_config['headlines'] = 1;
-      $news_data['SIDE_NEWS'] = get_news($getnews_config);
-      }
-
-     */
 
     $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('News', 'news_body', $news_data));
 

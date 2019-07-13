@@ -1,19 +1,20 @@
 HIGH
 
 MED
-* News: Guardar como borrador, y menu consultar borradores
-* Modulo Curriculum
-* NewsMediaUpload - Forma de borrar imagenes subidas
-
+* Plugins:Al rescanear no actualiza bien, hay que recargar la pagina
+* News: Moderacion de paginas, si hay varias a la espera y aprobamos una se aprueban el resto
 LOW
-* Minieditor: Capturar tabulaciones https://stackoverflow.com/questions/6637341/use-tab-to-indent-in-textarea
+
+* Minieditor: Capturar tabulaciones, https://stackoverflow.com/questions/6637341/use-tab-to-indent-in-textarea
+    si se capturan el parse deberia interpretarlas "\t" => &nsbsp;&nsbsp;&nsbsp;&nsbsp;
 * Bloques: poder cambiar idioma, prioridad y demas
 * Smbasic admin: poder añadir usuario manualmente.
 * Smbasic admin: poder añadir admin y founder
 * SMBasic?: Añadir opcion para que el usuario decida el formato de fecha
-* FRONTEND? : Mostrar fecha y hora actual
-* News: Moderacion de paginas, si hay varias a la espera y aprobamos una se aprueban el resto
-* Plugins:Al rescanear no actualiza bien, hay que recargar la pagina
+* Modulo Curriculum
+* NewsMediaUpload - Forma de borrar imagenes subidas
+* $filter-> post/getInt utiliza strlen que cuenta el numero de digitos, deberiamos tener una para el numero de dijitos y para un numero de ej: 1 al 10
+o la misma función pero seleccionable lo que queramos medir.
 
 Más tarde si eso... o backlog:
 * Frontend: funcion que muestre una pantalla de espera para tareas que tardan
@@ -36,3 +37,4 @@ para luego presentarlos por grupos, ej: L_NEWS_SUBMIT, L_NEWS_VIEW
 * PersonalGist/GENERAL: ver como tratar las dependencias del sistema, por ejemplo curl en el caso de personalgist
 * SimpleCategories: Opcion en creacion de categorias de poner el plugin.?
 * Rating opcion de calcular en el momento o mostrar total pre-calculado via cron y recalcular via cron
+* Plugin Galeria de fotos:
