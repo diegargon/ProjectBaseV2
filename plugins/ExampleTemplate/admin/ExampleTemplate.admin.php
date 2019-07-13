@@ -11,8 +11,8 @@
 !defined('IN_WEB') ? exit : true;
 
 /**
- * Init
- * @global plugins $plugins
+ * ExampleTemplate admin Init
+ * @global Plugins $plugins
  */
 function ExampleTemplate_AdminInit() {
     global $plugins;
@@ -20,9 +20,9 @@ function ExampleTemplate_AdminInit() {
 }
 
 /**
- * Admin menu
+ * ExampleTemplate Admin menu
  * 
- * @global plugins $plugins
+ * @global Plugins $plugins
  * @param array $params
  * @return string
  */
@@ -40,7 +40,7 @@ function ExampleTemplate_AdminMenu($params) {
 }
 
 /**
- * Admin aside
+ * ExampleTemplate Admin aside
  * 
  * @global array $LNG
  * @param array $params
@@ -54,7 +54,7 @@ function ExampleTemplate_AdminAside($params) {
 }
 
 /**
- * Admin content
+ * ExampleTemplate Admin content
  * @global array $LNG
  * @param array $params
  * @return string

@@ -17,14 +17,14 @@
 function ExampleTemplate_init() {
     global $example_template;
     !isset($example_template) ? $example_template = new ExampleTemplate() : null;
-    
+
     return true;
 }
 
 /**
- * Install
+ * ExempleTemplate Install
  * 
- * @global db $db
+ * @global Database $db
  * @return boolean
  */
 function ExampleTemplate_install() {
@@ -41,7 +41,7 @@ function ExampleTemplate_install() {
 }
 
 /**
- * PreInstall
+ * ExampleTemplate PreInstall
  * 
  * @return boolean
  */
@@ -50,7 +50,7 @@ function ExampleTemplate_preInstall() {
 }
 
 /**
- * PreInstall Info
+ * ExampleTemplate PreInstall Info
  * 
  * @return boolean
  */
@@ -59,10 +59,10 @@ function ExampleTemplate_preInstall_info() {
 }
 
 /**
- * Upgrade 
+ * ExampleTemplate Upgrade 
  * 
  * @global db $db
- * @param flaot $version
+ * @param float $version
  * @param float $from_version
  * @return boolean
  */
@@ -83,7 +83,7 @@ function ExampleTemplate_upgrade($version, $from_version) {
 }
 
 /**
- * Uninstall
+ * ExampleTemplate Uninstall
  * @global db $db
  * @return boolean
  */

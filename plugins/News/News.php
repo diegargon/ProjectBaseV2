@@ -10,9 +10,19 @@
  */
 !defined('IN_WEB') ? exit : true;
 
+/**
+ * News Init func
+ * @global SimpleFrontend $frontend
+ * @global array $cfg
+ * @global Plugins $plugins
+ * @global SessionManager $sm
+ * @global Database $db
+ * @global Blocks $blocks
+ * @return boolean
+ */
 function News_init() {
     define('NEWS', true);
-    global $frontend, $cfg, $plugins;
+    global $frontend, $cfg, $plugins, $sm;
 
     $plugins->expressStartProvider('SESSIONS');
 
@@ -48,7 +58,7 @@ function News_init() {
         $frontend->addMenuItem('sections_menu', news_section_menu_elements());
         $frontend->addMenuItem('sections_sub_menu', news_section_menu_subelements());
     }
-    if ($cfg['news_allow_user_drafts']) {
+    if ($cfg['news_allow_user_drafts'] && $sm->getSessionUserId() > 0) {
         $frontend->addMenuItem('dropdown_menu', news_dropdown_items());
     }
     if (defined('MULTILANG')) {
@@ -59,6 +69,11 @@ function News_init() {
     return true;
 }
 
+/**
+ * News insstall
+ * @global Database $db
+ * @return boolean
+ */
 function News_install() {
     global $db;
     require_once ('db/News.db.php');
@@ -70,14 +85,28 @@ function News_install() {
     return true;
 }
 
+/**
+ * News preInstall
+ * @return boolean
+ */
 function News_preInstall() {
     return true;
 }
 
+/**
+ * News preInstall info
+ * @return boolean
+ */
 function News_preInstall_info() {
     return true;
 }
 
+/**
+ * News upgrade
+ * @param float $version
+ * @param float $from_version
+ * @return boolean
+ */
 function News_upgrade($version, $from_version) {
     /*
       global $db;
@@ -93,6 +122,11 @@ function News_upgrade($version, $from_version) {
     return false;
 }
 
+/**
+ * News uninstall
+ * @global Database $db
+ * @return boolean
+ */
 function News_uninstall() {
     global $db;
     require_once ('db/News.db.php');
