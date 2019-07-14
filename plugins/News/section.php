@@ -39,7 +39,7 @@ $cfg['PAGE_DESC'] = $cfg['WEB_NAME'] . ': ' . $category_list;
 
 
 $q_opt = ['lead' => 1, 'childs' => 1, 'limit' => $cfg['news_section_getnews_limit'], 'main_image' => 1];
-$q_where = ['category' => $category_id];
+$q_where = ['category' => $category_id, 'as_draft' => 0];
 
 $user = $sm->getSessionUser();
 if (!empty($user['news_lang'])) {
