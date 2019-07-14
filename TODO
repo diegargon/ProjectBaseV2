@@ -3,6 +3,7 @@ HIGH
 MED
 * NewsMedia: subir imagenes arrastrando.
 * editor tag advertencia letras con fondo rojo.
+* La entradilla en bloques muestra \n\r
 
 LOW
 
@@ -25,7 +26,7 @@ LOW
 * GROUPS : Opcion para añadir automaticamente usuarios a los grupos por defecto (isFounder = ADMIN GRUPOS) (isAdmin = ADMIN_GROUPS)  (resto Usuarios registrados)
   En install instalar permisos basicos para cada grupo standard
 * Al crear un bloque, ponemos idioma, ponemos tipo de bloque y el idioma se resetea, posiblemente todo se resetea, mantener.
-
+* Bloque news opcionalmente uno para mostrar borradores de usuario, solo visible por el si tiene.
 
 Más tarde si eso... o backlog:
 * Frontend: funcion que muestre una pantalla de espera para tareas que tardan

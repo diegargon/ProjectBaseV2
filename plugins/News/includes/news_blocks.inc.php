@@ -43,6 +43,7 @@ function news_block($block_conf) {
 
     $news_where['category'] = $block_conf['news_cat'];
     $news_where['lang_id'] = $block_conf['news_lang'];
+    $news_where['as_draft'] = 0;
 
     $news_db = get_news_query($news_where, $news_conf);
     $content = isset($block_conf['block_title']) ? "<h2>{$block_conf['block_title']}</h2>" : '';
