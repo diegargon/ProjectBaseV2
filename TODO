@@ -22,6 +22,8 @@ LOW
 * NewsMediaUpload, autoload upload images on scroll.
 * Newsmediaupload - Sobre la imagen mostrar nombre (tiene alt pero no funciona)
 * CORE: separar lang variables de admin del resto y cargarlos cuando se entra en administración.
+* GROUPS : Opcion para añadir automaticamente usuarios a los grupos por defecto (isFounder = ADMIN GRUPOS) (isAdmin = ADMIN_GROUPS)  (resto Usuarios registrados)
+  En install instalar permisos basicos para cada grupo standard
 
 Más tarde si eso... o backlog:
 * Frontend: funcion que muestre una pantalla de espera para tareas que tardan
@@ -34,7 +36,6 @@ Más tarde si eso... o backlog:
 para luego presentarlos por grupos, ej: L_NEWS_SUBMIT, L_NEWS_VIEW
 * CRON?: CRON Plugin y calcular opcionalmente ratio de user global "todas las section"
 * News: Subscrition access
-* GROUPS : Opcion para añadir automaticamente usuarios a los grupos por defecto (isFounder = ADMIN GRUPOS) (isAdmin = ADMIN_GROUPS)  (resto Usuarios registrados)
 * SimpleGroups/ACL grupos heredados
 * News: Fix news_adv_stats
 * PersonalGist: Buscar manera de mostrar la pantallad de carga "loading" con la nueva web.
