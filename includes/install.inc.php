@@ -14,7 +14,7 @@
  */
 global $db;
 
-require_once ('../db/install.db.php');
+require_once ('db/install.db.php');
 
 $step = filter_input(INPUT_GET, 'step', FILTER_VALIDATE_INT);
 

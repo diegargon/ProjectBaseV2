@@ -33,7 +33,7 @@ CREATE TABLE `" . DB_PREFIX . "config` (
   `plugin` char (255) NOT NULL,
   `cfg_value` char(255) NOT NULL,
   `group` char(255) NOT NULL DEFAULT 'L_GENERAL',
-  `desc` char(255) DEFAULT NULL,
+  `desc` char(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . ";
 
 ";
