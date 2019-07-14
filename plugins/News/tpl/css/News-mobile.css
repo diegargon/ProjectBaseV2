@@ -1,6 +1,11 @@
-/*
- Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
-*/
+/**
+ *  News - News css mobile file
+ *
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage News
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
+ */
 @media only screen and (max-width: 900px) {
     .featured article h3, .featured article p {        
         display: none;
@@ -8,7 +13,6 @@
     .featured h1 {
         font-size: 1.2em;
     }
-
 }
 @media only screen and (max-width: 700px) {
     .newsbox {

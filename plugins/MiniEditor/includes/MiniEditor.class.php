@@ -46,6 +46,8 @@ class Editor {
         '~\[youtube w=((?:[1-9][0-9]?[0-9]?)) h=((?:[1-9][0-9]?[0-9]?))\]https:\/\/www.youtube.com\/watch\?v=(.*?)\[\/youtube\]~si' => '<div><iframe width="$1" height="$2" src="https:\/\/www.youtube.com\/embed\/$3" frameborder="0" allowfullscreen></iframe></div>',
         '~\[iurl=#(.*?)\](.*?)\[/iurl\]~si' => '<a href="#$1">$2</a>',
         '~\[iurl=/(.*?)\](.*?)\[/iurl\]~si' => '<a href="/$1">$2</a>',
+        '~\[warn\](.*?)\[/warn\]~si' => '<div class="warn"><div class="warn_svg"></div><div class="warn_text">$1</div></div>',
+        '~\[tip\](.*?)\[/tip\]~si' => '<div class="tip"><div class="tip_svg"></div><div class="tip_text">$1</div></div>',
     ];
     private $srv_url;
     private $img_platform;
@@ -89,7 +91,7 @@ class Editor {
         $text = preg_replace(array_keys($this->mark_codes), array_values($this->mark_codes), $text);
         //Replace new lines with br or enclose new lines with <p>
         $cfg['minieditor_nlbr'] ? $text = nl2br($text) : null;
-        //delete br (check again)
+        //delete br (examente no recuerdo, creo que doble br sin texto en medio)
         $text = preg_replace('/><br \/>(\s*)(<br \/>)?/si', '>', $text);
         // Replace STATIC_SRV_URL with the static server url
         $text = preg_replace('/{STATIC_SRV_URL}/si', $this->srv_url, $text);
