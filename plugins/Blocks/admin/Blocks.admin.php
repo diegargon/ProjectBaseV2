@@ -179,7 +179,7 @@ function Blocks_blk_mng() {
     $admin_blocks = $blocks->getAdminBlocks();
 
     $counter = 1;
-    $num_items = count($admin_blocks);
+    !empty($admin_blocks) ? $num_items = count($admin_blocks) : null;
 
     if (!$admin_blocks) { //NO ADMIN _BLOCKS
         $page_data['TPL_CTRL'] = $counter;

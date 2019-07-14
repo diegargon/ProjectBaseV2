@@ -28,7 +28,7 @@ CREATE TABLE `" . DB_PREFIX . "news` (
   `visits` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `translator_id` int(10) UNSIGNED DEFAULT NULL,
   `disabled` tinyint(1) NOT NULL DEFAULT '0',
-  `subscritor` tinyint(1) NOT NULL DEFAULT '0'
+  `subscritor` tinyint(1) NOT NULL DEFAULT '0',
   `as_draft` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . ";
 ";
