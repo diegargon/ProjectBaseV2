@@ -1,7 +1,7 @@
 HIGH
 
 MED
-
+* NewsMedia: subir imagenes arrastrando.
 * editor tag advertencia letras con fondo rojo.
 
 LOW
@@ -18,10 +18,14 @@ LOW
   la misma función pero seleccionable lo que queramos medir.
 * News: Mejorar frontend de borradores
 * Admin Plugins, mejorar frontend de lista de plugins
+* SimpleACL Ordenar permisos en solapas por plugins
+* NewsMediaUpload, autoload upload images on scroll.
+* Newsmediaupload - Sobre la imagen mostrar nombre (tiene alt pero no funciona)
+* CORE: separar lang variables de admin del resto y cargarlos cuando se entra en administración.
 
 Más tarde si eso... o backlog:
 * Frontend: funcion que muestre una pantalla de espera para tareas que tardan
-* NewsMedia: subir imagenes arrastrando.
+
 * Debug log to syslog?, 
 * Private Mensaje system
 * Smbasic: crear email html, quizas optativo plain/html por configuracion.
@@ -30,11 +34,8 @@ Más tarde si eso... o backlog:
 para luego presentarlos por grupos, ej: L_NEWS_SUBMIT, L_NEWS_VIEW
 * CRON?: CRON Plugin y calcular opcionalmente ratio de user global "todas las section"
 * News: Subscrition access
-* SimpleACL Ordenar permisos en solapas por plugins
 * GROUPS : Opcion para añadir automaticamente usuarios a los grupos por defecto (isFounder = ADMIN GRUPOS) (isAdmin = ADMIN_GROUPS)  (resto Usuarios registrados)
 * SimpleGroups/ACL grupos heredados
-* NewsMediaUpload, autoload upload images on scroll.
-* Newsmediaupload - Sobre la imagen mostrar nombre (tiene alt pero no funciona)
 * News: Fix news_adv_stats
 * PersonalGist: Buscar manera de mostrar la pantallad de carga "loading" con la nueva web.
 * PersonalGist/GENERAL: ver como tratar las dependencias del sistema, por ejemplo curl en el caso de personalgist
@@ -45,3 +46,4 @@ para luego presentarlos por grupos, ej: L_NEWS_SUBMIT, L_NEWS_VIEW
   (Tendria que añadir un campo extra en categorias )
 * Añadir <p> automaticamente en parrafos sin p
   (dificil)
+* Añadir en config 'desc'ripcion, para ello lo tal antes seria separar los lang files de admin del resto

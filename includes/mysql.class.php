@@ -592,9 +592,7 @@ class Database {
      */
     private function setProcess($set) {
         foreach ($set as $field => $value) {
-            //FIXME : each one its need create +1 function perhaps?
-            $newset[] = "$field = " . "'" . $value . "'"; //Need for re-scan
-            //$newset[] = "$field = $value"; //CHANGE 040619 //need for update comments+1 'comments +1' not work 
+            $newset[] = "$field = " . "'" . $value . "'";
         }
         $query = implode(',', $newset);
         return $query;
