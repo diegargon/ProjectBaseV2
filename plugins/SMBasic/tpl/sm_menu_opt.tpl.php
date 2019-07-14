@@ -39,9 +39,9 @@ if (isset($data['logout_menu'])) {
 }
 if (isset($data['drop_menu_caption'])) {
     ?>
-    <div class="drop_nav_top">
+    <span class="drop_nav_top">
         <img src="<?= $data['avatar'] ?>" alt=""/>
         <span class="drop_btn_caption"><?= $data['username'] ?></span>
-    </div>
+    </span>
     <?php
 } 

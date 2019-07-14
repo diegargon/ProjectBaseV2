@@ -3,9 +3,8 @@ HIGH
 MED
 * Plugins:Al rescanear no actualiza bien, hay que recargar la pagina
 * News: Moderacion de paginas, si hay varias a la espera y aprobamos una se aprueban el resto
-* editor ver de utilizar de nuevo nl2br o de cambiar \n desde un \n a otro \n añadiendo [p] automaticamente
 * editor tag advertencia letras con fondo rojo.
-* News/frontend dar la posibilidad de no mostrar una categoria en la cabecera, solo news ya que las demás son explicitas.
+
 LOW
 
 * Minieditor: Capturar tabulaciones, https://stackoverflow.com/questions/6637341/use-tab-to-indent-in-textarea
@@ -41,3 +40,7 @@ para luego presentarlos por grupos, ej: L_NEWS_SUBMIT, L_NEWS_VIEW
 * SimpleCategories: Opcion en creacion de categorias de poner el plugin.?
 * Rating opcion de calcular en el momento o mostrar total pre-calculado via cron y recalcular via cron
 * Plugin Galeria de fotos:
+* News/frontend dar la posibilidad de no mostrar una categoria en la cabecera, solo news ya que las demás son explicitas.
+  (Tendria que añadir un campo extra en categorias )
+* Añadir <p> automaticamente en parrafos sin p
+  (dificil)

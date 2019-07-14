@@ -85,11 +85,17 @@ class Editor {
     function parseText($text) {
         global $cfg;
 
+        //Replace mark codes
         $text = preg_replace(array_keys($this->mark_codes), array_values($this->mark_codes), $text);
+        //Replace new lines with br or enclose new lines with <p>
         $cfg['minieditor_nlbr'] ? $text = nl2br($text) : null;
-        $text = preg_replace('/><br \/>(\s*)(<br \/>)?/si', '>', $text);
+        //para que añadi esto???
+        //$text = preg_replace('/><br \/>(\s*)(<br \/>)?/si', '>', $text);
+        // Replace STATIC_SRV_URL with the static server url
         $text = preg_replace('/{STATIC_SRV_URL}/si', $this->srv_url, $text);
+        // Replace [S] (image relate tag with the plataform version path "Desktop" or "Mobile"
         $text = preg_replace('/\[S\]/si', DIRECTORY_SEPARATOR . $this->img_platform . DIRECTORY_SEPARATOR, $text);
+        // Replace keywords !TEST with the link assoc
         if ($cfg['minieditor_keylinks']) {
             $this->parseKeyLinks($text);
         }
