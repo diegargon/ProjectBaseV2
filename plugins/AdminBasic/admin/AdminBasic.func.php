@@ -127,11 +127,16 @@ function AdminBasic_unserialize_forPrint($data, $htmlseparator = '<br/>') {
  * @param array $plugins_list
  * @return array
  */
-function plugins_ctrl_display($plugins_list) {
+function plugins_ctrl_display() {
     global $LNG, $tpl, $plugins;
 
     $content = '';
     $counter = 1;
+
+    //($_SERVER['REQUEST_METHOD'] === 'POST') ? $force_reload = 0 : $force_reload = 1;
+
+    $plugins_list = $plugins->getPluginsDB();
+
     if (empty($plugins_list)) {
         return false;
     }

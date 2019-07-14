@@ -1,8 +1,7 @@
 HIGH
 
 MED
-* Plugins:Al rescanear no actualiza bien, hay que recargar la pagina
-* News: Moderacion de paginas, si hay varias a la espera y aprobamos una se aprueban el resto
+
 * editor tag advertencia letras con fondo rojo.
 
 LOW
@@ -15,8 +14,10 @@ LOW
 * SMBasic?: Añadir opcion para que el usuario decida el formato de fecha
 * Modulo Curriculum
 * NewsMediaUpload - Forma de borrar imagenes subidas
-* $filter-> post/getInt utiliza strlen que cuenta el numero de digitos, deberiamos tener una para el numero de dijitos y para un numero de ej: 1 al 10
-o la misma función pero seleccionable lo que queramos medir.
+* $filter-> post/getInt utiliza strlen que cuenta el numero de digitos, deberiamos tener una para el numero de digitos y para un numero de ej: 1 al 10
+  la misma función pero seleccionable lo que queramos medir.
+* News: Mejorar frontend de borradores
+* Admin Plugins, mejorar frontend de lista de plugins
 
 Más tarde si eso... o backlog:
 * Frontend: funcion que muestre una pantalla de espera para tareas que tardan

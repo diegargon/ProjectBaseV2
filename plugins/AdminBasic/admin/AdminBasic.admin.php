@@ -143,10 +143,7 @@ function AdminBasic_admin_content($params) {
             return false;
         }
 
-        ($_SERVER['REQUEST_METHOD'] === 'POST') ? $force_reload = 1 : $force_reload = 0;
-
-        $plugins_list = $plugins->getPluginsDB();
-        $content .= plugins_ctrl_display($plugins_list);
+        $content .= plugins_ctrl_display();
     } else if ($params['opt'] == 3) {
         $content .= '<form method="post" action="">';
 

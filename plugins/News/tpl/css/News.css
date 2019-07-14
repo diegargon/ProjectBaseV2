@@ -665,8 +665,8 @@ code {
 #scrollup, #scrolldown {
     position: fixed;
     background: rgb(0, 0, 0);    
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     text-decoration: none;
     -webkit-border-radius: 35px;
     border-radius: 35px;

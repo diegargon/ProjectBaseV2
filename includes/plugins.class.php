@@ -82,7 +82,7 @@ class Plugins {
 
     /**
      * Start plugin and include common plugin files
-     * @global debug $debug
+     * @global Debug $debug
      * @param array $plugin
      * @return boolean
      */
@@ -156,21 +156,21 @@ class Plugins {
 
     /**
      * Install plugin. Calls plugin install function
-     * @global db $db
-     * @param int $pluginid
+     * @global Database $db
+     * @param int $plugin_id
      * @return boolean
      */
-    function install($pluginid) {
+    function install($plugin_id) {
         global $db;
 
-        $query = $db->selectAll('plugins', ['plugin_id' => $pluginid], 'LIMIT 1');
+        $query = $db->selectAll('plugins', ['plugin_id' => $plugin_id], 'LIMIT 1');
         $plugin = $db->fetch($query);
         if ($plugin['installed'] != 1) {
             require_once("plugins/{$plugin['plugin_name']}/{$plugin['main_file']}");
             $func_plugInstall = $plugin['function_install'];
             if (function_exists($func_plugInstall)) {
                 if ($func_plugInstall()) {
-                    $db->update('plugins', ['installed' => 1], ['plugin_id' => $pluginid]);
+                    $db->update('plugins', ['installed' => 1], ['plugin_id' => $plugin_id]);
                 }
             } else {
                 die('function no exists');
@@ -178,28 +178,28 @@ class Plugins {
         } else {
             return false;
         }
-        $this->setPluginsDB(1);
+        $this->reloadPlugin($plugin_id);
         return true;
     }
 
     /**
      * Uninstall by plugin id, force will ignore installed flag for clean a fail
-     * @global db $db
-     * @param int $pluginid int
-     * @param int $force 1 or 0
+     * @global Database $db
+     * @param int $plugin_id 
+     * @param int $force
      * @return boolean
      */
-    function uninstall($pluginid, $force = 0) {
+    function uninstall($plugin_id, $force = 0) {
         global $db;
 
-        $query = $db->selectAll('plugins', ['plugin_id' => $pluginid], 'LIMIT 1');
+        $query = $db->selectAll('plugins', ['plugin_id' => $plugin_id], 'LIMIT 1');
         $plugin = $db->fetch($query);
         if ($plugin['installed'] == 1 || $force) {
             require_once("plugins/{$plugin['plugin_name']}/{$plugin['main_file']}");
             $func_plugUninstall = $plugin['function_uninstall'];
             if (function_exists($func_plugUninstall)) {
                 if ($func_plugUninstall()) {
-                    $db->update('plugins', ['installed' => 0], ['plugin_id' => $pluginid]);
+                    $db->update('plugins', ['installed' => 0], ['plugin_id' => $plugin_id]);
                 }
             } else {
                 die('function no exists');
@@ -207,27 +207,27 @@ class Plugins {
         } else {
             return false;
         }
-        $this->setPluginsDB(1);
+        $this->reloadPlugin($plugin_id);
         return true;
     }
 
     /**
      * Upgrade plugin process
-     * @global db $db
-     * @param int $pluginid
+     * @global Database $db
+     * @param int $plugin_id
      * @return boolean
      */
-    function upgrade($pluginid) {
+    function upgrade($plugin_id) {
         global $db;
 
-        $query = $db->selectAll('plugins', ['plugin_id' => $pluginid], 'LIMIT 1');
+        $query = $db->selectAll('plugins', ['plugin_id' => $plugin_id], 'LIMIT 1');
         $plugin = $db->fetch($query);
         if ($plugin['installed'] == 1) {
             require_once("plugins/{$plugin['plugin_name']}/{$plugin['main_file']}");
             $func_Upgrade = $plugin['function_upgrade'];
             if (function_exists($func_Upgrade)) {
                 if ($func_Upgrade($plugin['version'], $plugin['upgrade_from'])) {
-                    $db->update('plugins', ['upgrade_from' => 0], ['plugin_id' => $pluginid]);
+                    $db->update('plugins', ['upgrade_from' => 0], ['plugin_id' => $plugin_id]);
                 }
             } else {
                 die('function no exists');
@@ -235,49 +235,72 @@ class Plugins {
         } else {
             return false;
         }
+        $this->reloadPlugin($plugin_id);
+
         return true;
     }
 
     /**
      * Set plugin enabled
-     * @global db $db
-     * @param int $pluginid
+     * @global Database $db
+     * @param int $plugin_id
      * @param int $value
      * @return boolean
      */
-    function setEnable($pluginid, $value) {
+    function setEnable($plugin_id, $value) {
         global $db;
 
         if (!(($value == 0) || ($value == 1))) {
             return false;
         }
-        $db->update('plugins', ['enabled' => $value], ['plugin_id' => $pluginid], 'LIMIT 1');
-        $this->setPluginsDB(1);
+        $db->update('plugins', ['enabled' => $value], ['plugin_id' => $plugin_id], 'LIMIT 1');
+        $this->reloadPlugin($plugin_id);
+
         return true;
     }
 
     /**
      * set automatic start
-     * @global db $db
-     * @param int $pluginid
+     * @global Database $db
+     * @param int $plugin_id
      * @param int $value
      * @return boolean
      */
-    function setAutostart($pluginid, $value) {
+    function setAutostart($plugin_id, $value) {
         global $db;
 
         if (!(($value == 0) || ($value == 1))) {
             return false;
         }
 
-        $db->update('plugins', ['autostart' => $value], ['plugin_id' => $pluginid], 'LIMIT 1');
-        $this->setPluginsDB(1);
+        $db->update('plugins', ['autostart' => $value], ['plugin_id' => $plugin_id], 'LIMIT 1');
+
+        $this->reloadPlugin($plugin_id);
+
         return true;
     }
 
     /**
+     * Reload a plugin info
+     * @global Database $db
+     * @param int $plugin_id
+     */
+    function reloadPlugin($plugin_id) {
+        global $db;
+
+        $query = $db->selectAll('plugins', ['plugin_id' => $plugin_id], 'LIMIT 1');
+        if ($db->numRows($query) > 0) {
+            foreach ($this->plugins_db as &$plugin_db) {
+                if ($plugin_db['plugin_id'] == $plugin_id) {
+                    $plugin_db = $db->fetch($query);
+                }
+            }
+        }
+    }
+
+    /**
      * Scan plugins dir and push into (@link $registered_plugins)
-     * @global debug $debug
+     * @global Debug $debug
      */
     function scanDir() {
         global $debug;
@@ -327,7 +350,7 @@ class Plugins {
 
     /**
      * Rescan plugin dir for new plugins and update json changes
-     * @global db $db
+     * @global Database $db
      */
     function reScanToDB() {
         global $db;
@@ -388,7 +411,7 @@ class Plugins {
 
     /**
      * Express start a plugin by plugin name (mainly when not autostart and plugin need it)
-     * @global debug $debug
+     * @global Debug $debug
      * @param string $plugin_name
      * @return boolean
      */
@@ -422,7 +445,7 @@ class Plugins {
 
     /**
      * Search for a provide and express Start
-     * @global debug $debug
+     * @global Debug $debug
      * @param string $provider
      * @return boolean
      */
@@ -475,12 +498,12 @@ class Plugins {
      * /includes/pluginame.class.php, /admin/pluginname.inc.php
      * @global array $cfg
      * @global array $LNG 
-     * @global debug $debug
+     * @global Debug $debug
      * @param string $plugin
      * @param int $admin //Include admin mng/panel files
      */
     private function includePluginFiles($plugin, $admin = 0) {
-        global $cfg, $LNG, $debug; //we global LNG for load in global
+        global $cfg, $LNG, $debug; //need global LNG for included lang files in global
 
         $class_file = '';
         $inc_file = '';
@@ -517,7 +540,7 @@ class Plugins {
 
     /**
      * Retrieve from db the plugins information and set (@link $plugins_db) 
-     * @global db $db
+     * @global Database $db
      * @param int $force
      */
     private function setPluginsDB($force = 0) {
@@ -533,7 +556,7 @@ class Plugins {
 
     /**
      * Check pluigin, provide conflicts, and resolve depends
-     * @global debug $debug
+     * @global Debug $debug
      * @param array $plugin
      * @return boolean
      */
@@ -598,7 +621,7 @@ class Plugins {
 
     /**
      * Resolve plugins depends
-     * @global debug $debug
+     * @global Debug $debug
      * @param array $plugin
      * @return boolean
      */
@@ -685,15 +708,13 @@ class Plugins {
 
     /**
      * Check if the plugins have his depends started
-     * @global debug $debug
+     * @global Debug $debug
      * @param string $depend_name
      * @param float $min_version
      * @param flaot $max_version
      * @return boolean
      */
     private function checkIfDepsStarted($depend_name, $min_version, $max_version) {
-        global $debug;
-
         if (isset($this->depends_provide[$depend_name])) {
             $version = $this->depends_provide[$depend_name];
             if (($version >= $min_version) && ($version <= $max_version)) {
@@ -708,7 +729,7 @@ class Plugins {
      * 
      * cyclic dependences
      * 
-     * @global debug $debug
+     * @global Debug $debug
      * @param string $depend_name
      * @param float $min_version
      * @param float $max_version
