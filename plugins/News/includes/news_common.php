@@ -111,6 +111,7 @@ function get_news_byId($nid, $news_lang, $page = null) {
         return $news_row;
     }
 
+    //Get the exact news and return other news  if other langs exists
     while ($news_row = $db->fetch($query)) {
         if ($news_row['lang_id'] == $news_lang) {
             $news_exact_row = $news_row;
@@ -126,33 +127,6 @@ function get_news_byId($nid, $news_lang, $page = null) {
     isset($nlangs) ? $news_exact_row['other_langs'] = $nlangs : null;
 
     return $news_exact_row;
-}
-
-/* TODO REMOVE */
-
-function _get_news_byId($nid, $news_lang, $page = null) {
-    global $db;
-    empty($page) ? $page = 1 : null;
-
-    $where_ary = ['nid' => $nid, 'lang_id' => $news_lang, 'page' => $page];
-    $query = $db->selectAll('news', $where_ary, 'LIMIT 1');
-
-    //TODO ONE SELECT ALL LANG AND THEN CHOOSE IF EXISTS OR NOT EXIST
-    if ($db->numRows($query) < 1) { //IF NOT FOUND CHECK IN OTHER LANG        
-        $query = $db->selectAll('news', ['nid' => $nid, 'page' => $page], 'LIMIT 1');
-        return $db->numRows($query) > 0 ? 'L_NEWS_NOLANG' : 'L_NEWS_DELETE_NOEXISTS';
-    }
-    $news_row = $db->fetch($query);
-
-    /*
-      if ('ACL' && !empty($news_row['acl']) && !$acl_auth->acl_ask($news_row['acl'])) {
-      $frontend->messageBox(['msg' => "L_E_NOACCESS"]);
-      return false;
-      }
-     */
-    $db->free($query);
-
-    return $news_row;
 }
 
 function get_news_links(& $news_data) {
