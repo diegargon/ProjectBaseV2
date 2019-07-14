@@ -66,8 +66,10 @@ function news_show_page() {
     $news_data['news_admin_nav'] = news_nav_options($news_data);
     $cfg['allow_multiple_pages'] ? $news_data['pager'] = news_pager($news_data) : null;
 
-    $news_data['title'] = str_replace('\r\n', '', $news_data['title']);
-    $news_data['lead'] = str_replace('\r\n', PHP_EOL, $news_data['lead']);
+    //$news_data['title'] = str_replace('\r\n', '', $news_data['title']);
+    //$news_data['lead'] = str_replace('\r\n', PHP_EOL, $news_data['lead']);
+    $news_data['title'] = stripcslashes($news_data['title']);
+    $news_data['lead'] = stripcslashes($news_data['lead']);
     $news_data['date'] = $timeUtil->formatDbDate($news_data['created']);
     $news_data['last_edited'] = $timeUtil->formatDbDate($news_data['last_edited']);
     $author_data = $sm->getUserByID($news_data['author_id']);

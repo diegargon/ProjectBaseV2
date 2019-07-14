@@ -140,6 +140,7 @@ class Database {
      */
     function setCharset($charset) {
         $this->charset = $charset;
+        $this->dblink->set_charset($this->charset);
     }
 
     /**
@@ -468,9 +469,8 @@ class Database {
         if (!empty($where)) {
             $query .= ' WHERE ' . $this->whereProcess($where, $logic);
         }
-
         !empty($extra) ? $query .= " $extra" : null;
-        
+
         return $this->query($query);
     }
 

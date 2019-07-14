@@ -30,6 +30,9 @@ TODO
 
 REQUIREMENTS
 ============
+PHP7
+MYSQL >= 5
+
 TODO
 /cache must be writeble (need if CSS_OPTIMIZE 1) 
     chmod 755 /cache -R

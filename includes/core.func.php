@@ -45,10 +45,10 @@ function core_setup_database() {
     require_once ('includes/' . DB_TYPE . '.class.php');
 
     $db = new Database(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD);
-    $db->setCharset(DB_CHARSET);
     $db->setPrefix(DB_PREFIX);
     $db->setMinCharSearch(DB_MINCHAR_SEARCH);
     $db->connect();
+    $db->setCharset(DB_CHARSET);
 }
 
 /**

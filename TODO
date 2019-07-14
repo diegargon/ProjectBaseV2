@@ -4,7 +4,13 @@ MED
 * NewsMedia: subir imagenes arrastrando.
 * editor tag advertencia letras con fondo rojo.
 * La entradilla en bloques muestra \n\r
-
+TODO: Permitir varios relacionadas a la vez
+TODO: Medio error entradilla pero no me salto ni popup ni pagina de error,
+TODO: si hay en la entradila un \r lo escapa ha \\r y así sucesivamente, lo escapa pero como no le hace unscape al presentarlo vuelve a tener un \r para escapar
+TODO: Los enlaces los comprueba por edición, cambiar para cuando sea borrador no comprobarlo.
+TOO: Newsupload: poder hacer reload de imagenes
+TODO: Relacionadas, permitir caption en links utilizando extra
+TODO: al menos en edicion y newsview necesita un expressStart("NewsSearch") por el tema de tags
 LOW
 
 * Minieditor: Capturar tabulaciones, https://stackoverflow.com/questions/6637341/use-tab-to-indent-in-textarea
