@@ -1,6 +1,11 @@
-/*
- Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
-*/
+/**
+ *  NewsmediaUploader - css file
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage NewsMediaUploadeer
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)  
+ */
 #filelist {
     /* border:1px solid #000; */  
 }
@@ -45,4 +50,7 @@
 }
 .news_remote_link {
     width:80%;
+}
+#console {
+    padding:0 !important;
 }

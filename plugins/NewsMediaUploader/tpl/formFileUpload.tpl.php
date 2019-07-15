@@ -7,7 +7,6 @@
  *  @subpackage NewsMediaUploadeer
  *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)  
  */
-
 !defined('IN_WEB') ? exit : true;
 ?>
 <label><?= $LNG['L_NMU_UPLOAD_FILES'] ?><span class="text_small"><?= $LNG['L_NMU_MAX'] . $cfg['upload_max_filesize'] ?></span></label>
@@ -15,12 +14,11 @@
     <a id="pickfiles" href="javascript:;"><?= $LNG['L_NMU_SELECT_FILES'] ?></a>
     <a id="uploadfiles" href="javascript:;"><?= $LNG['L_NMU_UPLOAD_FILES'] ?></a>
 </div>
-<pre id="console"></pre>
 <div id="filelist"><?= $LNG['L_NMU_E_BROWSER_UPLOAD'] ?></div>
-
 <?php if (!empty($data['UPLOAD_EXTRA'])) { ?>
     <div id="uploaded_user_list"><?= $data['UPLOAD_EXTRA'] ?></div>
 <?php } ?>
+<pre id="console"></pre>
 <script type="text/javascript">
 
     var uploader = new plupload.Uploader({
@@ -29,6 +27,8 @@
         container: document.getElementById('upload_container'), // ... or DOM Element itself
         url: '/<?= $cfg['CON_FILE'] ?>?module=NewsMediaUploader&page=upload',
         unique_names: false,
+        drop_element: "uploaded_user_list",
+        autostart: true,
 
         filters: {
             max_file_size: '<?= $cfg['upload_max_filesize'] ?>',
@@ -79,9 +79,9 @@
 
     function addtext(text) {
         var textarea = document.getElementById('editor_text');
-        var cursor = textarea.selectionStart;        
+        var cursor = textarea.selectionStart;
         var left_text = textarea.value.substring(0, cursor);
-        var right_text = textarea.value.substring(cursor, textarea.size);        
+        var right_text = textarea.value.substring(cursor, textarea.size);
         textarea.value = left_text + text + right_text;
     }
 
