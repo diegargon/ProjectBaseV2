@@ -135,24 +135,6 @@
     margin-top: -18px;
     margin-left: 3px;
 }
-.editorBar {
-    overflow: hidden;
-    border: 1px solid #c5c5c5;
-    border-bottom: 1px solid #8a8787;
-    margin: 0px 0px 4px 0px;
-    background-color: #F1F1F1;
-}
-.editorBar button {
-    color: #666;
-    float:left;
-    border: 0px;
-    font-size: 0.9em;
-    background-color: transparent;
-    padding: 0px 2px 0px 2px;
-}
-.editorBar button:hover {
-    color: #000;
-}
 #pager {
     text-align: center;
     margin-top: 10px;
