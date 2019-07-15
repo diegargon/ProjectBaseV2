@@ -709,7 +709,7 @@ code {
     padding:10px;
     margin:10px;
     min-width: 50%;
-    max-width: 50%;
+    max-width: 75%;
 }
 .warn {
     background-color: #ff4747;

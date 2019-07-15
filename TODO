@@ -1,7 +1,8 @@
 HIGH
 
 MED
-
+* NewsMediaUpload - Forma de borrar imagenes subidas
+* NewsMediaUpload, autoload upload images on scroll.
 LOW
 
 * Minieditor: Capturar tabulaciones, https://stackoverflow.com/questions/6637341/use-tab-to-indent-in-textarea
@@ -11,13 +12,11 @@ LOW
 * Smbasic admin: poder añadir admin y founder
 * SMBasic?: Añadir opcion para que el usuario decida el formato de fecha
 * Modulo Curriculum
-* NewsMediaUpload - Forma de borrar imagenes subidas
 * $filter-> post/getInt utiliza strlen que cuenta el numero de digitos, deberiamos tener una para el numero de digitos y para un numero de ej: 1 al 10
   la misma función pero seleccionable lo que queramos medir.
 * News: Mejorar frontend de borradores
 * Admin Plugins, mejorar frontend de lista de plugins
 * SimpleACL Ordenar permisos en solapas por plugins
-* NewsMediaUpload, autoload upload images on scroll.
 * Newsmediaupload - Sobre la imagen mostrar nombre (tiene alt pero no funciona)
 * CORE: separar lang variables de admin del resto y cargarlos cuando se entra en administración.
 * GROUPS : Opcion para añadir automaticamente usuarios a los grupos por defecto (isFounder = ADMIN GRUPOS) (isAdmin = ADMIN_GROUPS)  (resto Usuarios registrados)
@@ -29,7 +28,6 @@ LOW
 
 Más tarde si eso... o backlog:
 * Frontend: funcion que muestre una pantalla de espera para tareas que tardan
-
 * Debug log to syslog?, 
 * Private Mensaje system
 * Smbasic: crear email html, quizas optativo plain/html por configuracion.
