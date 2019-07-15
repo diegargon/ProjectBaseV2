@@ -165,6 +165,8 @@ function news_submit_new_process() {
 
     $news_data = news_form_getPost();
 
+    news_submit_form_check($news_data);
+
     if (news_create_new($news_data)) {
         die('[{"status": "ok", "msg": "' . $LNG['L_NEWS_SUBMITED_SUCCESSFUL'] . '", "url": "' . $cfg['WEB_URL'] . '"}]');
     } else {

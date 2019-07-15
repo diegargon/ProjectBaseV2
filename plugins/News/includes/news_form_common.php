@@ -234,29 +234,27 @@ function news_submit_form_check($news_data) {
     if ($news_data['author_id'] == false) {
         die('[{"status": "2", "msg": "' . $LNG['L_NEWS_ERROR_INCORRECT_AUTHOR'] . '"}]');
     }
-
     //TITLE
     if ($news_data['title'] == false) {
         die('[{"status": "3", "msg": "' . $LNG['L_NEWS_TITLE_ERROR'] . '"}]');
     }
-    if ((mb_strlen($news_data['title'], $cfg['CHARSET']) > $cfg['news_title_max_length']) ||
-            (mb_strlen($news_data['title'], $cfg['CHARSET']) < $cfg['news_title_min_length'])
-    ) {
+    $title_len = mb_strlen($news_data['title'], $cfg['CHARSET']);
+    if (( $title_len > $cfg['news_title_max_length']) || ( $title_len < $cfg['news_title_min_length'])) {
         die('[{"status": "4", "msg": "' . $LNG['L_NEWS_TITLE_MINMAX_ERROR'] . '"}]');
     }
     //LEAD
     if (isset($_GET['npage']) && $_GET['npage'] > 1) {
-        if ((mb_strlen($news_data['lead'], $cfg['CHARSET']) > $cfg['news_lead_max_length'])) {
-            die('[{"status": "5", "msg": "' . $LNG['L_NEWS_LEAD_MINMAX_ERROR'] . '"}]');
+        $lead_len = mb_strlen($news_data['lead'], $cfg['CHARSET']);
+        if ($lead_len > $cfg['news_lead_max_length']) {
+            die('[{"status": "5", "msg": "' . $LNG['L_NEWS_LEAD_MINMAX_ERROR'] . '(' . $lead_len . '"}]');
         }
     } else {
         if ($news_data['lead'] == false) {
             die('[{"status": "6", "msg": "' . $LNG['L_NEWS_LEAD_ERROR'] . '"}]');
         }
-        if ((mb_strlen($news_data['lead'], $cfg['CHARSET']) > $cfg['news_lead_max_length']) ||
-                (mb_strlen($news_data['lead'], $cfg['CHARSET']) < $cfg['news_lead_min_length'])
-        ) {
-            die('[{"status": "7", "msg": "' . $LNG['L_NEWS_LEAD_MINMAX_ERROR'] . '"}]');
+        $lead_len = mb_strlen($news_data['lead'], $cfg['CHARSET']);
+        if (( $lead_len > $cfg['news_lead_max_length']) || ( $lead_len < $cfg['news_lead_min_length'])) {
+            die('[{"status": "7", "msg": "' . $LNG['L_NEWS_LEAD_MINMAX_ERROR'] . '(' . $lead_len . ')"}]');
         }
     }
     //TEXT
