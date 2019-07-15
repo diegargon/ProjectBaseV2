@@ -291,7 +291,7 @@ class SecureFilter {
      * @param int $min_size
      * @return boolean
      */
-    function postUrl($var, $max_size = null, $min_size = null) {
+    function postUrl($var, $max_size = null, $min_size = null, $force_no_remote_checks = null) {
 
         if (empty($_POST[$var])) {
             return false;
@@ -299,7 +299,7 @@ class SecureFilter {
         if (is_array($_POST[$var])) {
             $var_ary = $_POST[$var];
             foreach ($var_ary as $key => $value) {
-                $ret = $this->varUrl($value, $max_size, $min_size);
+                $ret = $this->varUrl($value, $max_size, $min_size, $force_no_remote_checks);
                 if (!$ret) {
                     $var_ary[$key] = false;
                 } else {
@@ -308,7 +308,7 @@ class SecureFilter {
             }
             return $var_ary;
         } else {
-            return $this->varUrl($_POST[$var], $max_size, $min_size);
+            return $this->varUrl($_POST[$var], $max_size, $min_size, $force_no_remote_checks);
         }
     }
 
@@ -541,7 +541,7 @@ class SecureFilter {
         if (empty($url)) {
             return false;
         }
-        if ($this->remote_checks && !remote_check($url)) {
+        if (!$force_no_remote_checks && $this->remote_checks && !remote_check($url)) {
             return false;
         }
         return $url;

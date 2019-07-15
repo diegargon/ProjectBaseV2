@@ -89,9 +89,6 @@ function news_form_getPost() {
     $form_data['editor_text'] = $db->escapeStrip($filter->postUtf8Txt('editor_text'));
     $form_data['category'] = $filter->postInt('news_category');
     $form_data['news_lang'] = $filter->postInt('news_lang', 8, 1);
-    $form_data['news_source'] = $filter->postUrl('news_source', 255, 1);
-    $form_data['news_new_related'] = $filter->postUrl('news_new_related', 255, 1);
-    $form_data['news_related'] = $filter->postUrl('news_related', 255, 1);
     $form_data['news_translator_id'] = $filter->postInt('news_translator_id');
     $form_data['current_lang_id'] = $filter->postInt('current_lang_id', 255, 1);
     if ($cfg['news_allow_user_drafts']) {
@@ -99,6 +96,17 @@ function news_form_getPost() {
     } else {
         $form_data['as_draft'] = 0;
     }
+    // force no remote check if its a draft
+    if ($form_data['as_draft']) {
+        $form_data['news_source'] = $filter->postUrl('news_source', 255, 1, 1);
+        $form_data['news_new_related'] = $filter->postUrl('news_new_related', 255, 1, 1);
+        $form_data['news_related'] = $filter->postUrl('news_related', 255, 1, 1);
+    } else {
+        $form_data['news_source'] = $filter->postUrl('news_source', 255, 1);
+        $form_data['news_new_related'] = $filter->postUrl('news_new_related', 255, 1);
+        $form_data['news_related'] = $filter->postUrl('news_related', 255, 1);
+    }
+
     //Author Changes
     if (news_perm_ask('w_news_change_author')) {
         $author = $filter->postUsername('news_author', $cfg['smbasic_max_username'], $cfg['smbasic_min_username']);
