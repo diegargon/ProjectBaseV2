@@ -6,6 +6,7 @@
  *  @subpackage News
  *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
+
 @media only screen and (max-width: 900px) {
     .featured article h3, .featured article p {        
         display: none;
@@ -13,9 +14,19 @@
     .featured h1 {
         font-size: 1.2em;
     }
+    .newsbox {
+        display:block;
+    }
+    .news_box_article_image {
+        text-align:center;        
+    }
+    .news_article_container img {
+        width:150px;
+    }
 }
 @media only screen and (max-width: 700px) {
     .newsbox {
+        display:inline-flex;
         margin-left: 5px;
     }
     .submit_items {

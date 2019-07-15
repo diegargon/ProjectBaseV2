@@ -76,10 +76,9 @@ function layout_news($template, $news) {
 
 function news_get_main_image($news) {
     $news_body = $news['text'];
-    $match_regex = '/\[(img|localimg).*\](.*)\[\/(img|localimg)\]/';
+    $match_regex = '/\[(img|localimg).*?\](.*?)\[\/(img|localimg)\]/';
     $match = false;
     preg_match($match_regex, $news_body, $match);
-
     return !empty($match[0]) ? $match[0] : null;
 }
 

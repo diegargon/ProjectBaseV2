@@ -25,7 +25,7 @@ LOW
 * Al crear un bloque, ponemos idioma, ponemos tipo de bloque y el idioma se resetea, posiblemente todo se resetea, mantener.
 * Bloque news opcionalmente uno para mostrar borradores de usuario, solo visible por el si tiene.
 * Permitir varios relacionadas a la vez y cambiar el codigo al respecto que es malo no lo siguiente.
-* editor: el tab deberia de saltarse los botones entre lead y texto.
+
 
 Más tarde si eso... o backlog:
 * Frontend: funcion que muestre una pantalla de espera para tareas que tardan

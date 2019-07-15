@@ -71,6 +71,10 @@ html, body {
     padding-bottom: 20px;
     line-height: 1.3em;
     background-color: #000;
+    background-image: url('/images/logo.png');
+    background-repeat: no-repeat;
+    background-position: right;  
+    background-size: contain;
 }
 #brand a{
     font-family: Rockwell, "Courier Bold", Courier, Georgia, Times, "Times New Roman", serif;

@@ -532,9 +532,9 @@
     padding:5px;
 }
 .news_article_container {
-    max-width: 32%;
+    /* max-width: 32%; */
     margin: 5px;
-    min-width: 400px;
+    /* min-width: 300px; */
     float:left;
 }
 .news_article_container img {
