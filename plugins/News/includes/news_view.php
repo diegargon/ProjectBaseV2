@@ -96,8 +96,8 @@ function news_show_page() {
     }
     $author = $sm->getUserByID($news_data['author_id']);
 
-    //HEAD MOD    
     $cfg['news_stats'] ? news_stats($nid, $news_data['lang_id'], $news_data['page']) : null;
+    //HEAD MOD       
     $cfg['PAGE_TITLE'] = $news_data['title'];
     $cfg['news_meta_opengraph'] ? news_add_social_meta($news_data) : null;
     $cfg['PAGE_DESC'] = $news_data['title'] . ":" . $news_data['lead'];
@@ -575,7 +575,8 @@ function news_format_source($link) {
     if ($link['type'] == 'source') {
         $url = parse_url($link['link']);
         $domain = $url['host'];
-        $result = '<a rel="nofollow" target="_blank" href="' . $link['link'] . '">' . $domain . '</a>';
+        $title = !empty($link['extra']) ? $link['extra'] : $domain;
+        $result = '<a rel="nofollow" target="_blank" href="' . $link['link'] . '">' . $title . '</a>';
     } else {
         return false;
     }

@@ -135,15 +135,19 @@ function news_create_new($news_data) {
             'source_id' => $news_data['nid'],
             'plugin' => $plugin,
             'type' => 'source',
-            'link' => $db->escapeStrip(urlencode($news_data['news_source']))
+            'link' => $db->escapeStrip(urlencode($news_data['news_source'])),
+            'extra' => $news_data['news_source_title']
         ];
         $db->insert('links', $insert_ary);
     }
     //NEW RELATED
     if (!empty($news_data['news_new_related'])) {
         $insert_ary = [
-            'source_id' => $news_data['nid'], 'plugin' => $plugin,
-            'type' => 'related', 'link' => $db->escapeStrip(urlencode($news_data['news_new_related'])),
+            'source_id' => $news_data['nid'],
+            'plugin' => $plugin,
+            'type' => 'related',
+            'link' => $db->escapeStrip(urlencode($news_data['news_new_related'])),
+            'extra' => $news_data['news_new_related_title']
         ];
         $db->insert('links', $insert_ary);
     }

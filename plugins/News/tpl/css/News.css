@@ -448,8 +448,14 @@
     width:99%;
 }
 .news_link {
-    width: 99%;
+    display: inline-table;
+    width: 80%;
     margin-top: 5px;
+}
+.news_link_title {
+    display: inline-table;
+    width: 15%;
+    margin-top: 5px;    
 }
 .news_submit_center_wrapper {}
 .submit_buttom {

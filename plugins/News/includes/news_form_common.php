@@ -106,7 +106,17 @@ function news_form_getPost() {
         $form_data['news_new_related'] = $filter->postUrl('news_new_related', 255, 1);
         $form_data['news_related'] = $filter->postUrl('news_related', 255, 1);
     }
+    $form_data['news_source_title'] = $filter->postAZChar('news_source_title');
+    $form_data['news_new_related_title'] = $filter->postAZChar('news_new_related_title');
 
+
+    if (isset($_POST['news_related_title'])) {
+        $news_rel_title_ary = $_POST['news_related_title'];
+
+        foreach ($news_rel_title_ary as $id => $news_rel_title) {
+            $form_data['news_related_title'][$id] = $filter->varAZChar($news_rel_title);
+        }
+    }
     //Author Changes
     if (news_perm_ask('w_news_change_author')) {
         $author = $filter->postUsername('news_author', $cfg['smbasic_max_username'], $cfg['smbasic_min_username']);
@@ -344,13 +354,14 @@ function news_form_news_update($news_data) {
         $query = $db->selectAll('links', ['source_id' => $source_id, 'type' => $type, 'plugin' => $plugin], 'LIMIT 1');
         if ($db->numRows($query) > 0) {
 
-            $db->update('links', ['link' => $db->escapeStrip(urldecode($news_data['news_source']))], ['source_id' => $source_id, 'type' => $type, 'plugin' => $plugin]);
+            $db->update('links', ['link' => $db->escapeStrip(urldecode($news_data['news_source'])), 'extra' => $news_data['news_source_title']], ['source_id' => $source_id, 'type' => $type, 'plugin' => $plugin]);
         } else {
             $insert_ary = [
                 'source_id' => $source_id,
                 'plugin' => $plugin,
                 'type' => $type,
                 'link' => $db->escapeStrip(urldecode($news_data['news_source'])),
+                'extra' => !empty($news_data['news_source_title']) ? $db->escapeStrip($news_data['news_source_title']) : '',
             ];
             $db->insert('links', $insert_ary);
         }
@@ -366,19 +377,23 @@ function news_form_news_update($news_data) {
         $plugin = 'News';
         $type = 'related';
         $insert_ary = [
-            'source_id' => $source_id, 'plugin' => $plugin,
-            'type' => $type, 'link' => $db->escapeStrip(urldecode($news_data['news_new_related'])),
+            'source_id' => $source_id,
+            'plugin' => $plugin,
+            'type' => $type,
+            'link' => $db->escapeStrip(urldecode($news_data['news_new_related'])),
+            'extra' => $news_data['news_new_related_title'],
         ];
         $db->insert('links', $insert_ary);
     }
     //OLD RELATED
+
     if (!empty($news_data['news_related'])) {
         foreach ($news_data['news_related'] as $link_id => $value) {
-            if ($filter->varInt($link_id)) { //value its checked on post $link_id no 
+            if ($filter->varInt($link_id)) { //value its checked on post $link_id no             
                 if (empty($value)) {
                     $db->delete('links', ['link_id' => $link_id], 'LIMIT 1');
                 } else {
-                    $db->update('links', ['link' => $db->escapeStrip(urldecode($value))], ['link_id' => $link_id], 'LIMIT 1');
+                    $db->update('links', ['link' => $db->escapeStrip(urldecode($value)), 'extra' => $news_data['news_related_title'][$link_id]], ['link_id' => $link_id], 'LIMIT 1');
                 }
             }
         }

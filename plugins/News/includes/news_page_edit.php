@@ -50,6 +50,7 @@ function news_edit($news_nid, $news_lang_id, $news_page) {
     if (news_perm_ask('w_news_add_source')) {
         if (($news_source = news_get_source($news_data['nid'])) != false) {
             $news_data['news_source'] = urldecode($news_source['link']);
+            $news_data['news_source_title'] = $news_source['extra'];
         }
     }
     if (news_perm_ask('w_news_add_related')) {
@@ -57,6 +58,7 @@ function news_edit($news_nid, $news_lang_id, $news_page) {
             $news_data['news_related'] = '';
             foreach ($news_related as $related) {
                 $related['link'] = urldecode($related['link']);
+                $news_data['news_related'] .= "<input type='text' class='news_link_title' name='news_related_title[{$related['link_id']}]' value='{$related['extra']}' />\n";
                 $news_data['news_related'] .= "<input type='text' class='news_link' name='news_related[{$related['link_id']}]' value='{$related['link']}' />\n";
             }
         }

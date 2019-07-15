@@ -50,9 +50,11 @@
 
                     <?php if ($data['news_add_source']) { ?>
                         <div class="submit_items">
-                            <p> 
+                            <p>                                 
                                 <label for="news_source"><?= $LNG['L_NEWS_SOURCE'] ?> </label>
-                                <input  value="<?= isset($data['news_source']) ? $data['news_source'] : null ?>"  minlength="<?= $cfg['news_link_min_length'] ?>" maxlength="<?= $cfg['news_link_max_length'] ?>" id="news_source" class="news_link" name="news_source" type="text" placeholder="http://site.com"/>
+                                <input value="<?= isset($data['news_source_title']) ? $data['news_source_title'] : null ?>"  maxlength="250" id="news_source_title" class="news_link_title" name="news_source_title" type="text"/>
+                                <input value="<?= isset($data['news_source']) ? $data['news_source'] : null ?>"  minlength="<?= $cfg['news_link_min_length'] ?>" maxlength="<?= $cfg['news_link_max_length'] ?>" id="news_source" class="news_link" name="news_source" type="text" placeholder="http://site.com"/>
+
                             </p>
                         </div>
                     <?php } ?>
@@ -60,6 +62,7 @@
                         <div class="submit_items">
                             <p>
                                 <label for="news_new_related"><?= $LNG['L_NEWS_RELATED'] ?> </label>
+                                <input value="<?= isset($data['news_new_related_title']) ? $data['news_new_related_title'] : null ?>"  maxlength="250" id="news_new_related_title" class="news_link_title" name="news_new_related_title" type="text"/>
                                 <input  value="<?= isset($data['news_new_related']) ? $data['news_new_related'] : null ?>"  minlength="<?= $cfg['news_link_min_length'] ?>" maxlength="<?= $cfg['news_link_max_length'] ?>" id="news_new_related" class="news_link" name="news_new_related" type="text" placeholder="http://site.com"/>
                                 <?= isset($data['news_related']) ? $data['news_related'] : null ?>
                             </p>

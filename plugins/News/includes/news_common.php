@@ -140,7 +140,8 @@ function get_news_links(& $news_data) {
         while ($news_link = $db->fetch($query)) {
             if ($news_link['type'] == 'related') {
                 $link = urldecode($news_link['link']);
-                $news_data['news_related'] .= '<li><a rel="nofollow" target="_blank" href="' . $link . '">' . $link . '</a></li>';
+                $title = !empty($news_link['extra']) ? $news_link['extra'] : $link;
+                $news_data['news_related'] .= '<li><a rel="nofollow" target="_blank" href="' . $link . '">' . $title . '</a></li>';
             } else if ($news_link['type'] == 'source') {
                 $news_data['news_sources'] = news_format_source($news_link);
             }
