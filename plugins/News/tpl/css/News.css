@@ -265,7 +265,7 @@
 }
 .newsbox {
     font-family: Georgia;
-    display:block;
+    display:inline-flex;
     float:left;
     margin:0 0px 4px 0px;
     text-decoration: none;
@@ -536,6 +536,15 @@
     margin: 5px;
     min-width: 400px;
     float:left;
+}
+.news_article_container img {
+    display:inline-block;
+    width:100px;
+
+}
+.news_box_article_content {}
+.news_box_article_image {
+    padding-right: 10px;
 }
 .news_section_container {
 

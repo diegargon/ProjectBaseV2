@@ -40,7 +40,7 @@ function news_block($block_conf) {
         }
     }
     isset($block_conf['limits']) ? $news_conf['limit'] = $block_conf['limits'] : null;
-
+    $news_conf['main_image'] = 1;
     $news_where['category'] = $block_conf['news_cat'];
     $news_where['lang_id'] = $block_conf['news_lang'];
     $news_where['as_draft'] = 0;

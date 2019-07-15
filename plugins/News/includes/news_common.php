@@ -59,8 +59,10 @@ function layout_news($template, $news) {
         $news_row['date'] = $timeUtil->formatDbDate($news_row['created']);
 
         if (isset($news_row['text'])) {
-            $main_image = preg_replace('/\[S\]/si', DIRECTORY_SEPARATOR . $cfg['img_selector'] . DIRECTORY_SEPARATOR, news_get_main_image($news_row));
-            $thumb_image = preg_replace('/\[S\]/si', DIRECTORY_SEPARATOR . 'thumbs' . DIRECTORY_SEPARATOR, news_get_main_image($news_row));
+            $news_main_image = news_get_main_image($news_row);
+            $main_image = preg_replace('/\[S\]/si', DIRECTORY_SEPARATOR . $cfg['img_selector'] . DIRECTORY_SEPARATOR, $news_main_image);
+            $thumb_image = preg_replace('/\[S\]/si', DIRECTORY_SEPARATOR . 'thumbs' . DIRECTORY_SEPARATOR, $news_main_image);
+
             $news_row['main_image'] = preg_replace('~\[localimg w=((?:[1-9][0-9]?[0-9]?))\](.*?)\[\/localimg\]~si', '$2', $main_image);
             $news_row['thumb_image'] = preg_replace('~\[localimg w=((?:[1-9][0-9]?[0-9]?))\](.*?)\[\/localimg\]~si', '$2', $thumb_image);
         }
@@ -78,7 +80,7 @@ function news_get_main_image($news) {
     $match = false;
     preg_match($match_regex, $news_body, $match);
 
-    return !empty($match[0]) ? $match[2] : null;
+    return !empty($match[0]) ? $match[0] : null;
 }
 
 function news_extract_bycat($news, $cat) {
