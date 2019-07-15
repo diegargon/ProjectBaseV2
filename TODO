@@ -2,11 +2,7 @@ HIGH
 
 MED
 * NewsMedia: subir imagenes arrastrando.
-* editor tag advertencia letras con fondo rojo.
-* La entradilla en bloques muestra \n\r
-* Newsupload:  hacer reload despues de subir imagenes, que no haya necesidad de recargar la pagina, es el editor y se pierden los datos.
-* al menos en edicion y newsview necesita un expressStart("NewsSearch") por el tema de tags
-* no permitir reload en el editor
+
 LOW
 
 * Minieditor: Capturar tabulaciones, https://stackoverflow.com/questions/6637341/use-tab-to-indent-in-textarea
