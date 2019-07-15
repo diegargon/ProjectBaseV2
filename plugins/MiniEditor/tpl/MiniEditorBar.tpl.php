@@ -29,6 +29,6 @@
     <button class="btnEditor" type="button" value="[style]$1[/style]" tabindex="-1"><?= $LNG['L_EDITOR_STYLE'] ?></button>
     <button class="btnEditor" type="button" value="[blockquote]$1[/blockquote]" tabindex="-1"><?= $LNG['L_EDITOR_QUOTE'] ?></button>
     <button class="btnEditor" type="button" value="[code]$1[/code]" tabindex="-1"><?= $LNG['L_EDITOR_CODE'] ?></button>
-    <button class="btnEditor" type="button" value="[div_class=?]$1[/div_class]" tabindex="-1"><?= $LNG['L_EDITOR_DIVCLASS'] ?></button>
+    <button class="btnEditor" type="button" value="[div class=?]$1[/div]" tabindex="-1"><?= $LNG['L_EDITOR_DIVCLASS'] ?></button>
     <?= !empty($tpldata['EDITOR_BAR_POST']) ? $tpldata['EDITOR_BAR_POST'] : null ?>
 </div>
