@@ -25,6 +25,7 @@ function NewsMediaUploader_init() {
 
     $frontend->registerPage(['module' => 'NewsMediaUploader', 'page' => 'upload', 'type' => 'disk']);
     $frontend->registerPage(['module' => 'NewsMediaUploader', 'page' => 'remote_upload', 'type' => 'disk']);
+    $frontend->registerPage(['module' => 'NewsMediaUploader', 'page' => 'get_links', 'type' => 'disk']);
     register_action('news_new_form_add', 'NMU_form_add');
     register_action('news_edit_form_add', 'NMU_form_add');
     register_action('news_newlang_form_add', 'NMU_form_add');

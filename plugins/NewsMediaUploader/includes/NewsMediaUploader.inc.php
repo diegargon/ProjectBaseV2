@@ -26,8 +26,8 @@ function NMU_form_add($news) {
      */
     $tpl->getCssFile('NewsMediaUploader');
 
-    $extra_content['UPLOAD_EXTRA'] = '';
-    (!empty($user) && $user['uid'] > 0) ? $extra_content['UPLOAD_EXTRA'] = NMU_upload_list($user) : null;
+    $extra_content['uploaded_content'] = '';
+    (!empty($user) && $user['uid'] > 0) ? $extra_content['uploaded_content'] = NMU_upload_list() : null;
 
     $tpl->addScriptFile('standard', 'jquery', 'TOP', 0);
     $tpl->addScriptFile('NewsMediaUploader', 'plupload.full.min', 'TOP', 0);
@@ -37,8 +37,10 @@ function NMU_form_add($news) {
     $tpl->addtoTplVar('NEWS_FORM_MIDDLE_OPTION', $tpl->getTplFile('NewsMediaUploader', 'formFileUpload', $extra_content));
 }
 
-function NMU_upload_list($user) {
-    global $db, $cfg;
+function NMU_upload_list() {
+    global $db, $sm, $cfg;
+
+    $user = $sm->getSessionUser();
 
     $content = '<div id="photobanner">';
     $select_ary = [
@@ -46,14 +48,18 @@ function NMU_upload_list($user) {
         'source_id' => $user['uid'],
     ];
 
-    $query = $db->selectAll('links', $select_ary, 'ORDER BY `date` DESC LIMIT ' . $cfg['upload_max_list_files']);
-    while ($link = $db->fetch($query)) {
-        $link_thumb = str_replace('[S]', '/thumbs/', $link['link']);
-        $alt = str_replace('/media[S]', '', $link['link']);        
-        $textToadd = '[localimg]' . $link['link'] . '[/localimg]';                
-        $content .= '<a href="#news_text" onclick="addtext(\''. $textToadd .'\'); return false"><img src="'. $link_thumb.'" alt="'. $alt.'" /></a>';
+    $query = $db->selectAll('links', $select_ary, 'ORDER BY `link_id` DESC LIMIT ' . $cfg['upload_max_list_files']);
+
+    if (($num_rows = $db->numRows($query)) > 0) {
+        while ($link = $db->fetch($query)) {
+            $link_thumb = str_replace('[S]', '/thumbs/', $link['link']);
+            $alt = str_replace('/media[S]', '', $link['link']);
+            $textToadd = '[localimg]' . $link['link'] . '[/localimg]';
+            $content .= '<a href="#news_text" data-id="' . $link['link_id'] . '" onclick="addtext(\'' . $textToadd . '\'); return false"><img src="' . $link_thumb . '" alt="' . $alt . '" /></a>';
+        }
     }
     $content .= '</div>';
+
     return $content;
 }
 

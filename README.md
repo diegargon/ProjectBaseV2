@@ -60,6 +60,7 @@ Author
 
 Lastest relevant add/changes 
 ================================
+* add load on scroll to Newsupload images and reload button
 * add save news as drafts
 * rewrite top menu design/logic
 * Add to editor internal links tag and a bd links database

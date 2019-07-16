@@ -13,14 +13,39 @@
 <div id="upload_container">
     <a id="pickfiles" href="javascript:;"><?= $LNG['L_NMU_SELECT_FILES'] ?></a>
     <a id="uploadfiles" href="javascript:;"><?= $LNG['L_NMU_UPLOAD_FILES'] ?></a>
+    <a id="reloadfiles" onclick="reloadData()" href="javascript:void(0);">Reload</a>
 </div>
 <div id="filelist"><?= $LNG['L_NMU_E_BROWSER_UPLOAD'] ?></div>
-<?php if (!empty($data['UPLOAD_EXTRA'])) { ?>
-    <div id="uploaded_user_list"><?= $data['UPLOAD_EXTRA'] ?></div>
+<?php if (!empty($data['uploaded_content'])) { ?>
+    <div id="uploaded_user_list"><?= $data['uploaded_content'] ?></div>
 <?php } ?>
 <pre id="console"></pre>
 <script type="text/javascript">
+    $('#photobanner').on('scroll', function () {
+        let div = $(this).get(0);
+        if (div.scrollTop + div.clientHeight >= div.scrollHeight) {
+            //console.log($( '#photobanner a:last' ).data('id'));
+            loadData($('#photobanner a:last').data('id'));
+        }
+    });
 
+    function loadData(last_id) {
+        //console.log( last_id );        
+        var $photos = $('#photobanner');
+        var $path = '/index.php?module=NewsMediaUploader&page=get_links';
+        $.get($path, {last_id: last_id}, function (data) {
+            $photos.append(data);
+        });
+
+    }
+    function reloadData() {
+        var $photos = $('#photobanner');
+        var $path = '/index.php?module=NewsMediaUploader&page=get_links';
+        $('#photobanner').empty();
+        $.get($path, {reload: 1}, function (data) {
+            $photos.append(data);
+        });
+    }
     var uploader = new plupload.Uploader({
         runtimes: 'html5, html4',
         browse_button: 'pickfiles', // you can pass an id...

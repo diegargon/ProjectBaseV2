@@ -25,7 +25,7 @@
     border-left: 1px solid #000;
     padding: 0px 0px 0px 5px;
 }
-#pickfiles, #uploadfiles, #btnRemoteUpload {
+#pickfiles, #uploadfiles, #reloadfiles, #btnRemoteUpload {
     font-size: 0.8em;
     text-decoration: none;
     border: outset 1px #000;
