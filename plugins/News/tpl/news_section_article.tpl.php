@@ -11,7 +11,7 @@
  */
 !defined('IN_WEB') ? exit : true;
 ?>
-<div class="news_article_container">
+<div class="news_article_section_container">
     <a href="<?= $data['url'] ?>">
         <article class="newsbox <?= $data['featured'] ? 'featured' : null ?>">
             <div class="news_box_article_content">

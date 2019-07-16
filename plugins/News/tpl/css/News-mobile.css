@@ -32,7 +32,7 @@
 }
 @media only screen and (max-width: 700px) {
     .newsbox {
-        display:inline-flex;
+        /* display:inline-flex; */
         margin-left: 5px;
     }
     .submit_items {
@@ -123,5 +123,9 @@
     .news_img_float_l {    
         padding-right: 1px;
         width: 100%;
+    }
+    .news_article_section_container {
+        width:100%;
+        float:none;
     }
 }
