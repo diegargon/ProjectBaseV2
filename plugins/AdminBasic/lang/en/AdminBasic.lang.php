@@ -43,6 +43,7 @@ $LNG['L_PL_AUTOSTART_TURN_ON'] = 'Autostart';
 $LNG['L_PL_AUTOSTART_TURN_OFF'] = 'Disable autostart';
 $LNG['L_PL_ADMIN_DEBUG'] = 'Debug';
 $LNG['L_PL_CONFIG'] = 'Configuración';
+$LNG['L_PL_RESCAN'] = 'Rescan';
 $LNG['L_PL_UPGRADE'] = 'Upgrade';
 $LNG['L_PL_E_ITSMISSING'] = 'Missing files';
 $LNG['L_PL_DELETE'] = 'Eliminar';

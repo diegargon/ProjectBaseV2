@@ -458,3 +458,15 @@ h1,h2,h3,h4,h5,h6{
     padding: 0;
     margin: 0;
 }
+.loading{
+    display: none;
+    position:fixed;
+    height:100%;
+    width:100%;
+    overflow:hidden;
+    top:0; left:0;
+    background: rgba( 255, 255, 255, .8 ) 
+        url('/plugins/SimpleFrontend/tpl/img/loading.gif') 
+        50% 50% 
+        no-repeat;
+}

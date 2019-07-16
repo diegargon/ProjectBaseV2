@@ -14,3 +14,8 @@
     text-align: center;
     color: #660000;
 }
+@media only screen and (max-width: 900px) {
+    #choose_lang {
+        display:none;
+    }
+}

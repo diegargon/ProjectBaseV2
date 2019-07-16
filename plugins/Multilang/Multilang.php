@@ -15,11 +15,12 @@
  * @global Multilang $ml
  */
 function Multilang_init() {
-    global $ml;
+    global $ml, $tpl;
 
     if (!defined('MULTILANG')) {
         define('MULTILANG', TRUE);
         $ml = new Multilang();
+        $tpl->getCssFile('Multilang');
     }
 
     return true;

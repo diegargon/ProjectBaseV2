@@ -10,8 +10,8 @@
  */
 !defined('IN_WEB') ? exit : true;
 
-$LNG['L_LOGIN'] = 'Identificarse';
-$LNG['L_REGISTER'] = 'Registrarse';
+$LNG['L_LOGIN'] = 'Login';
+$LNG['L_REGISTER'] = 'Registro';
 $LNG['L_REGISTER_MSG'] = '¿no eres miembro?';
 $LNG['L_PROFILE'] = 'Perfil';
 $LNG['L_LOGOUT'] = 'Salir';

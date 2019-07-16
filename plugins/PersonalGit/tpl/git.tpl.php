@@ -9,7 +9,6 @@
  */
 !defined('IN_WEB') ? exit : true;
 ?>
-<div id="loading"></div> 
 <div  class="bodysize page">
     <div class="github_user">
         <div class="github_user_top">
@@ -36,7 +35,6 @@
 
     <div class="github_repo">
         <?= $data['repo_data'] ?>
-    </div>
-    <script type="text/javascript">$('#loading').hide();</script>
+    </div>    
 
 </div>

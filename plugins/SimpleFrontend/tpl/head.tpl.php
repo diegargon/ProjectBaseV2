@@ -39,6 +39,21 @@
         <link rel="icon" href="<?= $cfg['STATIC_SRV_URL'] ?>favicon.ico" type='image/x-icon' />   
         <?php
         isset($tpldata['SCRIPTS_TOP']) ? print $tpldata['SCRIPTS_TOP'] : null;
-        ?>
+
+        if ($cfg['loading_screen_support']) {
+            ?>
+            <script>window.onload = function () {
+                    document.getElementById("loading_wrap").style.display = "none";
+                };
+                function show_loading() {
+                    document.getElementById("loading_wrap").style.display = "block";
+                }
+            </script>
+        <?php } ?>
     </head>
     <body id="Top">    
+        <?php
+        if ($cfg['loading_screen_support']) {
+            ?>
+            <div id="loading_wrap" class="loading"></div>
+        <?php } ?>
