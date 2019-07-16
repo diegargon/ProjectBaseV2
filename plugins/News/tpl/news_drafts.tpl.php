@@ -11,8 +11,24 @@
 if ($data['TPL_CTRL'] == 1) {
     ?>
     <div  class="bodysize page">
-    <?php } ?>    
-    <p><a href="<?= $data['draft_url'] ?>"><?= $data['title'] ?></a></p>
-    <?php if ($data['TPL_FOOT'] == 1) { ?>
+        <div class="divTable">
+            <div class="divTableHeadRow">
+                <div class="divTableHeadCell"><?= $LNG['L_NEWS_NEWS_LINK'] ?></div>
+                <div class="divTableHeadCell"><?= $LNG['L_NEWS_NPAGE'] ?></div>
+            </div>
+            <div class="divTableBody">
+            <?php } ?>  
+
+            <div class="divTableRow">                
+                <div class="divTableCell"><a href="<?= $data['draft_url'] ?>"><?= $data['title'] ?></a></div>
+                <div class="divTableCell"><?= $data['page'] ?></div>
+            </div>            
+            <?php if ($data['TPL_FOOT'] == 1) { ?>
+            </div>
+            <div class="divTableFootRow">
+                <div class="divTableFootCell"></div>
+                <div class="divTableFootCell"></div>
+            </div>
+        </div>
     </div>
 <?php } ?>

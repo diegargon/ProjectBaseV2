@@ -105,7 +105,8 @@ $LNG['L_NEWS_WARNING_DRAFT'] = 'Warning: this news as a draft';
 $LNG['L_NEWS_E_CANT_ACCESS'] = 'No access';
 $LNG['L_NEWS_E_NODRAFTS'] = 'You havent drafts';
 $LNG['L_NEWS_DRAFTS'] = 'Drafts';
-
+$LNG['L_NEWS_NPAGE'] = 'Num Page';
+$LNG['L_NEWS_NEWS_LINK'] = 'Link to news';
 /* ACL */
 $LNG['L_PERM_R_NEWS_FULL_ACCESS'] = 'Full admin access to read';
 $LNG['L_PERM_W_NEWS_FULL_ACCESS'] = 'Full admin access to read/write';
