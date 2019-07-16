@@ -113,12 +113,11 @@ h1,h2,h3,h4,h5,h6{
 #header-menu {
     display:block;
     background-color:#eee;
-    /* overflow:hidden; */
-    border:1px solid black;
+    /* overflow:hidden; */    
     height: 40px;
     /* line-height: 50px; */
     color: #870505;
-    border: 1px solid #000;
+    /* border: 1px solid #000; */
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
 }
@@ -335,7 +334,7 @@ h1,h2,h3,h4,h5,h6{
     background: linear-gradient(#55a0db, #1f6ba5);
 }
 #sections_nav {
-    border: 1px solid #000;
+    /* border: 1px solid #000; */
 }
 #sections_nav ul, #sections_submenu ul {
     padding:0;
