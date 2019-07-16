@@ -21,7 +21,7 @@
         <meta name="referrer" content="origin-when-crossorigin" />
         <meta name="distribution" content="global"  />
         <meta name="resource-type" content="document"  />
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#2f5d81" />
         <?php
         isset($cfg['WEB_LANG']) ? print '<meta name="language" content="' . $cfg['WEB_LANG'] . '" />' : null;
         isset($cfg['PAGE_KEYWORDS']) ? print '<meta name="keywords" content="' . $cfg['PAGE_KEYWORDS'] . '" /> ' : null;

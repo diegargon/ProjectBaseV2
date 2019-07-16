@@ -1,3 +1,6 @@
+Options All -Indexes
+ServerSignature Off
+
 RewriteEngine On
 RewriteBase /
 
@@ -28,10 +31,39 @@ RewriteRule  ^([a-zA-z]{2})\/terms$   index.php?module=SMBasic&page=terms&lang=$
 RewriteRule ^(es|en)/$  $2?lang=$1 [QSA]
 RewriteRule  ^([a-zA-z]{2})$ $1/ [L,R=301]
 
+RewriteRule ^.*\.git.* - [R=404]
+
 <ifmodule mod_expires.c>
-<Filesmatch "\.(jpg|jpeg|png|gif|js|css|swf|ico|woff|mp3)$">
+<Filesmatch "\.(jpg|jpeg|svg|png|gif|eot|webm|ogv|mp4|swf|ico|woff|mp3)$">
+    ExpiresActive on
+    ExpiresDefault "access plus 365 days"
+</Filesmatch>
+<Filesmatch "\.(js|css)$">
     ExpiresActive on
     ExpiresDefault "access plus 30 days"
 </Filesmatch>
-#ExpiresByType image/x-icon "access plus 1 day/month/year"
+# Java script compression
+<FilesMatch "\.js$">
+RewriteEngine On
+RewriteCond %{HTTP:Accept-Encoding} gzip
+RewriteCond %{REQUEST_FILENAME}.gz -f
+RewriteRule (.*)\.js$ $1\.js.gz [L]
+ForceType text/javascript
+</FilesMatch>
+
+<IfModule mod_deflate.c>
+  SetOutputFilter DEFLATE
+</IfModule>
+
+<ifModule mod_gzip.c>
+mod_gzip_on Yes
+mod_gzip_dechunk Yes
+mod_gzip_item_include file .(html?|txt|css|js|php|pl)$
+mod_gzip_item_include handler ^cgi-script$
+mod_gzip_item_include mime ^text/.*
+mod_gzip_item_include mime ^application/x-javascript.*
+mod_gzip_item_exclude mime ^image/.*
+mod_gzip_item_exclude rspheader ^Content-Encoding:.*gzip.*
+</ifModule>
+
 </ifmodule>
