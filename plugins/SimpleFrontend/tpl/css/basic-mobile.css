@@ -58,4 +58,11 @@
     #brand span {
         font-size: 1em;
     }
+    #header {
+        margin-top: 0;
+    }
+    #header-menu {
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;        
+    }
 }

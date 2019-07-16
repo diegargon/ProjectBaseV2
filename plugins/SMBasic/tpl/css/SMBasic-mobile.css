@@ -1,6 +1,11 @@
-/*
- Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
-*/
+/**
+ *  SMBasic css mobile file
+ * 
+ *  @author diego@envigo.net
+ *  @package ProjectBase
+ *  @subpackage SMBasic
+ *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)  
+ */
 
 @media only screen and (max-width: 640px) {
     .login_box h1, .register_box h1, .profile_box h1 {
@@ -13,4 +18,9 @@
         margin: 0 auto;
     }
 
+}
+@media only screen and (max-width: 400px) {
+    .drop_btn_caption {
+        display:none;
+    }
 }

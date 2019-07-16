@@ -19,7 +19,7 @@ if (isset($data['login_menu'])) {
 if (isset($data['register_menu'])) {
     ?>
     <div class="nav_top">
-        <a class="header-menu-link" style="border: 1px solid black;border-radius: 5px;padding:5px;margin-left:5px;" href="<?= $data['register_url'] ?>" rel="nofollow"><?= $LNG['L_REGISTER'] ?>
+        <a class="header-menu-link" style="border: 1px solid black;border-radius: 5px;padding:5px;margin-left:5px;margin-right:5px;" href="<?= $data['register_url'] ?>" rel="nofollow"><?= $LNG['L_REGISTER'] ?>
         </a>
     </div>
     <?php

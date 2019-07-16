@@ -44,7 +44,9 @@ function SMBasic_SetTopNavUserMenu() {
         $frontend->addMenuItem('top_menu_right', $tpl->getTPLFile('SMBasic', 'sm_menu_opt', ['register_menu' => 1, 'register_url' => $register_url]), 8);
     }
 
-    if ($cfg['smbasic_set_drop_caption']) {
+    if ($cfg['smbasic_set_drop_caption'] && $user['uid'] > 0) {
+        $tpl->getCssFile('SMBasic');
+        $tpl->getCssFile('SMBasic', 'SMBasic-mobile');
         !empty($user['avatar']) ? $menu_data['avatar'] = $user['avatar'] : $menu_data['avatar'] = $cfg['smbasic_default_img_avatar'];
         $menu_data['drop_menu_caption'] = 1;
         $menu_data['username'] = $user['username'];

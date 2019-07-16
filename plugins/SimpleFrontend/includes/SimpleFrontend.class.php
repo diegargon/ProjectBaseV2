@@ -240,8 +240,12 @@ class SimpleFrontend {
         if ($cfg['tplbasic_nav_menu']) {
             $menu_data['header_menu_elements_left'] = $this->getMenuItems('top_menu_left');
             $menu_data['header_menu_elements_right'] = $this->getMenuItems('top_menu_right');
-            $menu_data['header_drop_menu_elements'] = $this->getMenuItems('dropdown_menu');
-            $menu_data['drop_menu_caption'] = $this->getMenuItems('dropdown_menu_caption');
+            $drop_menu_elements = $this->getMenuItems('dropdown_menu');
+            if (!empty($drop_menu_elements)) {
+                $menu_data['header_drop_menu_elements'] = $drop_menu_elements;
+                $menu_data['drop_menu_caption'] = $this->getMenuItems('dropdown_menu_caption');
+            }
+
             $body_data['header_menu'] = $tpl->getTplFile('SimpleFrontend', 'header_menu', $menu_data);
         }
 
