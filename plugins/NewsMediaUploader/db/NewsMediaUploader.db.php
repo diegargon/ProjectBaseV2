@@ -15,7 +15,7 @@
 $newsMediaUploader_database_install = [
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('NewsMediaUploader', 'newsmedia_debug', '0');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('NewsMediaUploader', 'upload_max_filesize', '8mb');",
-    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('NewsMediaUploader', 'upload_accepted_files', 'jpeg,jpg,png,gif');",
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('NewsMediaUploader', 'upload_accepted_files', 'jpeg,jpg,png,gif,webp');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('NewsMediaUploader', 'upload_allow_anon', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('NewsMediaUploader', 'upload_create_thumbs', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('NewsMediaUploader', 'upload_create_mobile', '1');",

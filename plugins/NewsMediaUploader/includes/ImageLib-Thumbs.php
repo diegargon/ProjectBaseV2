@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  NewsmediaUploader - ImageLib Thumbs Thread
  * 
@@ -7,8 +8,6 @@
  *  @subpackage NewsMediaUploadeer
  *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)  
  */
-
-
 class ImageLib_Thumbs_Thread extends Thread {
 
     private $filepath;
@@ -40,7 +39,11 @@ class ImageLib_Thumbs_Thread extends Thread {
         } else if ($original_type === 3) {
             $imgt = 'ImagePNG';
             $imgcreatefrom = 'ImageCreateFromPNG';
+        } else if ($original_type === IMG_WEBP) {
+            $imgt = 'ImageWEBP';
+            $imgcreatefrom = 'ImageCreateFromWEBP';
         } else {
+
             return false;
         }
 

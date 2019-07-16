@@ -138,8 +138,10 @@ $db->insert('links', $insert_ary);
 require_once('includes/ImageLib.php');
 $imglib = new ImageLib;
 if ($cfg['upload_create_thumbs']) {
-    $thumb_filePath = $thumbsDir . DIRECTORY_SEPARATOR . $fileName; // str_replace(".", "-thumb.", $filePath);
-    $imglib->do_thumb($filePath, $thumb_filePath, $cfg['upload_thumbs_width']);
+    $thumb_filePath = $thumbsDir . DIRECTORY_SEPARATOR . $fileName; // str_replace(".", "-thumb.", $filePath);  
+    if( !($rc = $imglib->do_thumb($filePath, $thumb_filePath, $cfg['upload_thumbs_width'])) ) {
+        die('{"jsonrpc" : "2.0", "error" : {"code": 201, "message": " '. $rc .' "}, "id" : "id"}');
+    }
 }
 if ($cfg['upload_create_mobile']) {
     $mobile_filePath = $mobileDir . DIRECTORY_SEPARATOR . $fileName;

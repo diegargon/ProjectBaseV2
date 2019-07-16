@@ -34,7 +34,7 @@ RewriteRule  ^([a-zA-z]{2})$ $1/ [L,R=301]
 RewriteRule ^.*\.git.* - [R=404]
 
 <ifmodule mod_expires.c>
-<Filesmatch "\.(jpg|jpeg|svg|png|gif|eot|webm|ogv|mp4|swf|ico|woff|mp3)$">
+<Filesmatch "\.(jpg|jpeg|jp2|svg|png|gif|eot|webm|webp|ogv|mp4|swf|ico|woff|mp3)$">
     ExpiresActive on
     ExpiresDefault "access plus 365 days"
 </Filesmatch>

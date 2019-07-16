@@ -35,16 +35,20 @@ class ImageLib {
         }
     }
 
-    function jpeg_support() {
+    function jpegSupport() {
         return $this->engine_info['JPEG Support'];
     }
 
-    function gif_support() {
+    function gifSupport() {
         return $this->engine_info['GIF Create Support'];
     }
 
-    function png_support() {
+    function pngSupport() {
         return $this->engine_info['PNG Support'];
+    }
+
+    function webpSupport() {
+        return $this->engine_info['WEBP Support'];
     }
 
     // Git @ pedroppinheiro
@@ -69,6 +73,9 @@ class ImageLib {
         } else if ($original_type === 3) {
             $imgt = 'ImagePNG';
             $imgcreatefrom = 'ImageCreateFromPNG';
+        } else if ($original_type === IMG_WEBP) {
+            $imgt = 'ImageWEBP';
+            $imgcreatefrom = 'ImageCreateFromWEBP';
         } else {
             return false;
         }
@@ -113,7 +120,11 @@ class ImageLib {
         } else if ($original_type === 3) {
             $imgt = 'ImagePNG';
             $imgcreatefrom = 'ImageCreateFromPNG';
+        } else if ($original_type === 18) {
+            $imgt = 'ImageWEBP';
+            $imgcreatefrom = 'ImageCreateFromWEBP';
         } else {
+
             return false;
         }
 
