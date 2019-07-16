@@ -12,7 +12,7 @@
 
 function git_section_nav_elements() {
     global $cfg;
-    return '<li><a href="/index.php?module=PersonalGit&page=git">' . $cfg['git_menu_text'] . '</a></li>';
+    return '<li><a rel="nofollow" href="/index.php?module=PersonalGit&page=git">' . $cfg['git_menu_text'] . '</a></li>';
 }
 
 function get_user($user, $curl_token) {
