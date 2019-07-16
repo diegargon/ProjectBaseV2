@@ -223,7 +223,7 @@ class SimpleFrontend {
 
     function sendHeaders() {
         global $tpl;
-        $tpl->addScriptFile('standard', 'jquery', 'TOP', 0);
+
         $tpl->addPrefetchLinks();
         $tpl->cssCache();
 

@@ -535,7 +535,7 @@ class Plugins {
                 $this->debug ? $debug_msg .= 'Class file (' . $class_file . ') ' : null;
             }
         }
-        $debug->log($debug_msg, 'PLUGINS', 'INFO');
+        $this->debug ? $debug->log($debug_msg, 'PLUGINS', 'INFO') : null;
     }
 
     /**
