@@ -505,11 +505,10 @@ function news_adv_stats($nid, $lang_id) {
     }
 }
 
-function news_add_social_meta($news) { // TODO:  Move to plugin NewsSocialExtra? Unused Atm
-    global $tpl, $cfg, $filter;
+function news_add_social_meta($news) {
+    global $tpl, $cfg, $filter, $ml, $ctgs;
     $protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://';
     $news['url'] = $protocol . $_SERVER['HTTP_HOST'] . $filter->srvRequestUri();
-    $news['PAGE_TITLE'] = $news['title'];
     $match_regex = '/\[.*img.*\](.*)\[\/.*img\]/';
     $match = '';
     preg_match($match_regex, $news['text'], $match);
@@ -518,8 +517,10 @@ function news_add_social_meta($news) { // TODO:  Move to plugin NewsSocialExtra?
         $cfg['IMG_UPLOAD_DIR'] = 'news_img'; //TODO i forget why add a TODO here :)
         $news['mainimage'] = $cfg['STATIC_SRV_URL'] . $cfg['IMG_UPLOAD_DIR'] . '/' . $url;
     }
-    $content = $tpl->getTplFile('News', 'NewsSocialmeta', $news);
-    $tpl->addtoTplVar('META', $content);
+    defined('MULTILANG') ? $news['iso_lang'] = $ml->idToIso($news['lang_id']) : $news['iso_lang'] = $cfg['WEB_LANG'];
+    $news['cat_name'] = $ctgs->getCatNameByID($news['category']);
+
+    $tpl->addtoTplVar('META', $tpl->getTplFile('News', 'NewsSocialmeta', $news));
 }
 
 function getNewsCatBreadcrumb($news_data) {

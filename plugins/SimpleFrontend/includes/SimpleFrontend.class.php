@@ -200,6 +200,7 @@ class SimpleFrontend {
     function indexPage() {
         global $tpl, $cfg;
 
+        $tpl->addtoTplVar('META', $tpl->getTplFile('SimpleFrontend', 'index_meta'));
         if (defined('BLOCKS')) {
             global $blocks;
 
