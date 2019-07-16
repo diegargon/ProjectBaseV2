@@ -138,16 +138,26 @@ function news_newpage_submit_new($news_data) {
      * Check last page if have as draft 1, and force new page if have.
      * We can't allow have page 2 as a draft and publish page 3
      */
+    $as_draft = 0;
+    if ($cfg['news_allow_user_drafts']) {
+        if (!$news_data['as_draft']) {
+            if ($num_pages > 1) {
+                $query = $db->selectAll('news', ['nid' => $news_data['nid'], 'lang_id' => $news_data['news_lang_id'], 'page' => $num_pages], 'LIMIT 1');
+                $last_page = $db->fetch($query);
+                $parent_asdraft_value = $last_page['as_draft'];
+            } else {
+                $parent_asdraft_value = $news_father['as_draft'];
+            }
 
-    if ($num_pages > 1) {
-        $query = $db->selectAll('news', ['nid' => $news_data['nid'], 'lang_id' => $news_data['news_lang_id'], 'page' => $num_pages], 'LIMIT 1');
-        $last_page = $db->fetch($query);
-        $parent_asdraft_value = $last_page['as_draft'];
-    } else {
-        $parent_asdraft_value = $news_father['as_draft'];
+            if ($parent_asdraft_value == 1) {
+                $as_draft = 1;
+            } else {
+                $as_draft = $news_data['as_draft'];
+            }
+        } else {
+            $as_draft = $news_data['as_draft'];
+        }
     }
-
-    $parent_asdraft_value == 1 ? $as_draft_check = 1 : null;
 
     $insert_ary = [
         'nid' => $news_father['nid'],
@@ -159,10 +169,10 @@ function news_newpage_submit_new($news_data) {
         'category' => $news_father['category'],
         'moderation' => $cfg['news_moderation'],
         'page' => $page_num,
-        'as_draft' => $cfg['news_allow_user_drafts'],
-        'as_draft_check' => empty($as_draft_check) ? 0 : 1,
+        'as_draft' => empty($as_draft) ? 0 : 1,
     ];
     !empty($news_data['lead']) ? $insert_ary['lead'] = $db->escapeStrip($news_data['lead']) : null;
+
     $db->insert("news", $insert_ary);
 
     $num_pages++;
