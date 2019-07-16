@@ -8,7 +8,11 @@
  *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
  */
 !defined('IN_WEB') ? exit : true;
-?>
+if ($cfg['news_side_scroll']) {
+    ?>
+    <a href="javascript:" id="scrollup"></a>
+    <a href="javascript:" id="scrolldown"></a>
+<?php } ?>
 <div  class="bodysize page">
     <div class="standard_box submit_box">
         <form  id="form_news" action="#" autocomplete="on" method="post">

@@ -31,5 +31,9 @@ if (!empty($_POST['submitForm'])) {
     $tpl->addScriptFile("standard", "jquery", "TOP", 0);
     $tpl->addScriptFile("MiniEditor", "editor");
     $tpl->addScriptFile("News", "newsform");
+    if ($cfg['news_side_scroll']) {
+        $tpl->addScriptFile('News', 'news_scroll', 'BOTTOM');
+    }
+
     news_new_form();
 }
