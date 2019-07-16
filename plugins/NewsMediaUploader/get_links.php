@@ -61,3 +61,4 @@ if (!empty($last_id)) {
     print $content;
     exit();
 }
+exit();

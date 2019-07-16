@@ -30,13 +30,13 @@
     });
 
     function loadData(last_id) {
-        //console.log( last_id );        
-        var $photos = $('#photobanner');
-        var $path = '/index.php?module=NewsMediaUploader&page=get_links';
-        $.get($path, {last_id: last_id}, function (data) {
-            $photos.append(data);
-        });
-
+        if (last_id) {
+            var $photos = $('#photobanner');
+            var $path = '/index.php?module=NewsMediaUploader&page=get_links';
+            $.get($path, {last_id: last_id}, function (data) {
+                $photos.append(data);
+            });
+        }
     }
     function reloadData() {
         var $photos = $('#photobanner');
