@@ -23,6 +23,12 @@
     .news_article_container img {
         width:150px;
     }
+    .news_section_row {
+        float:none;
+    }
+    .news_row {
+        width:99%;
+    }
 }
 @media only screen and (max-width: 700px) {
     .newsbox {

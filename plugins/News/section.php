@@ -101,7 +101,9 @@ foreach ($cats as $cat) {
             }
             $CATHEAD = 0;
         }
+        $news_data['news'] .= '<div class="news_article_section_container">';
         $news_data['news'] .= $cat_news_row['html'];
+        $news_data['news'] .= '</div>';
     }
     $news_data['news'] .= '</div>';
 }
