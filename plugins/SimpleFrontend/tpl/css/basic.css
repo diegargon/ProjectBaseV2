@@ -331,7 +331,8 @@ h1,h2,h3,h4,h5,h6{
     border-left: 1px solid #000;
     border-right: 1px solid #000;
     color:white;
-    background: linear-gradient(#55a0db, #1f6ba5);
+    /* background: linear-gradient(#55a0db, #1f6ba5) */;
+    background-color: #1f6ba5;
 }
 #sections_nav {
     /* border: 1px solid #000; */
