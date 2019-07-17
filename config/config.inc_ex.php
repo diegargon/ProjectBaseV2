@@ -79,4 +79,4 @@ $cfg['WEB_LANG'] = 'es';
 $cfg['WEB_LOGO'] = $cfg['STATIC_SRV_URL'] . 'favicon-96x96.png';
 $cfg['default_timezone'] = 'Europe/Madrid';
 $cfg['server_timezone'] = 'Europe/Madrid';
-$cfg['default_dateformat'] = 'd/m/y H:i';
+$cfg['default_dateformat'] = 'd/m/U H:i';

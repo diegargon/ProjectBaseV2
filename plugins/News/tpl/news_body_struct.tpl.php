@@ -26,16 +26,19 @@
     "dateModified": "<?= !empty($data['ITEM_MODIFIED']) ? $data['ITEM_MODIFIED'] : null ?>",
     <?= $data['ITEM_SECTIONS'] ?>
     "creator": "<?= $data['author'] ?>",
-    "author": "<?= $data['author'] ?>",
+    "author": {
+        "@type": "Person",
+        "name": "<?= $data['author'] ?>"
+    },
     "articleBody": "<?= $data['lead'] ?>",
     "publisher": {
-    "@type": "Organization",
-    "logo": {
-    "@type": "ImageObject",
-    "url": "<?= $cfg['WEB_LOGO'] ?>"
-    },
-    "name": "<?= $cfg['WEB_NAME'] ?>"
-    },
+        "@type": "Organization",
+        "name": "<?= $cfg['WEB_NAME'] ?>",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "<?= $cfg['WEB_LOGO'] ?>"
+        }
+    },    
     "mainEntityOfPage": "True"
     }
 </script>

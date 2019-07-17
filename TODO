@@ -47,3 +47,4 @@ para luego presentarlos por grupos, ej: L_NEWS_SUBMIT, L_NEWS_VIEW
 * Añadir <p> automaticamente en parrafos sin p
   (dificil)
 * Quizas Añadir en config descripcion, para ello lo tal antes seria separar los lang files de admin del resto
+* Revisar default_dateformat y DB_DATAFORMAT 

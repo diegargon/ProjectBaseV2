@@ -125,7 +125,7 @@ function news_show_page() {
         if (!empty($cats)) {
             $news_data['ITEM_SECTIONS'] = '';
             foreach ($cats as $cat) {
-                $news_data['ITEM_SECTIONS'] .= '"articleSection": "' . trim($cat) . '",\n';
+                $news_data['ITEM_SECTIONS'] .= '"articleSection": "' . trim($cat) . '",';
             }
         }
         $tpl->addtoTplVar('POST_ACTION_ADD_TO_BODY', $tpl->getTplFile('News', 'news_body_struct', $news_data));
@@ -546,7 +546,7 @@ function getNewsCatBreadcrumb($news_data) {
         $list_counter = 1;
         foreach ($cat_ary as $cat) {
             $ITEM_LI = 'itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"';
-            $ITEM_HREF = 'itemprop="item';
+            $ITEM_HREF = 'itemprop="item"';
             $ITEM_NAME = 'itemprop="name"';
             $ITEM_POS = '<meta itemprop="position" content="' . $list_counter . '" />';
             $cat_path .= $cat;

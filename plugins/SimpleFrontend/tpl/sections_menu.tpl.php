@@ -9,7 +9,7 @@
  */
 !defined('IN_WEB') ? exit : true;
 ?>
-<nav id="sections_nav">
+<nav id="sections_nav"  itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement">
     <ul>
         <?= $data['sections_menu'] ?>
     </ul>

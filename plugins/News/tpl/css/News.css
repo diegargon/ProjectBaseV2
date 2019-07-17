@@ -230,7 +230,7 @@
     padding: 5px;
 }
 #news_info {
-    clear:both;
+    /* clear:both; */
     overflow:hidden;
     border:0px solid red;
 }
