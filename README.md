@@ -60,6 +60,7 @@ Author
 
 Lastest relevant add/changes 
 ================================
+* comments moderation
 * add load on scroll to Newsupload images and reload button
 * add save news as drafts
 * rewrite top menu design/logic

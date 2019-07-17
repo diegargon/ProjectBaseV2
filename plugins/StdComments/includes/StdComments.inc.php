@@ -66,9 +66,6 @@ function stdFormatComments($comments, $comm_conf, $perm_cfg) {
     }
     $num_comments = count($comments);
 
-    //ADM COMMENTS ACTIONS
-    stdCatchAdmActions();
-
     do_action('std_format_comments', $comments);
 
     /* First, retrieve all authors in one query) */
@@ -87,6 +84,9 @@ function stdFormatComments($comments, $comm_conf, $perm_cfg) {
     !empty($uid_list) ? $sm->setUsersInCacheByIDs($uid_list) : null;
 
     foreach ($comments as $comment_row) {
+        if ($comment_row['moderation'] == 1 && $perm_cfg['allow_comm_moderation'] == 0) {
+            continue;
+        }
         $counter == 0 ? $comment_row['TPL_FIRST'] = 1 : null;
         $counter == ($num_comments - 1 ) ? $comment_row['TPL_LAST'] = 1 : null;
         $counter++;
@@ -124,7 +124,7 @@ function stdFormatComments($comments, $comm_conf, $perm_cfg) {
 }
 
 /**
- * Get Comment admin bar
+ * Get the comment admin options bar
  * 
  * @global array $LNG
  * @param array $comm
@@ -152,7 +152,10 @@ function stdAdmBar($comm, $perm) {
         ($comm['shadow_ban'] > 0) ? $class = 'class="adm_btn_on_comm"' : $class = '';
         $bar .= '<input ' . $class . ' type="submit" value="' . $LNG['L_SC_SHADOWBAN'] . '" name="shadowban" />';
     }
-
+    if ($perm['comm_moderation']) {
+        ($comm['moderation'] == 1) ? $class = 'class="adm_btn_on_comm"' : $class = '';
+        $bar .= '<input ' . $class . ' type="submit" value="' . $LNG['L_SC_MODERATION'] . '" name="moderation" />';
+    }
     return $bar;
 }
 
@@ -161,7 +164,7 @@ function stdAdmBar($comm, $perm) {
  * 
  * @return boolean
  */
-function stdCatchAdmActions() {
+function stdCatchAdmCommActions() {
 
     if (!isset($_POST['cid']) || !is_numeric($_POST['cid'])) {
         return false;
@@ -178,6 +181,9 @@ function stdCatchAdmActions() {
     if (isset($_POST['shadowban'])) {
         stdCommShadowBan($_POST['cid']);
     }
+    if (isset($_POST['moderation'])) {
+        stdCommApprove($_POST['cid']);
+    }
 }
 
 /**
@@ -186,10 +192,12 @@ function stdCatchAdmActions() {
  * @global tpl $tpl
  * @return string
  */
-function stdNewComment() {
+function stdNewComment($msg = null) {
     global $tpl;
+    $comm_data = [];
 
-    return $tpl->getTplFile('StdComments', 'new_comment');
+    isset($msg) ? $comm_data['msg'] = $msg : null;
+    return $tpl->getTplFile('StdComments', 'new_comment', $comm_data);
 }
 
 /**
@@ -247,18 +255,21 @@ function stdGetCommPerms($comm_author_id, $perm_cfg) {
         $perm_comm['delete_comm'] = 1;
         $perm_comm['soft_delete_comm'] = 1;
         $perm_comm['shadow_ban_comm'] = 1;
+        $perm_comm['comm_moderation'] = 1;
         return $perm_comm;
     }
 
     $perm_comm['delete_comm'] = $perm_cfg['allow_comm_delete'];
     $perm_comm['soft_delete_comm'] = $perm_cfg['allow_comm_softdelete'];
     $perm_comm['shadow_ban_comm'] = $perm_cfg['allow_comm_shadowban'];
+    $perm_comm['comm_moderation'] = $perm_cfg['allow_comm_moderation'];
 
     $comm_author = $sm->getUserByID($comm_author_id);
     if ($comm_author['isAdmin'] && !$user['isAdmin']) {
         $perm_comm['delete_comm'] = 0;
         $perm_comm['soft_delete_comm'] = 0;
         $perm_comm['shadow_ban_comm'] = 0;
+        $perm_comm['comm_moderation'] = 0;
     }
 
     if ($user['uid'] == $comm_author_id) {
@@ -266,6 +277,7 @@ function stdGetCommPerms($comm_author_id, $perm_cfg) {
         $perm_comm['shadow_ban_comm'] = 0;
         $perm_comm['soft_delete_comm'] = 0;
         $perm_comm['report_comm'] = 0;
+        $perm_comm['comm_moderation'] = 0;
     }
 
 
@@ -318,4 +330,15 @@ function stdCommShadowBan($comm_id) {
     global $db;
 
     $db->toggleField('comments', 'shadow_ban', ['cid' => $comm_id]);
+}
+
+/**
+ * Approve message
+ * @global Database $db
+ * @param int $comm_id
+ */
+function stdCommApprove($comm_id) {
+    global $db;
+
+    $db->toggleField('comments', 'moderation', ['cid' => $comm_id]);
 }

@@ -19,13 +19,15 @@ CREATE TABLE `" . DB_PREFIX . "comments` (
   `soft_delete` tinyint(1) NOT NULL DEFAULT '0',
   `shadow_ban` tinyint(1) NOT NULL DEFAULT '0',
   `reported` int(10) NOT NULL DEFAULT '0',
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+  `moderation` tinyint(1) NOT NULL DEFAULT '0',
 ) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . ";
 ";
 
 /* CONFIG */
-//$stdComments_database_install[] = "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('stdComments', '', '');";
-
+//$stdComments_database_install = [
+//   "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('stdComments', 'comments_moderation', '0');",
+//];
 $stdComments_database_install[] = "
 ALTER TABLE `" . DB_PREFIX . "comments`
   ADD PRIMARY KEY (`cid`),

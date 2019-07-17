@@ -16,3 +16,5 @@ $LNG['L_SC_REPORT'] = 'Report';
 $LNG['L_SC_DELETE'] = 'Delete';
 $LNG['L_SC_SOFTDELETE'] = 'Soft Delete';
 $LNG['L_SC_SHADOWBAN'] = 'Shadow ban';
+$LNG['L_SC_MODERATION'] = 'Moderation';
+$LNG['L_SC_COMM_WAITING_MOD'] = 'Su comentario esta en espera de moderación';

@@ -13,6 +13,7 @@
 function News_Comments($news) {
     global $cfg, $tpl, $sm, $filter, $plugins, $LNG;
     $content = '';
+    $msg = '';
 
     if (empty($news['nid']) || empty($news['lang_id'])) {
         return false;
@@ -43,41 +44,56 @@ function News_Comments($news) {
         return false;
     }
 
+    stdCatchAdmCommActions();
+
     $tpl->addScriptFile('standard', 'jquery', 'BOTTOM');
+
+    if (!empty($_POST['btnSendNewComment']) && $cfg['nc_allow_new_comments'] && !$news['comments_disabled']) {
+        if (!empty($user) || $cfg['nc_allow_anon_comments']) {
+            $add_comm_conf['plugin'] = 'NewsComments';
+            $add_comm_conf['resource_id'] = $news['nid'];
+            $add_comm_conf['lang_id'] = $news['lang_id'];
+            empty($user) ? $add_comm_conf['author_id'] = 0 : $add_comm_conf['author_id'] = $user['uid'];
+            $add_comm_conf['comment'] = $filter->postUtf8Txt('news_comment');
+            if ($cfg['nc_moderate_comm']) {
+                if ($user['uid'] > 0 && ($user['uid'] == $news['author_id'])) {
+                    $add_comm_conf['moderation'] = 0;
+                } else {
+                    $add_comm_conf['moderation'] = 1;
+                }
+            }
+            $add_comm_conf['comment'] ? stdAddComment($add_comm_conf) : null;
+            if ($cfg['nc_moderate_comm'] && ($user['uid'] != $news['author_id'])) {
+                $msg .= $LNG['L_SC_COMM_WAITING_MOD'];
+            }
+        }
+    }
 
     $comm_conf['plugin'] = 'NewsComments';
     $comm_conf['resource_id'] = $news['nid'];
     $comm_conf['lang_id'] = $news['lang_id'];
-
-    if (!empty($_POST['btnSendNewComment']) && $cfg['nc_allow_new_comments'] && !$news['comments_disabled']) {
-        if (!empty($user) || $cfg['nc_allow_anon_comments']) {
-            empty($user) ? $comm_conf['author_id'] = 0 : $comm_conf['author_id'] = $user['uid'];
-            $comm_conf['comment'] = $filter->postUtf8Txt('news_comment');
-            $comm_conf['comment'] ? stdAddComment($comm_conf) : null;
-            unset($comm_conf['comment']);
-            unset($comm_conf['author_id']);
-        }
-    }
-
     $comm_conf['limit'] = $cfg['nc_max_comments_perpage'];
 
-    if ($news['author_id'] == $user['uid']) {
+    if (($user['uid'] > 0 && $news['author_id'] == $user['uid']) || ( $user['isAdmin'] || $user['isFounder'] )
+    ) {
         $perm_cfg['allow_comm_delete'] = $cfg['nc_allow_author_delete'];
         $perm_cfg['allow_comm_softdelete'] = $cfg['nc_allow_author_softdelete'];
         $perm_cfg['allow_comm_shadowban'] = $cfg['nc_allow_author_shadowban'];
+        $perm_cfg['allow_comm_moderation'] = $cfg['nc_moderate_comm'];
     } else {
         $perm_cfg['allow_comm_delete'] = 0;
         $perm_cfg['allow_comm_softdelete'] = 0;
         $perm_cfg['allow_comm_shadowban'] = 0;
+        $perm_cfg['allow_comm_moderation'] = 0;
     }
     $perm_cfg['allow_comm_report'] = $cfg['nc_allow_comm_report'];
 
-    if (($comments = stdGetComments($comm_conf, $perm_cfg))) {
+    if (($comments = stdGetComments($comm_conf))) {
         $content .= stdFormatComments($comments, $comm_conf, $perm_cfg);
     }
 
     if ($cfg['nc_allow_new_comments'] && !$news['comments_disabled']) {
-        (($user['uid'] > 1) || $cfg['nc_allow_anon_comments']) ? $content .= stdNewComment() : null;
+        (($user['uid'] > 1) || $cfg['nc_allow_anon_comments']) ? $content .= stdNewComment($msg) : null;
     }
 
     $tpl->addtoTplVar('ADD_TO_NEWSSHOW_BOTTOM', $content);
@@ -88,7 +104,7 @@ function News_Comments($news) {
 function NewsComments_AddrateDisplay(& $comments) {
 
     $rating_r_ids = '';
-    
+
     if (empty($comments) || count($comments) < 1) {
         return false;
     }

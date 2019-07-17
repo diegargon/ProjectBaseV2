@@ -24,8 +24,10 @@ $simplegroups_database_install[] = "CREATE TABLE `" . DB_PREFIX . "groups` (
 ) ENGINE=InnoDB DEFAULT CHARSET=" . DB_CHARSET . ";"
 ;
 
-$simplegroups_database_install [] = "ALTER TABLE `" . DB_PREFIX . "groups` ADD PRIMARY KEY (`group_id`), ADD UNIQUE KEY `group_id` (`group_id`);";
-$simplegroups_database_install [] = "ALTER TABLE `" . DB_PREFIX . "groups` MODIFY `group_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;";
+$simplegroups_database_install = [
+    "ALTER TABLE `" . DB_PREFIX . "groups` ADD PRIMARY KEY (`group_id`), ADD UNIQUE KEY `group_id` (`group_id`);",
+    "ALTER TABLE `" . DB_PREFIX . "groups` MODIFY `group_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;"
+];
 
 /* GROUPS_INSERTS */
 $simplegroups_database_install_insert_admin_group = "INSERT INTO `" . DB_PREFIX . "groups` (`group_name`, `group_father`, `group_desc`, `group_type`, `plugin`) VALUES
@@ -41,7 +43,7 @@ $simplegroups_database_install_insert_registered_group = "INSERT INTO `" . DB_PR
 ";
 
 $simplegroups_database_install_anon_group = "INSERT INTO `" . DB_PREFIX . "groups` (`group_name`, `group_father`, `group_desc`, `group_type`, `plugin`) VALUES
-('L_ANONYMOUS', '0', 'L_ANONYMOUS_DESC', 'USER', 'GROUPS')
+('L_ANONYMOUS_GROUP', '0', 'L_ANONYMOUS_DESC', 'USER', 'GROUPS')
 ";
 
 /* USERS */
@@ -51,9 +53,11 @@ $simplegroups_database_install [] = "ALTER TABLE `" . DB_PREFIX . "users` ADD `g
 
 /* UNINSTALL */
 
-$simplegroups_database_uninstall[] = "DROP TABLE `" . DB_PREFIX . "groups`";
-$simplegroups_database_uninstall[] = "ALTER TABLE `" . DB_PREFIX . "users` DROP `groups`";
-$simplegroups_database_uninstall [] = "DELETE FROM `" . DB_PREFIX . "config` WHERE plugin = 'SimpleGroups'";
-$simplegroups_database_uninstall [] = "DELETE FROM `" . DB_PREFIX . "plugins` WHERE plugin_name = 'SimpleGroups'";
+$simplegroups_database_uninstall = [
+    "DROP TABLE `" . DB_PREFIX . "groups`",
+    "ALTER TABLE `" . DB_PREFIX . "users` DROP `groups`",
+    "DELETE FROM `" . DB_PREFIX . "config` WHERE plugin = 'SimpleGroups'",
+    "DELETE FROM `" . DB_PREFIX . "plugins` WHERE plugin_name = 'SimpleGroups'"
+];
 
 

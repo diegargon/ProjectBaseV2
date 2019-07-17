@@ -35,6 +35,6 @@ $LNG['L_GROUP_TYPE'] = 'Tipo';
 $LNG['L_USER_NOTFOUND'] = 'Usuario no existe';
 $LNG['L_ADMINISTRATOR'] = 'Administrador';
 $LNG['L_ADMIN_LIMITED'] = 'Administrador limitado';
-$LNG['L_ANONYMOUS'] = 'Grupo de usuarios anonimos';
+$LNG['L_ANONYMOUS_GROUP'] = 'Grupo de usuarios anonimos';
 $LNG['L_ADMIN_LIMIT_DESC'] = 'Grupo de administradores limitados';
 $LNG['L_NO_GROUPS_FOUND'] = 'No se encontraron grupos';
