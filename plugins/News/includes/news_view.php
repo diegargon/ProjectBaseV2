@@ -149,7 +149,7 @@ function news_catch_admin_actions(&$news_data) {
 
     $news_lang_id = $filter->getInt('news_lang_id');
     $news_nid = $filter->getInt('nid');
-    $news_page = $filter->getInt('news_delete_page');
+    $news_page = $filter->getInt('npage');
 
     if (empty($news_lang_id) || empty($news_nid)) {
         return false;
@@ -400,8 +400,8 @@ function news_delete($nid, $lang_id, $page = null) {
 
 function news_approved($nid, $lang_id, $news_page) {
     global $db;
-
-    if (empty($nid) || empty($lang_id) || $news_page) {
+    
+    if (empty($nid) || empty($lang_id) || empty($news_page)) {        
         return false;
     }
     $db->update('news', ['moderation' => 0], ['nid' => $nid, 'lang_id' => $lang_id, 'page' => $news_page], 'LIMIT 1');
