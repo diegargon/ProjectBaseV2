@@ -52,3 +52,4 @@ $LNG['L_ACL_E_ID'] = 'Error in the ID field';
 $LNG['L_ACL_USER_ALREADY_ROLE'] = 'User already have this rol assigned';
 $LNG['L_ACL_ADD_SUCCESSFUL'] = 'Rol added sucesfull';
 $LNG['L_ACL_DEL_SUCCESSFUL'] = 'Rol delete sucesfull';
+$LNG['L_ACL_PERM_GROUPS'] = 'Group permissions';

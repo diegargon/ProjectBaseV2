@@ -52,5 +52,6 @@ $LNG['L_ACL_E_ID'] = 'Error del campo ID';
 $LNG['L_ACL_USER_ALREADY_ROLE'] = 'Usuario ya tiene ese rol asignado';
 $LNG['L_ACL_ADD_SUCCESSFUL'] = 'Rol añadido correctamente';
 $LNG['L_ACL_DEL_SUCCESSFUL'] = 'Rol borrado correctamente';
-//$LNG[''] = '';
 $LNG['L_ACL_PERM_GROUPS'] = 'Permisos de grupos';
+//$LNG[''] = '';
+
