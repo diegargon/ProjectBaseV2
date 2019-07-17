@@ -400,8 +400,8 @@ function news_delete($nid, $lang_id, $page = null) {
 
 function news_approved($nid, $lang_id, $news_page) {
     global $db;
-    
-    if (empty($nid) || empty($lang_id) || empty($news_page)) {        
+
+    if (empty($nid) || empty($lang_id) || empty($news_page)) {
         return false;
     }
     $db->update('news', ['moderation' => 0], ['nid' => $nid, 'lang_id' => $lang_id, 'page' => $news_page], 'LIMIT 1');
@@ -545,23 +545,16 @@ function getNewsCatBreadcrumb($news_data) {
         $cat_path = '';
         $list_counter = 1;
         foreach ($cat_ary as $cat) {
-            if ($cfg['ITS_BOT'] && $cfg['news_microdata']) {
-                $ITEM_LI = 'itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"';
-                $ITEM_HREF = "itemscope itemtype=\"http://schema.org/Thing\" itemprop=\"item\"";
-                $ITEM_NAME = 'itemprop="name"';
-                $ITEM_POS = '<meta itemprop="position" content="$list_counter" />';
-            } else {
-                $ITEM_LI = '';
-                $ITEM_HREF = '';
-                $ITEM_NAME = '';
-                $ITEM_POS = '';
-            }
+            $ITEM_LI = 'itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"';
+            $ITEM_HREF = 'itemprop="item';
+            $ITEM_NAME = 'itemprop="name"';
+            $ITEM_POS = '<meta itemprop="position" content="' . $list_counter . '" />';
             $cat_path .= $cat;
             !empty($breadcrumb) ? $breadcrumb .= $cfg['news_breadcrum_separator'] : null;
             $cat = preg_replace('/\_/', ' ', $cat);
             $breadcrumb .= '<li ' . $ITEM_LI . '>';
-            $breadcrumb .= "<a $ITEM_HREF href='/{$cfg['WEB_LANG']}/section/$cat_path'>";
-            $breadcrumb .= "<span $ITEM_NAME>$cat</span></a>$ITEM_POS</li> ";
+            $breadcrumb .= '<a ' . $ITEM_HREF . ' href="' . $cfg['WEB_LANG'] . '/section/' . $cat_path . '">';
+            $breadcrumb .= '<span ' . $ITEM_NAME . '>' . $cat . '</span></a>' . $ITEM_POS . '</li>';
             $cat_path .= $cfg['categories_separator'];
             $list_counter++;
         }
