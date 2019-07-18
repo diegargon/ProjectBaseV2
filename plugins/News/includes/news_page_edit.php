@@ -92,13 +92,13 @@ function news_form_edit_process() {
     $user = $sm->getSessionUser();
     $news_data = news_form_getPost();
 
-    if (!news_perm_ask('w_news_edit')) {
-        if (!($user['uid'] == $news_data['author_id']) && news_perm_ask('w_news_edit_own')
-        ) {
-
-            die('[{"status": "4", "msg": "' . $LNG['L_E_NOEDITACCESS'] . '"}]');
-        }
+    if (
+            (!news_perm_ask('w_news_edit')) ||
+            (!($user['uid'] == $news_data['author_id']) && news_perm_ask('w_news_edit_own'))
+    ) {
+        die('[{"status": "4", "msg": "' . $LNG['L_E_NOEDITACCESS'] . '"}]');
     }
+
     if (!news_perm_ask('w_news_edit')) {
         die('[{"status": "4", "msg": "' . $LNG['L_E_NOEDITACCESS'] . '"}]');
     }
@@ -128,4 +128,45 @@ function news_form_edit_process() {
     }
 
     return true;
+}
+
+function news_save_text_only() {
+    global $db, $filter, $LNG, $cfg, $sm;
+
+    $user = $sm->getSessionUser();
+
+
+    $editor_text = $db->escapeStrip($filter->postUtf8Txt('editor_text'));
+    $nid = $filter->getInt('nid');
+    $news_lang_id = $filter->getInt('news_lang_id');
+    $page = $filter->getInt('npage');
+
+    if (empty($editor_text)) {
+        die('[{"status": "7", "msg": "' . $LNG['L_NEWS_TEXT_ERROR'] . '"}]');
+    }
+    $text_size = mb_strlen($editor_text, $cfg['CHARSET']);
+
+    if (($text_size > $cfg['news_text_max_length']) || ($text_size < $cfg['news_text_min_length'])) {
+        die('[{"status": "8", "msg": "' . $LNG['L_NEWS_TEXT_MINMAX_ERROR'] . '"}]');
+    }
+
+    if (empty($nid) || empty($news_lang_id) || empty($page)) {
+        die('[{"status": "11", "msg": "' . $LNG['L_NEWS_INTERNAL_ERROR'] . '"}]');
+    }
+
+    if (!news_perm_ask('w_news_edit')) {
+        $query = $db->select('news', 'author_id', ['nid' => $nid, 'lang_id' => $news_lang_id, 'page' => $page], 'LIMIT 1');
+        if (!$query) {
+            die('[{"status": "12", "msg": "' . $LNG['L_NEWS_INTERNAL_ERROR'] . '"}]');
+        }
+        $news_data = $db->fetch($query);
+        if (
+                (!($user['uid'] == $news_data['author_id']) && news_perm_ask('w_news_edit_own'))
+        ) {
+            die('[{"status": "4", "msg": "' . $LNG['L_E_NOEDITACCESS'] . '"}]');
+        }
+    }
+
+    $db->update('news', ['text' => $editor_text], ['nid' => $nid, 'lang_id' => $news_lang_id, 'page' => $page], 'LIMIT 1');
+    die('[{"status": "0", "msg": "' . $LNG['L_NEWS_UPDATE_SUCCESSFUL'] . '"}]');
 }
