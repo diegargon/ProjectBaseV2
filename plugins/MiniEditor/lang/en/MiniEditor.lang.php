@@ -34,3 +34,4 @@ $LNG['L_EDITOR_MOD_KEYLINKS'] = "Modify KeyLink";
 $LNG['L_EDITOR_DEL_KEYLINKS'] = "Delete KeyLink";
 $LNG['L_EDITOR_KEYLINKS_FIELD_NOEMPTY'] = "Fields can't be empty";
 $LNG['L_EDITOR_KEYLINKS_KEYWORD_EXIST'] = "Keyword already exists";
+$LNG['L_EDITOR_SAVE'] = "Save";

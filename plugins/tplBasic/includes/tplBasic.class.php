@@ -281,12 +281,12 @@ class TPL {
     }
 
     /**
-     * Check if script exists
+     * Check if script  exists (included)
      * 
      * @param string $script
      * @return boolean
      */
-    private function checkScript($script) {
+    function checkScript($script) {
         foreach ($this->scripts as $value) {
             if ($value == $script) {
                 return true;

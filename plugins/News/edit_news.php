@@ -63,6 +63,8 @@ if (!empty($_GET['newsedit'])) {
 
     if (!empty($_POST['submitForm'])) {
         news_form_edit_process();
+    } else if (!empty($_POST['btnEditorSave'])) {
+        news_save_text_only();
     } else {
         news_edit($news_nid, $news_lang_id, $news_page);
     }
@@ -86,3 +88,28 @@ if (!empty($_GET['newsedit'])) {
     }
 }
 
+function news_save_text_only() {
+    global $db, $filter, $LNG, $cfg;
+
+    $editor_text = $db->escapeStrip($filter->postUtf8Txt('editor_text'));
+    $nid = $filter->getInt('nid');
+    $news_lang_id = $filter->getInt('news_lang_id');
+    $page = $filter->getInt('npage');
+
+    if (empty($editor_text)) {
+        die('[{"status": "7", "msg": "' . $LNG['L_NEWS_TEXT_ERROR'] . '"}]');
+    }
+    $text_size = mb_strlen($editor_text, $cfg['CHARSET']);
+
+    if (($text_size > $cfg['news_text_max_length']) || ($text_size < $cfg['news_text_min_length'])) {
+        die('[{"status": "8", "msg": "' . $LNG['L_NEWS_TEXT_MINMAX_ERROR'] . '"}]');
+    }
+
+    if (!empty($nid) && !empty($news_lang_id) && !empty($page)) {
+        $db->update('news', ['text' => $editor_text], ['nid' => $nid, 'lang_id' => $news_lang_id, 'page' => $page], 'LIMIT 1');
+        die('[{"status": "0", "msg": "' . $LNG['L_NEWS_UPDATE_SUCCESSFUL'] . '"}]');
+    }
+
+
+    die('[{"status": "9", "msg": "' . $LNG['L_NEWS_INTERNAL_ERROR'] . '"}]');
+}

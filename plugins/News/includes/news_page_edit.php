@@ -66,15 +66,18 @@ function news_edit($news_nid, $news_lang_id, $news_page) {
     if (defined('MULTILANG') && ($site_langs = news_get_available_langs($news_data)) != false) {
         if ($news_data['page'] == 1) {
             $news_data['select_langs'] = $site_langs;
-            $news_data['current_lang_id'] = '<input type="hidden" name="current_lang_id" value="' . $news_data['lang_id'] . '"/>';
-        } else {
-            $news_data['current_lang_id'] = '<input type="hidden" name="current_lang_id" value="' . $news_data['lang_id'] . '"/>';
         }
+        $news_data['current_lang_id'] = '<input type="hidden" name="current_lang_id" value="' . $news_data['lang_id'] . '"/>';
     }
 
     $news_data['as_draft_check'] = $news_data['as_draft'];
     $editor = new Editor();
-    $news_data['editor'] = $editor->getEditor(['text' => $news_data['text']]);
+    $editor_conf = [
+        'text' => $news_data['text']
+    ];
+    $tpl->checkScript('jquery') ? $editor_conf['save_button'] = 1 : null;
+
+    $news_data['editor'] = $editor->getEditor($editor_conf);
     $news_data['terms_url'] = $sm->getPage('terms');
     do_action('news_edit_form_add', $news_data);
 
