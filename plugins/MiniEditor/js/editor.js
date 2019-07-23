@@ -26,25 +26,12 @@ function new_tagged_text(tag) {
     return left_text + tag + right_text;
 }
 
-$("#btnEditorSave").click(function () {
-    var text = $("#editor_text").val();
-    var btnEditorSave = 1;
-    $text = $.trim(text);
-    if (text.length > 0) {
-        $.post("", {editor_text: text, btnEditorSave: btnEditorSave},
-                function (data) {
-                    console.log(data);
-                    var json = $.parseJSON(data);
-                    //if (json[0].status  0) {
-                    alert(json[0].msg);
-                    return true;
-                    // }
-                });
-    }
-    return false;
+$( document ).ready(function() {
+  
 });
 
 window.addEventListener("load", function () {
+    console.log("Load");
     $(".btnEditor").on('click', function () {
         var tag = $(this).val();
         var tag_ary = tag.split(/\$1/);
@@ -64,4 +51,25 @@ window.addEventListener("load", function () {
     $('#btnEditorHiddePreview').click(function () {
         $("#editor_preview").html("");
     });
+
+    $('#btnEditorSave').click(function () {
+        console.log("EditorSave");
+        var text = $("#editor_text").val();
+        var btnEditorSave = 1;
+        $text = $.trim(text);
+        if (text.length > 0) {
+            $.post("", {editor_text: text, btnEditorSave: btnEditorSave},
+                    function (data) {
+                        console.log(data);
+                        var json = $.parseJSON(data);
+                        //if (json[0].status  0) {
+                        alert(json[0].msg);
+                        return true;
+                        // }
+                    });
+        }
+        return false;
+    });  
+        
 });
+

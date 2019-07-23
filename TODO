@@ -2,8 +2,12 @@ HIGH
 
 MED
 * NewsMediaUpload - Forma de poder borrar imagenes subidas
+* Spoiler/ enrollado tag que despligue texto.
+  Actualmente hay en SMBasic dropdown.js y un toggleMenu inline (para el menu dropdown), hacer un standard que incruste a petición frontend 
+    y poder llamar con algo como 'toogleDisplay("id");
+* ¿mostrar breadcrum en section?
 LOW
-
+* News: el pager actualmente muestra el numero de pagina si es un borrador
 * Minieditor: Capturar tabulaciones, https://stackoverflow.com/questions/6637341/use-tab-to-indent-in-textarea
     si se capturan el parse deberia interpretarlas "\t" => &nsbsp;&nsbsp;&nsbsp;&nsbsp;
 * Bloques: poder cambiar idioma, prioridad y demas
@@ -23,7 +27,7 @@ LOW
 * Al crear un bloque, ponemos idioma, ponemos tipo de bloque y el idioma se resetea, posiblemente todo se resetea, mantener.
 * Bloque news opcionalmente uno para mostrar borradores de usuario, solo visible por el si tiene.
 * Permitir varios relacionadas a la vez y cambiar el codigo al respecto que es malo no lo siguiente.
-
+* StdComments/NewsComments: Alguna forma de avisar de comentarios nuevos.
 
 Más tarde si eso... o backlog:
 * Frontend: funcion que muestre una pantalla de espera para tareas que tardan

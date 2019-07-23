@@ -553,7 +553,7 @@ function getNewsCatBreadcrumb($news_data) {
             !empty($breadcrumb) ? $breadcrumb .= $cfg['news_breadcrum_separator'] : null;
             $cat = preg_replace('/\_/', ' ', $cat);
             $breadcrumb .= '<li ' . $ITEM_LI . '>';
-            $breadcrumb .= '<a ' . $ITEM_HREF . ' href="' . $cfg['WEB_LANG'] . '/section/' . $cat_path . '">';
+            $breadcrumb .= '<a ' . $ITEM_HREF . ' href="/' . $cfg['WEB_LANG'] . '/section/' . $cat_path . '">';
             $breadcrumb .= '<span ' . $ITEM_NAME . '>' . $cat . '</span></a>' . $ITEM_POS . '</li>';
             $cat_path .= $cfg['categories_separator'];
             $list_counter++;
