@@ -43,7 +43,10 @@ function news_edit($news_nid, $news_lang_id, $news_page) {
             return false;
         }
     }
-
+    if (!news_perm_ask('w_news_edit')) {
+        $frontend->messageBox(['msg' => 'L_E_NOEDITACCESS']);
+        return false;
+    }
     $news_data['news_form_title'] = $LNG['L_NEWS_EDIT_NEWS'];
 
     $news_data['select_categories'] = news_getCatsSelect($news_data);
@@ -156,7 +159,7 @@ function news_save_text_only() {
         }
         $news_data = $db->fetch($query);
         if (
-                (!($user['uid'] == $news_data['author_id']) && news_perm_ask('w_news_edit_own'))
+                (!(($user['uid'] == $news_data['author_id']) && news_perm_ask('w_news_edit_own')))
         ) {
             die('[{"status": "4", "msg": "' . $LNG['L_E_NOEDITACCESS'] . '"}]');
         }
