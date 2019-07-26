@@ -1,8 +1,7 @@
 HIGH
 
 MED
-* NewsMediaUpload - Forma de poder borrar imagenes subidas
-* Spoiler/ enrollado tag que despligue texto.
+* NewsMediaUpload - Añadir field owner_id/uid Forma de poder borrar imagenes subidas
   Actualmente hay en SMBasic dropdown.js y un toggleMenu inline (para el menu dropdown), hacer un standard que incruste a petición frontend 
     y poder llamar con algo como 'toogleDisplay("id");
 * ¿mostrar breadcrum en section?

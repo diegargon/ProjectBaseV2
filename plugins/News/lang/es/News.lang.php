@@ -90,6 +90,7 @@ $LNG['L_NEWS_E_NODRAFTS'] = 'No tiene borradores';
 $LNG['L_NEWS_DRAFTS'] = 'Borradores';
 $LNG['L_NEWS_NPAGE'] = 'Numero de pagina';
 $LNG['L_NEWS_NEWS_LINK'] = 'Enlace a noticia';
+
 /* ACL */
 $LNG['L_PERM_R_NEWS_FULL_ACCESS'] = 'Acceso administrador total de lectura';
 $LNG['L_PERM_W_NEWS_FULL_ACCESS'] = 'Acceso administrador total lectura/escritura';

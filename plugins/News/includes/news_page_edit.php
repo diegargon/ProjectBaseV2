@@ -92,15 +92,10 @@ function news_form_edit_process() {
     $user = $sm->getSessionUser();
     $news_data = news_form_getPost();
 
-    if (
-            (!news_perm_ask('w_news_edit')) ||
-            (!($user['uid'] == $news_data['author_id']) && news_perm_ask('w_news_edit_own'))
-    ) {
-        die('[{"status": "4", "msg": "' . $LNG['L_E_NOEDITACCESS'] . '"}]');
-    }
-
     if (!news_perm_ask('w_news_edit')) {
-        die('[{"status": "4", "msg": "' . $LNG['L_E_NOEDITACCESS'] . '"}]');
+        if (!(($user['uid'] == $news_data['author_id']) && news_perm_ask('w_news_edit_own'))) {
+            die('[{"status": "4", "msg": "' . $LNG['L_E_NOEDITACCESS'] . '"}]');
+        }
     }
 
     if (empty($news_data['nid']) || empty($news_data['current_lang_id']) || empty($news_data['page'])) {

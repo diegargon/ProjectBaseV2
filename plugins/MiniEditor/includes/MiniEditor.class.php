@@ -48,6 +48,7 @@ class Editor {
         '~\[iurl=/(.*?)\](.*?)\[/iurl\]~si' => '<a href="/$1">$2</a>',
         '~\[warn\](.*?)\[/warn\]~si' => '<div class="warn"><div class="warn_svg"></div><div class="warn_text">$1</div></div>',
         '~\[tip\](.*?)\[/tip\]~si' => '<div class="tip"><div class="tip_svg"></div><div class="tip_text">$1</div></div>',
+        '~\[spoiler\](.*?)\[/spoiler\]~si' => '<input class="spoilerbutton" type="button" value="+" onclick="this.value=this.value==\'+\'?\'-\':\'+\';"/><div class="spoiler"><div>$1</div></div>',
     ];
     private $srv_url;
     private $img_platform;

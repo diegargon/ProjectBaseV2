@@ -77,6 +77,7 @@ $LNG['L_NEWS_SECTION'] = 'section'; //Need mod htaccess if change
 $LNG['L_NEWS_E_SEC_NOEXISTS'] = 'Section not exists';
 $LNG['L_NEWS_FATHER'] = 'Father';
 $LNG['L_NEWS_ORDER'] = 'Weight';
+$LNG['L_E_NOEDITACCESS'] = 'You haven\'t access to edit';
 
 /* NEW */
 
@@ -107,6 +108,7 @@ $LNG['L_NEWS_E_NODRAFTS'] = 'You havent drafts';
 $LNG['L_NEWS_DRAFTS'] = 'Drafts';
 $LNG['L_NEWS_NPAGE'] = 'Num Page';
 $LNG['L_NEWS_NEWS_LINK'] = 'Link to news';
+
 /* ACL */
 $LNG['L_PERM_R_NEWS_FULL_ACCESS'] = 'Full admin access to read';
 $LNG['L_PERM_W_NEWS_FULL_ACCESS'] = 'Full admin access to read/write';
