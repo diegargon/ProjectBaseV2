@@ -134,7 +134,7 @@ function news_save_text_only() {
     $user = $sm->getSessionUser();
 
 
-    $editor_text = $db->escapeStrip($filter->postUtf8Txt('editor_text'));
+    $editor_text = $db->escape($filter->postUtf8Txt('editor_text'));
     $nid = $filter->getInt('nid');
     $news_lang_id = $filter->getInt('news_lang_id');
     $page = $filter->getInt('npage');

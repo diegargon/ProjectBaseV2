@@ -84,9 +84,9 @@ function news_form_getPost() {
     $form_data['page'] = $filter->getInt('npage');
     //POST    
     $form_data['author_id'] = $filter->postInt('news_author_id', 10, 1);
-    $form_data['title'] = $db->escapeStrip($filter->postUtf8Txt('news_title'));
-    $form_data['lead'] = $db->escapeStrip($filter->postUtf8Txt('news_lead'));
-    $form_data['editor_text'] = $db->escapeStrip($filter->postUtf8Txt('editor_text'));
+    $form_data['title'] = $db->escape($filter->postUtf8Txt('news_title'));
+    $form_data['lead'] = $db->escape($filter->postUtf8Txt('news_lead'));
+    $form_data['editor_text'] = $db->escape($filter->postUtf8Txt('editor_text'));
     $form_data['category'] = $filter->postInt('news_category');
     $form_data['news_lang'] = $filter->postInt('news_lang', 8, 1);
     $form_data['news_translator_id'] = $filter->postInt('news_translator_id');
