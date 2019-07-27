@@ -309,9 +309,9 @@ function news_form_news_update($news_data) {
     !defined('MULTILANG') ? $news_data['news_lang'] = 1 : null;
 
     $set_ary = [
-        'title' => $db->escapeStrip($news_data['title']),
-        'lead' => $db->escapeStrip($news_data['lead']),
-        'text' => $db->escapeStrip($news_data['editor_text']),
+        'title' => $news_data['title'],
+        'lead' => $news_data['lead'],
+        'text' => $news_data['editor_text'],
         'author_id' => $news_data['author_id'],
         'category' => $news_data['category'],
         'as_draft' => $news_data['as_draft'] ? $news_data['as_draft'] : 0,

@@ -150,9 +150,9 @@ function news_newlang_submit($news_data) {
         'lang_id' => $news_data['news_lang'],
         'page' => $news_data['page'],
         'translator_id' => $news_data['news_translator_id'],
-        'title' => $db->escapeStrip($news_data['title']),
-        'lead' => $db->escapeStrip($news_data['lead']),
-        'text' => $db->escapeStrip($news_data['editor_text']),
+        'title' => $news_data['title'],
+        'lead' => $news_data['lead'],
+        'text' => $news_data['editor_text'],
         'author_id' => $orig_news['author_id'],
         'category' => $orig_news['category'],
         'moderation' => $moderation

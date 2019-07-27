@@ -162,8 +162,8 @@ function news_newpage_submit_new($news_data) {
     $insert_ary = [
         'nid' => $news_father['nid'],
         'lang_id' => $news_father['lang_id'],
-        'title' => $db->escapeStrip($news_data['title']),
-        'text' => $db->escapeStrip($news_data['editor_text']),
+        'title' => $news_data['title'],
+        'text' => $news_data['editor_text'],
         'featured' => $news_father['featured'],
         'author_id' => $news_father['author_id'],
         'category' => $news_father['category'],

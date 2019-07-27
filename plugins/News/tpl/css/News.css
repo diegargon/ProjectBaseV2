@@ -649,7 +649,7 @@ code {
     color:green;
     background-color: #000;
     padding:10px;
-    line-height:0.6;
+    line-height:1;
 }
 #scrollup, #scrolldown {
     position: fixed;
