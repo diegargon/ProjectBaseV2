@@ -84,24 +84,34 @@ function stdFormatComments($comments, $comm_conf, $perm_cfg) {
     !empty($uid_list) ? $sm->setUsersInCacheByIDs($uid_list) : null;
 
     foreach ($comments as $comment_row) {
+
+        /* Fix buscar forma en template de cerrar TPL_LAST si es el ultimo y no se va a mostrar */
         if ($comment_row['moderation'] == 1 && $perm_cfg['allow_comm_moderation'] == 0) {
+            $num_comments--;
+            $counter == $num_comments ? $content .= "</section></div>" : null; //if it the last close
             continue;
         }
-        $counter == 0 ? $comment_row['TPL_FIRST'] = 1 : null;
-        $counter == ($num_comments - 1 ) ? $comment_row['TPL_LAST'] = 1 : null;
-        $counter++;
-
         if (!$author_data = $sm->getUserByID($comment_row['author_id'])) {
             $author_data['uid'] = 0;
             $author_data['username'] = $LNG['L_ANONYMOUS'];
         }
         $user = $sm->getSessionUser();
         if ($comment_row['shadow_ban'] && !$user['isAdmin'] && $comment_row['author_id'] != $user['uid']) {
+            $num_comments--;
+            $counter == $num_comments ? $content .= "</section></div>" : null;
             continue;
         }
         if (!$user['isAdmin'] && $comment_row['soft_delete']) {
+            $num_comments--;
+            $counter == $num_comments ? $content .= "</section></div>" : null;
             continue;
         }
+
+
+        $counter == 0 ? $comment_row['TPL_FIRST'] = 1 : null;
+        $counter == ($num_comments - 1 ) ? $comment_row['TPL_LAST'] = 1 : null;
+        $counter++;
+
         empty($author_data['avatar']) ? $author_data['avatar'] = $cfg['smbasic_default_img_avatar'] : null;
         $comment_row = array_merge($author_data, $comment_row);
 

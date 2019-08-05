@@ -16,8 +16,8 @@ if (!empty($data['TPL_FIRST'])) {
             <h2><?= $LNG['L_SC_COMMENTS'] ?></h2>
         <?php } ?>
         <div class="comment">
-            <div id="comm_adm_buttons">
-                <form id="comm_adm_formbar" method="POST" action="">                
+            <div class="comm_adm_buttons">
+                <form  method="POST" action="#">                
                     <?= $data['admbar'] ?>
                     <input type="hidden" value="<?= $data['cid'] ?>" name="cid" />
                 </form>

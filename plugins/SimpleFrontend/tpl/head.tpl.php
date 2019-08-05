@@ -12,7 +12,7 @@
 !defined('IN_WEB') ? exit : true;
 ?>
 <!DOCTYPE html>
-<html <?= isset($cfg['WEB_DIR']) ? 'dir="' . $cfg['WEB_DIR'] . '"' : null ?> <?= isset($cfg['WEB_LANG']) ? 'lang="' . $cfg['WEB_LANG'] . '"' : null ?> > 
+<html <?= isset($cfg['WEB_DIR']) ? 'dir="' . $cfg['WEB_DIR'] . '"' : null ?> <?= isset($cfg['WEB_LANG']) ? 'lang="' . $cfg['WEB_LANG'] . '"' : null ?> itemscope itemtype="http://schema.org/WebPage" > 
     <head>
         <?= isset($cfg['CHARSET']) ? '<meta charset="' . $cfg['CHARSET'] . '" />' : null; ?>
         <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1" />

@@ -13,7 +13,7 @@
 
 <div id="new_comment_wrap" class="comment_box">
     <p><?= !empty($data['msg']) ? $data['msg'] : null ?></p>
-    <form method="post" action="" id="form_new_comment">
+    <form method="post" action="#" id="form_new_comment">
         <textarea id="new_comment" name="news_comment" ></textarea>
         <input id="btnSendNewComment" name="btnSendNewComment" type="submit" value="<?= $LNG['L_SEND'] ?>" />
     </form>
