@@ -76,7 +76,7 @@ function news_edit($news_nid, $news_lang_id, $news_page) {
     $news_data['as_draft_check'] = $news_data['as_draft'];
     $editor = new Editor();
     $editor_conf = [
-        'text' => $news_data['text']
+        'text' => addslashes($news_data['text']),
     ];
     $tpl->checkScript('jquery') ? $editor_conf['save_button'] = 1 : null;
 
