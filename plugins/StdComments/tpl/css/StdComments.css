@@ -44,7 +44,7 @@
     margin-right: 5px;    
 }
 .btnShow {
-    display: block;
+    display: flow-root;
     border: 1px solid #0A4B48;
     font-size: 0.8em;    
     background: #3fa0ea;

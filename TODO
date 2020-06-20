@@ -6,6 +6,8 @@ MED
     y poder llamar con algo como 'toogleDisplay("id");
 * ¿mostrar breadcrum en section?
 * el detector de primera imagen al menos en el bloque no detecta [localimg] si no solamente [localimg w=XXX]
+* editor: table responsive
+
 LOW
 * News: el pager actualmente muestra el numero de pagina si es un borrador
 * Minieditor: Capturar tabulaciones, https://stackoverflow.com/questions/6637341/use-tab-to-indent-in-textarea
