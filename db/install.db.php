@@ -6,7 +6,7 @@
  *  @author diego@envigo.net
  *  @package ProjectBase
  *  @subpackage CORE
- *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+ *  @copyright Copyright @ 2016 - 2020 Diego Garcia (diego@envigo.net)
  */
 !defined('IN_WEB') ? exit : true;
 
@@ -93,7 +93,7 @@ $core_inserts = [
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('CORE', 'WEB_NAME', 'My Web Name');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('CORE', 'WEB_DESC', 'My Web Name Description');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('CORE', 'CORE_PATH', '" . ABSPATH . "');",
-    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('CORE', 'FOOT_COPYRIGHT', 'Copyright &copy; 2016 - 2019 Diego García All Rights Reserved');",
+    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('CORE', 'FOOT_COPYRIGHT', 'Copyright &copy; 2016 - 2020 Diego García All Rights Reserved');",
     //"INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('CORE', '', '');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('CORE', 'BAD_BOTS', 'ia_archiver|Altavista|eStyle|MJ12bot|ips-agent|Yandex|Semrush|Baidu|Sogou|Pcore');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('CORE', 'WEB_DIR', 'ltr');",

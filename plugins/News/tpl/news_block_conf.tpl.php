@@ -1,6 +1,6 @@
 <?php
 /*
- *  Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net)
+ *  Copyright @ 2016 - 2020 Diego Garcia (diego@envigo.net)
  */
 ?>
 <div class="block_conf">

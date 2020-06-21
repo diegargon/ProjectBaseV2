@@ -1,5 +1,5 @@
 /* 
- *  Copyright @ 2016 - 2019 Diego Garcia
+ *  Copyright @ 2016 - 2020 Diego Garcia
  */
 
 function dropdown(element)

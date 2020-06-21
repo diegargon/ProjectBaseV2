@@ -6,7 +6,7 @@
  *  @author diego@envigo.net
  *  @package ProjectBase
  *  @subpackage Utils
- *  @copyright Copyright @ 2016 - 2019 Diego Garcia (diego@envigo.net) 
+ *  @copyright Copyright @ 2016 - 2020 Diego Garcia (diego@envigo.net) 
  */
 $use_salt = 1;
 $salt = 5565;
