@@ -25,15 +25,15 @@ function SMBasic_SetTopNavUserMenu() {
     $user = $sm->getSessionUser();
 
     if ($cfg['FRIENDLY_URL']) {
-        $login_url = "/{$cfg['WEB_LANG']}/login";
-        $register_url = "/{$cfg['WEB_LANG']}/register";
-        $profile_url = "/{$cfg['WEB_LANG']}/profile";
-        $logout_url = "/{$cfg['WEB_LANG']}/logout";
+        $login_url = "{$cfg['REL_PATH']}{$cfg['WEB_LANG']}/login";
+        $register_url = "{$cfg['REL_PATH']}{$cfg['WEB_LANG']}/register";
+        $profile_url = "{$cfg['REL_PATH']}{$cfg['WEB_LANG']}/profile";
+        $logout_url = "{$cfg['REL_PATH']}{$cfg['WEB_LANG']}/logout";
     } else {
-        $login_url = "/{$cfg['CON_FILE']}?module=SMBasic&page=login&lang={$cfg['WEB_LANG']}";
-        $register_url = "/{$cfg['CON_FILE']}?module=SMBasic&page=register&lang={$cfg['WEB_LANG']}";
-        $profile_url = "/{$cfg['CON_FILE']}?module=SMBasic&page=profile&lang={$cfg['WEB_LANG']}'";
-        $logout_url = "/{$cfg['CON_FILE']}?module=SMBasic&page=logout&lang={$cfg['WEB_LANG']}";
+        $login_url = "{$cfg['REL_PATH']}{$cfg['CON_FILE']}?module=SMBasic&page=login&lang={$cfg['WEB_LANG']}";
+        $register_url = "{$cfg['REL_PATH']}{$cfg['CON_FILE']}?module=SMBasic&page=register&lang={$cfg['WEB_LANG']}";
+        $profile_url = "{$cfg['REL_PATH']}{$cfg['CON_FILE']}?module=SMBasic&page=profile&lang={$cfg['WEB_LANG']}'";
+        $logout_url = "{$cfg['REL_PATH']}{$cfg['CON_FILE']}?module=SMBasic&page=logout&lang={$cfg['WEB_LANG']}";
     }
 
     if ($user && $user['uid'] > 0) {
@@ -47,7 +47,7 @@ function SMBasic_SetTopNavUserMenu() {
     if ($cfg['smbasic_set_drop_caption'] && $user['uid'] > 0) {
         $tpl->getCssFile('SMBasic');
         $tpl->getCssFile('SMBasic', 'SMBasic-mobile');
-        !empty($user['avatar']) ? $menu_data['avatar'] = $user['avatar'] : $menu_data['avatar'] = $cfg['smbasic_default_img_avatar'];
+        !empty($user['avatar']) ? $menu_data['avatar'] = $user['avatar'] : $menu_data['avatar'] = $cfg['STATIC_SRV_URL'] . '/' .$cfg['smbasic_default_img_avatar'];
         $menu_data['drop_menu_caption'] = 1;
         $menu_data['username'] = $user['username'];
         $frontend->addMenuItem('dropdown_menu_caption', $tpl->getTPLFile('SMBasic', 'sm_menu_opt', $menu_data));
@@ -125,14 +125,14 @@ function SMBasic_create_reg_mail($active) {
         if ($cfg['FRIENDLY_URL']) {
             $URL = $cfg['WEB_URL'] . $cfg['WEB_LANG'] . '/login&active=' . $active;
         } else {
-            $URL = $cfg['CON_FILE'] . '?module=SMBasic&page=login&active=' . $active;
+            $URL = $cfg['REL_PATH'] . $cfg['CON_FILE'] . '?module=SMBasic&page=login&active=' . $active;
         }
         $msg = $LNG['L_REG_EMAIL_MSG_ACTIVE'] . $URL;
     } else {
         if ($cfg['FRIENDLY_URL']) {
             $URL = $cfg['WEB_URL'] . $cfg['WEB_LANG'] . '/login';
         } else {
-            $URL = $cfg['CON_FILE'] . '?module=SMBasic&page=login';
+            $URL = $cfg['REL_PATH'] . $cfg['CON_FILE'] . '?module=SMBasic&page=login';
         }
         $msg = $LNG['L_REG_EMAIL_MSG_WELCOME'] . $URL;
     }

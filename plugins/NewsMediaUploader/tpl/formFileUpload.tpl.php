@@ -32,7 +32,7 @@
     function loadData(last_id) {
         if (last_id) {
             var $photos = $('#photobanner');
-            var $path = '/index.php?module=NewsMediaUploader&page=get_links';
+            var $path = '<?= $cfg['REL_PATH'] . $cfg['CON_FILE'] . '?module=NewsMediaUploader&page=get_links' ?>';
             $.get($path, {last_id: last_id}, function (data) {
                 $photos.append(data);
             });
@@ -40,7 +40,7 @@
     }
     function reloadData() {
         var $photos = $('#photobanner');
-        var $path = '/index.php?module=NewsMediaUploader&page=get_links';
+        var $path = '<?= $cfg['REL_PATH'] . $cfg['CON_FILE'] . '?module=NewsMediaUploader&page=get_links' ?>';
         $('#photobanner').empty();
         $.get($path, {reload: 1}, function (data) {
             $photos.append(data);
@@ -50,7 +50,7 @@
         runtimes: 'html5, html4',
         browse_button: 'pickfiles', // you can pass an id...
         container: document.getElementById('upload_container'), // ... or DOM Element itself
-        url: '/<?= $cfg['CON_FILE'] ?>?module=NewsMediaUploader&page=upload',
+        url: '<?= $cfg['REL_PATH'] . $cfg['CON_FILE'] . '?module=NewsMediaUploader&page=upload' ?>',
         unique_names: false,
         drop_element: "uploaded_user_list",
         autostart: true,

@@ -34,9 +34,9 @@ $params['admtab'] = $admtab;
 $params['opt'] = $opt;
 
 if ($cfg['FRIENDLY_URL']) {
-    $params['url'] = "/{$cfg['WEB_LANG']}/admin";
+    $params['url'] = "{$cfg['REL_PATH']}{$cfg['WEB_LANG']}/admin";
 } else {
-    $params['url'] = "/{$cfg['CON_FILE']}?lang={$cfg['WEB_LANG']}&module=AdminBasic&page=adm";
+    $params['url'] = "{$cfg['REL_PATH']}{$cfg['CON_FILE']}?lang={$cfg['WEB_LANG']}&module=AdminBasic&page=adm";
 }
 
 

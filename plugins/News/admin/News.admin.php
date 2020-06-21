@@ -70,7 +70,7 @@ function News_AdminModeration() {
         return '<p>' . $LNG['L_NEWS_NONEWS_MOD'] . '</p>';
     }
     while ($news_row = $db->fetch($query)) {
-        $common_url = "<a href='/{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_row['nid']}&news_lang_id={$news_row['lang_id']}&npage={$news_row['page']}";
+        $common_url = "<a href='{$cfg['REL_PATH']}{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_row['nid']}&news_lang_id={$news_row['lang_id']}&npage={$news_row['page']}";
         $content .= '<p>'
                 . "[$common_url&news_delete=1'>{$LNG['L_NEWS_DELETE']}</a>]"
                 . "[$common_url&news_approved=1'>{$LNG['L_NEWS_APPROVED']}</a>]"

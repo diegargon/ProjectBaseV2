@@ -15,9 +15,9 @@ function NS_setTopNavSearchbox() {
     global $tpl, $cfg, $frontend;
 
     if ($cfg['FRIENDLY_URL']) {
-        $sbox_data['searchUrl'] = "/{$cfg['WEB_LANG']}/search/";
+        $sbox_data['searchUrl'] = "{$cfg['REL_PATH']}{$cfg['WEB_LANG']}/search/";
     } else {
-        $sbox_data['searchUrl'] = "/{$cfg['CON_FILE']}?module=NewsSearch&page=search&lang={$cfg['WEB_LANG']}";
+        $sbox_data['searchUrl'] = "{$cfg['REL_PATH']}{$cfg['CON_FILE']}?module=NewsSearch&page=search&lang={$cfg['WEB_LANG']}";
     }
     $frontend->addMenuItem('top_menu_right', $tpl->getTplFile('NewsSearch', 'NewsSearchBarbox', $sbox_data), 4);
 
@@ -48,9 +48,9 @@ function NS_news_tag_show_page(& $news_row) {
             preg_replace('/\s+/', "%20", $tag);
             $link_tag = urldecode($tag);
             if ($cfg['FRIENDLY_URL']) {
-                $tag_data .= "<a href=\"/{$cfg['WEB_LANG']}/searchTag/$link_tag\">$tag</a> ";
+                $tag_data .= "<a href=\"{$cfg['REL_PATH']}{$cfg['WEB_LANG']}/searchTag/$link_tag\">$tag</a> ";
             } else {
-                $tag_data .= "<a href=\"/{$cfg['CON_FILE']}&lang={$cfg['WEB_LANG']}&searchTag=$link_tag\">$tag</a> ";
+                $tag_data .= "<a href=\"{$cfg['REL_PATH']}{$cfg['CON_FILE']}&lang={$cfg['WEB_LANG']}&searchTag=$link_tag\">$tag</a> ";
             }
         }
         $tag_data .= '</p></div>';

@@ -51,11 +51,12 @@ function layout_news($template, $news) {
     foreach ($news as $news_row) {
         if ($cfg['FRIENDLY_URL']) {
             $friendly_title = news_friendly_title($news_row['title']);
-            $news_row['url'] = '/' . $cfg['WEB_LANG'] . "/news/{$news_row['nid']}/{$news_row['page']}/{$news_row['lang_id']}/$friendly_title";
+            $news_row['url'] = $cfg['REL_PATH'] . $cfg['WEB_LANG'] . "/news/{$news_row['nid']}/{$news_row['page']}/{$news_row['lang_id']}/$friendly_title";
         } else {
-            $news_row['url'] = "/{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_row['nid']}&lang=" . $cfg['WEB_LANG'] . "&npage={$news_row['page']}&news_lang_id={$news_row['lang_id']}";
+            $news_row['url'] = "{$cfg['REL_PATH']}{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_row['nid']}&lang=" . $cfg['WEB_LANG'] . "&npage={$news_row['page']}&news_lang_id={$news_row['lang_id']}";
         }
 
+        $news_row['STATIC_SRV_URL'] = $cfg['STATIC_SRV_URL'];
         $news_row['date'] = $timeUtil->formatDbDate($news_row['created']);
 
         if (isset($news_row['text'])) {

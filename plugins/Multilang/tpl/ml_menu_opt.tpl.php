@@ -9,7 +9,7 @@
  */
 /*
   <span class="nav_top">
-  <a rel="nofollow" href="/<?= $cfg['FRIENDLY_URL'] ? $cfg['WEB_LANG'] . "/admin" : $cfg['CON_FILE'] . "?module=AdminBasic&page=adm&lang={$cfg['WEB_LANG']}";?>">Admin</a>
+  <a rel="nofollow" href="<?= $cfg['FRIENDLY_URL'] ? $cfg['WEB_LANG'] . "/admin" : $cfg['CON_FILE'] . "?module=AdminBasic&page=adm&lang={$cfg['WEB_LANG']}";?>">Admin</a>
   </span>
  */
 

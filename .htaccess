@@ -2,7 +2,7 @@ Options All -Indexes
 ServerSignature Off
 
 RewriteEngine On
-RewriteBase /
+#RewriteBase /
 
 #RewriteCond %{HTTP_HOST} ^www.domain.com [NC]
 #RewriteRule ^(.*)$ https://domain.com/$1 [L,R=301]

@@ -25,7 +25,11 @@ function SimpleFrontend_init() {
 
     if ($cfg['tplbasic_header_menu_home']) {
         $plugins->expressStart('Multilang');
-        $cfg['FRIENDLY_URL'] ? $home_link['home_url'] = $cfg['WEB_LANG'] : $home_link['home_url'] = "?lang={$cfg['WEB_LANG']}";
+        if ($cfg['FRIENDLY_URL']) {
+            $home_link['home_url'] = $cfg['REL_PATH'] . $cfg['WEB_LANG'];
+        } else {
+            $home_link['home_url'] = $cfg['REL_PATH'] . $cfg['CON_FILE'] . '?lang=' . $cfg['WEB_LANG'];
+        }
         $frontend->addMenuItem('top_menu_left', $tpl->getTplFile('SimpleFrontend', 'home_menu_opt', $home_link), 1);
     }
     return true;

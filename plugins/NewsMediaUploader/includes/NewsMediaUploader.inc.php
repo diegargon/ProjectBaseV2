@@ -53,7 +53,7 @@ function NMU_upload_list() {
     if (($num_rows = $db->numRows($query)) > 0) {
         while ($link = $db->fetch($query)) {
             $link_thumb = str_replace('[S]', '/thumbs/', $link['link']);
-            $alt = str_replace('/media[S]', '', $link['link']);
+            $alt = str_replace('media[S]', '', $link['link']);
             $textToadd = '[localimg]' . $link['link'] . '[/localimg]';
             $content .= '<a href="#news_text" data-id="' . $link['link_id'] . '" onclick="addtext(\'' . $textToadd . '\'); return false"><img src="' . $link_thumb . '" alt="' . $alt . '" /></a>';
         }

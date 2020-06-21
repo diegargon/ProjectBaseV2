@@ -112,13 +112,13 @@ function stdFormatComments($comments, $comm_conf, $perm_cfg) {
         $counter == ($num_comments - 1 ) ? $comment_row['TPL_LAST'] = 1 : null;
         $counter++;
 
-        empty($author_data['avatar']) ? $author_data['avatar'] = $cfg['smbasic_default_img_avatar'] : null;
+        empty($author_data['avatar']) ? $author_data['avatar'] = $cfg['STATIC_SRV_URL'] . '/' . $cfg['smbasic_default_img_avatar'] : null;
         $comment_row = array_merge($author_data, $comment_row);
 
         if ($cfg['FRIENDLY_URL']) {
-            $comment_row['p_url'] = '/' . $cfg['WEB_LANG'] . '/profile&viewprofile=' . $author_data['uid'];
+            $comment_row['p_url'] = $cfg['REL_PATH'] . $cfg['WEB_LANG'] . '/profile&viewprofile=' . $author_data['uid'];
         } else {
-            $comment_row['p_url'] = '/' . $cfg['CON_FILE'] . '?module=SMBasic&page=profile&viewprofile=' . $author_data['uid'] . '&lang=' . $cfg['WEB_LANG'];
+            $comment_row['p_url'] = $cfg['REL_PATH'] . $cfg['CON_FILE'] . '?module=SMBasic&page=profile&viewprofile=' . $author_data['uid'] . '&lang=' . $cfg['WEB_LANG'];
         }
 
         $perm_comm = stdGetCommPerms($author_data['uid'], $perm_cfg);

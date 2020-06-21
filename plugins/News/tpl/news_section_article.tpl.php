@@ -22,7 +22,7 @@
             <?php
             if (isset($data['main_image']) && !empty($data['main_image'])) {
                 ?>
-                <div class="news_box_article_image"><img src="<?= $data['thumb_image'] ?>" alt="<?= $data['thumb_image'] ?>"/></div>
+            <div class="news_box_article_image"><img src="/<?= $data['STATIC_SRV_URL'] . $data['thumb_image'] ?>" alt="<?= $data['thumb_image'] ?>"/></div>
                     <?php
                 }
                 ?>

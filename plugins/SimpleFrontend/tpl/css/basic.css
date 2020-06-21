@@ -466,7 +466,7 @@ h1,h2,h3,h4,h5,h6{
     overflow:hidden;
     top:0; left:0;
     background: rgba( 255, 255, 255, .8 ) 
-        url('/plugins/SimpleFrontend/tpl/img/loading.gif') 
+        url('plugins/SimpleFrontend/tpl/img/loading.gif') 
         50% 50% 
         no-repeat;
 }

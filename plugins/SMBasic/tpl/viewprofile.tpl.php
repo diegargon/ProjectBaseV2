@@ -20,7 +20,7 @@
                 <?php
             } else {
                 ?>
-                <img width="125" height="150" src="<?= $cfg['smbasic_default_img_avatar'] ?>" alt="" />
+                <img width="125" height="150" src="<?= $cfg['STATIC_SRV_URL'] . '/' . $cfg['smbasic_default_img_avatar'] ?>" alt="" />
             <?php } ?>
         </div>
         <div id="profile_fields">

@@ -22,9 +22,9 @@ function NS_build_result_page(& $query, $q = false) {
             $counter++;
             if ($cfg['FRIENDLY_URL']) {
                 $friendly_title = news_friendly_title($result['title']);
-                $result['url'] = "/{$cfg['WEB_LANG']}/news/{$result['nid']}/{$result['page']}/{$result['lang_id']}/$friendly_title";
+                $result['url'] = "{$cfg['REL_PATH']}{$cfg['WEB_LANG']}/news/{$result['nid']}/{$result['page']}/{$result['lang_id']}/$friendly_title";
             } else {
-                $result['url'] = "/{$cfg['CON_FILE']}?module=News&page=news&nid={$result['nid']}&lang={$cfg['WEB_LANG']}&npage={$result['page']}&news_lang_id={$result['news_lang']}";
+                $result['url'] = "{$cfg['REL_PATH']}{$cfg['CON_FILE']}?module=News&page=news&nid={$result['nid']}&lang={$cfg['WEB_LANG']}&npage={$result['page']}&news_lang_id={$result['news_lang']}";
             }
             $content .= $tpl->getTplFile('NewsSearch', 'NewsSearch-results', $result);
         }

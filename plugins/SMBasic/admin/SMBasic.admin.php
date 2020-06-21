@@ -86,9 +86,9 @@ function SMBasic_UserSearch() {
             $table['ADM_TABLE_ROW'] = '';
             foreach ($users_ary as $user_match) {
                 if ($cfg['FRIENDLY_URL']) {
-                    $user_match['profile_url'] = "/{$cfg['WEB_LANG']}/profile?viewprofile={$user_match['uid']}";
+                    $user_match['profile_url'] = "{$cfg['REL_PATH']}{$cfg['WEB_LANG']}/profile?viewprofile={$user_match['uid']}";
                 } else {
-                    $user_match['profile_url'] = "/{$cfg['CON_FILE']}?module=SMBasic&page=profile?lang={$cfg['WEB_LANG']}&viewprofile={$user_match['uid']}";
+                    $user_match['profile_url'] = "{$cfg['REL_PATH']}{$cfg['CON_FILE']}?module=SMBasic&page=profile?lang={$cfg['WEB_LANG']}&viewprofile={$user_match['uid']}";
                 }
                 $table['ADM_TABLE_ROW'] .= $tpl->getTplFile('SMBasic', 'sm_adm_userlist', $user_match);
             }
@@ -124,9 +124,9 @@ function SMBasic_UserList() {
         $user['last_login'] = $timeUtil->formatDbDate($user['last_login']);
 
         if ($cfg['FRIENDLY_URL']) {
-            $user['profile_url'] = "/{$cfg['WEB_LANG']}/profile?viewprofile={$user['uid']}";
+            $user['profile_url'] = "{$cfg['REL_PATH']}{$cfg['WEB_LANG']}/profile?viewprofile={$user['uid']}";
         } else {
-            $user['profile_url'] = "/{$cfg['CON_FILE']}?module=SMBasic&page=profile?lang={$cfg['WEB_LANG']}&viewprofile={$user['uid']}";
+            $user['profile_url'] = "{$cfg['REL_PATH']}{$cfg['CON_FILE']}?module=SMBasic&page=profile?lang={$cfg['WEB_LANG']}&viewprofile={$user['uid']}";
         }
         if ($user['active'] == 0 && !$user['disable']) {
             $active['ADM_TABLE_ROW'] .= $tpl->getTplFile('SMBasic', 'sm_adm_userlist', $user);

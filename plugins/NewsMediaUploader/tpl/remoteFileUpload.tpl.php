@@ -16,7 +16,7 @@
                 $('#btnRemoteUpload').show();
                 return false;
             } else {
-                $.post("/<?= $cfg['CON_FILE'] ?>?module=NewsMediaUploader&page=remote_upload", {url: remote_url},
+                $.post("<?= $cfg['REL_PATH'] . $cfg['CON_FILE'] ?>?module=NewsMediaUploader&page=remote_upload", {url: remote_url},
                         function (data) {
                             //console.log(data);
                             var json = $.parseJSON(data);

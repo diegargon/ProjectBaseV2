@@ -45,6 +45,7 @@ class SessionManager {
     /* CONFIG */
     private $friendly_url;
     private $file_path;
+    private $rel_path;
 
     function __construct() {
         
@@ -308,7 +309,7 @@ class SessionManager {
 
     function logout() {
         $this->destroy();
-        header('Location: /');
+        header('Location: ' . $this->rel_path);
     }
 
     private function setAnonUser() {
@@ -378,10 +379,12 @@ class SessionManager {
         $this->register_enable = $cfg['smbasic_register_enable'];
         $this->login_enable = $cfg['smbasic_login_enable'];
 
+        $this->rel_path = $cfg['REL_PATH'];
+
         if ($cfg['FRIENDLY_URL']) {
-            $this->file_path = '/' . $cfg['WEB_LANG'] . '/';
+            $this->file_path = $cfg['REL_PATH'] . $cfg['WEB_LANG'] . '/';
         } else {
-            $this->file_path = '/' . $cfg['CON_FILE'] . '?module=SMBasic&lang=' . $cfg['WEB_LANG'] . '&page=';
+            $this->file_path = $cfg['REL_PATH'] . $cfg['CON_FILE'] . '?module=SMBasic&lang=' . $cfg['WEB_LANG'] . '&page=';
         }
 
         if ($cfg['smbasic_default_session']) {

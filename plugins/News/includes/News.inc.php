@@ -23,9 +23,9 @@ function add_menu_submit_news() {
 
     $menu_data['submit_opt'] = 1;
     if ($cfg['FRIENDLY_URL']) {
-        $menu_data['submit_url'] = $cfg['WEB_LANG'] . '/submit_news';
+        $menu_data['submit_url'] = $cfg['REL_PATH'] . $cfg['WEB_LANG'] . '/submit_news';
     } else {
-        $menu_data['submit_url'] .= "{$cfg['CON_FILE']}?module=News&page=submit_news&lang={$cfg['WEB_LANG']}";
+        $menu_data['submit_url'] .= "{$cfg['REL_PATH']}{$cfg['CON_FILE']}?module=News&page=submit_news&lang={$cfg['WEB_LANG']}";
     }
     $frontend->addMenuItem('top_menu_left', $tpl->getTPLFile('News', 'news_menu_opt', $menu_data), 2);
     return true;
@@ -60,7 +60,7 @@ function news_section_menu_elements() {
     if ($menu_cats != false) {
         foreach ($menu_cats as $menucat) {
             $cat_display_name = preg_replace('/\_/', ' ', $menucat['name']);
-            $menu_data .= "<li><a href='/{$cfg['WEB_LANG']}/section/{$menucat['name']}'>$cat_display_name</a></li>";
+            $menu_data .= "<li><a href=\"{$cfg['REL_PATH']}{$cfg['WEB_LANG']}/section/{$menucat['name']}\">{$cat_display_name}</a></li>";
         }
     }
 
@@ -91,7 +91,7 @@ function news_section_menu_subelements() {
     if (count($cats_explode) > 1) { //Back button to the previus cat;
         array_pop($cats_explode);
         $f_cats = implode($cfg['categories_separator'], $cats_explode);
-        $submenu_data .= "<li><a href='/{$cfg['WEB_LANG']}/section/$f_cats'><<</a></li>";
+        $submenu_data .= "<li><a href='{$cfg['WEB_LANG']}/section/$f_cats'><<</a></li>";
         //TODO NO FRIENDLY URL
     }
 
@@ -101,7 +101,7 @@ function news_section_menu_subelements() {
         foreach ($childcats as $childcat) {
             if ($childcat['father'] == $cat_id) {
                 $cat_display_name = preg_replace('/\_0/', ' ', $childcat['name']);
-                $submenu_data .= "<li><a href='/{$cfg['WEB_LANG']}/section/$cat_path{$cfg['categories_separator']}{$childcat['name']}'>$cat_display_name</a></li>";
+                $submenu_data .= "<li><a href='{$cfg['WEB_LANG']}/section/$cat_path{$cfg['categories_separator']}{$childcat['name']}'>$cat_display_name</a></li>";
             }
         }
     }
@@ -155,9 +155,9 @@ function news_dropdown_items() {
 
     $menu_data['drafts_opt'] = 1;
     if ($cfg['FRIENDLY_URL']) {
-        $menu_data['drafts_url'] = $cfg['WEB_LANG'] . '/drafts';
+        $menu_data['drafts_url'] = $cfg['REL_PATH'] . $cfg['WEB_LANG'] . '/drafts';
     } else {
-        $menu_data['drafts_url'] = "{$cfg['CON_FILE']}?module=News&page=drafts&lang={$cfg['WEB_LANG']}";
+        $menu_data['drafts_url'] = "{$cfg['REL_PATH']}{$cfg['CON_FILE']}?module=News&page=drafts&lang={$cfg['WEB_LANG']}";
     }
     $frontend->addMenuItem('dropdown_menu', $tpl->getTPLFile('News', 'news_menu_opt', $menu_data), 5);
 }
@@ -186,9 +186,9 @@ function drafts_page() {
         $content_data['TPL_CTRL'] = $counter;
         ($counter == $num_items) ? $content_data['TPL_FOOT'] = 1 : $content_data['TPL_FOOT'] = 0;
         if ($cfg['FRIENDLY_URL']) {
-            $content_data['draft_url'] = "/{$cfg['WEB_LANG']}/news/{$draft['nid']}/{$draft['page']}/{$draft['lang_id']}/";
+            $content_data['draft_url'] = "{$cfg['REL_PATH']}{$cfg['WEB_LANG']}/news/{$draft['nid']}/{$draft['page']}/{$draft['lang_id']}/";
         } else {
-            $content_data['draft_url'] = "/{$cfg['CON_FILE']}?module=News&page=view_news&nid={$draft['nid']}&news_lang_id={$draft['lang_id']}&npage={$draft['page']}/";
+            $content_data['draft_url'] = "{$cfg['REL_PATH']}{$cfg['CON_FILE']}?module=News&page=view_news&nid={$draft['nid']}&news_lang_id={$draft['lang_id']}&npage={$draft['page']}/";
         }
         $content_data = array_merge($content_data, $draft);
         $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('News', 'news_drafts', $content_data));

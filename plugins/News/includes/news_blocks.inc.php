@@ -106,6 +106,7 @@ function news_block_conf($blocks_data = null) {
                 $form_data['limits'] .= '<option value="' . $i . '">' . $i . '</option>';
             }
         }
+        $content['STATIC_SRV_URL'] = $cfg['STATIC_SRV_URL'];
         $content['content'] = $tpl->getTplFile('News', 'news_block_conf', $form_data);
         $content['config'] = $block_conf;
     } else {
@@ -130,6 +131,7 @@ function news_block_conf($blocks_data = null) {
             $form_data['limits'] .= '<option value="' . $i . '">' . $i . '</option>';
         }
 
+        $content['STATIC_SRV_URL'] = $cfg['STATIC_SRV_URL'];
         $content['content'] = $tpl->getTplFile('News', 'news_block_conf', $form_data);
 
         $content['config'] = $block_conf;

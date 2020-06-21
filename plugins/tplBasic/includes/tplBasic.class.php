@@ -151,6 +151,7 @@ class TPL {
 
         $this->theme = $cfg['tplbasic_theme'];
         $this->static_url = $cfg['STATIC_SRV_URL'];
+        $this->relative_path = $cfg['REL_PATH'];
         $this->css_optimize = $cfg['tplbasic_css_optimize'];
         $this->gzip = $cfg['tplbasic_gzip'];
         $this->css_inline = $cfg['tplbasic_css_inline'];
@@ -212,7 +213,7 @@ class TPL {
      * Search order:
      * User path lang: /tpl/theme/file.es.tpl.php
      * User path: /tpl/theme/file.tpl.php
-     * Default: /plugins/plugin/tpl/filename.tpl.php
+     * Default: plugins/plugin/tpl/filename.tpl.php
      * 
      * @param string $plugin
      * @param string $filename
@@ -427,9 +428,11 @@ class TPL {
                 isset($css_code) ? $css = '<style>' . $this->cssStrip($css_code) . '</style>' : null;
             } else {
                 if (file_exists($USER_PATH)) {
-                    $css = '<link rel="stylesheet" href="/' . $USER_PATH . ' ">' . "\n";
+                    $css = '<link rel="stylesheet" href="' . $this->relative_path . $USER_PATH . ' ">' . "\n";
                 } else if (file_exists($DEFAULT_PATH)) {
-                    $css = '<link rel="stylesheet" href="/' . $DEFAULT_PATH . ' ">' . "\n";
+                    $css = '<link rel="stylesheet" href="' . $this->relative_path . $DEFAULT_PATH . ' ">' . "\n";
+                } else {
+                    //TODO LOG ERROR?
                 }
             }
             if (isset($css)) {
@@ -486,7 +489,7 @@ class TPL {
         }
         /* CSS Inline or not */
         if ($this->css_inline == 0) {
-            $this->addtoTplVar('LINK', '<link rel="stylesheet" href="/cache/css/' . $cssfile . '">');
+            $this->addtoTplVar('LINK', '<link rel="stylesheet" href="cache/css/' . $cssfile . '">');
         } else {
             $css_code = $this->parseFile('cache/css/' . $cssfile);
             $this->addtoTplVar('LINK', '<style>' . $css_code . '</style>');

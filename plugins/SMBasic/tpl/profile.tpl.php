@@ -21,7 +21,7 @@
                     <?php
                 } else {
                     ?>
-                    <img width="125" height="150" src="<?= $cfg['smbasic_default_img_avatar']; ?>" alt="avatar" />
+                    <img width="125" height="150" src="<?= $cfg['STATIC_SRV_URL'] . '/' . $cfg['smbasic_default_img_avatar']; ?>" alt="avatar" />
                 <?php } ?>
             </div>
             <?= !empty($tpldata['SMB_PROFILE_POST_AVATAR']) ? $tpldata['SMB_PROFILE_POST_AVATAR'] : false ?>

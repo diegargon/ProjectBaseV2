@@ -65,32 +65,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ($filter->postInt('rememberme')) ? $rememberme = 1 : $rememberme = 0;
         if ($email != false && $password != false) {
             SMBasic_Login($email, $password, $rememberme);
+            return false;
         } else {
             die('[{"status": "error", "msg": "' . $LNG['L_E_EMAILPASSWORD'] . '"}]');
         }
     } else if (isset($_POST['email']) && !empty($_POST['reset_password_chk'])) {
         SMBasic_RequestResetOrActivation();
+        return false;
     }
-} else {
-    /*
-      if ($cfg['smbasic_oauth']) {
-      require_once 'includes/SMBasic-oauth.inc.php';
-      if (!empty($_GET['provider'])) {
-      SMB_oauth_DoLogin();
-      } else {
-      $login_data['oAuth_data'] = SMB_oauth_getLoginURL();
-      }
-      }
-     */
-    $tpl->getCssFile('SMBasic');
-    $tpl->getCssFile('SMBasic', 'SMBasic-mobile');
-    $tpl->addScriptFile('standard', 'jquery', 'TOP');
-    $tpl->addScriptFile('SMBasic', 'login', 'BOTTOM');
-
-    if ($cfg['FRIENDLY_URL']) {
-        $login_data['register_url'] = "/{$cfg['WEB_LANG']}/register";
-    } else {
-        $login_data['register_url'] = "/{$cfg['CON_FILE']}?module=SMBasic&page=register&lang={$cfg['WEB_LANG']}";
-    }
-    $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('SMBasic', 'login', $login_data));
 }
+/*
+  if ($cfg['smbasic_oauth']) {
+  require_once 'includes/SMBasic-oauth.inc.php';
+  if (!empty($_GET['provider'])) {
+  SMB_oauth_DoLogin();
+  } else {
+  $login_data['oAuth_data'] = SMB_oauth_getLoginURL();
+  }
+  }
+ */
+$tpl->getCssFile('SMBasic');
+$tpl->getCssFile('SMBasic', 'SMBasic-mobile');
+$tpl->addScriptFile('standard', 'jquery', 'TOP');
+$tpl->addScriptFile('SMBasic', 'login', 'BOTTOM');
+
+if ($cfg['FRIENDLY_URL']) {
+    $login_data['register_url'] = "{$cfg['REL_PATH']}{$cfg['WEB_LANG']}/register";
+} else {
+    $login_data['register_url'] = "{$cfg['REL_PATH']}{$cfg['CON_FILE']}?module=SMBasic&page=register&lang={$cfg['WEB_LANG']}";
+}
+$tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile('SMBasic', 'login', $login_data));
+

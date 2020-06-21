@@ -671,13 +671,13 @@ code {
     top: 60%;
     right: 20px;
     display: none;
-    background: rgba(0, 0, 0, 0.7) url('/plugins/News/tpl/img/goTop.png') 50% 50% no-repeat;    
+    background: rgba(0, 0, 0, 0.7) url('../img/goTop.png') 50% 50% no-repeat;    
 }
 #scrolldown {
     top:35%;
     right: 20px;
     display: block;
-    background: rgba(0, 0, 0, 0.7) url('/plugins/News/tpl/img/goBottom.png') 50% 50% no-repeat;     
+    background: rgba(0, 0, 0, 0.7) url('../img/goBottom.png') 50% 50% no-repeat;     
 }
 .other_langs {
     float:left;

@@ -32,7 +32,7 @@ if ($user && $user['uid'] != 0) {
 //if ((!isset($_POST['email']) || ($cfg['smbasic_need_username'] == 1) && !isset($_POST['username'])) &&
 //        !isset($_POST['password']) && !isset($_POST['register'])) {
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST'  && isset($_POST['register'])) {
     SMBasic_RegisterSubmit();
 } else {
     SMBasic_Register();

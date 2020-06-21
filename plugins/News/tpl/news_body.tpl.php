@@ -55,7 +55,7 @@ if ($cfg['news_side_scroll']) {
                     <?php } ?>
                     <?= !empty($tpldata['ADD_NEWS_INFO_POST_AVATAR']) ? $tpldata['ADD_NEWS_INFO_POST_AVATAR'] : null ?>
                     <div id="author_details" class="extra-small">
-                        <a href='/<?= $cfg['WEB_LANG'] ?>/profile&viewprofile=<?= $data['author_uid'] ?>'><?= $data['author'] ?></a>
+                        <a href='<?= $cfg['REL_PATH'] . $cfg['WEB_LANG'] ?>/profile&viewprofile=<?= $data['author_uid'] ?>'><?= $data['author'] ?></a>
                         <?= !empty($data['translator']) ? " | " . $LNG['L_NEWS_TRANSLATE_BY'] . $data['translator'] : null ?>
                         <br/>
                         <?= $LNG['L_NEWS_CREATE'] . ':' . $data['date'] ?> <br/>

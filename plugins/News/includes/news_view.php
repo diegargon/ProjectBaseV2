@@ -82,9 +82,9 @@ function news_show_page() {
         $news_data['sel_other_langs'] = '<div class="other_langs">';
         foreach ($other_langs as $o_lang_id) {
             if ($cfg['FRIENDLY_URL']) {
-                $o_lang_url = "/{$ml->getWebLang()}/news/{$news_data['nid']}/{$news_data['page']}/{$o_lang_id}/";
+                $o_lang_url = "{$cfg['REL_PATH']}{$ml->getWebLang()}/news/{$news_data['nid']}/{$news_data['page']}/{$o_lang_id}/";
             } else {
-                $o_lang_url = "/index.php?module=News&page=view_news.php?nid={$news_data['nid']}&npage={$news_data['page']}&news_lang={$o_lang_id}";
+                $o_lang_url = "{$cfg['REL_PATH']}{$cfg['CON_FILE']}?module=News&page=view_news.php?nid={$news_data['nid']}&npage={$news_data['page']}&news_lang={$o_lang_id}";
             }
             $news_data['sel_other_langs'] .= '<a href="' . $o_lang_url . '">' . $ml->idToName($o_lang_id) . '</a>';
         }
@@ -92,7 +92,7 @@ function news_show_page() {
     }
     if (!empty($news_data['translator_id'])) {
         $translator = $sm->getUserByID($news_data['translator_id']);
-        $news_data['translator'] = '<a rel="nofollow" href="/' . $cfg['WEB_LANG'] . '/profile&viewprofile=' . $translator['uid'] . '">' . $translator['username'] . '</a>';
+        $news_data['translator'] = '<a rel="nofollow" href="' . $cfg['REL_PATH'] . $cfg['WEB_LANG'] . '/profile&viewprofile=' . $translator['uid'] . '">' . $translator['username'] . '</a>';
     }
     $author = $sm->getUserByID($news_data['author_id']);
 
@@ -103,7 +103,7 @@ function news_show_page() {
     $cfg['PAGE_DESC'] = $news_data['title'] . ":" . $news_data['lead'];
     $cfg['PAGE_AUTHOR'] = $author['username'];
     //END HEAD MOD
-    !empty($author['avatar']) ? $news_data['author_avatar'] = $author['avatar'] : $news_data['author_avatar'] = $cfg['smbasic_default_img_avatar'];
+    !empty($author['avatar']) ? $news_data['author_avatar'] = $author['avatar'] : $news_data['author_avatar'] = $cfg['STATIC_SRV_URL'] .'/'. $cfg['smbasic_default_img_avatar'];
 
     get_news_links($news_data);
 
@@ -201,8 +201,8 @@ function news_nav_options($news) {
     $content = '';
     $news_url_args = "&nid={$news['nid']}&news_lang_id={$news['lang_id']}&npage={$news['page']}";
 
-    $view_news_url = "/{$cfg['CON_FILE']}?module=News&page=view_news" . $news_url_args;
-    $edit_news_url = "/{$cfg['CON_FILE']}?module=News&page=edit_news" . $news_url_args;
+    $view_news_url = "{$cfg['REL_PATH']}{$cfg['CON_FILE']}?module=News&page=view_news" . $news_url_args;
+    $edit_news_url = "{$cfg['REL_PATH']}{$cfg['CON_FILE']}?module=News&page=edit_news" . $news_url_args;
 
     $user = $sm->getSessionUser();
 
@@ -308,9 +308,9 @@ function news_pager($news_page) {
     $news_page['page'] == 1 ? $a_class = 'class="active"' : $a_class = '';
     if ($cfg['FRIENDLY_URL']) {
         $friendly_title = news_friendly_title($news_page['title']);
-        $content .= "<li><a $a_class href='/{$cfg['WEB_LANG']}/news/{$news_page['nid']}/1/{$news_page['lang_id']}/$friendly_title'>1</a></li>";
+        $content .= "<li><a $a_class href='{$cfg['REL_PATH']}{$cfg['WEB_LANG']}/news/{$news_page['nid']}/1/{$news_page['lang_id']}/$friendly_title'>1</a></li>";
     } else {
-        $content .= "<li><a $a_class href='{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_page['nid']}&lang={$cfg['WEB_LANG']}&news_lang_id={$news_page['lang_id']}&npage=1&news_lang_id={$news_page['lang_id']}'>1</a></li>";
+        $content .= "<li><a $a_class href='{$cfg['REL_PATH']}{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_page['nid']}&lang={$cfg['WEB_LANG']}&news_lang_id={$news_page['lang_id']}&npage=1&news_lang_id={$news_page['lang_id']}'>1</a></li>";
     }
 
     $pager = page_pager($cfg['news_pager_max'], $news_page['num_pages'], $news_page['page']);
@@ -318,17 +318,17 @@ function news_pager($news_page) {
         $news_page['page'] == $i ? $a_class = 'class="active"' : $a_class = '';
         if ($cfg['FRIENDLY_URL']) {
             $friendly_title = news_friendly_title($news_page['title']);
-            $content .= "<li><a $a_class href='/{$cfg['WEB_LANG']}/news/{$news_page['nid']}/$i/{$news_page['lang_id']}/$friendly_title'>$i</a></li>";
+            $content .= "<li><a $a_class href='{$cfg['REL_PATH']}{$cfg['WEB_LANG']}/news/{$news_page['nid']}/$i/{$news_page['lang_id']}/$friendly_title'>$i</a></li>";
         } else {
-            $content .= "<li><a $a_class href='{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_page['nid']}&lang={$cfg['WEB_LANG']}&npage=$i&news_lang_id={$news_page['lang_id']}'>$i</a></li>";
+            $content .= "<li><a $a_class href='{$cfg['REL_PATH']}{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_page['nid']}&lang={$cfg['WEB_LANG']}&npage=$i&news_lang_id={$news_page['lang_id']}'>$i</a></li>";
         }
     }
     $news_page['page'] == $news_page['num_pages'] ? $a_class = 'class="active"' : $a_class = '';
     if ($cfg['FRIENDLY_URL']) {
         $friendly_title = news_friendly_title($news_page['title']);
-        $content .= "<li><a $a_class href='/{$cfg['WEB_LANG']}/news/{$news_page['nid']}/{$news_page['num_pages']}/{$news_page['lang_id']}/$friendly_title'>{$news_page['num_pages']}</a></li>";
+        $content .= "<li><a $a_class href='{$cfg['REL_PATH']}{$cfg['WEB_LANG']}/news/{$news_page['nid']}/{$news_page['num_pages']}/{$news_page['lang_id']}/$friendly_title'>{$news_page['num_pages']}</a></li>";
     } else {
-        $content .= "<li><a $a_class href='{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_page['nid']}&lang={$cfg['WEB_LANG']}&npage={$news_page['num_pages']}&news_lang_id={$news_page['lang_id']}'>{$news_page['num_pages']}</a></li>";
+        $content .= "<li><a $a_class href='{$cfg['REL_PATH']}{$cfg['CON_FILE']}?module=News&page=view_news&nid={$news_page['nid']}&lang={$cfg['WEB_LANG']}&npage={$news_page['num_pages']}&news_lang_id={$news_page['lang_id']}'>{$news_page['num_pages']}</a></li>";
     }
     $content .= '</ul></div>';
 
@@ -553,7 +553,7 @@ function getNewsCatBreadcrumb($news_data) {
             !empty($breadcrumb) ? $breadcrumb .= $cfg['news_breadcrum_separator'] : null;
             $cat = preg_replace('/\_/', ' ', $cat);
             $breadcrumb .= '<li ' . $ITEM_LI . '>';
-            $breadcrumb .= '<a ' . $ITEM_HREF . ' href="/' . $cfg['WEB_LANG'] . '/section/' . $cat_path . '">';
+            $breadcrumb .= '<a ' . $ITEM_HREF . ' href="' . $cfg['REL_PATH'] . $cfg['WEB_LANG'] . '/section/' . $cat_path . '">';
             $breadcrumb .= '<span ' . $ITEM_NAME . '>' . $cat . '</span></a>' . $ITEM_POS . '</li>';
             $cat_path .= $cfg['categories_separator'];
             $list_counter++;
