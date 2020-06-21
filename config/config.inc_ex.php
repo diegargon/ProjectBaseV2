@@ -70,14 +70,9 @@ define('DEBUG_CORE', 'DebugBasic');
 
 
 //CORE 
-//ONLY EFFECT FOR INSTALL LATER WE USE THE CONF IN DATABASE
 
 $cfg['REL_PATH'] = '/';
-$cfg['WEB_URL'] = 'https://localhost.ld' . $cfg['REL_PATH'];
+$cfg['WEB_URL'] = 'https://localhost' . $cfg['REL_PATH'];
 $cfg['STATIC_SRV_URL'] = $cfg['WEB_URL'];
 $cfg['WEB_LANG'] = 'es';
 $cfg['WEB_LOGO'] = $cfg['STATIC_SRV_URL'] . '/favicon-96x96.png';
-
-$cfg['default_timezone'] = 'Europe/Madrid';
-$cfg['server_timezone'] = 'Europe/Madrid';
-$cfg['default_dateformat'] = 'd/m/U H:i';
