@@ -69,6 +69,8 @@ function SimpleFrontend_AdminAside($params) {
         $aside_menu .= '<li><a href="admin&admtab=' . $params['admtab'] . '&opt=2">' . $LNG['L_FRONT_INDEX_CFG'] . '</a></li>';
     }
     $aside_menu .= '<li><a href="admin&admtab=' . $params['admtab'] . '&opt=4">' . $LNG['L_PL_CONFIG'] . '</a></li>';
+    
+    return $aside_menu;
 }
 
 /**
