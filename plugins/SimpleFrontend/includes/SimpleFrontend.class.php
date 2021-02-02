@@ -82,7 +82,6 @@ class SimpleFrontend {
      */
     public function __construct() {
         global $plugins;
-        $plugins->expressStart('Blocks');
         $this->setConfig();
     }
 
@@ -132,6 +131,13 @@ class SimpleFrontend {
         }
 
         return false;
+    }
+
+    /**
+     * get all pages    
+     */
+    function getPages() {
+        return $this->pages;
     }
 
     /**
@@ -203,10 +209,21 @@ class SimpleFrontend {
         $tpl->addtoTplVar('META', $tpl->getTplFile('SimpleFrontend', 'index_meta'));
         if (defined('BLOCKS')) {
             global $blocks;
-
-            $page_data = $blocks->getBlocksContent('index', $cfg['index_sections']);
-            $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile($cfg['index_plugin_layout'], $cfg['index_layout'] . '_layout', $page_data));
+            $page_data = $blocks->getBlocksContent('index', 10);
+        } else {
+            $page_data = [];
         }
+
+        if (!empty($cfg['index_layout'])) {
+            $layouts = $this->getLayouts();
+            foreach ($layouts as $layout) {
+                if (($layout['page'] == 'index') && ($layout['file'] == $cfg['index_layout'])) {
+                    $layout_plugin = $layout['plugin'];
+                    $layout_file = $layout['file'];
+                }
+            }
+        }
+        $tpl->addtoTplVar('ADD_TO_BODY', $tpl->getTplFile($layout_plugin, $layout_file . '_layout', $page_data));
     }
 
     /**

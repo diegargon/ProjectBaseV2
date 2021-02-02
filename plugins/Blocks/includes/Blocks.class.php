@@ -29,13 +29,6 @@ class Blocks {
     private $user_blocks;
 
     /**
-     * List pages
-     * 
-     * @var array
-     */
-    private $pages;
-
-    /**
      * Debug reference
      * 
      * @var debug|false
@@ -78,6 +71,7 @@ class Blocks {
      * @param string $def_conf
      * @param string $admin_block
      */
+    
     function registerBlock($block_name, $block_desc, $func_show, $func_conf, $def_conf, $admin_block) {
         $this->registered_blocks[] = [
             'blockname' => $block_name,
@@ -90,33 +84,11 @@ class Blocks {
     }
 
     /**
-     * register blocks page
-     * 
-     * @param string $page_name
-     * @param string $page_sections
-     */
-    function registerBlocksPage($page_name, $page_sections) {
-        isset($this->debug) ? $this->debug->log('Registered blocks page, ' . $page_name . ' sections ' . $page_sections, 'Blocks', 'INFO') : null;
-        $this->pages [] = [
-            'page_name' => $page_name,
-            'page_sections' => $page_sections
-        ];
-    }
-
-    /**
-     * get pages
-     * 
-     * @return array
-     */
-    function getPages() {
-        return $this->pages;
-    }
-
-    /**
      * get registered blocks
      * 
      * @return array
      */
+    
     function getRegisteredBlocks() {
         return $this->registered_blocks;
     }

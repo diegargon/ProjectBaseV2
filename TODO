@@ -1,4 +1,7 @@
 HIGH
+* news, al editar la noticia com guardar texto entra filtrado bien posiblemente las ' y demas caracteres pero si le doy a enviar da error
+* lead es palabra reservada y da fallo en las consultas SELECT lead...
+* groups es palabra reservada en mysql 8 y da fall ocosnultar SELECT groups hay que entrecomillarlas con `groups`
 * SimpleFrontend,comprobar bien que blocks es opcional y añadir alternativa para que un plugin provea un index 
 MED
 * NewsMediaUpload - Añadir field owner_id/uid Forma de poder borrar imagenes subidas

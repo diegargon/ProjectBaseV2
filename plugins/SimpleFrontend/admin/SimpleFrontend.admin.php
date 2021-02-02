@@ -21,17 +21,6 @@ function SimpleFrontend_AdminInit() {
         return false;
     }
     register_action('add_admin_menu', 'SimpleFrontend_AdminMenu', '5');
-
-    /* Default SimpleFrontend layouts */
-    $frontend->registerLayout(['name' => 'Index 3 Colums', 'plugin' => 'SimpleFrontend', 'file' => 'index_3', 'sections' => 3]);
-    $frontend->registerLayout(['name' => 'Index 2 Colums', 'plugin' => 'SimpleFrontend', 'file' => 'index_2', 'sections' => 2]);
-    $frontend->registerLayout(['name' => 'Index 1 Colums', 'plugin' => 'SimpleFrontend', 'file' => 'index_1', 'sections' => 2]);
-
-    if (defined('BLOCKS')) {
-        global $blocks, $cfg;
-
-        $blocks->registerBlocksPage('index', $cfg['index_sections']);
-    }
 }
 
 /**
@@ -65,11 +54,11 @@ function SimpleFrontend_AdminAside($params) {
     global $LNG;
 
     $aside_menu = '<li><a href="admin&admtab=' . $params['admtab'] . '&opt=1">' . $LNG['L_PL_STATE'] . '</a></li>';
-    if (defined('BLOCKS')) {
-        $aside_menu .= '<li><a href="admin&admtab=' . $params['admtab'] . '&opt=2">' . $LNG['L_FRONT_INDEX_CFG'] . '</a></li>';
-    }
+    // if (defined('BLOCKS')) {
+    $aside_menu .= '<li><a href="admin&admtab=' . $params['admtab'] . '&opt=2">' . $LNG['L_FRONT_INDEX_CFG'] . '</a></li>';
+    //}
     $aside_menu .= '<li><a href="admin&admtab=' . $params['admtab'] . '&opt=4">' . $LNG['L_PL_CONFIG'] . '</a></li>';
-    
+
     return $aside_menu;
 }
 
@@ -108,6 +97,46 @@ function SimpleFrontend_admin_content($params) {
  * @global db $db
  * @return string
  */
+function SimpleFrontEnd_index_cfg() {
+    global $tpl, $cfg, $filter, $LNG, $frontend;
+
+    $layouts = $frontend->getLayouts();
+
+    $content = '';
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnChangeLayout'])) {
+        global $db;
+
+        $layout_opt = $filter->postStrictChars('admin_layout', 255, 1);
+
+        if (!empty($layout_opt)) {
+            if ($layout_opt == 'none') {
+                $db->upsert('config', ['plugin' => 'SimpleFrontend', 'cfg_value' => ''], ['cfg_key' => 'index_layout']);
+            } else {
+                foreach ($layouts as $layout) {
+                    if ($layout['file'] == $layout_opt) {
+                        $db->upsert('config', ['plugin' => 'SimpleFrontend', 'cfg_value' => $layout['file']], ['cfg_key' => 'index_layout']);
+                        $cfg['index_layout'] = $layout['file'];
+                    }
+                }
+            }
+        }
+    }
+
+    $page_data['layouts_select'] = '';
+    foreach ($layouts as $layout) {
+        if ($layout['file'] == $cfg['index_layout']) {
+            $page_data['layouts_select'] .= '<option selected value="' . $layout['file'] . '">' . $layout['name'] . '</option>';            
+        } else {
+            $page_data['layouts_select'] .= '<option value="' . $layout['file'] . '">' . $layout['name'] . '</option>';
+        }
+    }
+    $content .= $tpl->getTplFile('SimpleFrontend', 'admin_layouts', $page_data);
+
+    return $content;
+}
+
+/*
 function SimpleFrontEnd_index_cfg() {
     global $tpl, $cfg, $filter, $LNG, $frontend, $blocks;
 
@@ -154,3 +183,4 @@ function SimpleFrontEnd_index_cfg() {
 
     return $content;
 }
+*/

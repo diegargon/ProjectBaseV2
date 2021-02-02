@@ -32,6 +32,13 @@ function SimpleFrontend_init() {
         }
         $frontend->addMenuItem('top_menu_left', $tpl->getTplFile('SimpleFrontend', 'home_menu_opt', $home_link), 1);
     }
+    
+    /* Default SimpleFrontend layouts */
+    $frontend->registerLayout(['name' => 'Index 3 Colums', 'page' => 'index', 'plugin' => 'SimpleFrontend', 'file' => 'index_3', 'sections' => 3]);
+    $frontend->registerLayout(['name' => 'Index 2 Colums', 'page' => 'index', 'plugin' => 'SimpleFrontend', 'file' => 'index_2', 'sections' => 2]);
+    $frontend->registerLayout(['name' => 'Index 1 Colums', 'page' => 'index', 'plugin' => 'SimpleFrontend', 'file' => 'index_1', 'sections' => 2]);
+
+    $frontend->registerPage(['module' => 'SimpleFrontend', 'page' => 'index', 'type' => 'virtual', 'func' => [$frontend,'index_page']]);
     return true;
 }
 

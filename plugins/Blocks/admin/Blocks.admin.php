@@ -89,7 +89,7 @@ function Blocks_admin_content($params) {
  * @return string
  */
 function Blocks_blk_mng() {
-    global $blocks, $tpl, $filter, $LNG;
+    global $blocks, $tpl, $filter, $LNG, $frontend;
 
     if (defined('MULTILANG')) {
         global $ml;
@@ -130,28 +130,26 @@ function Blocks_blk_mng() {
         $block_added = false;
     }
 
-    //Display Create New Block
-    $pages = $blocks->getPages();
+    $pages = $frontend->getPages();
 
     (empty($selected_page) || $selected_page == false) ? $selected = 1 : $selected = 0;
 
     foreach ($pages as $page) {
-        ($selected_page == $page['page_name']) ? $selected = 1 : null;
+        ($selected_page == $page['page']) ? $selected = 1 : null;
 
         if ($selected == 1) {
-            $page_data['page_options'] .= "<option selected value='{$page['page_name']}'>{$page['page_name']}</option>";
-            $page_selected_sections = $page['page_sections'];
+            $page_data['page_options'] .= "<option selected value='{$page['page']}'>{$page['page']}</option>";
             $selected = 0;
         } else {
-            $page_data['page_options'] .= "<option value='{$page['page_name']}'>{$page['page_name']}</option>";
+            $page_data['page_options'] .= "<option value='{$page['page']}'>{$page['page']}</option>";
         }
     }
-
+    
     if (defined('MULTILANG')) {
         $page_data['block_lang'] = $ml->getSiteLangsSelect('block_lang', 1);
     }
 
-    for ($i = 1; $i <= $page_selected_sections; $i++) {
+    for ($i = 1; $i <= 10; $i++) {
         if (!empty($selected_section) && $selected_section == $i) {
             $page_data['sections'] .= "<option selected value='$i'>$i</option>";
         } else {

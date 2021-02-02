@@ -81,8 +81,7 @@ html, body {
     font-size:3em;
     text-decoration: none;
 }
-#brand span {
-    font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+#brand span {    
     font-size: 1.3em;  
 }
 .row1, .row3 {

@@ -12,9 +12,7 @@
 !defined('IN_WEB') ? exit : true;
 ?>
 <p><?= $LNG['L_FR_INDEX_LAYOUTS'] ?></p>
-<form id="form_layouts_<?= $data['page_name'] ?>" action="#" method="POST">
-    <input type="hidden" name="page" value="<?= $data['page_name'] ?>"/>
-    <p style="font-weight: bold;"><?= $data['page_name'] ?></p>
+<form id="form_layouts" action="#" method="POST">      
     <select name="admin_layout">
         <?= $data['layouts_select'] ?>
     </select>

@@ -21,10 +21,10 @@ $simplefrontend_db_install = [
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SimpleFrontend', 'simplefrontend_theme', 'default');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SimpleFrontend', 'simplefrontend_css_inline', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SimpleFrontend', 'simplefrontend_css_optimize', '1');",
-    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SimpleFrontend', 'index_plugin_layout', 'SimpleFrontend');",
+    /* "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SimpleFrontend', 'index_plugin_layout', 'SimpleFrontend');", */
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SimpleFrontend', 'index_layout', 'index_1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SimpleFrontend', 'display_section_menu', '1');",
-    "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SimpleFrontend', 'index_sections', '3');",
+    /* "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SimpleFrontend', 'index_sections', '3');", */
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SimpleFrontend', 'show_load_time', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SimpleFrontend', 'show_memory_usage', '1');",
     "INSERT INTO `" . DB_PREFIX . "config` (`plugin`, `cfg_key`, `cfg_value`) VALUES ('SimpleFrontend', 'loading_screen_support', '1');"

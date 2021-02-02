@@ -369,7 +369,21 @@ class Database {
         if (empty($table) || empty($what)) {
             return false;
         }
-        $query = 'SELECT ' . $what . ' FROM ' . $this->db_prefix . $table;
+        
+        //FIXME TODO arreglo a correr para evitar fallo de palabras reservadas en mysql8 (groups/lead) revisar
+        $what_filtered = '';
+        $what_ary = explode(",", $what);
+        $end_what = end($what_ary);
+
+        foreach($what_ary as $_what) {
+                $what_filtered .=  "`" . trim($_what) . "`";
+
+                if($_what != $end_what) {
+                        $what_filtered .= ",";
+                }
+        }
+               
+        $query = 'SELECT ' . $what_filtered . ' FROM ' . $this->db_prefix . $table;
 
         if (!empty($where)) {
             $query .= ' WHERE ';
@@ -575,7 +589,8 @@ class Database {
      */
     private function insertProcess($insert_data) {
         foreach ($insert_data as $field => $value) {
-            $fields_ary[] = $field;
+            //TODO FIXME correccion rapida para evitar errores en mysql 8 con groups lead (palabras reservadas)
+            $fields_ary[] = '`' . $field . '`';
             $values_ary[] = "'" . $value . "'";
         }
         $insert['fields'] = implode(', ', $fields_ary);
