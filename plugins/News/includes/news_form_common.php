@@ -3,20 +3,20 @@
 /**
  *  News - Common form functions
  *
- *  @author diego@envigo.net
+ *  @author diego////@////envigo.net
  *  @package ProjectBase
  *  @subpackage News
- *  @copyright Copyright @ 2016 - 2020 Diego Garcia (diego@envigo.net) 
+ *  @copyright Copyright @ 2016 - 2021 Diego Garcia (diego////@////envigo.net)
  */
 
 /**
  * Get html select formated category selection
- * 
+ *
  * TODO: Hay un posible error, si se muevo una subcategoria de padre, y el ID del padre es menor
  * el loop que crea a la lista no encuentra al padre por que aun no esta añadido, se añade antes al
  * hijo que al padre pero no encuentra al padre. Se solvento (supongo igual da otro) temporalmente
  *  ordenando por 'father'
- * 
+ *
  * @global array $cfg
  * @global Categories $ctgs
  * @global Multilang $ml
@@ -67,7 +67,7 @@ function news_getCatsSelect($news_data = null, $select_name = 'news_category', $
 
 /**
  * Std Get POST form data
- * 
+ *
  * @global Database $db
  * @global SecureFilter $filter
  * @global SessionManager $sm
@@ -82,7 +82,7 @@ function news_form_getPost() {
     $form_data['nid'] = $filter->getInt('nid');
     $form_data['news_lang_id'] = $filter->getInt('news_lang_id');
     $form_data['page'] = $filter->getInt('npage');
-    //POST    
+    //POST
     $form_data['author_id'] = $filter->postInt('news_author_id', 10, 1);
     $form_data['title'] = $db->escape($filter->postUtf8Txt('news_title'));
     $form_data['lead'] = $db->escape($filter->postUtf8Txt('news_lead'));
@@ -127,7 +127,7 @@ function news_form_getPost() {
                 $form_data['author_id'] = $author_data['uid'];
             }
         } else if ($author == $LNG['L_NEWS_ANONYMOUS']) {
-            $form_data['author_id'] = 0; //Change to anonymousM
+            $form_data['author_id'] = 0; //Change to anonymous
         } else {
             $form_data['author_id'] = false;
         }
@@ -143,7 +143,7 @@ function news_form_getPost() {
                 $form_data['news_translator_id'] = $translator_data['uid'];
             }
         } else if ($translator == $LNG['L_NEWS_ANONYMOUS']) {
-            $form_data['news_translator_id'] = 0; //Change to anonymousM
+            $form_data['news_translator_id'] = 0; //Change to anonymous
         } else {
             $form_data['news_translator_id'] = false;
         }
@@ -154,7 +154,7 @@ function news_form_getPost() {
 
 /**
  * used when edit news
- * 
+ *
  * omit langs that already have this news translate
  * @global Multilang $ml
  * @global Database $db
@@ -187,9 +187,9 @@ function news_get_available_langs($news_data) {
 
 /**
  * used when translate a news
- * 
+ *
  * omit all already translate langs, exclude original lang too. just show langs without the news translate
- * 
+ *
  * @global type $ml
  * @global type $db
  * @param type $nid
@@ -221,7 +221,7 @@ function news_get_missed_langs($nid, $page) {
 
 /**
  * Used for submit and edit
- * 
+ *
  * @global array $LNG
  * @global array $cfg
  * @param array $news_data
@@ -271,11 +271,11 @@ function news_submit_form_check($news_data) {
     if ($news_data['category'] == false) {
         die('[{"status": "10", "msg": "' . $LNG['L_NEWS_INTERNAL_ERROR'] . '"}]');
     }
-    //Source check valid if input    
+    //Source check valid if input
     if (!empty($_POST['news_source']) && $news_data['news_source'] == false && news_perm_ask('w_news_add_source')) {
         die('[{"status": "11", "msg": "' . $LNG['L_NEWS_E_SOURCE'] . '"}]');
     }
-    //New related   check valid if input 
+    //New related   check valid if input
     if (!empty($_POST['news_new_related']) && $news_data['news_new_related'] == false && news_perm_ask('w_news_add_related')) {
         die('[{"status": "12", "msg": "' . $LNG['L_NEWS_E_RELATED'] . '"}]');
     }
@@ -283,7 +283,7 @@ function news_submit_form_check($news_data) {
     if (!empty($_POST['news_related']) && $news_data['news_related'] == false && news_perm_ask('w_news_add_related')) {
         die('[{"status": "13", "msg": "' . $LNG['L_NEWS_E_RELATED'] . '"}]');
     }
-    // Custom /Mod Validators 
+    // Custom /Mod Validators
     if (($return = do_action("news_form_add_check", $news_data)) && !empty($return)) {
         die('[{"status": "14", "msg": "' . $return . '"}]');
     }
@@ -295,7 +295,7 @@ function news_submit_form_check($news_data) {
 
 /**
  * News form update
- * 
+ *
  * @global Database $db
  * @global SecureFilter $filter
  * @param array $news_data
@@ -337,7 +337,7 @@ function news_form_news_update($news_data) {
 
     $db->update('news', $set_ary, $where_ary);
 
-    //if lang change on main change on childs to ovoid orphan pages
+    //if lang change on main change on childs to avoid orphan pages
     if (!empty($news_data['news_lang']) && ($news_data['current_lang_id'] != $news_data['news_lang'])) {
         $db->update('news', ['lang_id' => $news_data['news_lang']], ['nid' => $news_data['nid'], 'lang_id' => $news_data['news_lang']]);
     }
@@ -387,7 +387,7 @@ function news_form_news_update($news_data) {
 
     if (!empty($news_data['news_related'])) {
         foreach ($news_data['news_related'] as $link_id => $value) {
-            if ($filter->varInt($link_id)) { //value its checked on post $link_id no             
+            if ($filter->varInt($link_id)) { //value its checked on post $link_id no
                 if (empty($value)) {
                     $db->delete('links', ['link_id' => $link_id], 'LIMIT 1');
                 } else {

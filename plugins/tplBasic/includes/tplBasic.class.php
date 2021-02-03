@@ -1,12 +1,12 @@
 <?php
 
 /*
- *  Copyright @ 2016 - 2020 Diego Garcia (diego@envigo.net)
+ *  Copyright @ 2016 - 2021 Diego Garcia (diego////@////envigo.net)
  */
 /**
  *  tplBasic - TPL class
  *  Template manager
- *  @author diego@envigo.net
+ *  @author diego////@////envigo.net
  *  @package ProjectBase
  *  @subpackage tplBasic
  */

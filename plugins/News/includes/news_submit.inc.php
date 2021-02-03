@@ -3,15 +3,15 @@
 /**
  *  News - News submit include
  *
- *  @author diego@envigo.net
+ *  @author diego////@////envigo.net
  *  @package ProjectBase
  *  @subpackage News
- *  @copyright Copyright @ 2016 - 2020 Diego Garcia (diego@envigo.net) 
+ *  @copyright Copyright @ 2016 - 2021 Diego Garcia (diego////@////envigo.net)
  */
 
 /**
  * Build create new news form
- * 
+ *
  * @global aray $LNG
  * @global TPL $tpl
  * @global SessionManager $sm
@@ -83,8 +83,8 @@ function news_new_form() {
 }
 
 /**
- * insert new news 
- * 
+ * insert new news
+ *
  * @global array $cfg
  * @global Database $db
  * @param array $news_data
@@ -156,7 +156,7 @@ function news_create_new($news_data) {
 
 /**
  * Send new news process
- * 
+ *
  * @global array $LNG
  * @global array $cfg
  */

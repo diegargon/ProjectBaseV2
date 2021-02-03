@@ -1,7 +1,7 @@
 <?php
 
 /*
- *  Copyright @ 2016 - 2020 Diego Garcia (diego@envigo.net)
+ *  Copyright @ 2016 - 2021 Diego Garcia (diego////@////envigo.net)
  *  EN
  */
 !defined('IN_WEB') ? exit : true;

@@ -3,16 +3,16 @@
 /**
  *  News - News view template
  * 
- *  @author diego@envigo.net
+ *  @author diego////@////envigo.net
  *  @package ProjectBase
  *  @subpackage News
- *  @copyright Copyright @ 2016 - 2020 Diego Garcia (diego@envigo.net)  
+ *  @copyright Copyright @ 2016 - 2021 Diego Garcia (diego////@////envigo.net)
  */
 !defined('IN_WEB') ? exit : true;
 
 /**
  * news show page
- * 
+ *
  * @global array $cfg
  * @global tpl $tpl
  * @global sm $sm
@@ -97,13 +97,13 @@ function news_show_page() {
     $author = $sm->getUserByID($news_data['author_id']);
 
     $cfg['news_stats'] ? news_stats($nid, $news_data['lang_id'], $news_data['page']) : null;
-    //HEAD MOD       
+    //HEAD MOD
     $cfg['PAGE_TITLE'] = $news_data['title'];
     $cfg['news_meta_opengraph'] ? news_add_social_meta($news_data) : null;
     $cfg['PAGE_DESC'] = $news_data['title'] . ":" . $news_data['lead'];
     $cfg['PAGE_AUTHOR'] = $author['username'];
     //END HEAD MOD
-    !empty($author['avatar']) ? $news_data['author_avatar'] = $author['avatar'] : $news_data['author_avatar'] = $cfg['STATIC_SRV_URL'] .'/'. $cfg['smbasic_default_img_avatar'];
+    !empty($author['avatar']) ? $news_data['author_avatar'] = $author['avatar'] : $news_data['author_avatar'] = $cfg['STATIC_SRV_URL'] . '/' . $cfg['smbasic_default_img_avatar'];
 
     get_news_links($news_data);
 
@@ -138,7 +138,7 @@ function news_show_page() {
 
 /**
  * Catch admin actions
- * 
+ *
  * @global filter $filter
  * @param array $news_data
  * @param array $perms
@@ -188,7 +188,7 @@ function news_catch_admin_actions(&$news_data) {
 
 /**
  * News navigation options
- * 
+ *
  * @global array $LNG
  * @global array $cfg
  * @param array $news
@@ -450,7 +450,7 @@ function news_adv_stats($nid, $lang_id) {
     global $db, $sm, $filter;
 
     $user = $sm->getSessionUser();
-    empty($user) ? $user['uid'] = 0 : null; //Anon        
+    empty($user) ? $user['uid'] = 0 : null; //Anon
     $ip = $filter->srvRemoteAddr();
     $hostname = gethostbyaddr($ip);
     $where_ary = [

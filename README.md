@@ -56,7 +56,7 @@ DEVELOPEMENT
 Author
 ------
 
-* Diego Garcia <diego@envigo.net>
+* Diego Garcia <diego////@////envigo.net>
 
 Lastest relevant add/changes 
 ================================

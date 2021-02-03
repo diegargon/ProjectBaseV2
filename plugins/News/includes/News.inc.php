@@ -3,10 +3,10 @@
 /**
  *  News - News main include
  *
- *  @author diego@envigo.net
+ *  @author diego////@////envigo.net
  *  @package ProjectBase
  *  @subpackage News
- *  @copyright Copyright @ 2016 - 2020 Diego Garcia (diego@envigo.net) 
+ *  @copyright Copyright @ 2016 - 2021 Diego Garcia (diego////@////envigo.net)
  */
 !defined('IN_WEB') ? exit : true;
 
@@ -69,7 +69,7 @@ function news_section_menu_elements() {
 
 /**
  * Put section sub menu categories elements
- * 
+ *
  * @global array $cfg
  * @global Categories $ctgs
  * @global SecureFilter $filter
@@ -138,7 +138,7 @@ function news_dropdown_profile_edit(& $form_data) {
 }
 
 /**
- * Dropdown change 
+ * Dropdown change
  * @param array $q_data
  */
 function news_dropdown_profile_change(& $q_data) {

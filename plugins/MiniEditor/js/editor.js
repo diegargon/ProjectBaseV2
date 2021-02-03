@@ -1,10 +1,10 @@
 /**
  *  NewsmediaUploader - editor.js script
  * 
- *  @author diego@envigo.net
+ *  @author diego////@////envigo.net
  *  @package ProjectBase
  *  @subpackage NewsMediaUploadeer
- *  @copyright Copyright @ 2016 - 2020 Diego Garcia (diego@envigo.net)  
+ *  @copyright Copyright @ 2016 - 2021 Diego Garcia (diego////@////envigo.net)  
  */
 
 function get_highlighted() {

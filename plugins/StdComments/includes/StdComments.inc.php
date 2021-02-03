@@ -3,10 +3,10 @@
 /**
  *  StdComments - Main include
  * 
- *  @author diego@envigo.net
+ *  @author diego////@////envigo.net
  *  @package ProjectBase
  *  @subpackage StdComments
- *  @copyright Copyright @ 2016 - 2020 Diego Garcia (diego@envigo.net)  
+ *  @copyright Copyright @ 2016 - 2021 Diego Garcia (diego////@////envigo.net)  
  */
 
 /**

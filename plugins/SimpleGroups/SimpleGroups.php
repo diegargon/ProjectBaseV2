@@ -3,10 +3,10 @@
 /**
  *  SimpleGroups - Main init file
  * 
- *  @author diego@envigo.net
+ *  @author diego////@////envigo.net
  *  @package ProjectBase
  *  @subpackage SimpleGroups
- *  @copyright Copyright @ 2016 - 2020 Diego Garcia (diego@envigo.net) 
+ *  @copyright Copyright @ 2016 - 2021 Diego Garcia (diego////@////envigo.net) 
  */
 /*
  *  TODO Añadir en admin el id y poder establecer el padre
