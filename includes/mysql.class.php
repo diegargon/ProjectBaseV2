@@ -2,13 +2,13 @@
 
 /**
  *  Mysql
- * 
+ *
  *  DB Utils
- * 
+ *
  *  @author diego@envigo.net
  *  @package ProjectBase
  *  @subpackage CORE
- *  @copyright Copyright @ 2016 - 2020 Diego Garcia (diego@envigo.net) 
+ *  @copyright Copyright @ 2016 - 2020 Diego Garcia (diego@envigo.net)
  */
 !defined('IN_WEB') ? exit : true;
 
@@ -25,13 +25,13 @@ class Database {
 
     /**
      * charset
-     * @var string 
+     * @var string
      */
     public $charset;
 
     /**
      * collate
-     * @var type 
+     * @var type
      */
     public $collate; //TODO unused atm
     /**
@@ -48,7 +48,7 @@ class Database {
 
     /**
      * db link object
-     * @var object 
+     * @var object
      */
     protected $dblink;
 
@@ -72,7 +72,7 @@ class Database {
 
     /**
      * db password
-     * @var string 
+     * @var string
      */
     protected $dbpassword;
     //Logging
@@ -169,9 +169,9 @@ class Database {
 
     /**
      * Query
-     * 
+     *
      * Std query wrap, add history and stats
-     * 
+     *
      * @param string $query
      * @return array
      */
@@ -188,7 +188,7 @@ class Database {
 
     /**
      * fetch wrap
-     * 
+     *
      * @param object $query
      * @return array
      */
@@ -198,7 +198,7 @@ class Database {
 
     /**
      * fetch all
-     * 
+     *
      * @param array $query
      * @return array
      */
@@ -214,7 +214,7 @@ class Database {
 
     /**
      * Escape string
-     * 
+     *
      * @param string $var
      * @return string
      */
@@ -224,7 +224,7 @@ class Database {
 
     /**
      * Escape and Strip tags
-     * 
+     *
      * @param string $var
      * @return string
      */
@@ -234,7 +234,7 @@ class Database {
 
     /**
      * Return num rows
-     * 
+     *
      * @param object $result
      * @return int
      */
@@ -252,7 +252,7 @@ class Database {
 
     /**
      * Print db error and exit
-     * 
+     *
      * @param string $query
      */
     private function dbdie($query) {
@@ -265,7 +265,7 @@ class Database {
 
     /**
      * Return next table id
-     * 
+     *
      * @return int
      */
     function insertID() {
@@ -280,7 +280,7 @@ class Database {
 
     /**
      * free
-     * 
+     *
      * @param object $query
      */
     function free(& $query) {
@@ -289,7 +289,7 @@ class Database {
 
     /**
      * Check if table exists
-     * 
+     *
      * @param string $table
      * @return boolean
      */
@@ -304,8 +304,8 @@ class Database {
     }
 
     /**
-     * Calculate next row number 
-     * 
+     * Calculate next row number
+     *
      * @param string $table
      * @param string $field
      * @return int|boolean
@@ -324,15 +324,15 @@ class Database {
     }
 
     /*
-     * $db->selectAll("users", ['uid' => 1, 'username' => "myname"], "LIMIT 1"); 
+     * $db->selectAll("users", ['uid' => 1, 'username' => "myname"], "LIMIT 1");
      * Especify operator default '=';
      * $query = $db->selectAll("news", ["frontpage" => ["value"=> 1, "operator" => "="], "moderation" => 0, "disabled" => 0]);
-     * extra not array 
+     * extra not array
      */
 
     /**
      * Select all fields
-     * 
+     *
      * @param string $table
      * @param array $where
      * @param string $extra
@@ -357,7 +357,7 @@ class Database {
 
     /**
      * Select specific fields using $what
-     * 
+     *
      * @param string $table
      * @param string $what comma field separated
      * @param array $where
@@ -369,20 +369,20 @@ class Database {
         if (empty($table) || empty($what)) {
             return false;
         }
-        
+
         //FIXME TODO arreglo a correr para evitar fallo de palabras reservadas en mysql8 (groups/lead) revisar
         $what_filtered = '';
         $what_ary = explode(",", $what);
         $end_what = end($what_ary);
 
-        foreach($what_ary as $_what) {
-                $what_filtered .=  "`" . trim($_what) . "`";
+        foreach ($what_ary as $_what) {
+            $what_filtered .= "`" . trim($_what) . "`";
 
-                if($_what != $end_what) {
-                        $what_filtered .= ",";
-                }
+            if ($_what != $end_what) {
+                $what_filtered .= ",";
+            }
         }
-               
+
         $query = 'SELECT ' . $what_filtered . ' FROM ' . $this->db_prefix . $table;
 
         if (!empty($where)) {
@@ -396,7 +396,7 @@ class Database {
 
     /**
      * Search databse
-     * 
+     *
      * @param string $table
      * @param string $s_fields
      * @param string $searchText
@@ -443,7 +443,7 @@ class Database {
 
     /**
      * Update database
-     * 
+     *
      * @param string $table
      * @param array $set
      * @param array $where
@@ -490,7 +490,7 @@ class Database {
 
     /**
      * Toggle field 1/0
-     * 
+     *
      * @param string $table
      * @param string $field
      * @param array $where
@@ -512,7 +512,7 @@ class Database {
 
     /**
      * Insert
-     * 
+     *
      * @param string $table
      * @param array $insert_data
      * @param string $extra
@@ -530,8 +530,8 @@ class Database {
     }
 
     /**
-     * Delete 
-     * 
+     * Delete
+     *
      * @param string $table
      * @param array $where
      * @param string $extra
@@ -552,7 +552,7 @@ class Database {
 
     /**
      * Insert or update if exists
-     * 
+     *
      * @param string $table
      * @param array $set_ary
      * @param array $where_ary
@@ -564,8 +564,8 @@ class Database {
     }
 
     /**
-     * Return number of executed querys 
-     * 
+     * Return number of executed querys
+     *
      * @return int
      */
     function numQuerys() {
@@ -574,7 +574,7 @@ class Database {
 
     /**
      * return query history
-     * 
+     *
      * @return array
      */
     function getQueryHistory() {
@@ -583,7 +583,7 @@ class Database {
 
     /**
      * Insert Processs
-     * 
+     *
      * @param array $insert_data
      * @return array
      */
@@ -601,13 +601,13 @@ class Database {
 
     /**
      * Set process
-     * 
+     *
      * @param array $set
      * @return string
      */
     private function setProcess($set) {
         foreach ($set as $field => $value) {
-            $newset[] = "$field = " . "'" . $value . "'";
+            $newset[] = "`$field` = " . "'" . $value . "'";
         }
         $query = implode(',', $newset);
         return $query;
@@ -615,7 +615,7 @@ class Database {
 
     /**
      * Where process
-     * 
+     *
      * @param array $where
      * @param string $logic
      * @return string
@@ -624,10 +624,10 @@ class Database {
 
         foreach ($where as $field => $value) {
             if (!is_array($value)) {
-                $q_where_fields[] = "$field = " . "'" . $value . "'";
+                $q_where_fields[] = "`$field` = " . "'" . $value . "'";
             } else {
                 //$q_where_fields[] = "$field {$value['operator']} '" . $value['value'] . "'";
-                $q_where_fields[] = "$field {$value['operator']} " . $value['value']; //CHANGE 100818
+                $q_where_fields[] = "`$field` {$value['operator']} " . $value['value']; //CHANGE 100818
             }
         }
         $query = implode(" $logic ", $q_where_fields);
